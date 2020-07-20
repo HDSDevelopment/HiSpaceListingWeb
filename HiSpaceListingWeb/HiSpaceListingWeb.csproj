@@ -37,13 +37,4 @@
     <Folder Include="wwwroot\css\datatables\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="HiSpaceListingModels">
-      <HintPath>..\..\HiSpaceListingService\HiSpaceListingModels\bin\Debug\netcoreapp3.1\HiSpaceListingModels.dll</HintPath>
-    </Reference>
-    <Reference Include="HiSpaceListingService">
-      <HintPath>..\..\HiSpaceListingService\HiSpaceListingService\bin\Debug\netcoreapp3.1\HiSpaceListingService.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
