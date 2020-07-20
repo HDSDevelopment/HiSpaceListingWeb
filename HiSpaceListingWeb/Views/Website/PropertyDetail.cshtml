@@ -974,18 +974,29 @@
 												@Model.HealthCheck.AQI_Data
 											</div>
 											<div class="col-sm-5">
-												@if (Model.HealthCheck.AQI_Data == "0-50") {
-												<span class="text-sec font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
-												} else if (Model.HealthCheck.AQI_Data == "51-100") {
-											<span class="text-sec font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
-												} else if (Model.HealthCheck.AQI_Data == "101-200") {
-											<span class="text-pry font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
-												} else if (Model.HealthCheck.AQI_Data == "201-300") {
-											<span class="text-pry font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
-												} else if (Model.HealthCheck.AQI_Data == "301-400") {
-											<span class="text-danger font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
-												} else if (Model.HealthCheck.AQI_Data == "401-500") {
-											<span class="text-danger font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
+												@if (Model.HealthCheck.AQI_Data == "0-50")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
+												}
+												else if (Model.HealthCheck.AQI_Data == "51-100")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
+												}
+												else if (Model.HealthCheck.AQI_Data == "101-200")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
+												}
+												else if (Model.HealthCheck.AQI_Data == "201-300")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
+												}
+												else if (Model.HealthCheck.AQI_Data == "301-400")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
+												}
+												else if (Model.HealthCheck.AQI_Data == "401-500")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
 												}
 											</div>
 										</div>
@@ -997,16 +1008,23 @@
 												@Model.HealthCheck.Temperature_Data
 											</div>
 											<div class="col-sm-5">
-												@if (Model.HealthCheck.Temperature_Data == "<95") {
-												<span class="text-pry font-weight-bold">@Model.HealthCheck.Temperature_Grade</span>
-												} else if (Model.HealthCheck.Temperature_Data == "95-99.9" ) {
-											<span class="text-sec font-weight-bold">@Model.HealthCheck.Temperature_Grade</span>
-												} else if (Model.HealthCheck.Temperature_Data == "100-104" ) {
-											<span class="text-sec font-weight-bold">@Model.HealthCheck.Temperature_Grade</span>
-												} else if (Model.HealthCheck.Temperature_Data == ">104" ) {
-											<span class="text-pry font-weight-bold">@Model.HealthCheck.Temperature_Grade</span>
+												@if (Model.HealthCheck.Temperature_Data == "<95")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.Temperature_Grade</span>
 												}
-												
+												else if (Model.HealthCheck.Temperature_Data == "95-99.9")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.Temperature_Grade</span>
+												}
+												else if (Model.HealthCheck.Temperature_Data == "100-104")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.Temperature_Grade</span>
+												}
+												else if (Model.HealthCheck.Temperature_Data == ">104")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.Temperature_Grade</span>
+												}
+
 											</div>
 										</div>
 										<div class="row">
@@ -1019,15 +1037,15 @@
 											<div class="col-sm-5">
 												@if (Model.HealthCheck.Humidity_Data == "<30")
 												{
-												<span class="text-pry font-weight-bold">@Model.HealthCheck.Humidity_Grade</span>
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.Humidity_Grade</span>
 												}
 												else if (Model.HealthCheck.Humidity_Data == "30-50")
 												{
-											<span class="text-sec font-weight-bold">@Model.HealthCheck.Humidity_Grade</span>
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.Humidity_Grade</span>
 												}
 												else if (Model.HealthCheck.Humidity_Data == ">50")
 												{
-											<span class="text-pry font-weight-bold">@Model.HealthCheck.Humidity_Grade</span>
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.Humidity_Grade</span>
 												}
 											</div>
 										</div>
@@ -1041,27 +1059,27 @@
 											<div class="col-sm-5">
 												@if (Model.HealthCheck.CO2_Data == "<400")
 												{
-												<span class="text-sec font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
 												}
 												else if (Model.HealthCheck.CO2_Data == "400-599")
 												{
-											<span class="text-sec font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
 												}
 												else if (Model.HealthCheck.CO2_Data == "600-999")
 												{
-											<span class="text-pry font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
 												}
 												else if (Model.HealthCheck.CO2_Data == "1000-1499")
 												{
-											<span class="text-pry font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
 												}
 												else if (Model.HealthCheck.CO2_Data == "1500-1999")
 												{
-											<span class="text-danger font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
 												}
 												else if (Model.HealthCheck.CO2_Data == ">2000")
 												{
-											<span class="text-danger font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
 												}
 											</div>
 										</div>
@@ -1075,31 +1093,31 @@
 											<div class="col-sm-5">
 												@if (Model.HealthCheck.CO_Data == "<4.4")
 												{
-												<span class="text-sec font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.CO_Grade</span>
 												}
 												else if (Model.HealthCheck.CO_Data == "4.4-9.4")
 												{
-											<span class="text-sec font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.CO_Grade</span>
 												}
 												else if (Model.HealthCheck.CO_Data == "9.5-12.4")
 												{
-											<span class="text-pry font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.CO_Grade</span>
 												}
 												else if (Model.HealthCheck.CO_Data == "12.5-15.4")
 												{
-											<span class="text-pry font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.CO_Grade</span>
 												}
 												else if (Model.HealthCheck.CO_Data == "15.5-30.4")
 												{
-											<span class="text-danger font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.CO_Grade</span>
 												}
 												else if (Model.HealthCheck.CO_Data == "30.5-40.4")
 												{
-											<span class="text-danger font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.CO_Grade</span>
 												}
 												else if (Model.HealthCheck.CO_Data == ">40.5")
 												{
-											<span class="text-danger font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.CO_Grade</span>
 												}
 											</div>
 										</div>
@@ -1113,33 +1131,33 @@
 											<div class="col-sm-5">
 												@if (Model.HealthCheck.PM2Point5_Data == "<15.4")
 												{
-												<span class="text-sec font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
 												}
 												else if (Model.HealthCheck.PM2Point5_Data == "15.4-40.4")
 												{
-											<span class="text-sec font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
 												}
 												else if (Model.HealthCheck.PM2Point5_Data == "40.5-65.4")
 												{
-											<span class="text-pry font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
 												}
 												else if (Model.HealthCheck.PM2Point5_Data == "65.5-150.4")
 												{
-											<span class="text-pry font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
 												}
 												else if (Model.HealthCheck.PM2Point5_Data == "150.5-250.4")
 												{
-											<span class="text-danger font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
 												}
 												else if (Model.HealthCheck.PM2Point5_Data == "250.5-350.4")
 												{
-											<span class="text-danger font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
 												}
 												else if (Model.HealthCheck.PM2Point5_Data == ">350.5")
 												{
-											<span class="text-danger font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
 												}
-												
+
 											</div>
 										</div>
 										<div class="row">
@@ -1152,31 +1170,31 @@
 											<div class="col-sm-5">
 												@if (Model.HealthCheck.PM10_Data == "<=54")
 												{
-												<span class="text-sec font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
 												}
 												else if (Model.HealthCheck.PM10_Data == "55-154")
 												{
-												<span class="text-sec font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
 												}
 												else if (Model.HealthCheck.PM10_Data == "155-254")
 												{
-												<span class="text-pry font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
 												}
 												else if (Model.HealthCheck.PM10_Data == "255-354")
 												{
-												<span class="text-pry font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
 												}
 												else if (Model.HealthCheck.PM10_Data == "355-424")
 												{
-												<span class="text-danger font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
 												}
 												else if (Model.HealthCheck.PM10_Data == "425-504")
 												{
-												<span class="text-danger font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
 												}
 												else if (Model.HealthCheck.PM10_Data == ">505")
 												{
-												<span class="text-danger font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
 												}
 											</div>
 										</div>
@@ -1190,15 +1208,15 @@
 											<div class="col-sm-5">
 												@if (Model.HealthCheck.Moisture_Data == "5%-12%")
 												{
-												<span class="text-sec"><i class="fab fa-pagelines"></i></span>
+													<span class="text-sec"><i class="fab fa-pagelines"></i></span>
 												}
 												else if (Model.HealthCheck.Moisture_Data == "13%-17%")
 												{
-											<span class="text-pry"><i class="fab fa-pagelines"></i></span>
+													<span class="text-pry"><i class="fab fa-pagelines"></i></span>
 												}
 												else if (Model.HealthCheck.Moisture_Data == "<5% or >17%")
 												{
-											<span class="text-danger"><i class="fas fa-lead"></i></span>
+													<span class="text-danger"><i class="fas fa-lead"></i></span>
 												}
 											</div>
 										</div>
@@ -1207,292 +1225,292 @@
 							</div>
 							<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">
 						}
-						@if(Model.GreenBuildingCheck != null)
-							{
-								//Green Building Data
-								<div class="greenBuilding-check">
-									<div class="row">
-										<div class="col-sm-12">
-											<h5 class="">Green Building Data</h5>
-										</div>
-										<div class="col-sm-6">
-											<div class="row">
-												<div class="col-sm-12 mb-3 mb-sm-0">
-													<h5>Site & Facility Management</h5>
+						@if (Model.GreenBuildingCheck != null)
+						{
+							//Green Building Data
+							<div class="greenBuilding-check">
+								<div class="row">
+									<div class="col-sm-12">
+										<h5 class="">Green Building Data</h5>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-12 mb-3 mb-sm-0">
+												<h5>Site & Facility Management</h5>
+											</div>
+											<div class="col-sm-12 green-web__table">
+												<div class="row">
+													<div class="col-sm-1">1</div>
+													<div class="col-sm-6">Green Policy</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_GreenPolicy"></div>
+													</div>
 												</div>
-												<div class="col-sm-12 green-web__table">
-													<div class="row">
-														<div class="col-sm-1">1</div>
-														<div class="col-sm-6">Green Policy</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_GreenPolicy"></div>
-														</div>
+												<div class="row">
+													<div class="col-sm-1">2</div>
+													<div class="col-sm-6">Waste Collection & Disposal</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_WasteCD"></div>
 													</div>
-													<div class="row">
-														<div class="col-sm-1">2</div>
-														<div class="col-sm-6">Waste Collection & Disposal</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_WasteCD"></div>
-														</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">3</div>
+													<div class="col-sm-6">Eco-friendly Commuting Practices</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_Commuting"></div>
 													</div>
-													<div class="row">
-														<div class="col-sm-1">3</div>
-														<div class="col-sm-6">Eco-friendly Commuting Practices</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_Commuting"></div>
-														</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">4</div>
+													<div class="col-sm-6">Eco-friendly Landscaping Practices</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_Landscaping"></div>
 													</div>
-													<div class="row">
-														<div class="col-sm-1">4</div>
-														<div class="col-sm-6">Eco-friendly Landscaping Practices</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_Landscaping"></div>
-														</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">5</div>
+													<div class="col-sm-6">Heat Island Reduction, Non-roof</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_NonRoof"></div>
 													</div>
-													<div class="row">
-														<div class="col-sm-1">5</div>
-														<div class="col-sm-6">Heat Island Reduction, Non-roof</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_NonRoof"></div>
-														</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">6</div>
+													<div class="col-sm-6">Heat Island Reduction, Roof</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_Roof"></div>
 													</div>
-													<div class="row">
-														<div class="col-sm-1">6</div>
-														<div class="col-sm-6">Heat Island Reduction, Roof</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_Roof"></div>
-														</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">7</div>
+													<div class="col-sm-6">Outdoor Light Pollution Reduction</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_PollutionReduction"></div>
 													</div>
-													<div class="row">
-														<div class="col-sm-1">7</div>
-														<div class="col-sm-6">Outdoor Light Pollution Reduction</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_PollutionReduction"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">8</div>
-														<div class="col-sm-6">Building Operations & Maintenance</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_BuildingOM"></div>
-														</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">8</div>
+													<div class="col-sm-6">Building Operations & Maintenance</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_BuildingOM"></div>
 													</div>
 												</div>
 											</div>
-										</div>
-										@*Health & Comfort*@
-										<div class="col-sm-6">
-											<div class="row">
-												<div class="col-sm-12 mb-3 mb-sm-0">
-													<h5>Health & Comfort</h5>
-												</div>
-												<div class="col-sm-12 green-web__table">
-													<div class="row">
-														<div class="col-sm-1">1</div>
-														<div class="col-sm-6">Tobacco Smoke Control</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_SmokeControl"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">2</div>
-														<div class="col-sm-6">Fresh Air Ventilation</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_VEntilation"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">3</div>
-														<div class="col-sm-6">Carbon dioxide Monitoring & Control</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_CO2Control"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">4</div>
-														<div class="col-sm-6">Isolation of Polluting Equipment & Systems</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_PollutionEquipment"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">5</div>
-														<div class="col-sm-6">Eco-friendly Housekeeping Chemicals</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_EcoChemicals"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">6</div>
-														<div class="col-sm-6">Thermal Comfort, Indoor Temperature & RH</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_ThermalComfort"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">7</div>
-														<div class="col-sm-6">Facilities for Differently Abled People</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_AbledPeople"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">8</div>
-														<div class="col-sm-6">Occupant Well-being Facilities</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_Facilities"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										@*Water Efficiency*@
-										<div class="col-sm-6">
-											<div class="row">
-												<div class="col-sm-12 mb-3 mb-sm-0">
-													<h5>Water Efficiency</h5>
-												</div>
-												<div class="col-sm-12 green-web__table">
-													<div class="row">
-														<div class="col-sm-1">1</div>
-														<div class="col-sm-6">Water Efficient Fixtures</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Fixtures"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">2</div>
-														<div class="col-sm-6">Rain Water Harvesting</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Harvesting"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">3</div>
-														<div class="col-sm-6">Waste Water Treatment</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Treatment"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">4</div>
-														<div class="col-sm-6">Waste Water Reuse</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Reuse"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">5</div>
-														<div class="col-sm-6">Water Metering</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Metering"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">6</div>
-														<div class="col-sm-6">Turf Area</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_TurfArea"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										@*Energy Efficiency*@
-										<div class="col-sm-6">
-											<div class="row">
-												<div class="col-sm-12 mb-3 mb-sm-0">
-													<h5>Energy Efficiency</h5>
-												</div>
-												<div class="col-sm-12 green-web__table">
-													<div class="row">
-														<div class="col-sm-1">1</div>
-														<div class="col-sm-6">Eco-friendly Refrigerants & Halons</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_Refrigerants"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">2</div>
-														<div class="col-sm-6">Minimum Energy Performance</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_MinimumEP"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">3</div>
-														<div class="col-sm-6">Improved Energy Performance</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_ImprovedEP"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">4</div>
-														<div class="col-sm-6">On site Renewable Energy</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_OnSiteRE"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">5</div>
-														<div class="col-sm-6">Off Site Renewable Energy</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_OffSiteRE"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">6</div>
-														<div class="col-sm-6">Energy Metering</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_EnergyMetering"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										@*Innovation Category*@
-										<div class="col-sm-6">
-											<div class="row">
-												<div class="col-sm-12 mb-3 mb-sm-0">
-													<h5>Innovation Category</h5>
-												</div>
-												<div class="col-sm-12 green-web__table">
-													<div class="row">
-														<div class="col-sm-1">1</div>
-														<div class="col-sm-6">Innovation Credits</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.IC_Innovation"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-sm-1">2</div>
-														<div class="col-sm-6">IGBC AP</div>
-														<div class="col-sm-5">
-															<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.IC_IGBC"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-6 align-self-center gb-verified">
-											@if (Model.GreenBuildingCheck.CertifiedBy == "GRIHA")
-											{
-												<div><i class="fas fa-user-check"></i> Green Building Verified by GRIHA Council</div>
-											}
-											else if (Model.GreenBuildingCheck.CertifiedBy == "ECBC")
-											{
-										<div><i class="fas fa-user-check"></i> Green Building Verified by ECBC Council</div>
-											}
-											else if (Model.GreenBuildingCheck.CertifiedBy == "IGBC")
-											{
-										<div><i class="fas fa-user-check"></i> Green Building Verified by IGBC Council</div>
-											}
-											else if (Model.GreenBuildingCheck.CertifiedBy == "LEED")
-											{
-										<div><i class="fas fa-user-check"></i> Green Building Verified by LEED India</div>
-											}
 										</div>
 									</div>
+									@*Health & Comfort*@
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-12 mb-3 mb-sm-0">
+												<h5>Health & Comfort</h5>
+											</div>
+											<div class="col-sm-12 green-web__table">
+												<div class="row">
+													<div class="col-sm-1">1</div>
+													<div class="col-sm-6">Tobacco Smoke Control</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_SmokeControl"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">2</div>
+													<div class="col-sm-6">Fresh Air Ventilation</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_VEntilation"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">3</div>
+													<div class="col-sm-6">Carbon dioxide Monitoring & Control</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_CO2Control"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">4</div>
+													<div class="col-sm-6">Isolation of Polluting Equipment & Systems</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_PollutionEquipment"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">5</div>
+													<div class="col-sm-6">Eco-friendly Housekeeping Chemicals</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_EcoChemicals"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">6</div>
+													<div class="col-sm-6">Thermal Comfort, Indoor Temperature & RH</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_ThermalComfort"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">7</div>
+													<div class="col-sm-6">Facilities for Differently Abled People</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_AbledPeople"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">8</div>
+													<div class="col-sm-6">Occupant Well-being Facilities</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_Facilities"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									@*Water Efficiency*@
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-12 mb-3 mb-sm-0">
+												<h5>Water Efficiency</h5>
+											</div>
+											<div class="col-sm-12 green-web__table">
+												<div class="row">
+													<div class="col-sm-1">1</div>
+													<div class="col-sm-6">Water Efficient Fixtures</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Fixtures"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">2</div>
+													<div class="col-sm-6">Rain Water Harvesting</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Harvesting"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">3</div>
+													<div class="col-sm-6">Waste Water Treatment</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Treatment"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">4</div>
+													<div class="col-sm-6">Waste Water Reuse</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Reuse"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">5</div>
+													<div class="col-sm-6">Water Metering</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Metering"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">6</div>
+													<div class="col-sm-6">Turf Area</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_TurfArea"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									@*Energy Efficiency*@
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-12 mb-3 mb-sm-0">
+												<h5>Energy Efficiency</h5>
+											</div>
+											<div class="col-sm-12 green-web__table">
+												<div class="row">
+													<div class="col-sm-1">1</div>
+													<div class="col-sm-6">Eco-friendly Refrigerants & Halons</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_Refrigerants"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">2</div>
+													<div class="col-sm-6">Minimum Energy Performance</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_MinimumEP"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">3</div>
+													<div class="col-sm-6">Improved Energy Performance</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_ImprovedEP"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">4</div>
+													<div class="col-sm-6">On site Renewable Energy</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_OnSiteRE"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">5</div>
+													<div class="col-sm-6">Off Site Renewable Energy</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_OffSiteRE"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">6</div>
+													<div class="col-sm-6">Energy Metering</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_EnergyMetering"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									@*Innovation Category*@
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-12 mb-3 mb-sm-0">
+												<h5>Innovation Category</h5>
+											</div>
+											<div class="col-sm-12 green-web__table">
+												<div class="row">
+													<div class="col-sm-1">1</div>
+													<div class="col-sm-6">Innovation Credits</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.IC_Innovation"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">2</div>
+													<div class="col-sm-6">IGBC AP</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.IC_IGBC"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6 align-self-center gb-verified">
+										@if (Model.GreenBuildingCheck.CertifiedBy == "GRIHA")
+										{
+											<div><i class="fas fa-user-check"></i> Green Building Verified by GRIHA Council</div>
+										}
+										else if (Model.GreenBuildingCheck.CertifiedBy == "ECBC")
+										{
+											<div><i class="fas fa-user-check"></i> Green Building Verified by ECBC Council</div>
+										}
+										else if (Model.GreenBuildingCheck.CertifiedBy == "IGBC")
+										{
+											<div><i class="fas fa-user-check"></i> Green Building Verified by IGBC Council</div>
+										}
+										else if (Model.GreenBuildingCheck.CertifiedBy == "LEED")
+										{
+											<div><i class="fas fa-user-check"></i> Green Building Verified by LEED India</div>
+										}
+									</div>
+								</div>
 							</div>
 							<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">
 						}
