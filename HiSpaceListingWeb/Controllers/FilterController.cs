@@ -352,6 +352,64 @@ namespace HiSpaceListingWeb.Controllers
 		//	return View(vModel);
 		//}
 
+		public ActionResult PropertyOperatorPeople()
+		{
+			SetSessionVariables();
+			PropertyOperatorPeopleViewModel vModel = new PropertyOperatorPeopleViewModel();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				//HTTP GET
+				//Get Listings
+				var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllProperty);
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<Listing>>();
+					readTask.Wait();
+					vModel.Listings = readTask.Result;
+				}
+
+				responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllOperators);
+				responseTask.Wait();
+				result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PropertyOperatorResponse>>();
+					readTask.Wait();
+					vModel.Operators = readTask.Result;
+				}
+
+				responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllPeople);
+				responseTask.Wait();
+				result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
+					readTask.Wait();
+					vModel.People = readTask.Result;
+				}
+			}
+
+			//Get Operators
+			//using (var client = new HttpClient())
+			//{
+			//	client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
+			//	var responseTask = client.GetAsync(Common.Instance.ApiUserGetUsers);
+			//	responseTask.Wait();
+
+			//	var result = responseTask.Result;
+			//	if (result.IsSuccessStatusCode)
+			//	{
+			//		var readTask = result.Content.ReadAsAsync<List<User>>();
+			//		readTask.Wait();
+			//		vModel.Users = readTask.Result;
+			//	}
+			//}
+			return View(vModel);
+		}
+
 		public void SetSessionVariables()
 		{
 			#region
