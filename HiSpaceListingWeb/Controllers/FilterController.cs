@@ -392,21 +392,6 @@ namespace HiSpaceListingWeb.Controllers
 				}
 			}
 
-			//Get Operators
-			//using (var client = new HttpClient())
-			//{
-			//	client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
-			//	var responseTask = client.GetAsync(Common.Instance.ApiUserGetUsers);
-			//	responseTask.Wait();
-
-			//	var result = responseTask.Result;
-			//	if (result.IsSuccessStatusCode)
-			//	{
-			//		var readTask = result.Content.ReadAsAsync<List<User>>();
-			//		readTask.Wait();
-			//		vModel.Users = readTask.Result;
-			//	}
-			//}
 			return View(vModel);
 		}
 

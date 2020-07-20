@@ -123,6 +123,9 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiListingGetPropertyList = "GetPropertyList/";
 		public string ApiListingGetPropertyListByUserID = "GetPropertyListByUserID/";
 		public string ApiListingGetPropertyDetailByListingID = "GetPropertyDetailByListingID/";
+		public string ApiLisitingGetAllProperty = "GetAllPropertyList/";
+		public string ApiLisitingGetAllOperators = "GetAllOperatorList/";
+		public string ApiLisitingGetAllPeople = "GetAllPeopleList/";
 
 		#endregion Listing Controller
 
