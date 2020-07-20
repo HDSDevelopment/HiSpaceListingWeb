@@ -1,5 +1,279 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+﻿@*
+	For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-<p>Test Professionals</p>
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model HiSpaceListingWeb.ViewModel.PropertyListViewModel
+
+<section class="">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 mb-5 mb-lg-0">
+				<div class="sidebar">
+					<div class="widget">
+						<div class="widget-title widget-collapse">
+
+							<a class="ml-auto" data-toggle="collapse" href="#property-location" role="button" aria-expanded="false" aria-controls="property-location"> <h6>Search by People</h6> <i class="fas fa-chevron-down"></i> </a>
+						</div>
+						<div class="collapse show" id="property-location">
+							<ul class="list-unstyled mb-0 pt-3">
+								<li><a href="#">Professional1 lastname<span class="ml-auto"></span></a></li>
+								<li><a href="#">Professional2 lastname<span class="ml-auto"></span></a></li>
+								<li><a href="#">Professional3 lastname<span class="ml-auto"></span></a></li>
+								<li><a href="#">All Professional<span class="ml-auto"></span></a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="widget">
+						<div class="widget-title widget-collapse">
+
+							<a class="ml-auto" data-toggle="collapse" href="#property-location" role="button" aria-expanded="false" aria-controls="property-location"> <h6>Operators</h6> <i class="fas fa-chevron-down"></i> </a>
+						</div>
+						<div class="collapse show" id="property-location">
+							<ul class="list-unstyled mb-0 pt-3">
+								<li><a href="#">NextSpace<span class="ml-auto">(5)</span></a></li>
+								<li><a href="#">MakeShift<span class="ml-auto">(3)</span></a></li>
+								<li><a href="#">ImpactHub<span class="ml-auto">(10)</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-9" id="filterOperatorResult">
+				<div class="property-item property-col-list mt-4">
+					<div class="row no-gutters">
+						<div class="col-lg-12 col-md-12 prop-details">
+							<div class="property-details">
+								<div class="row">
+									<div class="people-details__head col-sm-6">
+										<div class="people-details__head-logo">PL</div>
+										<div class="property-details__header">Professional1 Lastname</div>
+									</div>
+									<div class="property-details__role col-sm-6 align-self-center">
+										<div>Operator Name: <span class="property-details__role-name">NextSpace</span></div>
+										<div>Role: <span class="property-details__role-type">Owner | Operator | Interior Design | Project Management</span></div>
+									</div>
+								</div>
+								@*<div class="property-details__desc">
+							With shared workspace available from as little as an hour, you only pay for the desks and time that you need. For a more long-term solution or upcoming project, you can also reserve dedicated desks for you and your team.
+						</div>*@
+								<div class="people-details__section">
+									<div class="people-projects">
+										<span class="property-span__head">Total Projects</span>
+										<span class="property-span__type badge-sec">10</span>
+									</div>
+									<div class="property-detail-img popup-gallery people-image__carousel">
+										<div class="owl-carousel owl-theme owl-loaded carousel-People">
+											<div class="owl-stage-outer">
+												<div class="owl-stage">
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/list/01.jpg">
+															<img class="img-fluid" src="~/images/property/grid/01.jpg" alt="">
+														</a>
+														<div class="people-image__type">Owner</div>
+													</div>
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/grid/02.jpg">
+															<img class="img-fluid" src="~/images/property/grid/02.jpg" alt="">
+														</a>
+														<div class="people-image__type">Interior Designer</div>
+													</div>
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/grid/03.jpg">
+															<img class="img-fluid" src="~/images/property/grid/03.jpg" alt="">
+														</a>
+														<div class="people-image__type">Investor</div>
+													</div>
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/grid/04.jpg">
+															<img class="img-fluid" src="~/images/property/grid/04.jpg" alt="">
+														</a>
+														<div class="people-image__type">Leasing</div>
+													</div>
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/grid/05.jpg">
+															<img class="img-fluid" src="~/images/property/grid/05.jpg" alt="">
+														</a>
+														<div class="people-image__type">Property Developer</div>
+													</div>
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/grid/06.jpg">
+															<img class="img-fluid" src="~/images/property/grid/06.jpg" alt="">
+														</a>
+														<div class="people-image__type">Co-working</div>
+													</div>
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/grid/07.jpg">
+															<img class="img-fluid" src="~/images/property/grid/07.jpg" alt="">
+														</a>
+														<div class="people-image__type">Owner</div>
+													</div>
+												</div>
+											</div>
+											@*<div class="owl-nav">
+										<button type="button" role="presentation" class="owl-prev"><i class="fas fa-chevron-left"></i></button>
+										<button type="button" role="presentation" class="owl-next"><i class="fas fa-chevron-right"></i></button>
+									</div>*@
+											@*<div class="owl-dots disabled"></div>*@
+										</div>
+										<div class="people-operator">
+											<div class="people-operator__head">Linked Operators with us</div>
+											<div class="people-operator__list">
+												<img class="oper-img" src="/images/Upload/user/1/documents/_Logo.png" data-holder-rendered="true">
+												<div>NextSpace</div>
+											</div>
+											<div class="people-operator__list">
+												<img class="oper-img" src="/images/Upload/user/1/documents/_Logo.png" data-holder-rendered="true">
+												<div>MakeShift</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="property-details__footer">
+										<div class="property-details__address">
+											<i class="fas fa-map-marker-alt fa-xs"></i>
+											Flat 10,								<span class="property-span__head">chennai</span>, tamilnadu. <span class="property-span__head">600002</span>
+										</div>
+										<div class="property-details__total">
+
+											<span class="property-span__tot">
+												<i class="fas fa-envelope fa-xs"></i>nextspace@gmail.com
+											</span>
+											<span class="property-span__head"> | </span>
+											<span class="property-span__occ">
+												<i class="fas fa-mobile fa-xs"></i>9876543210
+											</span>
+										</div>
+									</div>
+
+								</div>
+								<div class="">
+									<a class="property-link btn btn-primary btn-block" href="/Website/PropertyDetail?ListingID=2">See Details</a>
+								</div>
+								<div class="tooltip-wrapper list-data__check" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eco-Friendly Spaces click to see details"><i class="fas fa-check"></i></div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="property-item property-col-list mt-4">
+					<div class="row no-gutters">
+						<div class="col-lg-12 col-md-12 prop-details">
+							<div class="property-details">
+								<div class="row">
+									<div class="people-details__head col-sm-6">
+										<div class="people-details__head-logo">PL</div>
+										<div class="property-details__header">Professional2 Lastname</div>
+									</div>
+									<div class="property-details__role col-sm-6 align-self-center">
+										<div>Operator Name: <span class="property-details__role-name">NextSpace</span></div>
+										<div>Role: <span class="property-details__role-type">Owner | Operator | Interior Design | Project Management</span></div>
+									</div>
+								</div>
+								@*<div class="property-details__desc">
+							With shared workspace available from as little as an hour, you only pay for the desks and time that you need. For a more long-term solution or upcoming project, you can also reserve dedicated desks for you and your team.
+						</div>*@
+								<div class="people-details__section">
+									<div class="people-projects">
+										<span class="property-span__head">Total Projects</span>
+										<span class="property-span__type badge-sec">10</span>
+									</div>
+									<div class="property-detail-img popup-gallery people-image__carousel">
+										<div class="owl-carousel owl-theme owl-loaded carousel-People">
+											<div class="owl-stage-outer">
+												<div class="owl-stage">
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/list/01.jpg">
+															<img class="img-fluid" src="~/images/property/grid/01.jpg" alt="">
+														</a>
+														<div class="people-image__type">Owner</div>
+													</div>
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/grid/02.jpg">
+															<img class="img-fluid" src="~/images/property/grid/02.jpg" alt="">
+														</a>
+														<div class="people-image__type">Interior Designer</div>
+													</div>
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/grid/03.jpg">
+															<img class="img-fluid" src="~/images/property/grid/03.jpg" alt="">
+														</a>
+														<div class="people-image__type">Investor</div>
+													</div>
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/grid/04.jpg">
+															<img class="img-fluid" src="~/images/property/grid/04.jpg" alt="">
+														</a>
+														<div class="people-image__type">Leasing</div>
+													</div>
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/grid/05.jpg">
+															<img class="img-fluid" src="~/images/property/grid/05.jpg" alt="">
+														</a>
+														<div class="people-image__type">Property Developer</div>
+													</div>
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/grid/06.jpg">
+															<img class="img-fluid" src="~/images/property/grid/06.jpg" alt="">
+														</a>
+														<div class="people-image__type">Co-working</div>
+													</div>
+													<div class="owl-item">
+														<a class="portfolio-img" href="~/images/property/grid/07.jpg">
+															<img class="img-fluid" src="~/images/property/grid/07.jpg" alt="">
+														</a>
+														<div class="people-image__type">Owner</div>
+													</div>
+												</div>
+											</div>
+											@*<div class="owl-nav">
+										<button type="button" role="presentation" class="owl-prev"><i class="fas fa-chevron-left"></i></button>
+										<button type="button" role="presentation" class="owl-next"><i class="fas fa-chevron-right"></i></button>
+									</div>*@
+											@*<div class="owl-dots disabled"></div>*@
+										</div>
+										<div class="people-operator">
+											<div class="people-operator__head">Linked Operators with us</div>
+											<div class="people-operator__list">
+												<img class="oper-img" src="/images/Upload/user/1/documents/_Logo.png" data-holder-rendered="true">
+												<div>NextSpace</div>
+											</div>
+											<div class="people-operator__list">
+												<img class="oper-img" src="/images/Upload/user/1/documents/_Logo.png" data-holder-rendered="true">
+												<div>MakeShift</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="property-details__footer">
+										<div class="property-details__address">
+											<i class="fas fa-map-marker-alt fa-xs"></i>
+											Flat 10,								<span class="property-span__head">chennai</span>, tamilnadu. <span class="property-span__head">600002</span>
+										</div>
+										<div class="property-details__total">
+
+											<span class="property-span__tot">
+												<i class="fas fa-envelope fa-xs"></i>nextspace@gmail.com
+											</span>
+											<span class="property-span__head"> | </span>
+											<span class="property-span__occ">
+												<i class="fas fa-mobile fa-xs"></i>9876543210
+											</span>
+										</div>
+									</div>
+
+								</div>
+								<div class="">
+									<a class="property-link btn btn-primary btn-block" href="/Website/PropertyDetail?ListingID=2">See Details</a>
+								</div>
+								<div class="tooltip-wrapper list-data__check" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eco-Friendly Spaces click to see details"><i class="fas fa-check"></i></div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+</section>

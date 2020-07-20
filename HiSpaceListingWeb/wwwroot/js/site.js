@@ -30,6 +30,7 @@ function userCheck(check) {
 	}
 }
 $(document).ready(function () {
+
 	var optionsWeb = {
 		step_size: 1,
 		symbols: {
