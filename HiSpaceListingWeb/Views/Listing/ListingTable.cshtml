@@ -299,7 +299,7 @@
 												@foreach (var item in Model.ListingList)
 												{
 													//checking the status
-													@if (item.Status == true)
+													@if (item.Listings.Status == true)
 													{
 														ViewBag.ListStatus = @Html.Raw("<i class='fas fa-check text-success'></i>");
 													}
@@ -308,28 +308,28 @@
 														ViewBag.ListStatus = @Html.Raw("<i class='fas fa-times text-danger'></i>");
 													}
 													//checking the type and addons
-													@if (item.ListingType == "Commercial")
+													@if (item.Listings.ListingType == "Commercial")
 													{
 														ViewBag.TypeClass = "text-pry";
 														ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-												"<span span class='modal-link__amenities' data-targeturl=\'" + @Url.Action("AddAmenities", "Addons", new { id = item.ListingId }) + "\' data-dismiss='modal'>" +
+												"<span span class='modal-link__amenities' data-targeturl=\'" + @Url.Action("AddAmenities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 													"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the aminities'>" +
 														"<i class='fas fa-wifi btn-icon text-primary'></i>" +
 													"</a>" +
 												"</span>" +
-									"<span span class='modal-link__facilities' data-targeturl=\'" + @Url.Action("AddFacilities", "Addons", new { id = item.ListingId }) + "\' data-dismiss='modal'>" +
+									"<span span class='modal-link__facilities' data-targeturl=\'" + @Url.Action("AddFacilities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 										"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the facilities'>" +
 											"<i class='fas fa-bus btn-icon text-sec'></i>" +
 										"</a>" +
 									"</span>" +
 									"</div>");
 														ViewBag.Eco = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-												"<span span class='modal-link__healthCheck' data-targeturl=\'" + @Url.Action("AddHealthCheck", "Addons", new { id = item.ListingId }) + "\' data-dismiss='modal'>" +
+												"<span span class='modal-link__healthCheck' data-targeturl=\'" + @Url.Action("AddHealthCheck", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 													"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Property Internal Health Check'>" +
 														"<i class='fas fa-temperature-low btn-icon text-sec'></i>" +
 													"</a>" +
 												"</span>" +
-									"<span span class='modal-link__greenBuildingData' data-targeturl=\'" + @Url.Action("AddGreenBuildingData", "Addons", new { id = item.ListingId }) + "\' data-dismiss='modal'>" +
+									"<span span class='modal-link__greenBuildingData' data-targeturl=\'" + @Url.Action("AddGreenBuildingData", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 										"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Buildings Operation and Maintenance Checklist'>" +
 											"<i class='fas fa-tree btn-icon text-info'></i>" +
 										"</a>" +
@@ -337,28 +337,28 @@
 									"</span>" +
 									"</div>");
 													}
-													else if (item.ListingType == "Co-Working")
+													else if (item.Listings.ListingType == "Co-Working")
 													{
 														ViewBag.TypeClass = "text-sec";
 														ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-																			  "<span class='modal-link__amenities' data-targeturl=\'" + @Url.Action("AddAmenities", "Addons", new { id = item.ListingId }) + "\' data-dismiss='modal'>" +
+																			  "<span class='modal-link__amenities' data-targeturl=\'" + @Url.Action("AddAmenities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 																				  "<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the aminities'>" +
 																					  "<i class='fas fa-wifi btn-icon text-primary'></i>" +
 																				  "</a>" +
 																			  "</span>" +
-																  "<span class='modal-link__facilities' data-targeturl=\'" + @Url.Action("AddFacilities", "Addons", new { id = item.ListingId }) + "\' data-dismiss='modal'>" +
+																  "<span class='modal-link__facilities' data-targeturl=\'" + @Url.Action("AddFacilities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 																	  "<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the facilities'>" +
 																		  "<i class='fas fa-bus btn-icon text-sec'></i>" +
 																	  "</a>" +
 																  "</span>" +
 															  "</div>");
 														ViewBag.Eco = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-												"<span span class='modal-link__healthCheck' data-targeturl=\'" + @Url.Action("AddHealthCheck", "Addons", new { id = item.ListingId }) + "\' data-dismiss='modal'>" +
+												"<span span class='modal-link__healthCheck' data-targeturl=\'" + @Url.Action("AddHealthCheck", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 													"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Property Internal Health Check'>" +
 														"<i class='fas fa-temperature-low btn-icon text-sec'></i>" +
 													"</a>" +
 												"</span>" +
-									"<span span class='modal-link__greenBuildingData' data-targeturl=\'" + @Url.Action("AddGreenBuildingData", "Addons", new { id = item.ListingId }) + "\' data-dismiss='modal'>" +
+									"<span span class='modal-link__greenBuildingData' data-targeturl=\'" + @Url.Action("AddGreenBuildingData", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 										"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Buildings Operation and Maintenance Checklist'>" +
 											"<i class='fas fa-tree btn-icon text-info'></i>" +
 										"</a>" +
@@ -366,11 +366,11 @@
 									"</span>" +
 									"</div>");
 													}
-													else if (item.ListingType == "RE-Professional")
+													else if (item.Listings.ListingType == "RE-Professional")
 													{
 														ViewBag.TypeClass = "text-info";
 														ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-																			  "<span class='modal-link__project' data-targeturl=\'" + @Url.Action("AddProject", "Addons", new { id = item.ListingId }) + "\' data-dismiss='modal'>" +
+																			  "<span class='modal-link__project' data-targeturl=\'" + @Url.Action("AddProject", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 																				  "<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the RE project'>" +
 																					  "<i class='fas fa-city btn-icon text-info'></i>" +
 																				  "</a>" +
@@ -380,23 +380,23 @@
 													}
 													<tr>
 														<td>
-															@Html.DisplayFor(modelItem => item.Name)
+															@Html.DisplayFor(modelItem => item.Listings.Name)
 														</td>
 														<td>
-															<span class="font-weight-bold  @ViewBag.TypeClass">@Html.DisplayFor(modelItem => item.ListingType)</span>
+															<span class="font-weight-bold  @ViewBag.TypeClass">@Html.DisplayFor(modelItem => item.Listings.ListingType)</span>
 														</td>
 														<td>
-															@Html.DisplayFor(modelItem => item.Phone)
+															@Html.DisplayFor(modelItem => item.Listings.Phone)
 														</td>
 														<td>
-															@Html.DisplayFor(modelItem => item.locality)
+															@Html.DisplayFor(modelItem => item.Listings.locality)
 														</td>
 														@*<td>
 															@Html.DisplayFor(modelItem => item.CurrentOccupancy)
 														</td>*@
 														<td class="p-0">
 															<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
-																<span class="modal-link__hours" data-targeturl="@Url.Action("AddHours", "Addons", new { id = item.ListingId })" data-dismiss="modal">
+																<span class="modal-link__hours" data-targeturl="@Url.Action("AddHours", "Addons", new { id = item.Listings.ListingId })" data-dismiss="modal">
 																	<a href="javascript:function() { return false; }" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to list the working hours">
 																		<i class="fas fa-business-time btn-icon text-pry"></i>
 																	</a>
@@ -405,7 +405,7 @@
 														</td>
 														<td class="p-0">
 															<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
-																<span class="modal-link__image" data-targeturl="@Url.Action("AddImage", "Addons", new { id = item.ListingId })" data-dismiss="modal">
+																<span class="modal-link__image" data-targeturl="@Url.Action("AddImage", "Addons", new { id = item.Listings.ListingId })" data-dismiss="modal">
 																	<a href="javascript:function() { return false; }" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to list the Images">
 																		<i class="fas fa-image btn-icon text-try"></i>
 																	</a>
@@ -428,7 +428,7 @@
 																@*<a href="/" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="View">
 																	<i class="fas fa-eye btn-icon text-info"></i>
 																</a>*@
-																<a href="@Url.Action("Edit", "ListingForm", new { ListingID = item.ListingId})" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit or View">
+																<a href="@Url.Action("Edit", "ListingForm", new { ListingID = item.Listings.ListingId})" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit or View">
 																	<i class="fas fa-edit btn-icon text-warning"></i>
 																</a>
 																<a href="/" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
