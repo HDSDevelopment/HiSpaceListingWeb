@@ -16,13 +16,13 @@ using HiSpaceListingService.ViewModel;
 
 namespace HiSpaceListingWeb.Controllers
 {
-    public class ListingController : Controller
-    {
-        public ActionResult Index()
-        {
+	public class ListingController : Controller
+	{
+		public ActionResult Index()
+		{
 			SetSessionVariables();
 			return View();
-        }
+		}
 
 		//public ActionResult ListingTable(int UserID, int UserType)
 		//{

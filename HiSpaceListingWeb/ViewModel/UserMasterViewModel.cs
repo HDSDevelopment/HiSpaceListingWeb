@@ -36,11 +36,11 @@ namespace HiSpaceListingWeb.ViewModel
 
 		public UserMasterViewModel()
 		{
-				User = new User();
-				ListingList = new List<ListingTableResponse>();
-				AmenityList = new List<Amenity>();
-				FacilityList = new List<Facility>();
-				WorkingHours = new WorkingHours();
+			User = new User();
+			ListingList = new List<ListingTableResponse>();
+			AmenityList = new List<Amenity>();
+			FacilityList = new List<Facility>();
+			WorkingHours = new WorkingHours();
 		}
 
 		public User User { get; set; }
@@ -52,5 +52,4 @@ namespace HiSpaceListingWeb.ViewModel
 		public IFormFile PANCopy { set; get; }
 		public IFormFile Logo { set; get; }
 	}
-	
 }

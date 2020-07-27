@@ -76,7 +76,7 @@
 							<div class="accordion-sec__detail @ViewBag.cardbody">
 
 								@*<form class="form-row align-items-center md-form p-3" action="account-profile.html">*@
-								@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @class = "form-row align-items-center md-form p-3", enctype = "multipart/form-data" }))
+								@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @class = "form-row align-items-center md-form p-3", enctype = "multipart/form-data", onSubmit = "EditUserValidate(event)" }))
 								{
 									@Html.AntiForgeryToken()
 									@Html.HiddenFor(m => m.User.UserId)
@@ -87,76 +87,140 @@
 									@Html.HiddenFor(m => m.User.Doc_PANCopy)
 									@Html.HiddenFor(m => m.User.Doc_RCCopy)
 									@Html.HiddenFor(m => m.User.Password)
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="text" class="form-control" placeholder="Company Name">*@
-										@Html.EditorFor(m => m.User.CompanyName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name" } })
-										<label for="input" class="control-label">Operator/Company Name*</label><i class="bar"></i>
-									</div>
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="text" class="form-control" placeholder="Phone">*@
-										@Html.EditorFor(m => m.User.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Phone" } })
-										<label for="input" class="control-label">Phone*</label><i class="bar"></i>
-									</div>
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="email" class="form-control" placeholder="abc@gmail.com">*@
-										@Html.EditorFor(m => m.User.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Email" } })
-										<label for="input" class="control-label">Email*</label><i class="bar"></i>
-									</div>
+								<div class="form-group col-md-3 col-sm-6">
+									@*<input type="text" class="form-control" placeholder="Company Name">*@
+									@Html.EditorFor(m => m.User.CompanyName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name", onblur = "errShow(this.value,'error_CompanyName-e');", onfocus = "errHide(this.value,'error_CompanyName-e');" } })
+									<label for="input" class="control-label">Operator/Company Name*</label><i class="bar"></i>
+									<div class="error" id="error_CompanyName-e"></div>
+								</div>
+								<div class="form-group col-md-3 col-sm-6">
+									@*<input type="text" class="form-control" placeholder="Phone">*@
+									@Html.EditorFor(m => m.User.Phone, new { htmlAttributes = new {@type="number", @class = "form-control", placeholder = "Enter Phone", onblur = "errShow(this.value,'error_Phone-e');", onfocus = "errHide(this.value,'error_Phone-e');" } })
+									<label for="input" class="control-label">Phone*</label><i class="bar"></i>
+									<div class="error" id="error_Phone-e"></div>
+								</div>
+								<div class="form-group col-md-3 col-sm-6">
+									@*<input type="email" class="form-control" placeholder="abc@gmail.com">*@
+									@Html.EditorFor(m => m.User.Email, new { htmlAttributes = new { @type = "email", @class = "form-control event-none", placeholder = "Enter Email", onblur = "errShow(this.value,'error_Email-e');", onfocus = "errHide(this.value,'error_Email-e');" } })
+									<label for="input" class="control-label">Email*</label><i class="bar"></i>
+									<div class="error" id="error_Email-e"></div>
+								</div>
 									@*<div class="form-group col-md-3 col-sm-6">
 										@Html.EditorFor(m => m.User.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Password" } })
 										<label for="input" class="control-label">Password*</label><i class="bar"></i>
 									</div>*@
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="text" class="form-control" placeholder="www.abc.com">*@
-										@Html.EditorFor(m => m.User.Website, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Website" } })
-										<label for="input" class="control-label">Web Address</label><i class="bar"></i>
-									</div>
+							<div class="form-group col-md-3 col-sm-6">
+								@*<input type="text" class="form-control" placeholder="www.abc.com">*@
+								@Html.EditorFor(m => m.User.Website, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Website" } })
+								<label for="input" class="control-label">Web Address</label><i class="bar"></i>
+							</div>
 									<div class="form-group col-md-6 col-sm-12">
 										@*<input type="text" class="form-control" placeholder="No.00, street">*@
-										@Html.EditorFor(m => m.User.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Address" } })
-										<label for="input" class="control-label">Complete Address</label><i class="bar"></i>
+										@Html.EditorFor(m => m.User.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Address", onblur = "errShow(this.value,'error_Address-e');", onfocus = "errHide(this.value,'error_Address-e');" } })
+										<label for="input" class="control-label">Complete Address*</label><i class="bar"></i>
+										@if (Model.User.Address == null)
+										{
+											<div class="error" id="error_Address-e">Enter Complete Address</div>
+										}
+										else
+										{
+											<div class="error" id="error_Address-e"></div>
+										}
 									</div>
 									<div class="form-group col-md-3 col-sm-6">
 										@*<input type="number" class="form-control" placeholder="postal code">*@
-										@Html.EditorFor(m => m.User.Postalcode, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PostalCode" } })
-										<label for="input" class="control-label">Postal Code</label><i class="bar"></i>
+										@Html.EditorFor(m => m.User.Postalcode, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PostalCode", onblur = "errShow(this.value,'error_Postalcode-e');", onfocus = "errHide(this.value,'error_Postalcode-e');" } })
+										<label for="input" class="control-label">Postal Code*</label><i class="bar"></i>
+										@if (Model.User.Postalcode == null)
+										{
+									<div class="error" id="error_Postalcode-e">Enter Postal Code</div>
+										}
+										else
+										{
+									<div class="error" id="error_Postalcode-e"></div>
+										}
+										
 									</div>
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="text" class="form-control" placeholder="Fax">*@
+									@*<div class="form-group col-md-3 col-sm-6">
 										@Html.EditorFor(m => m.User.Fax, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Fax" } })
 										<label for="input" class="control-label">Fax</label><i class="bar"></i>
-									</div>
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="text" class="form-control" placeholder="Contact Name">*@
-										@Html.EditorFor(m => m.User.PrimaryContactName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name" } })
-										<label for="input" class="control-label">Contact Person</label><i class="bar"></i>
-									</div>
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="text" class="form-control" placeholder="9999999999">*@
-										@Html.EditorFor(m => m.User.PrimaryContactPhone, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Phone" } })
-										<label for="input" class="control-label">Contact Person N0.</label><i class="bar"></i>
-									</div>
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="text" class="form-control" placeholder="12345ABCD">*@
-										@Html.EditorFor(m => m.User.GSTIN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter GSTIN" } })
-										<label for="input" class="control-label">GSTIN</label><i class="bar"></i>
-									</div>
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="text" class="form-control" placeholder="12345ABCD">*@
-										@Html.EditorFor(m => m.User.PAN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PAN" } })
-										<label for="input" class="control-label">PAN</label><i class="bar"></i>
-									</div>
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="text" class="form-control" placeholder="12345ABCD">*@
-										@Html.EditorFor(m => m.User.UAN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter UAN" } })
-										<label for="input" class="control-label">UAN</label><i class="bar"></i>
-									</div>
+									</div>*@
+							<div class="form-group col-md-3 col-sm-6">
+								@*<input type="text" class="form-control" placeholder="Contact Name">*@
+								@Html.EditorFor(m => m.User.PrimaryContactName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name", onblur = "errShow(this.value,'error_PrimaryContactName-e');", onfocus = "errHide(this.value,'error_PrimaryContactName-e');" } })
+								<label for="input" class="control-label">Contact Person*</label><i class="bar"></i>
+								
+								@if (Model.User.PrimaryContactName == null)
+								{
+							<div class="error" id="error_PrimaryContactName-e">Enter Contact Person</div>
+								}
+								else
+								{
+							<div class="error" id="error_PrimaryContactName-e"></div>
+								}
+							</div>
+							<div class="form-group col-md-3 col-sm-6">
+								@*<input type="text" class="form-control" placeholder="9999999999">*@
+								@Html.EditorFor(m => m.User.PrimaryContactPhone, new { htmlAttributes = new { @type = "number", @class = "form-control", placeholder = "Enter Phone", onblur = "errShow(this.value,'error_PrimaryContactPhone-e');", onfocus = "errHide(this.value,'error_PrimaryContactPhone-e');" } })
+								<label for="input" class="control-label">Contact Person No.*</label><i class="bar"></i>
+								
+								@if (Model.User.PrimaryContactPhone == null)
+								{
+							<div class="error" id="error_PrimaryContactPhone-e">Enter Contact Person Number</div>
+								}
+								else
+								{
+							<div class="error" id="error_PrimaryContactPhone-e"></div>
+								}
+							</div>
+							<div class="form-group col-md-3 col-sm-6">
+								@*<input type="text" class="form-control" placeholder="12345ABCD">*@
+								@Html.EditorFor(m => m.User.GSTIN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter GSTIN", onblur = "errShow(this.value,'error_GSTIN-e');", onfocus = "errHide(this.value,'error_GSTIN-e');" } })
+								<label for="input" class="control-label">GSTIN*</label><i class="bar"></i>
+								
+								@if (Model.User.GSTIN == null)
+								{
+							<div class="error" id="error_GSTIN-e">Enter GSTIN</div>
+								}
+								else
+								{
+							<div class="error" id="error_GSTIN-e"></div>
+								}
+							</div>
+							<div class="form-group col-md-3 col-sm-6">
+								@*<input type="text" class="form-control" placeholder="12345ABCD">*@
+								@Html.EditorFor(m => m.User.PAN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PAN", onblur = "errShow(this.value,'error_PAN-e');", onfocus = "errHide(this.value,'error_PAN-e');" } })
+								<label for="input" class="control-label">PAN*</label><i class="bar"></i>
+								
+								@if (Model.User.PAN == null)
+								{
+							<div class="error" id="error_PAN-e">Enter PAN</div>
+								}
+								else
+								{
+							<div class="error" id="error_PAN-e"></div>
+								}
+							</div>
+							<div class="form-group col-md-3 col-sm-6">
+								@*<input type="text" class="form-control" placeholder="12345ABCD">*@
+								@Html.EditorFor(m => m.User.UAN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter UAN", onblur = "errShow(this.value,'error_UAN-e');", onfocus = "errHide(this.value,'error_UAN-e');" } })
+								<label for="input" class="control-label">UAN*</label><i class="bar"></i>
+								
+								@if (Model.User.UAN == null)
+								{
+							<div class="error" id="error_UAN-e">Enter UAN</div>
+								}
+								else
+								{
+							<div class="error" id="error_UAN-e"></div>
+								}
+							</div>
 									<div class="row">
 										<div class="form-group col-md-3 col-sm-6">
 											@*<input type="file" class="form-control" accept="image/*">*@
 											@*@Html.EditorFor(m => m.User.Doc_PANCopy, new { htmlAttributes = new { @class = "form-control", type = "file", accept = "image/*" } })
 			<label for="input" class="control-label">Upload PAN</label><i class="bar"></i>*@
-											<p class="label-head mb-10">PAN Certificate</p>
+											<p class="label-head mb-10">PAN Certificate*</p>
 											@if (Model.User.Doc_PANCopy != null)
 											{
 
@@ -176,7 +240,7 @@
 											@*<input type="file" class="form-control" accept="image/*">*@
 											@*@Html.EditorFor(m => m.User.Doc_RCCopy, new { htmlAttributes = new { @class = "form-control", type = "file", accept = "image/*" } })
 			<label for="input" class="control-label">Upload Registration</label><i class="bar"></i>*@
-											<p class="label-head mb-10">Registration Certificate</p>
+											<p class="label-head mb-10">Registration Certificate*</p>
 											@if (Model.User.Doc_RCCopy != null)
 											{
 
@@ -196,7 +260,7 @@
 											@*<input type="file" class="form-control" accept="image/*">*@
 											@*@Html.EditorFor(m => m.User.Doc_CompanyLogo, new { htmlAttributes = new { @class = "form-control", type = "file", accept = "image/*" } })
 			<label for="input" class="control-label">Company Logo</label><i class="bar"></i>*@
-											<p class="label-head mb-10">Logo</p>
+											<p class="label-head mb-10">Logo*</p>
 											@if (Model.User.Doc_CompanyLogo != null)
 											{
 
@@ -235,7 +299,7 @@
 						<div class="col-md-12">
 							<div>
 								<span class="font-weight-bold">Note: </span>
-								Please fill the basic details to enable the <span class="text-pry font-weight-bold">Listing Section</span>
+								Please fill the basic details to enable the <span class="text-pry font-weight-bold">Property Listing Section</span>
 							</div>
 						</div>
 					}
@@ -265,7 +329,7 @@
 									<span class="note-head"> <i class="fas fa-city btn-icon text-info"></i> Re Projects</span><span class="note-sm"> ( for RE Professionals ) </span>
 								</p>
 								<p>
-									Be Green Save Green Fill the Eco-Friendly Environment
+									Be Green, Save Green Fill the Eco-Friendly Environment
 									<span class="note-head"> <i class="fas fa-temperature-low btn-icon text-sec"></i> Internal Health Check </span> <span class="spliter"> | </span>
 									<span class="note-head"> <i class="fas fa-tree btn-icon text-info"></i> Operation and Maintenance Checklist </span>
 								</p>
@@ -316,11 +380,17 @@
 													"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the aminities'>" +
 														"<i class='fas fa-wifi btn-icon text-primary'></i>" +
 													"</a>" +
+													"<span class='tooltip-wrapper status-alert status-alert__amenities' data-toggle='tooltip' data-placement='top' title='' data-original-title='Amenities Count'>" +
+																				  @item.TotalAmenities +
+																				  "</span>" +
 												"</span>" +
 									"<span span class='modal-link__facilities' data-targeturl=\'" + @Url.Action("AddFacilities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 										"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the facilities'>" +
 											"<i class='fas fa-bus btn-icon text-sec'></i>" +
 										"</a>" +
+										 "<span class='tooltip-wrapper status-alert status-alert__facilities' data-toggle='tooltip' data-placement='top' title='' data-original-title='Facilities Count'>" +
+																				  @item.TotalFacilities +
+																				  "</span>" +
 									"</span>" +
 									"</div>");
 														ViewBag.Eco = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
@@ -328,12 +398,17 @@
 													"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Property Internal Health Check'>" +
 														"<i class='fas fa-temperature-low btn-icon text-sec'></i>" +
 													"</a>" +
+													 "<span class='tooltip-wrapper status-alert__hc' data-toggle='tooltip' data-placement='top' title='' data-original-title='Health check completed' status-check="+@item.TotalHealthCheck+">" +
+												"<i class='fas fa-smile'></i>" +
+																				  "</span>" +
 												"</span>" +
 									"<span span class='modal-link__greenBuildingData' data-targeturl=\'" + @Url.Action("AddGreenBuildingData", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 										"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Buildings Operation and Maintenance Checklist'>" +
 											"<i class='fas fa-tree btn-icon text-info'></i>" +
 										"</a>" +
-										"<span class='check-alert'></span>" +
+										"<span class='tooltip-wrapper status-alert__gbc' data-toggle='tooltip' data-placement='top' title='' data-original-title='Green Building check completed' status-check=" + @item.TotalGreenBuildingCheck + ">" +
+												"<i class='fas fa-bell'></i>" +
+																				  "</span>" +
 									"</span>" +
 									"</div>");
 													}
@@ -345,11 +420,18 @@
 																				  "<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the aminities'>" +
 																					  "<i class='fas fa-wifi btn-icon text-primary'></i>" +
 																				  "</a>" +
+																				  "<span class='tooltip-wrapper status-alert status-alert__amenities' data-toggle='tooltip' data-placement='top' title='' data-original-title='Amenities Count'>" +
+																				  @item.TotalAmenities +
+																				  "</span>" +
+												"</span>" +
 																			  "</span>" +
 																  "<span class='modal-link__facilities' data-targeturl=\'" + @Url.Action("AddFacilities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 																	  "<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the facilities'>" +
 																		  "<i class='fas fa-bus btn-icon text-sec'></i>" +
 																	  "</a>" +
+																	  "<span class='tooltip-wrapper status-alert status-alert__facilities' data-toggle='tooltip' data-placement='top' title='' data-original-title='Facilities Count'>" +
+																				  @item.TotalFacilities +
+																				  "</span>" +
 																  "</span>" +
 															  "</div>");
 														ViewBag.Eco = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
@@ -357,12 +439,17 @@
 													"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Property Internal Health Check'>" +
 														"<i class='fas fa-temperature-low btn-icon text-sec'></i>" +
 													"</a>" +
+													 "<span class='tooltip-wrapper status-alert__hc' data-toggle='tooltip' data-placement='top' title='' data-original-title='Health check completed' status-check=" + @item.TotalHealthCheck + ">" +
+												"<i class='fas fa-smile'></i>" +
+																				  "</span>" +
 												"</span>" +
 									"<span span class='modal-link__greenBuildingData' data-targeturl=\'" + @Url.Action("AddGreenBuildingData", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 										"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Buildings Operation and Maintenance Checklist'>" +
 											"<i class='fas fa-tree btn-icon text-info'></i>" +
 										"</a>" +
-										"<span class='check-alert'></span>"+
+										"<span class='tooltip-wrapper status-alert__gbc' data-toggle='tooltip' data-placement='top' title='' data-original-title='Green Building check completed' status-check=" + @item.TotalGreenBuildingCheck + ">" +
+												"<i class='fas fa-bell'></i>" +
+																				  "</span>" +
 									"</span>" +
 									"</div>");
 													}
@@ -372,15 +459,27 @@
 														ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
 																			  "<span class='modal-link__project' data-targeturl=\'" + @Url.Action("AddProject", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
 																				  "<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the RE project'>" +
-																					  "<i class='fas fa-city btn-icon text-info'></i>" +
-																				  "</a>" +
-																			  "</span>" +
-															  "</div>");
+																					  "<i class='fas fa-city btn-icon text-info'></i>"+
+																				  "</a>"+
+																				  "<span class='tooltip-wrapper status-alert status-alert__projects' data-toggle='tooltip' data-placement='top' title='' data-original-title='Project Count'>" +
+																				  @item.TotalProjects+
+																				  "</span>" +
+
+												   "</span>" +
+								   "</div>");
 														ViewBag.Eco = @Html.Raw("---");
 													}
 													<tr>
 														<td>
-															@Html.DisplayFor(modelItem => item.Listings.Name)
+															@if (item.Listings.ListingType == "Commercial" || item.Listings.ListingType == "Co-Working")
+															{
+																@Html.DisplayFor(modelItem => item.Listings.Name)
+															}
+															else if (item.Listings.ListingType == "RE-Professional")
+															{
+																@Html.DisplayFor(modelItem => item.Listings.RE_FirstName)<span> </span>@Html.DisplayFor(modelItem => item.Listings.RE_LastName)
+															}
+
 														</td>
 														<td>
 															<span class="font-weight-bold  @ViewBag.TypeClass">@Html.DisplayFor(modelItem => item.Listings.ListingType)</span>
@@ -392,14 +491,26 @@
 															@Html.DisplayFor(modelItem => item.Listings.locality)
 														</td>
 														@*<td>
-															@Html.DisplayFor(modelItem => item.CurrentOccupancy)
-														</td>*@
+					@Html.DisplayFor(modelItem => item.Listings.CurrentOccupancy)
+				</td>*@
 														<td class="p-0">
 															<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
 																<span class="modal-link__hours" data-targeturl="@Url.Action("AddHours", "Addons", new { id = item.Listings.ListingId })" data-dismiss="modal">
 																	<a href="javascript:function() { return false; }" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to list the working hours">
 																		<i class="fas fa-business-time btn-icon text-pry"></i>
 																	</a>
+																	@if (item.TotalWorkingHours != 0)
+																	{
+																		<span class="tooltip-wrapper status-alert status-alert__hours" data-toggle="tooltip" data-placement="top" title="" data-original-title="Available hours inside">
+																			<i class="fas fa-thumbs-up"></i>
+																		</span>
+																	}
+																	else
+																	{
+																		<span class="tooltip-wrapper status-alert status-alert__empty" data-toggle="tooltip" data-placement="top" title="" data-original-title="Please add the available hours details">
+																			<i class="fas fa-thumbs-down"></i>
+																		</span>
+																	}
 																</span>
 															</div>
 														</td>
@@ -409,7 +520,21 @@
 																	<a href="javascript:function() { return false; }" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to list the Images">
 																		<i class="fas fa-image btn-icon text-try"></i>
 																	</a>
+																	@if (item.TotalListingImages != 0)
+																	{
+																		<span class="tooltip-wrapper status-alert status-alert__images" data-toggle="tooltip" data-placement="top" title="" data-original-title="Image count">
+																			@item.TotalListingImages
+																		</span>
+																	}
+																	else
+																	{
+																		<span class="tooltip-wrapper status-alert status-alert__empty" data-toggle="tooltip" data-placement="top" title="" data-original-title="Please add the images about the property">
+																			@item.TotalListingImages
+																		</span>
+																	}
+
 																</span>
+
 															</div>
 														</td>
 														<td class="p-0">
@@ -426,8 +551,8 @@
 														<td class="p-0">
 															<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
 																@*<a href="/" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="View">
-																	<i class="fas fa-eye btn-icon text-info"></i>
-																</a>*@
+							<i class="fas fa-eye btn-icon text-info"></i>
+						</a>*@
 																<a href="@Url.Action("Edit", "ListingForm", new { ListingID = item.Listings.ListingId})" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit or View">
 																	<i class="fas fa-edit btn-icon text-warning"></i>
 																</a>

@@ -688,7 +688,9 @@ namespace HiSpaceListingWeb.Controllers
 		{
 			REProfessionalMaster model = new REProfessionalMaster();
 			SetSessionVariables();
-			if(rEProfessionalMasterViewModel.REProfessionalMasterId == 0)
+			ViewBag.ListOfProfessionalCategory = Common.GetProfessionalCategory();
+			ViewBag.ListOfGetPropertyDocumentList = Common.GetPropertyDocumentList();
+			if (rEProfessionalMasterViewModel.REProfessionalMasterId == 0)
 			{
 				model.CreatedDateTime = DateTime.Now;
 				model.Description = rEProfessionalMasterViewModel.Description;
@@ -699,7 +701,11 @@ namespace HiSpaceListingWeb.Controllers
 				model.ModifyDateTime = DateTime.Now;
 				model.ProjectName = rEProfessionalMasterViewModel.ProjectName;
 				model.Status = rEProfessionalMasterViewModel.Status;
-				using(var client = new HttpClient())
+				model.ProjectRole = rEProfessionalMasterViewModel.ProjectRole;
+				model.PropertyReraId = rEProfessionalMasterViewModel.PropertyReraId;
+				model.PropertyAdditionalIdName = rEProfessionalMasterViewModel.PropertyAdditionalIdName;
+				model.PropertyAdditionalIdNumber = rEProfessionalMasterViewModel.PropertyAdditionalIdNumber;
+				using (var client = new HttpClient())
 				{
 					client.BaseAddress = new Uri(Common.Instance.ApiAddonsControllerName);
 					//HTTP POST
@@ -757,6 +763,10 @@ namespace HiSpaceListingWeb.Controllers
 						model2.REProfessionalMasterId = model.REProfessionalMasterId;
 						model2.Status = model.Status;
 						model2.ListingId = model.ListingId;
+						model2.ProjectRole = model.ProjectRole;
+						model2.PropertyReraId = model.PropertyReraId;
+						model2.PropertyAdditionalIdName = model.PropertyAdditionalIdName;
+						model2.PropertyAdditionalIdNumber = model.PropertyAdditionalIdNumber;
 
 						var nextresponseTask = client.PutAsJsonAsync(Common.Instance.ApiAddonsUpdateProject + model2.REProfessionalMasterId, model2);
 						nextresponseTask.Wait();
@@ -785,6 +795,10 @@ namespace HiSpaceListingWeb.Controllers
 				model.ProjectName = rEProfessionalMasterViewModel.ProjectName;
 				model.REProfessionalMasterId = rEProfessionalMasterViewModel.REProfessionalMasterId;
 				model.Status = rEProfessionalMasterViewModel.Status;
+				model.ProjectRole = rEProfessionalMasterViewModel.ProjectRole;
+				model.PropertyReraId = rEProfessionalMasterViewModel.PropertyReraId;
+				model.PropertyAdditionalIdName = rEProfessionalMasterViewModel.PropertyAdditionalIdName;
+				model.PropertyAdditionalIdNumber = rEProfessionalMasterViewModel.PropertyAdditionalIdNumber;
 
 				//upload image action
 				string DuplicateName = "";
@@ -889,6 +903,8 @@ namespace HiSpaceListingWeb.Controllers
 		public ActionResult AddProject(int id)
 		{
 			SetSessionVariables();
+			ViewBag.ListOfProfessionalCategory = Common.GetProfessionalCategory();
+			ViewBag.ListOfGetPropertyDocumentList = Common.GetPropertyDocumentList();
 			ViewBag.ListingId = id;
 			IEnumerable<REProfessionalMaster> listOfProjects = null;
 			using (var client = new HttpClient())

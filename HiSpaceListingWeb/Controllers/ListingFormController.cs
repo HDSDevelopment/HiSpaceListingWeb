@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using HiSpaceListingModels;
 using HiSpaceListingWeb.Utilities;
+using HiSpaceListingWeb.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,7 @@ namespace HiSpaceListingWeb.Controllers
 			ViewBag.ListOfCoworkingCategory = Common.GetCoworkingCategory();
 			ViewBag.ListOfProfessionalCategory = Common.GetProfessionalCategory();
 			Listing model = new Listing();
+			//ListingViewModel model = new ListingViewModel();
 			return View(model);
         }
 
@@ -35,7 +37,7 @@ namespace HiSpaceListingWeb.Controllers
 				model.ModifyBy = GetSessionObject().UserId;
 				model.UserId = GetSessionObject().UserId;
 				model.Status = true;
-				if(model.ListingType == "Commercial")
+				if (model.ListingType == "Commercial")
 				{
 					model.CoworkingType = null;
 					model.CW_Coworking = null;
@@ -51,6 +53,21 @@ namespace HiSpaceListingWeb.Controllers
 					model.RE_Retail = false;
 					model.RE_Coworking = false;
 					model.RE_PropertyManagement = false;
+					model.RE_FirstName = null;
+					model.RE_LastName = null;
+					if (model.CMCW_PropertyFor == "Rental")
+					{
+						model.CMCW_AproximatePrice = null;
+					}
+					else if (model.CMCW_PropertyFor == "Sale")
+					{
+						model.RentalHour = false;
+						model.RentalDay = false;
+						model.RentalMonth = false;
+						model.PriceMin = null;
+						model.PriceMax = null;
+						model.CurrentOccupancy = null;
+					}
 				}
 				else if (model.ListingType == "Co-Working")
 				{
@@ -63,6 +80,21 @@ namespace HiSpaceListingWeb.Controllers
 					model.RE_Retail = false;
 					model.RE_Coworking = false;
 					model.RE_PropertyManagement = false;
+					model.RE_FirstName = null;
+					model.RE_LastName = null;
+					if (model.CMCW_PropertyFor == "Rental")
+					{
+						model.CMCW_AproximatePrice = null;
+					}
+					else if (model.CMCW_PropertyFor == "Sale")
+					{
+						model.RentalHour = false;
+						model.RentalDay = false;
+						model.RentalMonth = false;
+						model.PriceMin = null;
+						model.PriceMax = null;
+						model.CurrentOccupancy = null;
+					}
 				}
 				else if (model.ListingType == "RE-Professional")
 				{
@@ -77,6 +109,22 @@ namespace HiSpaceListingWeb.Controllers
 					model.CW_MeetingRoom = null;
 					model.CW_MeetingRoomSeats = null;
 					model.CW_VirtualOffice = false;
+					model.Name = null;
+					model.CMCW_PropertyFor = null;
+					model.CMCW_AproximatePrice = null;
+					model.CMCW_CTSNumber = null;
+					model.CMCW_GatNumber = null;
+					model.CMCW_MilkatNumber = null;
+					model.CMCW_PlotNumber = null;
+					model.CMCW_PropertyTaxBillNumber = null;
+					model.CMCW_ReraId = null;
+					model.CMCW_SurveyNumber = null;
+					model.RentalHour = false;
+					model.RentalDay = false;
+					model.RentalMonth = false;
+					model.PriceMin = null;
+					model.PriceMax = null;
+					model.CurrentOccupancy = null;
 				}
 
 				using (var client = new HttpClient())
@@ -90,7 +138,7 @@ namespace HiSpaceListingWeb.Controllers
 					var result = postTask.Result;
 					if (result.IsSuccessStatusCode)
 					{
-						return RedirectToAction("ListingTable", "Listing", new { UserID = model.UserId, UserType = GetSessionObject().UserType});
+						return RedirectToAction("ListingTable", "Listing", new { UserID = model.UserId, UserType = GetSessionObject().UserType });
 					}
 				}
 
@@ -131,56 +179,102 @@ namespace HiSpaceListingWeb.Controllers
 		{
 			SetSessionVariables();
 			Listing listing = null;
-			if (model != null)
-			{
+			//if (model != null)
+			//{
 				model.CreatedDateTime = DateTime.Now;
 				model.ModifyDateTime = DateTime.Now;
 				model.ModifyBy = model.ModifyBy;
 				model.UserId = model.UserId;
-				if (model.ListingType == "Commercial")
+			if (model.ListingType == "Commercial")
+			{
+				model.CoworkingType = null;
+				model.CW_Coworking = null;
+				model.CW_CoworkingSeats = null;
+				model.CW_PrivateOffice = null;
+				model.CW_PrivateOfficeSeats = null;
+				model.CW_MeetingRoom = null;
+				model.CW_MeetingRoomSeats = null;
+				model.CW_VirtualOffice = false;
+				model.REprofessionalsType = null;
+				model.RE_Warehouse = false;
+				model.RE_Office = false;
+				model.RE_Retail = false;
+				model.RE_Coworking = false;
+				model.RE_PropertyManagement = false;
+				model.RE_FirstName = null;
+				model.RE_LastName = null;
+				if (model.CMCW_PropertyFor == "Rental")
 				{
-					model.CoworkingType = null;
-					model.CW_Coworking = null;
-					model.CW_CoworkingSeats = null;
-					model.CW_PrivateOffice = null;
-					model.CW_PrivateOfficeSeats = null;
-					model.CW_MeetingRoom = null;
-					model.CW_MeetingRoomSeats = null;
-					model.CW_VirtualOffice = false;
-					model.REprofessionalsType = null;
-					model.RE_Warehouse = false;
-					model.RE_Office = false;
-					model.RE_Retail = false;
-					model.RE_Coworking = false;
-					model.RE_PropertyManagement = false;
+					model.CMCW_AproximatePrice = null;
 				}
-				else if (model.ListingType == "Co-Working")
+				else if (model.CMCW_PropertyFor == "Sale")
 				{
-					model.CommercialType = null;
-					model.CommercialInfraType = null;
-					model.CM_IntrestedCoworking = false;
-					model.REprofessionalsType = null;
-					model.RE_Warehouse = false;
-					model.RE_Office = false;
-					model.RE_Retail = false;
-					model.RE_Coworking = false;
-					model.RE_PropertyManagement = false;
+					model.RentalHour = false;
+					model.RentalDay = false;
+					model.RentalMonth = false;
+					model.PriceMin = null;
+					model.PriceMax = null;
+					model.CurrentOccupancy = null;
 				}
-				else if (model.ListingType == "RE-Professional")
+			}
+			else if (model.ListingType == "Co-Working")
+			{
+				model.CommercialType = null;
+				model.CommercialInfraType = null;
+				model.CM_IntrestedCoworking = false;
+				model.REprofessionalsType = null;
+				model.RE_Warehouse = false;
+				model.RE_Office = false;
+				model.RE_Retail = false;
+				model.RE_Coworking = false;
+				model.RE_PropertyManagement = false;
+				model.RE_FirstName = null;
+				model.RE_LastName = null;
+				if (model.CMCW_PropertyFor == "Rental")
 				{
-					model.CommercialType = null;
-					model.CommercialInfraType = null;
-					model.CM_IntrestedCoworking = false;
-					model.CoworkingType = null;
-					model.CW_Coworking = null;
-					model.CW_CoworkingSeats = null;
-					model.CW_PrivateOffice = null;
-					model.CW_PrivateOfficeSeats = null;
-					model.CW_MeetingRoom = null;
-					model.CW_MeetingRoomSeats = null;
-					model.CW_VirtualOffice = false;
+					model.CMCW_AproximatePrice = null;
 				}
-				using (var client = new HttpClient())
+				else if (model.CMCW_PropertyFor == "Sale")
+				{
+					model.RentalHour = false;
+					model.RentalDay = false;
+					model.RentalMonth = false;
+					model.PriceMin = null;
+					model.PriceMax = null;
+					model.CurrentOccupancy = null;
+				}
+			}
+			else if (model.ListingType == "RE-Professional")
+			{
+				model.CommercialType = null;
+				model.CommercialInfraType = null;
+				model.CM_IntrestedCoworking = false;
+				model.CoworkingType = null;
+				model.CW_Coworking = null;
+				model.CW_CoworkingSeats = null;
+				model.CW_PrivateOffice = null;
+				model.CW_PrivateOfficeSeats = null;
+				model.CW_MeetingRoom = null;
+				model.CW_MeetingRoomSeats = null;
+				model.CW_VirtualOffice = false;
+				model.Name = null;
+				model.CMCW_PropertyFor = null;
+				model.CMCW_AproximatePrice = null;
+				model.CMCW_CTSNumber = null;
+				model.CMCW_GatNumber = null;
+				model.CMCW_MilkatNumber = null;
+				model.CMCW_PlotNumber = null;
+				model.CMCW_PropertyTaxBillNumber = null;
+				model.CMCW_ReraId = null;
+				model.CMCW_SurveyNumber = null;
+				model.RentalHour = false;
+				model.RentalDay = false;
+				model.RentalMonth = false;
+				model.PriceMin = null;
+				model.PriceMax = null;
+				model.CurrentOccupancy = null;
+			}
+			using (var client = new HttpClient())
 				{
 					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
 					//HTTP GET
@@ -196,7 +290,7 @@ namespace HiSpaceListingWeb.Controllers
 						listing = readTask.Result;
 					}
 				}
-			}
+			//}
 			
 			return RedirectToAction("ListingTable", "Listing", new { UserID = model.UserId, UserType = GetSessionObject().UserType});
 		}

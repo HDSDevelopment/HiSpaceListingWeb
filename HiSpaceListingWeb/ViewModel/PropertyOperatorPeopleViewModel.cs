@@ -7,16 +7,16 @@ using HiSpaceListingService.ViewModel;
 
 namespace HiSpaceListingWeb.ViewModel
 {
-    public class PropertyOperatorPeopleViewModel
-    {
+	public class PropertyOperatorPeopleViewModel
+	{
         public PropertyOperatorPeopleViewModel()
         {
-            List<Listing> Listings = new List<Listing>();
+            List<PropertyDetailResponse> Listings = new List<PropertyDetailResponse>();
             List<PropertyOperatorResponse> Operators = new List<PropertyOperatorResponse>();
             List<PropertyPeopleResponse> People = new List<PropertyPeopleResponse>();
         }
 
-        public List<Listing> Listings { get; set; }
+        public List<PropertyDetailResponse> Listings { get; set; }
         public List<PropertyOperatorResponse> Operators { get; set; }
         public List<PropertyPeopleResponse> People { get; set; }
     }

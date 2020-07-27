@@ -16,9 +16,19 @@
 //		$('.scroll-padding').css({ "padding-top": "0" });
 //	}
 //});
+
+//Stop Form Submission of Enter Key Press
+function stopRKey(evt) {
+	var evt = (evt) ? evt : ((event) ? event : null);
+	var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+	if ((evt.keyCode == 13) && (node.type == "text")) { return false; }
+}
+document.onkeypress = stopRKey;
+
 $('#BuildYear, #RecentInnovation, #BuildYearDiv, #RecentInnovationDiv').datetimepicker({
 	//viewMode: 'years',
-	format: 'YYYY/MM/DD',
+	//format: 'LT'
+	format: 'DD-MMM-YYYY',
 	//debug: true,
 });
 function userCheck(check) {
@@ -29,8 +39,43 @@ function userCheck(check) {
 		return confirm("Are your sure want to recheck the user as background details?");
 	}
 }
-$(document).ready(function () {
 
+$(document).ready(function () {
+	//addons status alert section start
+	$('.status-alert__amenities').each(function (i, obj) {
+		if ($(this).html() == 0) {
+			$(this).addClass('status-alert__empty');
+			$(this).attr('data-original-title','Please add the Amenities to the property')
+		}
+	});
+	$('.status-alert__facilities').each(function (i, obj) {
+		if ($(this).html() == 0) {
+			$(this).addClass('status-alert__empty');
+			$(this).attr('data-original-title', 'Please add the Facilities to the property')
+		}
+	});
+	$('.status-alert__projects').each(function (i, obj) {
+		if ($(this).html() == 0) {
+			$(this).addClass('status-alert__empty');
+			$(this).attr('data-original-title', 'Please add your project inside the RE-Professionals')
+		}
+	});
+	$('.status-alert__hc').each(function (i, obj) {
+		//console.log($(this).attr('status-check'))
+		if ($(this).attr('status-check') == 0) {
+			$(this).addClass('status-alert__empty');
+			$(this).html('<i class="fas fa-frown"></i>');
+			$(this).attr('data-original-title', 'Please check the health of the property')
+		}
+	});
+	$('.status-alert__gbc').each(function (i, obj) {
+		//console.log($(this).attr('status-check'))
+		if ($(this).attr('status-check') == 0) {
+			$(this).addClass('status-alert__empty');
+			$(this).attr('data-original-title', 'Please fill the green building check for the property')
+		}
+	});
+	//addons status alert section end
 	var optionsWeb = {
 		step_size: 1,
 		symbols: {
@@ -112,12 +157,21 @@ $(document).ready(function () {
 	});
 
 	//edit section on listing form 
+	
 	if ($('#ListingType').val() == "Commercial") {
 		$('.form-type').removeClass('type-2');
 		$('.form-type').removeClass('type-3');
 		$('.form-type').addClass('type-1');
 		$('.type-2__input, .type-3, .type-style.type-2, .type-style.type-3, .type-2-sub__input').addClass('d-none');
 		$('.type-1__input, .type-style.type-1, .form-type.type-1, .input-occupancy').removeClass('d-none');
+		if ($('input[name="CMCW_PropertyFor"]:checked').val() == "Rental") {
+			$('.for-rental').removeClass('d-none');
+			$('.for-sale').addClass('d-none');
+		} else if ($('input[name="CMCW_PropertyFor"]:checked').val() == "Sale") {
+			$('.for-rental').addClass('d-none');
+			$('.for-sale').removeClass('d-none');
+		}
+		//console.log($('input[name="CMCW_PropertyFor"]:checked').val());
 	} else if ($('#ListingType').val() == "Co-Working") {
 		//alert($('#ListingType').val())
 		$('.form-type').removeClass('type-1');
@@ -125,7 +179,13 @@ $(document).ready(function () {
 		$('.form-type').addClass('type-2');
 		$('.type-1__input, .type-3, .type-style.type-1, .type-style.type-3').addClass('d-none');
 		$('.type-2__input, .type-style.type-2, .form-type.type-2, .type-2-sub__input, .input-occupancy').removeClass('d-none');
-
+		if ($('input[name="CMCW_PropertyFor"]:checked').val() == "Rental") {
+			$('.for-rental').removeClass('d-none');
+			$('.for-sale').addClass('d-none');
+		} else if ($('input[name="CMCW_PropertyFor"]:checked').val() == "Sale") {
+			$('.for-rental').addClass('d-none');
+			$('.for-sale').removeClass('d-none');
+		}
 		if ($('#CoworkingType').val() == "Office") {
 			//alert($('#CoworkingType').val())
 			$('.type-2-sub__input, .input-occupancy').removeClass('d-none');
@@ -172,22 +232,33 @@ $(document).ready(function () {
 			$('.form-type').removeClass('type-2');
 			$('.form-type').removeClass('type-3');
 			$('.form-type').addClass('type-1');
-			$('.type-2__input, .type-3, .type-style.type-2, .type-style.type-3, .type-2-sub__input').addClass('d-none');
-			$('.type-1__input, .type-style.type-1, .form-type.type-1, .input-occupancy').removeClass('d-none');
+			$("input[name=CMCW_PropertyFor][value='Rental']").prop("checked", true);
+			$('.type-2__input, .type-3, .type-style.type-2, .type-style.type-3, .type-2-sub__input, .for-sale').addClass('d-none');
+			$('.type-1__input, .type-style.type-1, .form-type.type-1, .input-occupancy, .for-rental').removeClass('d-none');
 		}
 		else if (value == "Co-Working") {
 			$('.form-type').removeClass('type-1');
 			$('.form-type').removeClass('type-3');
 			$('.form-type').addClass('type-2');
-			$('.type-1__input, .type-3, .type-style.type-1, .type-style.type-3').addClass('d-none');
-			$('.type-2__input, .type-style.type-2, .form-type.type-2, .type-2-sub__input, .input-occupancy').removeClass('d-none');
+			$("input[name=CMCW_PropertyFor][value='Rental']").prop("checked", true);
+			$('.type-1__input, .type-3, .type-style.type-1, .type-style.type-3, .for-sale').addClass('d-none');
+			$('.type-2__input, .type-style.type-2, .form-type.type-2, .type-2-sub__input, .input-occupancy, .for-rental').removeClass('d-none');
 		}
 		else if (value == "RE-Professional") {
 			$('.type-3').removeClass('d-none');
-			$('.form-type.type-1, .form-type.type-2, .type-style.type-1, .type-style.type-2').addClass('d-none');
+			$('.form-type.type-1, .form-type.type-2, .type-style.type-1, .type-style.type-2, .for-sale, .for-rental').addClass('d-none');
 		}
 	});
-
+	$('input[type=radio][name=CMCW_PropertyFor]').change(function () {
+		if (this.value == 'Rental') {
+			$('.for-rental').removeClass('d-none');
+			$('.for-sale').addClass('d-none');
+		}
+		else if (this.value == 'Sale') {
+			$('.for-rental').addClass('d-none');
+			$('.for-sale').removeClass('d-none');
+		}
+	});
 	$('#CoworkingType').on('change', function () {
 		var value = $(this).val();
 		//alert(value)
@@ -294,6 +365,7 @@ function tabNavigation(nav) {
 	//click submit button
 	else if (nav == 2) {
 		//event.preventDefault();
+		console.log($("#REprofessionalsType").val());
 		if ($('input:visible').hasClass('required-input')) {
 			//each condition to find the empty inputs
 			$('.required-input:visible').each(function (i) {
@@ -303,6 +375,11 @@ function tabNavigation(nav) {
 				}
 			});
 		}
+		//$.ajax({
+		//	type: 'POST',
+		//	url: ,
+		//	data: 
+		//})
 	}
 };
 
@@ -540,7 +617,9 @@ $(function () {
 				data + '</div></div>').modal();
 
 		});
-		
+		//setTimeout(function () {
+		//	$('.ProjectRole').select2();
+		//}, 1000);
 		
 	});
 
@@ -1020,7 +1099,7 @@ function addProject(obj) {
 		'<label for="input" class="control-label">Project id</label><i class="bar"></i>'+
 		'</div>'+
 		'</div>'+
-		'<div class=" col-md-2 col-sm-6  align-self-center">' +
+		'<div class=" col-md-3 col-sm-6  align-self-center">' +
 		'<div class="form-group">' +
 		'<input type="text" class="form-control projectName" placeholder="project Name">' +
 		'<label for="input" class="control-label">project Name</label><i class="bar"></i>' +
@@ -1032,18 +1111,57 @@ function addProject(obj) {
 		'<label for="input" class="control-label">Upload project Image</label><i class="bar"></i>' +
 		'</div>' +
 		'</div>' +
-		'<div class=" col-md-3 col-sm-6 align-self-center">' +
+		'<div class=" col-md-2 col-sm-6 align-self-center">' +
 		'<div class="form-group">' +
 		'<input type="file" class="form-control projectDoucument" accept="project/*">' +
 		'<label for="input" class="control-label">Upload project Document</label><i class="bar"></i>' +
 		'</div>' +
 		'</div>' +
-		'<div class=" col-md-2 col-sm-6 align-self-center">' +
+		'<div class=" col-md-4 col-sm-6 align-self-center">' +
 		'<div class="form-group">' +
 		'<textarea type="text" class="form-control projectDesc" rows="3" placeholder="Enter your text..."></textarea>' +
 		'<label for="input" class="control-label">Description</label><i class="bar"></i>' +
 		'</div>' +
 		'</div>' +
+		'<div class=" col-md-3 col-sm-6 align-self-center">'+
+			'<div class="form-group">'+
+				'<select class="form-control basic-select ProjectRole">'+
+					'<option value="PropertyDeveloper">Property Developer</option>'+
+					'<option value="Leasing">Leasing</option>'+
+					'<option value="InteriorDesigner">Interior Designer</option>'+
+					'<option value="CoworkingArchitecture">Co-working Architecture</option>'+
+					'<option value="Investor">Investor</option>'+
+					'<option value="PropertyOwner">Property Owner</option>'+
+					'<option value="PropertyOperator">Property Operator</option>'+
+				'</select>'+
+				'<label for="input" class="control-label">RE Professional Role</label><i class="bar"></i>'+
+			'</div>'+
+		'</div>' +
+		'<div class=" col-md-3 col-sm-6 align-self-center">'+
+			'<div class="form-group">'+
+				'<input type="text" class="form-control PropertyReraId" placeholder="ABCD12345">'+
+					'<label for="input" class="control-label">RERA ID</label><i class="bar"></i>'+
+								'</div>'+
+			'</div>'+
+			'<div class=" col-md-3 col-sm-6 align-self-center">'+
+				'<div class="form-group">'+
+					'<select class="form-control basic-select PropertyAdditionalIdName">'+
+						'<option value="SurveyNumber">Survey No.</option>'+
+						'<option value="PropertyTaxBillNumber">Property Tax Bill No.</option>'+
+						'<option value="CTSNumber">CTS No.</option>'+
+						'<option value="MilkatNumber">Milkat No.</option>'+
+						'<option value="GatNumber">Gat No.</option>'+
+						'<option value="PlotNumber">Plot No.</option>'+
+					'</select>'+
+					'<label for="input" class="control-label">Additional Document</label><i class="bar"></i>'+
+				'</div>'+
+			'</div>'+
+			'<div class=" col-md-3 col-sm-6 align-self-center">'+
+				'<div class="form-group">'+
+					'<input type="text" class="form-control PropertyAdditionalIdNumber" placeholder="ABCD12345">'+
+						'<label for="input" class="control-label">Document Value/No.</label><i class="bar"></i>'+
+								'</div>'+
+				'</div>'+
 		//'<div class="col-md-1 col-sm-6 m-b--15 align-self-center">' +
 		//'<div class="checkbox m-0">' +
 		//'<label>' +
@@ -1051,7 +1169,7 @@ function addProject(obj) {
 		//'</label>' +
 		//'</div>' +
 		//'</div>' +
-		'<div class="col-md-2 col-sm-6 align-self-center">' +
+		'<div class="col-md-12 col-sm-6 align-self-center text-center">' +
 		'<span class="addon-add delete-btn tooltip-wrapper text-sec" onclick="AddProjectForm(this);" data-listingid=' + listingId + ' data-toggle="tooltip" data-placement="top" title="" data-original-title="submit and upload the file"><i class="fas fa-cloud-upload-alt btn-icon text-sec"></i> Upload</span>' +
 		'<span class="addon-edit delete-btn tooltip-wrapper display-none text-info" onclick="EditProjectForm(this);" data-listingid=' + listingId + ' data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit the file"><i class="fas fa-edit btn-icon text-info"></i> Edit</span>' +
 		'<span class="addon-delete delete-btn tooltip-wrapper text-danger" onclick="deleteRowProject(this)" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to delete the row"><i class="fas fa-trash-alt btn-icon text-danger"></i> Delete</span>' +
@@ -1059,6 +1177,8 @@ function addProject(obj) {
 		'</div>' +
 		'</div>'
 	);
+	$('.project-upload__row:last-child .ProjectRole').select2();
+	$('.project-upload__row:last-child .PropertyAdditionalIdName').select2();
 }
 function deleteRowProject(obj) {
 	$(obj).closest('.project-upload__row').remove();
@@ -1078,6 +1198,10 @@ function AddProjectForm(obj) {
 	var pImagePath = $(row).find('.projectImage').val();
 	var pDocumentPath = $(row).find('.projectDoucument').val();
 	var pDesc = $(row).find('.projectDesc').val();
+	var pRole = $(row).find('.ProjectRole').val();
+	var pRera = $(row).find('.PropertyReraId').val();
+	var pAdditionalIdName = $(row).find('.PropertyAdditionalIdName').val();
+	var pAdditionalIdValue = $(row).find('.PropertyAdditionalIdNumber').val();
 	if ($(row).find('.projectId').length) {
 		pProjectId = $(row).find('.projectId').val();
 	} else {
@@ -1092,6 +1216,10 @@ function AddProjectForm(obj) {
 	formData.append("DocumentUrl", pDocumentPath);
 	formData.append("Status", pStatus);
 	formData.append("Description", pDesc);
+	formData.append("ProjectRole", pRole);
+	formData.append("PropertyReraId", pRera);
+	formData.append("PropertyAdditionalIdName", pAdditionalIdName);
+	formData.append("PropertyAdditionalIdNumber", pAdditionalIdValue);
 
 	//var url = '@Url.Action("UploadImage", "Addons")';
 	$.ajax({
@@ -1107,17 +1235,37 @@ function AddProjectForm(obj) {
 				$(row).removeClass("addons-row__edit");
 				$(row).find('.projectName').addClass("event-none");
 				$(row).find('.projectDesc').addClass("event-none");
+				$(row).find('.PropertyReraId').addClass("event-none");
+				$(row).find('.PropertyAdditionalIdNumber').addClass("event-none");
+				$(row).find('.ProjectRole + .select2-container').addClass("event-none");
+				$(row).find('.PropertyAdditionalIdName + .select2-container').addClass("event-none");
+
 				$(row).find('.projectId').val(response.reProfessionalMasterId);
 				console.log($(row).find('.projectId').val());
+				if (response.imageUrl != null) {
+					$(row).find('.projectImage').parent().parent().append(
+						'<div class="addon-image__div"><a href=' + response.imageUrl + ' target="_blank"><img class="addon-image" alt="name" src=' + response.imageUrl + ' /></a></div>'
+					);
+					$(row).find('.projectImage').parent().addClass("display-none");
+				} else {
+					$(row).find('.projectImage').parent().parent().append(
+						'<div class="addon-image__div pop-image__error">No Image Uploaded</div>'
+					);
+					$(row).find('.projectImage').parent().addClass("display-none");
+				}
 				$(row).find('.projectDesc').html(response.description);
-				$(row).find('.projectImage').parent().parent().append(
-					'<div class="addon-image__div"><a href=' + response.imageUrl + ' target="_blank"><img class="addon-image" alt="name" src=' + response.imageUrl + ' /></a></div>'
-				);
-				$(row).find('.projectImage').parent().addClass("display-none");
-				$(row).find('.projectDoucument').parent().parent().append(
-					'<div class="addon-image__div"><a href=' + response.documentUrl + ' target="_blank"><img class="addon-image" alt="name" src="/images/doc_placeholder.png" />Click to view</a></div>'
-				);
-				$(row).find('.projectDoucument').parent().addClass("display-none");
+				if (response.documentUrl) {
+					$(row).find('.projectDoucument').parent().parent().append(
+						'<div class="addon-image__div"><a href=' + response.documentUrl + ' target="_blank"><i class="fas fa-file-alt"></i>Click to view</a></div>'
+					);
+					$(row).find('.projectDoucument').parent().addClass("display-none");
+				} else {
+					$(row).find('.projectDoucument').parent().parent().append(
+						'<div class="addon-image__div pop-image__error">No Document Uploaded</div>'
+					);
+					$(row).find('.projectDoucument').parent().addClass("display-none");
+				}
+				
 				//$(row).find('.imageCheck').prop("checked", response.status);
 				$(obj).siblings('.addon-edit, .addon-delete').removeClass('display-none');
 				$(obj).siblings('.addon-delete').attr('onclick', "deleteProject(this," + response.reProfessionalMasterId + ")");
@@ -1145,6 +1293,15 @@ function EditProjectForm(obj) {
 	$(row).addClass("addons-row__edit");
 	$(row).find('.projectName').removeClass("event-none");
 	$(row).find('.projectDesc').removeClass("event-none");
+	$(row).find('.ProjectRole').removeClass("event-none");
+	$(row).find('.PropertyAdditionalIdName').removeClass("event-none");
+	$(row).find('.PropertyReraId').removeClass("event-none");
+	$(row).find('.PropertyAdditionalIdNumber').removeClass("event-none");
+	$(row).find('.ProjectRole + .select2-container').removeClass("event-none");
+	$(row).find('.PropertyAdditionalIdName, .ProjectRole').select2();
+	//$(row).find('.ProjectRole').select2();
+	$(row).find('.PropertyAdditionalIdName + .select2-container').removeClass("event-none");
+
 	$(row).find('.projectImage').parent().removeClass("display-none");
 	$(row).find('.projectDoucument').parent().removeClass("display-none");
 	$(row).find('.projectImage').parent().siblings(".addon-image__div").remove();
@@ -1173,16 +1330,38 @@ function clearRowProject(obj, projectId) {
 				$(row).find('.projectId').val(response.reProfessionalMasterId);
 				$(row).find('.projectName').addClass("event-none");
 				$(row).find('.projectDesc').addClass("event-none");
+				$(row).find('.PropertyReraId').addClass("event-none");
+				$(row).find('.PropertyAdditionalIdNumber').addClass("event-none");
+				$(row).find('.ProjectRole + .select2-container').addClass("event-none");
+				$(row).find('.PropertyAdditionalIdName + .select2-container').addClass("event-none");
+
 				$(row).find('.projectName').val(response.projectName);
+				$(row).find('.ProjectRole').val(response.projectRole);
 				$(row).find('.projectDesc').html(response.description);
-				$(row).find('.projectImage').parent().parent().append(
-					'<div class="addon-image__div"><a href=' + response.imageUrl + ' target="_blank"><img class="addon-image" alt="name" src=' + response.imageUrl + ' /></a></div>'
-				);
-				$(row).find('.projectImage').parent().addClass("display-none");
-				$(row).find('.projectDoucument').parent().parent().append(
-					'<div class="addon-image__div"><a href=' + response.documentUrl + ' target="_blank"><img class="addon-image" alt="name" src="/images/doc_placeholder.png" />Click to view</a></div>'
-				);
-				$(row).find('.projectDoucument').parent().addClass("display-none");
+				if (response.imageUrl != null) {
+					$(row).find('.projectImage').parent().parent().append(
+						'<div class="addon-image__div"><a href=' + response.imageUrl + ' target="_blank"><img class="addon-image" alt="name" src=' + response.imageUrl + ' /></a></div>'
+					);
+					$(row).find('.projectImage').parent().addClass("display-none");
+				}
+				else {
+					$(row).find('.projectImage').parent().parent().append(
+						'<div class="addon-image__div pop-image__error">No Image Uploaded</div>'
+					);
+					$(row).find('.projectImage').parent().addClass("display-none");
+				}
+				if (response.documentUrl) {
+					$(row).find('.projectDoucument').parent().parent().append(
+						'<div class="addon-image__div"><a href=' + response.documentUrl + ' target="_blank"><i class="fas fa-file-alt"></i>Click to view</a></div>'
+					);
+					$(row).find('.projectDoucument').parent().addClass("display-none");
+				} else {
+					$(row).find('.projectDoucument').parent().parent().append(
+						'<div class="addon-image__div pop-image__error">No Document Uploaded</div>'
+					);
+					$(row).find('.projectDoucument').parent().addClass("display-none");
+				}
+				
 				//$(row).find('.imageCheck').prop("checked", response.status);
 				$(obj).siblings('.addon-edit, .addon-delete').removeClass('display-none');
 				$(obj).siblings('.addon-add').addClass('display-none');

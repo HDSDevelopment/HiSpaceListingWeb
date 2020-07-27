@@ -122,11 +122,11 @@ namespace HiSpaceListingWeb.Controllers
 				}
 				ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
 			}
-			if(model.UserId != 0)
+			if(GetSessionObject().UserId != 0)
 			{
 				return RedirectToAction("Index", "Website");
 			}
-			else if (model.UserId == 0)
+			else if (GetSessionObject().UserId == 0)
 			{
 				return RedirectToAction("AdminLister", "Admin");
 			}
@@ -210,7 +210,7 @@ namespace HiSpaceListingWeb.Controllers
 				model.User.Doc_CompanyLogo = "\\" + UploadRootPath_removeRoot + uploadsFolder + DuplicateName;
 			}
 
-			if(model.User.Email != null && model.User.Password != null && model.User.CompanyName != null && model.User.Website != null && model.User.Phone != null && model.User.Doc_CompanyLogo != null && model.User.GSTIN != null && model.User.PAN != null && model.User.UAN != null && model.User.Address != null && model.User.Postalcode != null && model.User.Fax != null && model.User.Doc_RCCopy != null && model.User.Doc_PANCopy != null && model.User.Doc_CompanyLogo != null && model.User.PrimaryContactName != null && model.User.PrimaryContactPhone != null && model.User.Status == true && model.User.TermsAndConditions == true)
+			if(model.User.Email != null && model.User.Password != null && model.User.CompanyName != null && model.User.Phone != null && model.User.GSTIN != null && model.User.PAN != null && model.User.UAN != null && model.User.Address != null && model.User.Postalcode != null && model.User.Doc_RCCopy != null && model.User.Doc_PANCopy != null && model.User.PrimaryContactName != null && model.User.PrimaryContactPhone != null && model.User.Status == true && model.User.TermsAndConditions == true)
 			{
 				model.User.UserStatus = "BackgroundCheck";
 			}

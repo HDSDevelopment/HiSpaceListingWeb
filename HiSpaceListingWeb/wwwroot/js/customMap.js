@@ -1,6 +1,6 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
-$(document).ready(function () {
+//$(document).ready(function () {
 
 	//function mapData() {
 	var searchInput = 'pac-input';
@@ -20,16 +20,14 @@ $(document).ready(function () {
 			zoom: 13
 		});
 		var card = document.getElementById('pac-card');
-		//var input = document.getElementById('pac-input');
+		var input = document.getElementById('pac-input');
 		var types = document.getElementById('type-selector');
 		var strictBounds = document.getElementById('strict-bounds-selector');
 
 
 		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
 
-		var autocomplete = new google.maps.places.Autocomplete((document.getElementById(searchInput)), {
-			types: ['geocode'],
-		});
+		var autocomplete = new google.maps.places.Autocomplete(input);
 
 		// Avoid paying for data that you don't need by restricting the set of
 		// place fields that are returned to just the address components.
@@ -44,9 +42,14 @@ $(document).ready(function () {
 			console.log(near_place.geometry);
 			document.getElementById('loc_lat').value = near_place.geometry.location.lat();
 			document.getElementById('loc_long').value = near_place.geometry.location.lng();
-
-			document.getElementById('latitude_view').value = near_place.geometry.location.lat();
-			document.getElementById('longitude_view').value = near_place.geometry.location.lng();
+			//console.log($('#loc_lat').val());
+			$('#latitude_view').val($('#loc_lat').val()).trigger("change");
+			$('#longitude_view').val($('#loc_long').val()).trigger("change");
+			$('#disp_lat').html($('#loc_lat').val());
+			$('#disp_lan').html($('#loc_long').val());
+			//console.log($('#latitude_view').val());
+			//document.getElementById('latitude_view').value = near_place.geometry.location.lat();
+			//document.getElementById('longitude_view').value = near_place.geometry.location.lng();
 		});
 
 
@@ -162,11 +165,12 @@ $(document).ready(function () {
 	}
 	initMap();	
 	//};
-});
+//});
 $(document).on('change', '#pac-input', function () {
 	//document.getElementById('latitude_input').value = "";
 	//document.getElementById('longitude_input').value = "";
 
 	document.getElementById('latitude_view').value;
 	document.getElementById('longitude_view').value;
+	//initMap();
 });

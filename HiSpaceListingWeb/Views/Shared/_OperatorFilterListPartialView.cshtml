@@ -1,0 +1,167 @@
+﻿@*
+	For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<HiSpaceListingService.ViewModel.PropertyOperatorResponse>
+@if (Model != null || Model.Count() != 0)
+{
+
+	var i = 0;
+	<div class="result-count" id="opCount">Operator Filter Count : <span></span></div>
+	@foreach (var item in Model)
+	{
+		@if (item.TotalCommercial != 0 || item.TotalCoWorking != 0 || item.TotalREProfessional != 0)
+		{
+			<div class=" property-col-list mt-4">
+				<div class="row no-gutters">
+					<div class="col-lg-3 col-md-3 oper-image">
+
+						@if (item.Operator.Doc_CompanyLogo != null)
+						{
+							<img class="oper-img" src="~/images/Upload/user/1/documents/_Logo.png"
+								 data-holder-rendered="true">
+						}
+						else
+						{
+							<img class="oper-img oper-img_placeholder" src="~/images/operatorPlaceholder.png"
+								 data-holder-rendered="true">
+						}
+					</div>
+					<div class="col-lg-9 col-md-9 prop-details">
+						<div class="property-details">
+							<div class="property-details__head">
+								<div class="property-details__header">@item.Operator.CompanyName</div>
+							</div>
+							@*<div class="property-details__desc">
+
+							</div>*@
+							<div class="property-details__section">
+								<div class="property-details__section-l">
+									<div>
+										<span class="property-span__head">Total Properties</span>
+										<span class="property-span__type badge-sec">@(@item.TotalCommercial+@item.TotalCoWorking+@item.TotalREProfessional)</span>
+									</div>
+									<div>
+										<span class="property-span__head">Commercial Properties</span>
+										@if (item.TotalCommercial > 0)
+										{
+											<span class="prop-count">(@item.TotalCommercial)</span>
+										}
+										else
+										{
+											<span class="prop-count">-</span>
+										}
+
+									</div>
+									<div>
+										<span class="property-span__head">Co-Working Properties</span>
+										@if (item.TotalCoWorking > 0)
+										{
+											<span class="prop-count">(@item.TotalCoWorking)</span>
+										}
+										else
+										{
+											<span class="prop-count">-</span>
+										}
+									</div>
+									<div>
+										<span class="property-span__head">NextSpace RE-Projects</span>
+										@if (item.TotalREProfessional > 0)
+										{
+											<span class="prop-count">(@item.TotalREProfessional)</span>
+										}
+										else
+										{
+											<span class="prop-count">-</span>
+										}
+									</div>
+									
+								</div>
+								<div class="property-details__section-r">
+									<div class="property-details__address">
+										<i class="fas fa-map-marker-alt fa-xs"></i>
+										@item.Operator.Address
+									</div>
+									<div>
+										<span class="property-span__head">@item.Operator.CompanyName Roles: </span>
+										<span class="re-roles">Owner | Operator </span>
+									</div>
+									@*<div>
+			<span class="property-span__head">Other Linked RE-Professionals</span>
+			<span class="property-span__rent">(10)</span>
+		</div>
+		<div>
+			<ul>
+				<li>
+					<a href="#">
+						<span>Professional 1</span>
+						<span>(Interior Design)</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<span>Professional 2</span>
+						<span>(Project Management)</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<span>Professional 3</span>
+						<span>(Leasing)</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<span>Professional 4</span>
+						<span>(Interior Design)</span>
+					</a>
+				</li>
+			</ul>
+		</div>*@
+								</div>
+
+
+							</div>
+
+
+							<div class="property-details__footer">
+								@if (item.Operator.Website != null)
+								{
+									<div class="property-details__address">
+										<i class="fas fa-globe fa-xs"></i>
+										<a href="@item.Operator.Website" target="_blank">@item.Operator.Website</a>
+									</div>
+								}
+								<div class="property-details__total">
+
+									<span class="property-span__tot">
+										<i class="fas fa-envelope fa-xs"></i>@item.Operator.Email
+									</span>
+									<span class="property-span__head"> | </span>
+									<span class="property-span__occ">
+										<i class="fas fa-mobile fa-xs"></i>@item.Operator.Phone
+									</span>
+								</div>
+							</div>
+
+						</div>
+						<div class="property-btn">
+							<a class="property-link btn btn-primary btn-block" href="#">See Details</a>
+						</div>
+						<div class="tooltip-wrapper list-data__check" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eco-Friendly Spaces click to see details"><i class="fas fa-check"></i></div>
+
+					</div>
+
+				</div>
+			</div>
+			i++;
+			<p class="invisible operatorCount">@i</p>
+		}
+
+	}
+
+}
+else
+{
+	<div>Test the value is null</div>
+}

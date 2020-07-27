@@ -42,14 +42,14 @@ namespace HiSpaceListingWeb
 
 			//session usage config
 			services.AddDistributedMemoryCache();
-			//services.AddSession(options =>
-			//{
-			//	options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time
-			//});
+			services.AddSession(options =>
+			{
+				options.IdleTimeout = TimeSpan.FromMinutes(120);//You can set Time
+			});
 			services.AddMvc().AddSessionStateTempDataProvider();
 			//services.AddMvc().AddNewtonsoftJson();
 			services.AddMemoryCache();
-			services.AddSession();
+			//services.AddSession();
 			//services.AddNewtonsoftJson();
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 			//services.AddControllers().AddJsonOptions(options =>

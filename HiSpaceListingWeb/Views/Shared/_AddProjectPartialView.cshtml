@@ -15,7 +15,7 @@
 		</button>
 	</div>
 	<div class="modal-body">
-		<div class="tab-content" id="">
+		<div class="tab-content" >
 			<div class="tab-pane fade show active" id="project" role="tabpanel" aria-labelledby="project-tab">
 				<div class="alert-text"><span class="bg-info">Please add your image (jpg, png,..) / project document (pdf, word,..) in the proper sections</span></div>
 				<div class="btn btn-info add-btn" data-listingid="@ViewBag.ListingId" onclick="addProject(this)"> <i class="fa fa-plus-circle"></i>project</div>
@@ -30,7 +30,7 @@
 									<label for="input" class="control-label">Project id</label><i class="bar"></i>
 								</div>
 							</div>
-							<div class=" col-md-2 col-sm-6 align-self-center">
+							<div class=" col-md-3 col-sm-6 align-self-center">
 								<div class="form-group">
 									<input type="text" class="form-control projectName" placeholder="project Name">
 									<label for="input" class="control-label">project Name</label><i class="bar"></i>
@@ -48,25 +48,53 @@
 									<label for="input" class="control-label">Upload project Document</label><i class="bar"></i>
 								</div>
 							</div>
-							<div class=" col-md-1 col-sm-6 align-self-center">
-								<span class="addon-edit delete-btn tooltip-wrapper text-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit the file" style="width: 30px;"><i class="fas fa-temperature-low btn-icon text-sec"></i></span>
 
-								<span class="addon-delete delete-btn tooltip-wrapper text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to delete the row" style="width: 30px;"><i class="fas fa-tree btn-icon text-info"></i></span>
-							</div>
-							<div class=" col-md-2 col-sm-6 align-self-center">
+							<div class=" col-md-4 col-sm-6 align-self-center">
 								<div class="form-group">
 									<textarea type="text" class="form-control projectDesc" rows="3" placeholder="Enter your text..."></textarea>
 									<label for="input" class="control-label">Description</label><i class="bar"></i>
 								</div>
 							</div>
-							@*<div class="col-md-1 col-sm-6 m-b--15 align-self-center">
-			<div class="checkbox m-0">
-				<label>
-					<input type="checkbox" /><i class="helper"></i> Active
-				</label>
-			</div>
-		</div>*@
-							<div class="col-md-2 col-sm-6 align-self-center">
+							<div class=" col-md-3 col-sm-6 align-self-center">
+								<div class="form-group">
+									<select class="form-control basic-select ProjectRole">
+										<option value="PropertyDeveloper">Property Developer</option>
+										<option value="Leasing">Leasing</option>
+										<option value="InteriorDesigner">Interior Designer</option>
+										<option value="CoworkingArchitecture">Co-working Architecture</option>
+										<option value="Investor">Investor</option>
+										<option value="PropertyOwner">Property Owner</option>
+										<option value="PropertyOperator">Property Operator</option>
+									</select>
+									<label for="input" class="control-label">RE Professional Role</label><i class="bar"></i>
+								</div>
+							</div>
+							<div class=" col-md-3 col-sm-6 align-self-center">
+								<div class="form-group">
+									<input type="text" class="form-control PropertyReraId" placeholder="ABCD12345">
+									<label for="input" class="control-label">RERA ID</label><i class="bar"></i>
+								</div>
+							</div>
+							<div class=" col-md-3 col-sm-6 align-self-center">
+								<div class="form-group">
+									<select class="form-control basic-select PropertyAdditionalIdName">
+										<option value="SurveyNumber">Survey No.</option>
+										<option value="PropertyTaxBillNumber">Property Tax Bill No.</option>
+										<option value="CTSNumber">CTS No.</option>
+										<option value="MilkatNumber">Milkat No.</option>
+										<option value="GatNumber">Gat No.</option>
+										<option value="PlotNumber">Plot No.</option>
+									</select>
+									<label for="input" class="control-label">Additional Document</label><i class="bar"></i>
+								</div>
+							</div>
+							<div class=" col-md-3 col-sm-6 align-self-center">
+								<div class="form-group">
+									<input type="text" class="form-control PropertyAdditionalIdNumber" placeholder="ABCD12345">
+									<label for="input" class="control-label">Document Value/No.</label><i class="bar"></i>
+								</div>
+							</div>
+							<div class="col-md-12 col-sm-12 align-self-center text-center">
 								<span class="addon-add delete-btn tooltip-wrapper text-sec" onclick="AddProjectForm(this);" data-listingid="@ViewBag.ListingId" data-toggle="tooltip" data-placement="top" title="" data-original-title="submit and upload the file"><i class="fas fa-cloud-upload-alt btn-icon text-sec"></i> Upload</span>
 								<span class="addon-edit delete-btn tooltip-wrapper display-none text-info" onclick="EditProjectForm(this);" data-listingid="@ViewBag.ListingId" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit the file"><i class="fas fa-edit btn-icon text-info"></i> Edit</span>
 								<span class="addon-delete delete-btn tooltip-wrapper text-danger" onclick="deleteProject(this, 0)" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to delete the row"><i class="fas fa-trash-alt btn-icon text-danger"></i> Delete</span>
@@ -75,6 +103,7 @@
 						}
 						else
 						{
+							int i = 1;
 							@foreach (var item in Model)
 							{
 					<div class="row project-upload__row addons-row align-self-center">
@@ -84,7 +113,7 @@
 								<label for="input" class="control-label">Project id</label><i class="bar"></i>
 							</div>
 						</div>
-						<div class=" col-md-2 col-sm-6 align-self-center">
+						<div class=" col-md-3 col-sm-6 align-self-center">
 							<div class="form-group">
 								<input type="text" class="form-control projectName event-none" placeholder="project Name" value="@item.ProjectName">
 								<label for="input" class="control-label">project Name</label><i class="bar"></i>
@@ -95,40 +124,90 @@
 								<input type="file" class="form-control projectImage" accept="project/*" value="@item.ImageUrl">
 								<label for="input" class="control-label">Upload project Image</label><i class="bar"></i>
 							</div>
-							<div class="addon-image__div"><a href="@Url.Content(item.ImageUrl)" target="_blank"><img class="addon-image" alt="name" src="@Url.Content(item.ImageUrl)" /></a></div>
+							@if (item.ImageUrl != null)
+							{
+								<div class="addon-image__div text-center"><a href="@Url.Content(item.ImageUrl)" target="_blank"><img class="addon-image" alt="name" src="@Url.Content(item.ImageUrl)" /></a></div>
+							}
+							else
+							{
+								<div class="addon-image__div pop-image__error text-center">No Image uploaded</div>
+							}
+
 						</div>
 						<div class=" col-md-2 col-sm-6 align-self-center">
 							<div class="form-group display-none">
 								<input type="file" class="form-control projectDoucument" accept="project/*" value="@item.DocumentUrl">
 								<label for="input" class="control-label">Upload project Document</label><i class="bar"></i>
 							</div>
-							<div class="addon-image__div"><a href="@Url.Content(item.DocumentUrl)" target="_blank"><img class="addon-image" alt="name" src="~/images/doc_placeholder.png" />Click to view</a></div>
+							@if (item.DocumentUrl !=null)
+							{
+						<div class="addon-image__div"><a href="@Url.Content(item.DocumentUrl)" target="_blank"> <i class="fas fa-file-alt"></i>Click to view</a></div>
+							}
+							else
+							{
+								<div class="addon-image__div pop-image__error text-center">No Document uploaded</div>
+							}
+							
 						</div>
-						<div class=" col-md-2 col-sm-6 align-self-center">
+						<div class=" col-md-4 col-sm-6 align-self-center">
 							<div class="form-group">
 								<textarea type="text" class="form-control projectDesc event-none" rows="3" placeholder="Enter your text..." value="@item.Description">@item.Description</textarea>
 								<label for="input" class="control-label">Description</label><i class="bar"></i>
 							</div>
 						</div>
-						<div class=" col-md-1 col-sm-6 align-self-center">
-							<span class="addon-edit delete-btn tooltip-wrapper text-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit the file" style="width: 30px;"><i class="fas fa-temperature-low btn-icon text-sec"></i></span>
-
-							<span class="addon-delete delete-btn tooltip-wrapper text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to delete the row" style="width: 30px;"><i class="fas fa-tree btn-icon text-info"></i></span>
+						<div class=" col-md-3 col-sm-6 align-self-center">
+							<div class="form-group">
+								@*<select class="form-control basic-select ProjectRole" name="@item.ProjectRole">
+					<option value="PropertyDeveloper">Property Developer</option>
+					<option value="Leasing">Leasing</option>
+					<option value="InteriorDesigner">Interior Designer</option>
+					<option value="CoworkingArchitecture">Co-working Architecture</option>
+					<option value="Investor">Investor</option>
+					<option value="PropertyOwner">Property Owner</option>
+					<option value="PropertyOperator">Property Operator</option>
+				</select>*@
+								<select class="form-control basic-select ProjectRole event-none" id="ProjectRole_@i" name="@item.ProjectRole" asp-for="@item.ProjectRole"
+										asp-items="@(new SelectList(ViewBag.ListOfProfessionalCategory, "ProfessionalCategoryName", "ProfessionalCategoryDisplay"))"></select>
+								<label for="input" class="control-label">RE Professional Role</label><i class="bar"></i>
+							</div>
 						</div>
-						@*<div class="col-md-1 col-sm-6 m-b--15 align-self-center">
-			<div class="checkbox m-0">
-				<label>
-					<input type="checkbox" /><i class="helper"></i> Active
-				</label>
+						<div class=" col-md-3 col-sm-6 align-self-center">
+							<div class="form-group">
+								<input type="text" class="form-control PropertyReraId event-none" placeholder="ABCD12345" value="@item.PropertyReraId">
+								<label for="input" class="control-label">RERA ID</label><i class="bar"></i>
+							</div>
+						</div>
+						<div class=" col-md-3 col-sm-6 align-self-center">
+							<div class="form-group">
+								<select class="form-control basic-select PropertyAdditionalIdName event-none" id="PropertyAdditionalIdName_@i" name="@item.PropertyAdditionalIdName" asp-for="@item.PropertyAdditionalIdName"
+										asp-items="@(new SelectList(ViewBag.ListOfGetPropertyDocumentList, "PropertyDocumentName", "PropertyDocumentDisplay"))"></select>
+								<label for="input" class="control-label">Addition Document</label><i class="bar"></i>
+							</div>
+						</div>
+						<div class=" col-md-3 col-sm-6 align-self-center">
+							<div class="form-group">
+								<input type="text" class="form-control PropertyAdditionalIdNumber event-none" placeholder="ABCD12345" value="@item.PropertyAdditionalIdNumber">
+								<label for="input" class="control-label">Document Value/No.</label><i class="bar"></i>
+							</div>
+						</div>
+						@*<div class=" col-md-3 col-sm-6 align-self-center">
+			<div class="form-group">
+				<select class="form-control basic-select operatorName" >
+					<option value="1">Commercial</option>
+					<option value="2">Co-Working</option>
+					<option value="3">RE-Professionals</option>
+				</select>
+				<label for="input" class="control-label">Select Operator</label><i class="bar"></i>
 			</div>
 		</div>*@
-						<div class="col-md-2 col-sm-6 align-self-center">
+						<div class="col-md-12 col-sm-12 align-self-center text-center">
 							<span class="addon-add delete-btn tooltip-wrapper display-none text-sec" onclick="AddProjectForm(this);" data-listingid="@ViewBag.ListingId" data-toggle="tooltip" data-placement="top" title="" data-original-title="submit and upload the file"><i class="fas fa-cloud-upload-alt btn-icon text-sec"></i> Upload</span>
 							<span class="addon-edit delete-btn tooltip-wrapper text-info" onclick="EditProjectForm(this);" data-listingid="@ViewBag.ListingId" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit the file"><i class="fas fa-edit btn-icon text-info"></i> Edit</span>
 							<span class="addon-delete delete-btn tooltip-wrapper text-danger" onclick="deleteProject(this, @item.REProfessionalMasterId)" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to delete the row"><i class="fas fa-trash-alt btn-icon text-danger"></i> Delete</span>
 							<span class="addon-clear delete-btn tooltip-wrapper display-none text-pry" onclick="clearRowProject(this,@item.REProfessionalMasterId)" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to clear"><i class="fas fa-times btn-icon text-pry"></i> Clear</span>
 						</div>
 					</div>
+								i++;
 							}
 						}
 

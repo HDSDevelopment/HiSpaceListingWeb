@@ -88,41 +88,47 @@
 				<div class="row align-items-center">
 					<div class="col-md-5 col-xl-5">
 						<div class="slide-type">
-							<div class="slide-type__image">
-								<span class="icon fab flaticon-apartment-1"></span>
-							</div>
-							<div class="slide-type_text texttype-1">
-								Find Your Space
-								<i class="fas fa-angle-double-right"></i>
-							</div>
+							<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">
+								<div class="slide-type__image">
+									<span class="icon fab flaticon-apartment-1"></span>
+								</div>
+								<div class="slide-type_text texttype-1">
+									Find Your Space
+									<i class="fas fa-angle-double-right"></i>
+								</div>
+							</a>
 						</div>
 						<div class="slide-type">
-							<div class="slide-type__image">
-								<span class="icon fab flaticon-building"></span>
-							</div>
-							<div class="slide-type_text texttype-2">
-								Manage Your Space
-								<i class="fas fa-angle-double-right"></i>
-							</div>
+							<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">
+								<div class="slide-type__image">
+									<span class="icon fab flaticon-building"></span>
+								</div>
+								<div class="slide-type_text texttype-2">
+									Manage Your Space
+									<i class="fas fa-angle-double-right"></i>
+								</div>
+								</a>
 						</div>
 						<div class="slide-type">
-							<div class="slide-type__image">
-								<span class="icon fab flaticon-agent"></span>
-							</div>
-							<div class="slide-type_text texttype-3">
-								Find a Real-Estate Professionals
-								<i class="fas fa-angle-double-right"></i>
-							</div>
+							<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">
+								<div class="slide-type__image">
+									<span class="icon fab flaticon-agent"></span>
+								</div>
+								<div class="slide-type_text texttype-3">
+									Find a Real-Estate Professionals
+									<i class="fas fa-angle-double-right"></i>
+								</div>
+								</a>
 						</div>
 					</div>
 					<div class="col-md-7 col-xl-7">
 						<h1 class="text-white mb-4 display-4 font-weight-bold slide-heading">Welcome to Coworking Community for the next generation Real-Estate Industry evolution</h1>
 						<div class="slide-btn">
 							<div class="property-btn">
-								<a class="property-link btn btn-primary modal-link__filter" data-targeturl="@Url.Action("FilterPartialView","Website")" href="javascript:function() { return false; }"><i class="fas fa-hands-helping"></i> Join Now</a>
+								<a class="property-link btn btn-primary modal-link__signup" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-hands-helping"></i> Join Now</a>
 							</div>
 							<div class="property-btn">
-								<a class="property-link btn btn-sec modal-link__filter" data-targeturl="@Url.Action("FilterPartialView","Website")" href="javascript:function() { return false; }"><i class="fas fa-sign-in-alt"></i> Login</a>
+								<a class="property-link btn btn-sec modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-sign-in-alt"></i> Login</a>
 							</div>
 						</div>
 					</div>
@@ -192,8 +198,8 @@
 						</ul>
 					</div>
 					<div class="property-btn">
-						@*<a class="property-link btn btn-sec" href="@Url.Action( "PropertyList","Website")">Click Here</a>*@
-						<a class="property-link btn btn-sec modal-link__filter" data-targeturl="@Url.Action("FilterPartialView","Website")" href="javascript:function() { return false; }"> Click Here</a>
+						<a class="property-link btn btn-sec" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">Click Here</a>
+						@*<a class="property-link btn btn-sec modal-link__filter" data-targeturl="@Url.Action("FilterPartialView","Website")" href="javascript:function() { return false; }"> Click Here</a>*@
 					</div>
 				</div>
 			</div>
@@ -227,13 +233,15 @@
 					@if (ViewBag.UserId != null)
 					{
 						<div class="property-btn">
-							<a class="property-link btn btn-info" href="@Url.Action("ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType })">Click Here</a>
+							<a class="property-link btn btn-info" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Click Here</a>
+							@*<a class="property-link btn btn-info" href="@Url.Action("ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType })">Click Here</a>*@
 						</div>
 					}
 					else
 					{
 						<div class="property-btn">
-							<a class="property-link btn btn-info modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"> Click Here</a>
+							<a class="property-link btn btn-info" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Click Here</a>
+							@*<a class="property-link btn btn-info modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"> Click Here</a>*@
 						</div>
 					}
 				</div>
@@ -270,14 +278,16 @@
 					@if (ViewBag.UserId != null)
 					{
 						<div class="property-btn">
-							<a class="property-link btn btn-primary" href="@Url.Action("ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType })">Click Here</a>
+							<a class="property-link btn btn-primary" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">Click Here</a>
+							@*<a class="property-link btn btn-primary" href="@Url.Action("ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType })">Click Here</a>*@
 						</div>
 					}
 					else
 					{
-						<div class="property-btn">
-							<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"> Click Here</a>
-						</div>
+				<div class="property-btn">
+					<a class="property-link btn btn-primary" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">Click Here</a>
+					@*<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"> Click Here</a>*@
+				</div>
 					}
 				</div>
 			</div>

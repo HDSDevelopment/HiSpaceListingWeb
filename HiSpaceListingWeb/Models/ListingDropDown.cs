@@ -7,7 +7,7 @@ namespace HiSpaceListingWeb.Models
 {
 	public class ListingDropDown
 	{
-		
+
 	}
 	public class ListingType
 	{
@@ -59,5 +59,12 @@ namespace HiSpaceListingWeb.Models
 		public int FacilityDistanceID { set; get; }
 		public string FacilityDistanceName { set; get; }
 		public string FacilityDistanceDisplay { set; get; }
+	}
+
+	public class PropertyDocument
+	{
+		public int PropertyDocumentID { set; get; }
+		public string PropertyDocumentName { set; get; }
+		public string PropertyDocumentDisplay { set; get; }
 	}
 }

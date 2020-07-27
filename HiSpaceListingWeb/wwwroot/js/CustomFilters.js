@@ -1,5 +1,29 @@
-﻿
-var filterResult = $('#filterPropertyResult');
+﻿function operatorFilterCount() {
+	var opCount = $('.operatorCount:last-child').html();
+	$('#opCount span').html(opCount);
+};
+$(document).ready(function () {
+	
+	operatorFilterCount();
+});
+var filterPropertyResult = $('#filterPropertyResult');
+//Property list all
+function propertyListByAll() {
+	$.ajax({
+		type: "GET",
+		url: "/Filter/PropertyListByAll",
+		data: {},
+		dataType: "html",
+		success: function (response) {
+			//console.log(response);
+			filterPropertyResult.html('');
+			filterPropertyResult.html(response);
+		},
+		error: function (response) {
+			alert("server not ready please try afterwards");
+		}
+	});
+}
 //Property Location filter
 function propertyListByLocation(location) {
 	$.ajax({
@@ -8,9 +32,9 @@ function propertyListByLocation(location) {
 		data: { Location: location },
 		dataType: "html",
 		success: function (response) {
-			console.log(response);
-			filterResult.html('');
-			filterResult.html(response);
+			//console.log(response);
+			filterPropertyResult.html('');
+			filterPropertyResult.html(response);
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");
@@ -25,9 +49,9 @@ function propertyListByType(type) {
 		data: { Type: type },
 		dataType: "html",
 		success: function (response) {
-			console.log(response);
-			filterResult.html('');
-			filterResult.html(response);
+			//console.log(response);
+			filterPropertyResult.html('');
+			filterPropertyResult.html(response);
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");
@@ -42,15 +66,93 @@ function propertyListByUser(user) {
 		data: { User: user },
 		dataType: "html",
 		success: function (response) {
-			console.log(response);
-			filterResult.html('');
-			filterResult.html(response);
+			//console.log(response);
+			filterPropertyResult.html('');
+			filterPropertyResult.html(response);
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");
 		}
 	});
 }
+
+var filterOperatorResult = $('#filterOperatorResult');
+//Operator list all
+function operatorListByAll() {
+	$.ajax({
+		type: "GET",
+		url: "/Filter/OperatorListByAll",
+		data: {},
+		dataType: "html",
+		success: function (response) {
+			//console.log(response);
+			filterOperatorResult.html('');
+			filterOperatorResult.html(response);
+			operatorFilterCount();
+		},
+		error: function (response) {
+			alert("server not ready please try afterwards");
+		}
+	});
+	
+}
+//Operator list by operator
+function operatorListByUser(user) {
+	$.ajax({
+		type: "GET",
+		url: "/Filter/OperatorListByUserId",
+		data: { User: user},
+		dataType: "html",
+		success: function (response) {
+			//console.log(response);
+			filterOperatorResult.html('');
+			filterOperatorResult.html(response);
+			operatorFilterCount();
+		},
+		error: function (response) {
+			alert("server not ready please try afterwards");
+		}
+	});
+}
+var filterProfessionalResult = $('#filterProfessionalResult');
+//People list all
+function peopleListByAll() {
+	$.ajax({
+		type: "GET",
+		url: "/Filter/PeopleListByAll",
+		data: {},
+		dataType: "html",
+		success: function (response) {
+			//console.log(response);
+			filterProfessionalResult.html('');
+			filterProfessionalResult.html(response);
+			Peoplecarousel();
+		},
+		error: function (response) {
+			alert("server not ready please try afterwards");
+		}
+	});
+
+} 
+//People list by ListingId
+function peopleListByUser(listingId) {
+	$.ajax({
+		type: "GET",
+		url: "/Filter/PeopleListByListingId",
+		data: { ListingId: listingId },
+		dataType: "html",
+		success: function (response) {
+			//console.log(response);
+			filterProfessionalResult.html('');
+			filterProfessionalResult.html(response);
+			Peoplecarousel();
+		},
+		error: function (response) {
+			alert("server not ready please try afterwards");
+		}
+	});
+}
+
 //professional sliders section
 Peoplecarousel = function () {
     var owlslider = jQuery("div.owl-carousel");
@@ -103,3 +205,37 @@ Peoplecarousel = function () {
     }
 }
 Peoplecarousel();
+
+//$('body').on('click', '.listNavigation', function () {
+//	console.log('test');
+//});
+function GetURLParameter(sParam) {
+	var sPageURL = window.location.search.substring(1);
+	var sURLVariables = sPageURL.split('&');
+	for (var i = 0; i < sURLVariables.length; i++) {
+		var sParameterName = sURLVariables[i].split('=');
+		if (sParameterName[0] == sParam) {
+			return decodeURIComponent(sParameterName[1]);
+		}
+	}
+}
+
+var listShowType = GetURLParameter('ListShowType');
+console.log(listShowType);
+if (listShowType == 1) {
+	$('.nav-link, .tab-pane').removeClass('active');
+	$('.tab-pane').removeClass('show');
+	$('#tab-01-tab.nav-link, #tab-01.tab-pane').addClass('active');
+	$('#tab-01.tab-pane').addClass('show');
+
+} else if (listShowType == 2) {
+	$('.nav-link, .tab-pane').removeClass('active');
+	$('.tab-pane').removeClass('show');
+	$('#tab-02-tab.nav-link, #tab-02.tab-pane').addClass('active');
+	$('#tab-02.tab-pane').addClass('show');
+} else if (listShowType == 3) {
+	$('.nav-link, .tab-pane').removeClass('active');
+	$('.tab-pane').removeClass('show');
+	$('#tab-03-tab.nav-link, #tab-03.tab-pane').addClass('active');
+	$('#tab-03.tab-pane').addClass('show');
+}

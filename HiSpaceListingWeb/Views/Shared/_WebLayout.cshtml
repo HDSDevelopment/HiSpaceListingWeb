@@ -121,10 +121,9 @@
 								HiSpace List <i class="fas fa-chevron-down fa-xs"></i>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="@Url.Action( "PropertyList","Filter")">Property</a></li>
-								<li><a class="dropdown-item" href="@Url.Action( "PropertyListByType","Filter",new { Type = "Commercial"})">Operator</a></li>
-								<li><a class="dropdown-item" href="@Url.Action( "PropertyListByType","Filter",new { Type = "RE-Professional"})">RE-Professionals</a></li>
-
+								<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">Property</a></li>
+								<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Operator</a></li>
+								<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">RE-Professionals</a></li>
 							</ul>
 						</li>
 						<li class="nav-item dropdown ">
@@ -332,6 +331,7 @@
 	@*<script src="~/js/jarallax/jarallax-video.min.js"></script>*@
 	<script src="~/js/magnific-popup/jquery.magnific-popup.min.js"></script>
 	<script src="~/js/rater.js"></script>
+	<script src="~/js/jquery.validate.min.js"></script>
 
 	<!-- Template Scripts (Do not remove)-->
 	<script src="~/js/custom.js"></script>

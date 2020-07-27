@@ -17,10 +17,10 @@
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
 				@*<form class="form-row mt-4 align-items-center" action="account-profile.html">*@
-				@using (Html.BeginForm("Login", "User", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-row mt-4 align-items-center md-form", onSubmit = "loginValidate(event)" }))
+				@using (Html.BeginForm("Login", "User", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-row mt-4 align-items-center md-form", onSubmit = "loginValidate(event)" , id="login-form"}))
 				{
 					<div class="form-group col-sm-12">
-						<input class="form-control" id="Email" name="Email" placeholder="Email Id" type="text" value="" onblur="errShow(this.value,'error_Email');" onfocus="errHide(this.value,'error_Email');">
+						<input class="form-control" id="Email" name="Email" placeholder="Email Id" type="email" value="" onblur="errShow(this.value,'error_Email');" onfocus="errHide(this.value,'error_Email');">
 						@*@Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email Id" })*@
 						<label for="input" class="control-label">Email*</label><i class="bar"></i>
 						<div class="error" id="error_Email"></div>

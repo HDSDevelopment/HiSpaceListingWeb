@@ -123,9 +123,10 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiListingGetPropertyList = "GetPropertyList/";
 		public string ApiListingGetPropertyListByUserID = "GetPropertyListByUserID/";
 		public string ApiListingGetPropertyDetailByListingID = "GetPropertyDetailByListingID/";
-		public string ApiLisitingGetAllProperty = "GetAllPropertyList/";
-		public string ApiLisitingGetAllOperators = "GetAllOperatorList/";
-		public string ApiLisitingGetAllPeople = "GetAllPeopleList/";
+		public string ApiLisitingGetAllPropertyListCommercialAndCoworking = "GetAllPropertyListCommercialAndCoworking/";
+		public string ApiLisitingGetAllOperatorsList = "GetAllOperatorList/";
+		public string ApiLisitingGetAllPeopleList = "GetAllPeopleList/";
+
 
 		#endregion Listing Controller
 
@@ -191,6 +192,11 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiCommonGetAllPropertyTypeSearch = "GetAllPropertyTypeSearch";
 		public string ApiCommonGetAllPropertyLevelSearch = "GetAllPropertyLevelSearch";
 		public string ApiCommonGetAllPropertyListerSearch = "GetAllPropertyListerSearch";
+
+		public string ApiCommonGetAllOperatorSearch = "GetAllOperatorSearch";
+
+		public string ApiCommonGetAllPeopleSearch = "GetAllPeopleSearch";
+
 		public string ApiCommonGetAmenityMasterList = "GetAmenityMasterList";
 		public string ApiCommonGetFacilityMasterList = "GetFacilityMasterList";
 
@@ -205,10 +211,13 @@ namespace HiSpaceListingWeb.Utilities
 			}
 		}
 
-		public string ApiFilterGetListingByLocation = "GetListingByLocation";
-		public string ApiFilterGetListingByType = "GetListingByType";
-		public string ApiFilterGetListingByUser = "GetListingByUser";
+		public string ApiFilterGetListingPropertyByLocation = "GetListingPropertyByLocation";
+		public string ApiFilterGetListingPropertyByType = "GetListingPropertyByType";
+		public string ApiFilterGetListingPropertyByUser = "GetListingPropertyByUser";
+		public string ApiFilterGetListingPropertyByAll = "GetListingPropertyByAll";
 		public string ApiFilterGetListingByTypeAndLocation = "GetListingByTypeAndLocation";
+		public string ApiFilterGetOperatorByUserId = "GetOperatorByUserId";
+		public string ApiFilterGetPeopleByListingId = "GetPeopleByListingId";
 
 		#endregion Filter Controller
 
@@ -257,6 +266,8 @@ namespace HiSpaceListingWeb.Utilities
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 3, ProfessionalCategoryName = "InteriorDesigner", ProfessionalCategoryDisplay = "Interior Designer" });
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 4, ProfessionalCategoryName = "CoworkingArchitecture", ProfessionalCategoryDisplay = "Co-working Architecture" });
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 5, ProfessionalCategoryName = "Investor", ProfessionalCategoryDisplay = "Investor" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 6, ProfessionalCategoryName = "PropertyOwner", ProfessionalCategoryDisplay = "Property Owner" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 7, ProfessionalCategoryName = "PropertyOperator", ProfessionalCategoryDisplay = "Property Operator" });
 			return types;
 		}
 
@@ -268,6 +279,19 @@ namespace HiSpaceListingWeb.Utilities
 			types.Add(new AmenitiesPaymentTypeList() { AmenitiesPaymentTypeListID = 3, AmenitiesPaymentTypeListName = "PartiallyPaid", AmenitiesPaymentTypeListDisplay = "Partially Paid" });
 			return types;
 		}
+
+		public static List<PropertyDocument> GetPropertyDocumentList()
+		{
+			List<PropertyDocument> types = new List<PropertyDocument>();
+			types.Add(new PropertyDocument() { PropertyDocumentID = 1, PropertyDocumentName = "SurveyNumber", PropertyDocumentDisplay = "Survey No." });
+			types.Add(new PropertyDocument() { PropertyDocumentID = 2, PropertyDocumentName = "PropertyTaxBillNumber", PropertyDocumentDisplay = "Property Tax Bill No." });
+			types.Add(new PropertyDocument() { PropertyDocumentID = 3, PropertyDocumentName = "CTSNumber", PropertyDocumentDisplay = "CTS No." });
+			types.Add(new PropertyDocument() { PropertyDocumentID = 4, PropertyDocumentName = "MilkatNumber", PropertyDocumentDisplay = "Milkat No." });
+			types.Add(new PropertyDocument() { PropertyDocumentID = 5, PropertyDocumentName = "GatNumber", PropertyDocumentDisplay = "Gat No." });
+			types.Add(new PropertyDocument() { PropertyDocumentID = 6, PropertyDocumentName = "PlotNumber", PropertyDocumentDisplay = "Plot No." });
+			return types;
+		}
+
 		public static List<FacilityDistance> GetFacilityDistances()
 		{
 			List<FacilityDistance> distance = new List<FacilityDistance>();
