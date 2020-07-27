@@ -299,7 +299,7 @@ namespace HiSpaceListingWeb.Controllers
 		//		var result = responseTask.Result;
 		//		if (result.IsSuccessStatusCode)
 		//		{
-		//			var readTask = result.Content.ReadAsAsync<List<PropertyLocationSearchResponse>>();
+		//			var readTask = result.Content.ReadAsAsync<List<PropertyLocationSearchResponse>>(); 
 		//			readTask.Wait();
 		//			vModel.PropertyLocationSearchList = readTask.Result;
 		//		}
