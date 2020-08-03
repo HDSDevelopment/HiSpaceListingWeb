@@ -333,19 +333,22 @@ $('.required-input').blur(function () {
 	}
 });
 
-function tabNavigation(nav) {
+function tabNavigation(nav,e) {
 	var tabLength = parseInt($('.hi-tab').find('.nav-link').length);
 	var currentTab = parseInt($('.hi-tab .active').attr('data-id'));
-
+	var isValid = true;
+	let formData = { "id": "addListingForm" };
+	$(`#${formData.id} .error`).html(``);
+	//console.log('click')
 	//disable the back btn on first tab
-	//if (currentTab == 2) {
-	//	//alert('a')
-	//	$('.tab-back-btn').css('display', 'none');
-	//}
-	//else {
-	//	$('.tab-next-btn').css('display', 'inline-block');
-	//	$('.tab-submit').css('display', 'none');
-	//}
+	if (currentTab == 2) {
+		//alert('a')
+		$('.tab-back-btn').css('display', 'none');
+	}
+	else {
+		$('.tab-next-btn').css('display', 'inline-block');
+		$('.tab-submit').css('display', 'none');
+	}
 
 	//click back button
 	if (nav == 0) {
@@ -353,6 +356,92 @@ function tabNavigation(nav) {
 	}
 	//click next button
 	else if (nav == 1) {
+		if (currentTab == 1) {
+			//console.log(1);
+			let rules = [
+				{ "id": "Email", "validation": ["emptyRegx", "emailRegx"] },
+				{ "id": "Phone", "validation": ["emptyRegx", "phoneRegx"] }
+			];
+
+			if ($("#ListingType").val() == "Commercial") {
+				//console.log('comm');
+				rules.push({ "id": "Name", "validation": ["emptyRegx"] });
+				//console.log(rules);
+			}
+			else if ($("#ListingType").val() == "Co-Working") {
+				//console.log('cow');
+				rules.push({ "id": "Name", "validation": ["emptyRegx"] });
+				let option_shared_space = $("#option_shared_space");
+				let option_private_space = $("#option_private_space");
+				let option_meeting_room = $("#option_meeting_room");
+
+				if (option_shared_space.prop("checked")) {
+					rules.push({ "id": "CW_Coworking", "validation": ["emptyRegx"] });
+					rules.push({ "id": "CW_CoworkingSeats", "validation": ["emptyRegx"] });
+				}
+
+				if (option_private_space.prop("checked")) {
+					rules.push({ "id": "CW_PrivateOffice", "validation": ["emptyRegx"] });
+					rules.push({ "id": "CW_PrivateOfficeSeats", "validation": ["emptyRegx"] });
+				}
+
+				if (option_meeting_room.prop("checked")) {
+					rules.push({ "id": "CW_MeetingRoom", "validation": ["emptyRegx"] });
+					rules.push({ "id": "CW_MeetingRoomSeats", "validation": ["emptyRegx"] });
+				}
+				//console.log(rules);
+			}
+			else if ($("#ListingType").val() == "RE-Professional") {
+				//console.log('rep');
+				rules.push({ "id": "RE_FirstName", "validation": ["emptyRegx"] });
+				rules.push({ "id": "RE_LastName", "validation": ["emptyRegx"] });
+				//console.log(rules);
+			}
+
+			validate(formData, rules);
+			$(`#${formData.id} .error`).each(function (i) {
+
+				if ($(this).is(':empty')) {
+
+				}
+				else {
+
+					isValid = false;
+					//e.preventDefault();
+					return;
+				}
+			})
+			if (!isValid) {
+
+				return false;
+			}
+		}
+		else if (currentTab == 2) {
+			console.log(2);
+			let rules = [
+				{ "id": "locality", "validation": ["emptyRegx"] },
+				{ "id": "administrative_area_level_1", "validation": ["emptyRegx"] },
+				{ "id": "country", "validation": ["emptyRegx"] },
+				{ "id": "postal_code", "validation": ["emptyRegx"] }
+			];
+			validate(formData, rules);
+			$(`#${formData.id} .error`).each(function (i) {
+				if ($(this).is(':empty')) {
+				}
+				else {
+					isValid = false;
+					//e.preventDefault();
+					return;
+				}
+			})
+			if (!isValid) {
+				return false;
+			}
+		}
+		else if (currentTab == 3) {
+			
+		}
+
 		checkRequiredInput(currentTab);
 
 		//to show submit button on the last tab
@@ -364,22 +453,35 @@ function tabNavigation(nav) {
 	}
 	//click submit button
 	else if (nav == 2) {
-		//event.preventDefault();
-		console.log($("#REprofessionalsType").val());
-		if ($('input:visible').hasClass('required-input')) {
-			//each condition to find the empty inputs
-			$('.required-input:visible').each(function (i) {
-				if ($(this).val() == "") {
-					$(this).parents('.form-group').siblings('.hi-error').removeClass('d-none');
-					event.preventDefault();
+		//console.log(3);
+		let rules = [
+			{ "id": "Description", "validation": ["emptyRegx"] }
+		];
+		validate(formData, rules);
+		$(`#${formData.id} .error`).each(function (i) {
+			if ($(this).is(':empty')) {
+			}
+			else {
+				if (currentTab == tabLength) {
+					$('.tab-back-btn').css('display', 'inline-block');
+					$('.tab-next-btn').css('display', 'none');
+					$('.tab-submit').css('display', 'inline-block');
 				}
-			});
+				console.log('failed')
+				isValid = false;
+				e.preventDefault();
+				return;
+			}
+		})
+		if (!isValid) {
+			if (currentTab == tabLength) {
+				$('.tab-back-btn').css('display', 'inline-block');
+				$('.tab-next-btn').css('display', 'none');
+				$('.tab-submit').css('display', 'inline-block');
+			}
+			console.log('fail')
+			return false;
 		}
-		//$.ajax({
-		//	type: 'POST',
-		//	url: ,
-		//	data: 
-		//})
 	}
 };
 
@@ -914,12 +1016,14 @@ function addImage(obj) {
 		'<div class="form-group">' +
 		'<input type="text" class="form-control imageName" placeholder="Image Name">' +
 		'<label for="input" class="control-label">Image Name</label><i class="bar"></i>' +
+		'<div class="error"></div>'+
 		'</div>	' +
 		'</div>' +
 		'<div class=" col-md-4 col-sm-6 align-self-center">' +
 		'<div class="form-group">' +
-		'<input type="file" class="form-control imageFilePath" accept="image/*">' +
+		'<input type="file" class="form-control imageFilePath"  accept="image/x-png,image/gif,image/jpeg">' +
 		'<label for="input" class="control-label">Upload Image</label><i class="bar"></i>' +
+		'<div class="error"></div>'+
 		'</div>' +
 		'</div>' +
 		//'<div class="col-md-2 col-sm-6 m-b--15 align-self-center">' +
@@ -944,12 +1048,12 @@ function deleteRowImage(that) {
 };
 //image upload section end
 function AddImageForm(obj) {
+
 	//debugger
 	var listingId = $(obj).attr('data-listingid');
 	//console.log(listingId)
 	var formData = new FormData();
 	var row = $(obj).closest('.image-upload__row');
-	var iStatus = true;
 	var iImageId;
 	var files = $(row).find('.imageFilePath').get(0).files;
 	var iName = $(row).find('.imageName').val();
@@ -959,6 +1063,19 @@ function AddImageForm(obj) {
 	//	} else {
 	//		iStatus = false;
 	//}
+
+	//image validation start
+	if (iName == "") {
+		$(row).find('.imageName').siblings('.error').html('This feild is required');
+	}
+	if (iImagePath == "") {
+		$(row).find('.imageFilePath').siblings('.error').html('This feild is required');
+	}
+	if (iName == "" || iImagePath == "") {
+		return false;
+	}
+	//image validation end
+
 	if ($(row).find('.imageId').length) {
 		iImageId = $(row).find('.imageId').val();
 	} else {
@@ -1429,6 +1546,7 @@ function addAmenities(obj) {
 		'<div class="form-group">' +
 		'<input type="text" class="form-control amenityName" placeholder="Name">' +
 		'<label for="input" class="control-label">Amenity</label><i class="bar"></i>' +
+		'<div class="error"></div>'+
 		'</div>' +
 		'</div>' +
 		'<div class="col-md-2 col-sm-4 col-6 ">' +
@@ -1446,12 +1564,14 @@ function addAmenities(obj) {
 		'<div class="form-group">' +
 		'<input type="number" class="form-control amenityPrice" placeholder="00">' +
 		'<label for="input" class="control-label">Price/Usage</label><i class="bar"></i>' +
+		'<div class="error"></div>'+
 		'</div>' +
 		'</div>' +
 		'<div class=" am-partial col-md-2 col-sm-3 d-none">' +
 		'<div class="form-group">' +
 		'<input type="number" class="form-control amenityCount" placeholder="00">' +
 		'<label for="input" class="control-label">Free Count</label><i class="bar"></i>' +
+		'<div class="error"></div>'+
 		'</div>' +
 		'</div>	' +
 
@@ -1502,6 +1622,40 @@ function AddAmenityForm(obj) {
 	var amenityType = $(row).find('.amenityType').val();
 	var amenityPrice = $(row).find('.amenityPrice').val();
 	var amenityCount = $(row).find('.amenityCount').val();
+
+	//Amenities validation start
+	if (amenityType == "PartiallyPaid") {
+		if (amenityName == "") {
+			$(row).find('.amenityName').siblings('.error').html('This feild is required');
+		}
+		if (amenityPrice == "") {
+			$(row).find('.amenityPrice').siblings('.error').html('This feild is required');
+		}
+		if (amenityCount == "") {
+			$(row).find('.amenityCount').siblings('.error').html('This feild is required');
+		}
+		if (amenityPrice == "" || amenityCount == "" || amenityName == "") {
+			return false;
+		}
+	} else if (amenityType == "Paid") {
+		if (amenityName == "") {
+			$(row).find('.amenityName').siblings('.error').html('This feild is required');
+		}
+		if (amenityPrice == "") {
+			$(row).find('.amenityPrice').siblings('.error').html('This feild is required');
+		}
+		if (amenityPrice == "" || amenityName == "") {
+			return false;
+		}
+	}
+	else if (amenityType == "Free") {
+		if (amenityName == "") {
+			$(row).find('.amenityName').siblings('.error').html('This feild is required');
+			return false;
+		}
+	}
+	
+	//Amenities validation end
 
 	formData.append("AmenityId", amenityId);
 	formData.append("ListingId", listingId);

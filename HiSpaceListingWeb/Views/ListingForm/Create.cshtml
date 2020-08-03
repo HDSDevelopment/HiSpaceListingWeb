@@ -34,7 +34,7 @@
 			</div>
 			<div class="">
 				@*<form class="form-row align-items-center md-form" action="account-profile.html">*@
-				@using (Html.BeginForm("AddForm", "ListingForm", FormMethod.Post, new { id = "", @class = "form-row align-items-center md-form listCreateForm", enctype = "multipart/form-data" }))
+				@using (Html.BeginForm("AddForm", "ListingForm", FormMethod.Post, new { id = "addListingForm", @class = "form-row align-items-center md-form listCreateForm", enctype = "multipart/form-data" }))
 				{
 					@Html.AntiForgeryToken()
 					<div class="col-12 hi-tabform">
@@ -84,7 +84,7 @@
 					</select>*@
 														<select class="form-control basic-select" id="ListingType" name="ListingType" asp-for="ListingType"
 																asp-items="@(new SelectList(ViewBag.ListOfListType, "ListingTypeName", "ListingTypeName"))"></select>
-														<label for="select" class="control-label">List Type</label><i class="bar"></i>
+														<label for="select" class="control-label">List Type*</label><i class="bar"></i>
 													</div>
 												</div>
 												@*type 1*@
@@ -138,18 +138,20 @@
 												<div class="col-md-3 col-sm-6">
 													<div class="form-group">
 														@*<input type="text" id="l_Email" class=" required-input" placeholder="abc@gmail.com">*@
-														@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "abc@gmail.com" } })
+														@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "abc@gmail.com",@type="email" } })
 														<label for="Email" class="control-label">Email*</label>
 														<i class="bar"></i>
+														<div class="error"></div>
 													</div>
 													@*<span class="hi-error d-none">Email is required</span>*@
 												</div>
 												<div class="col-md-3 col-sm-6">
 													<div class="form-group">
 														@*<input type="text" id="Phone" class=" required-input" placeholder="9999999999">*@
-														@Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999" } })
+														@Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999",@type="number" } })
 														<label for="Phone" class="control-label">Phone*</label>
 														<i class="bar"></i>
+														<div class="error"></div>
 													</div>
 													@*<span class="hi-error d-none">Phone is required</span>*@
 												</div>
@@ -167,16 +169,17 @@
 											<div class="col-md-3 col-sm-6">
 												<div class="form-group">
 													@*<input type="text" id="Name" class=" required-input" placeholder="List Name">*@
-													@Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control required-input", placeholder = "Enter Name" } })
+													@Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name" } })
 													<label for="Name" class="control-label">property Name*</label>
 													<i class="bar"></i>
+													<div class="error"></div>
 												</div>
-												<span class="hi-error d-none">Name is required</span>
+												
 											</div>
 											<div class="col-md-3 col-sm-6">
 												<div class="radio-group">
 													<div class="radio-lable">
-														Property For
+														Property For*
 													</div>
 													<div class="form-radio radio-items">
 														<div class="radio">
@@ -235,7 +238,7 @@
 											<div class="col-md-3 col-sm-6">
 												<div class="form-group">
 													@*<input type="number" id="Size" class="" placeholder="100">*@
-													@Html.EditorFor(m => m.SpaceSize, new { htmlAttributes = new { @class = "form-control", placeholder = "00.00" } })
+													@Html.EditorFor(m => m.SpaceSize, new { htmlAttributes = new { @class = "form-control", placeholder = "00.00", @type = "number" } })
 													<label for="SpaceSize" class="control-label">Space Size (Sq.ft)</label>
 													<i class="bar"></i>
 												</div>
@@ -274,7 +277,7 @@
 											<div class="type-2-sub col-md-3 col-sm-6 mt-1rem align-self-center type-2__input type-2-sub__input d-none">
 												<div class="checkbox">
 													<label>
-														<input type="checkbox" />
+														<input id="option_shared_space" type="checkbox" />
 														@*@Html.EditorFor(m => m.CW_Coworking, new { htmlAttributes = new { @class = "", @type="checkbox" } })*@
 														<i class="helper"></i>Shared Space
 													</label>
@@ -286,6 +289,7 @@
 															@Html.EditorFor(m => m.CW_Coworking, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
 															<label for="ss_no" class="control-label">No. of Space</label>
 															<i class="bar"></i>
+															<div class="error"></div>
 														</div>
 													</div>
 													<div class="col-md-6 col-sm-12">
@@ -294,6 +298,7 @@
 															@Html.EditorFor(m => m.CW_CoworkingSeats, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
 															<label for="ss_total" class="control-label">Total Seats</label>
 															<i class="bar"></i>
+															<div class="error"></div>
 														</div>
 													</div>
 												</div>
@@ -301,7 +306,7 @@
 											<div class="type-2-sub col-md-3 col-sm-6 mt-1rem align-self-center type-2__input type-2-sub__input d-none">
 												<div class="checkbox">
 													<label>
-														<input type="checkbox" /><i class="helper"></i>Private Space
+														<input id="option_private_space" type="checkbox" /><i class="helper"></i>Private Space
 													</label>
 												</div>
 												<div class="check-view row d-none">
@@ -311,6 +316,7 @@
 															@Html.EditorFor(m => m.CW_PrivateOffice, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
 															<label for="ps_no" class="control-label">No. of Space</label>
 															<i class="bar"></i>
+															<div class="error"></div>
 														</div>
 													</div>
 													<div class="col-md-6 col-sm-12">
@@ -319,6 +325,7 @@
 															@Html.EditorFor(m => m.CW_PrivateOfficeSeats, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
 															<label for="ps_total" class="control-label">Total Seats</label>
 															<i class="bar"></i>
+															<div class="error"></div>
 														</div>
 													</div>
 												</div>
@@ -326,7 +333,7 @@
 											<div class="type-2-sub col-md-3 col-sm-6 mt-1rem align-self-center type-2__input type-2-sub__input d-none">
 												<div class="checkbox">
 													<label>
-														<input type="checkbox" /><i class="helper"></i>Meeting Room
+														<input id="option_meeting_room" type="checkbox" /><i class="helper"></i>Meeting Room
 													</label>
 												</div>
 												<div class="check-view row d-none">
@@ -336,6 +343,7 @@
 															@Html.EditorFor(m => m.CW_MeetingRoom, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
 															<label for="mr_no" class="control-label">No. of Space</label>
 															<i class="bar"></i>
+															<div class="error"></div>
 														</div>
 													</div>
 													<div class="col-md-6 col-sm-12">
@@ -344,6 +352,7 @@
 															@Html.EditorFor(m => m.CW_MeetingRoomSeats, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
 															<label for="mr_total" class="control-label">Total Seats</label>
 															<i class="bar"></i>
+															<div class="error"></div>
 														</div>
 													</div>
 												</div>
@@ -374,7 +383,7 @@
 											<div class="col-md-3 col-sm-6 for-rental">
 												<div class="form-group">
 													@*<input type="number" id="MinPrice" class="" placeholder="000">*@
-													@Html.EditorFor(m => m.PriceMin, new { htmlAttributes = new { @class = "form-control", placeholder = "000" } })
+													@Html.EditorFor(m => m.PriceMin, new { htmlAttributes = new { @class = "form-control", placeholder = "000",@type="number" } })
 													<label for="PriceMin" class="control-label">Min Price &#8377;</label>
 													<i class="bar"></i>
 												</div>
@@ -382,7 +391,7 @@
 											<div class="col-md-3 col-sm-6 for-rental">
 												<div class="form-group">
 													@*<input type="number" id="MaxPrice" class="" placeholder="100000">*@
-													@Html.EditorFor(m => m.PriceMax, new { htmlAttributes = new { @class = "form-control", placeholder = "000" } })
+													@Html.EditorFor(m => m.PriceMax, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
 													<label for="MaxPrice" class="control-label">Max Price &#8377;</label>
 													<i class="bar"></i>
 												</div>
@@ -416,14 +425,14 @@
 											<div class="col-md-3 col-sm-6 input-occupancy for-rental">
 												<div class="form-group">
 													@*<input type="number" id="CurrentOccupancy" class="" placeholder="00">*@
-													@Html.EditorFor(m => m.CurrentOccupancy, new { htmlAttributes = new { @class = "form-control", placeholder = "00" } })
+													@Html.EditorFor(m => m.CurrentOccupancy, new { htmlAttributes = new { @class = "form-control", placeholder = "00", @type = "number" } })
 													<label for="CurrentOccupancy" class="control-label">Current Occupancy %</label>
 													<i class="bar"></i>
 												</div>
 											</div>
 											<div class="col-md-3 col-sm-6 for-sale d-none">
 												<div class="form-group">
-													@Html.EditorFor(m => m.CMCW_AproximatePrice, new { htmlAttributes = new { @class = "form-control", placeholder = "00" } })
+													@Html.EditorFor(m => m.CMCW_AproximatePrice, new { htmlAttributes = new { @class = "form-control", placeholder = "00", @type = "number" } })
 													<label for="CMCW_AproximatePrice" class="control-label">Aproximate Price &#8377;</label>
 													<i class="bar"></i>
 												</div>
@@ -521,8 +530,8 @@
 													@Html.EditorFor(m => m.RE_FirstName, new { htmlAttributes = new { @class = "form-control required-input", placeholder = "Enter Name" } })
 													<label for="RE_FirstName" class="control-label">First Name*</label>
 													<i class="bar"></i>
+													<div class="error"></div>
 												</div>
-												<span class="hi-error d-none">Name is required</span>
 											</div>
 											<div class="col-md-3 col-sm-6">
 												<div class="form-group">
@@ -530,8 +539,8 @@
 													@Html.EditorFor(m => m.RE_LastName, new { htmlAttributes = new { @class = "form-control required-input", placeholder = "Enter Name" } })
 													<label for="RE_LastName" class="control-label">Last Name*</label>
 													<i class="bar"></i>
+													<div class="error"></div>
 												</div>
-												<span class="hi-error d-none">Name is required</span>
 											</div>
 											
 											<div class="col-md-9 col-sm-12">
@@ -657,30 +666,34 @@
 
 															</tr>
 															<tr class="col-sm-6">
-																<td class="label col-sm-6">City</td>
+																<td class="label col-sm-6">City*</td>
 																<td class="wideField col-sm-6">
 																	@Html.EditorFor(m => m.locality, new { htmlAttributes = new { @class = "field" } })
 																	@*<input class="field" id="locality" />*@
+																	<div class="error"></div>
 																</td>
 															</tr>
 															<tr class="col-sm-6">
-																<td class="label col-sm-6">State</td>
+																<td class="label col-sm-6">State*</td>
 																<td class="slimField col-sm-6">
 																	@Html.EditorFor(m => m.administrative_area_level_1, new { htmlAttributes = new { @class = "field" } })
+																	<div class="error"></div>
 																	@*<input class="field" id="administrative_area_level_1" />*@
 																</td>
 															</tr>
 															<tr class="col-sm-6">
-																<td class="label col-sm-6">Country</td>
+																<td class="label col-sm-6">Country*</td>
 																<td class="wideField col-sm-6" colspan="3">
 																	@Html.EditorFor(m => m.country, new { htmlAttributes = new { @class = "field" } })
+																	<div class="error"></div>
 																	@*<input class="field" id="country" />*@
 																</td>
 															</tr>
 															<tr class="col-sm-6">
-																<td class="label col-sm-6">Zip code</td>
+																<td class="label col-sm-6">Zip code*</td>
 																<td class="wideField col-sm-6">
 																	@Html.EditorFor(m => m.postal_code, new { htmlAttributes = new { @class = "field" } })
+																	<div class="error"></div>
 																	@*<input class="field" id="postal_code" />*@
 																</td>
 															</tr>
@@ -720,8 +733,9 @@
 													<div class="form-group">
 														@*<textarea rows="5" id="desc" class="" placeholder="Enter your text here..."></textarea>*@
 														@Html.TextAreaFor(m => m.Description, new { @class = "", placeholder = "Enter your text here..." })
-														<label for="desc" class="control-label">Description</label>
+														<label for="desc" class="control-label">Description* (Minimum 100 characters)</label>
 														<i class="bar"></i>
+														<div class="error"></div>
 													</div>
 												</div>
 												@*<div class="col-md-6 col-sm-6">
@@ -745,9 +759,9 @@
 							<div class="card-body hi-form__foot">
 								<div class="row hi-btn-event">
 									<div class="col-12">
-										<a href="javascript:void(0);" onclick="tabNavigation(0);" class="btn btn-primary text-uppercase tab-back-btn">Back</a>
-										<a href="javascript:void(0);" onclick="tabNavigation(1);" class="btn btn-primary text-uppercase tab-next-btn float-right">Next</a>
-										<input href="javascript:void(0);" onclick="tabNavigation(2);" type="submit" class="btn btn-success text-uppercase tab-submit float-right bmw-submit" value="Submit" />
+										<a href="javascript:void(0);" onclick="tabNavigation(0,event);" class="btn btn-primary text-uppercase tab-back-btn">Back</a>
+										<a href="javascript:void(0);" onclick="tabNavigation(1,event);" class="btn btn-primary text-uppercase tab-next-btn float-right">Next</a>
+										<input href="javascript:void(0);" onclick="tabNavigation(2,event);" type="submit" class="btn btn-success text-uppercase tab-submit float-right bmw-submit" value="Submit" />
 									</div>
 								</div>
 							</div>

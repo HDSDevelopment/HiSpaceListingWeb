@@ -76,7 +76,7 @@
 							<div class="accordion-sec__detail @ViewBag.cardbody">
 
 								@*<form class="form-row align-items-center md-form p-3" action="account-profile.html">*@
-								@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @class = "form-row align-items-center md-form p-3", enctype = "multipart/form-data", onSubmit = "EditUserValidate(event)" }))
+								@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @class = "form-row align-items-center md-form p-3", enctype = "multipart/form-data", onSubmit = "EditUserValidate(event)" ,id="editUserData"}))
 								{
 									@Html.AntiForgeryToken()
 									@Html.HiddenFor(m => m.User.UserId)
@@ -89,21 +89,21 @@
 									@Html.HiddenFor(m => m.User.Password)
 								<div class="form-group col-md-3 col-sm-6">
 									@*<input type="text" class="form-control" placeholder="Company Name">*@
-									@Html.EditorFor(m => m.User.CompanyName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name", onblur = "errShow(this.value,'error_CompanyName-e');", onfocus = "errHide(this.value,'error_CompanyName-e');" } })
+									@Html.EditorFor(m => m.User.CompanyName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name", id= "CompanyName" } })
 									<label for="input" class="control-label">Operator/Company Name*</label><i class="bar"></i>
-									<div class="error" id="error_CompanyName-e"></div>
+									<div class="error" id=""></div>
 								</div>
 								<div class="form-group col-md-3 col-sm-6">
 									@*<input type="text" class="form-control" placeholder="Phone">*@
-									@Html.EditorFor(m => m.User.Phone, new { htmlAttributes = new {@type="number", @class = "form-control", placeholder = "Enter Phone", onblur = "errShow(this.value,'error_Phone-e');", onfocus = "errHide(this.value,'error_Phone-e');" } })
+									@Html.EditorFor(m => m.User.Phone, new { htmlAttributes = new {@type="number", @class = "form-control", placeholder = "Enter Phone", id = "Phone" } })
 									<label for="input" class="control-label">Phone*</label><i class="bar"></i>
-									<div class="error" id="error_Phone-e"></div>
+									<div class="error" id=""></div>
 								</div>
 								<div class="form-group col-md-3 col-sm-6">
 									@*<input type="email" class="form-control" placeholder="abc@gmail.com">*@
-									@Html.EditorFor(m => m.User.Email, new { htmlAttributes = new { @type = "email", @class = "form-control event-none", placeholder = "Enter Email", onblur = "errShow(this.value,'error_Email-e');", onfocus = "errHide(this.value,'error_Email-e');" } })
+									@Html.EditorFor(m => m.User.Email, new { htmlAttributes = new { @type = "email", @class = "form-control event-none", placeholder = "Enter Email", id = "Email" } })
 									<label for="input" class="control-label">Email*</label><i class="bar"></i>
-									<div class="error" id="error_Email-e"></div>
+									<div class="error" id=""></div>
 								</div>
 									@*<div class="form-group col-md-3 col-sm-6">
 										@Html.EditorFor(m => m.User.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Password" } })
@@ -111,33 +111,34 @@
 									</div>*@
 							<div class="form-group col-md-3 col-sm-6">
 								@*<input type="text" class="form-control" placeholder="www.abc.com">*@
-								@Html.EditorFor(m => m.User.Website, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Website" } })
+								@Html.EditorFor(m => m.User.Website, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Website", id = "Website" } })
 								<label for="input" class="control-label">Web Address</label><i class="bar"></i>
+								<div class="error" id=""></div>
 							</div>
 									<div class="form-group col-md-6 col-sm-12">
 										@*<input type="text" class="form-control" placeholder="No.00, street">*@
-										@Html.EditorFor(m => m.User.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Address", onblur = "errShow(this.value,'error_Address-e');", onfocus = "errHide(this.value,'error_Address-e');" } })
+										@Html.EditorFor(m => m.User.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Address", id = "Address" } })
 										<label for="input" class="control-label">Complete Address*</label><i class="bar"></i>
 										@if (Model.User.Address == null)
 										{
-											<div class="error" id="error_Address-e">Enter Complete Address</div>
+											<div class="error" id="">Enter Complete Address</div>
 										}
 										else
 										{
-											<div class="error" id="error_Address-e"></div>
+											<div class="error" id=""></div>
 										}
 									</div>
 									<div class="form-group col-md-3 col-sm-6">
 										@*<input type="number" class="form-control" placeholder="postal code">*@
-										@Html.EditorFor(m => m.User.Postalcode, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PostalCode", onblur = "errShow(this.value,'error_Postalcode-e');", onfocus = "errHide(this.value,'error_Postalcode-e');" } })
+										@Html.EditorFor(m => m.User.Postalcode, new { htmlAttributes = new { @type = "number", @class = "form-control", placeholder = "Enter PostalCode", id = "Postalcode" } })
 										<label for="input" class="control-label">Postal Code*</label><i class="bar"></i>
 										@if (Model.User.Postalcode == null)
 										{
-									<div class="error" id="error_Postalcode-e">Enter Postal Code</div>
+									<div class="error" id="">Enter Postal Code</div>
 										}
 										else
 										{
-									<div class="error" id="error_Postalcode-e"></div>
+									<div class="error" id=""></div>
 										}
 										
 									</div>
@@ -147,72 +148,72 @@
 									</div>*@
 							<div class="form-group col-md-3 col-sm-6">
 								@*<input type="text" class="form-control" placeholder="Contact Name">*@
-								@Html.EditorFor(m => m.User.PrimaryContactName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name", onblur = "errShow(this.value,'error_PrimaryContactName-e');", onfocus = "errHide(this.value,'error_PrimaryContactName-e');" } })
+								@Html.EditorFor(m => m.User.PrimaryContactName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name", id = "PrimaryContactName" } })
 								<label for="input" class="control-label">Contact Person*</label><i class="bar"></i>
 								
 								@if (Model.User.PrimaryContactName == null)
 								{
-							<div class="error" id="error_PrimaryContactName-e">Enter Contact Person</div>
+							<div class="error" id="">Enter Contact Person</div>
 								}
 								else
 								{
-							<div class="error" id="error_PrimaryContactName-e"></div>
+							<div class="error" id=""></div>
 								}
 							</div>
 							<div class="form-group col-md-3 col-sm-6">
 								@*<input type="text" class="form-control" placeholder="9999999999">*@
-								@Html.EditorFor(m => m.User.PrimaryContactPhone, new { htmlAttributes = new { @type = "number", @class = "form-control", placeholder = "Enter Phone", onblur = "errShow(this.value,'error_PrimaryContactPhone-e');", onfocus = "errHide(this.value,'error_PrimaryContactPhone-e');" } })
+								@Html.EditorFor(m => m.User.PrimaryContactPhone, new { htmlAttributes = new { @type = "number", @class = "form-control", placeholder = "Enter Phone", id = "PrimaryContactPhone" } })
 								<label for="input" class="control-label">Contact Person No.*</label><i class="bar"></i>
 								
 								@if (Model.User.PrimaryContactPhone == null)
 								{
-							<div class="error" id="error_PrimaryContactPhone-e">Enter Contact Person Number</div>
+							<div class="error" id="">Enter Contact Person Number</div>
 								}
 								else
 								{
-							<div class="error" id="error_PrimaryContactPhone-e"></div>
+							<div class="error" id=""></div>
 								}
 							</div>
 							<div class="form-group col-md-3 col-sm-6">
 								@*<input type="text" class="form-control" placeholder="12345ABCD">*@
-								@Html.EditorFor(m => m.User.GSTIN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter GSTIN", onblur = "errShow(this.value,'error_GSTIN-e');", onfocus = "errHide(this.value,'error_GSTIN-e');" } })
-								<label for="input" class="control-label">GSTIN*</label><i class="bar"></i>
+								@Html.EditorFor(m => m.User.GSTIN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter GSTIN", id = "GSTIN" } })
+								<label for="input" class="control-label">GSTIN* (22AAAAA0000A1Z5)</label><i class="bar"></i>
 								
 								@if (Model.User.GSTIN == null)
 								{
-							<div class="error" id="error_GSTIN-e">Enter GSTIN</div>
+							<div class="error" id="">Enter GSTIN</div>
 								}
 								else
 								{
-							<div class="error" id="error_GSTIN-e"></div>
+							<div class="error" id=""></div>
 								}
 							</div>
 							<div class="form-group col-md-3 col-sm-6">
 								@*<input type="text" class="form-control" placeholder="12345ABCD">*@
-								@Html.EditorFor(m => m.User.PAN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PAN", onblur = "errShow(this.value,'error_PAN-e');", onfocus = "errHide(this.value,'error_PAN-e');" } })
-								<label for="input" class="control-label">PAN*</label><i class="bar"></i>
+								@Html.EditorFor(m => m.User.PAN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PAN", id = "PAN" } })
+								<label for="input" class="control-label">PAN* (AAAPZ1234C)</label><i class="bar"></i>
 								
 								@if (Model.User.PAN == null)
 								{
-							<div class="error" id="error_PAN-e">Enter PAN</div>
+							<div class="error" id="">Enter PAN</div>
 								}
 								else
 								{
-							<div class="error" id="error_PAN-e"></div>
+							<div class="error" id=""></div>
 								}
 							</div>
 							<div class="form-group col-md-3 col-sm-6">
 								@*<input type="text" class="form-control" placeholder="12345ABCD">*@
-								@Html.EditorFor(m => m.User.UAN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter UAN", onblur = "errShow(this.value,'error_UAN-e');", onfocus = "errHide(this.value,'error_UAN-e');" } })
-								<label for="input" class="control-label">UAN*</label><i class="bar"></i>
+								@Html.EditorFor(m => m.User.UAN, new { htmlAttributes = new { @type = "number", @class = "form-control", placeholder = "Enter UAN", id = "UAN" } })
+								<label for="input" class="control-label">Aadhaar* (999900001111)</label><i class="bar"></i>
 								
 								@if (Model.User.UAN == null)
 								{
-							<div class="error" id="error_UAN-e">Enter UAN</div>
+							<div class="error" id="">Enter Aadhaar </div>
 								}
 								else
 								{
-							<div class="error" id="error_UAN-e"></div>
+							<div class="error" id=""></div>
 								}
 							</div>
 									<div class="row">
@@ -220,7 +221,7 @@
 											@*<input type="file" class="form-control" accept="image/*">*@
 											@*@Html.EditorFor(m => m.User.Doc_PANCopy, new { htmlAttributes = new { @class = "form-control", type = "file", accept = "image/*" } })
 			<label for="input" class="control-label">Upload PAN</label><i class="bar"></i>*@
-											<p class="label-head mb-10">PAN Certificate*</p>
+											<p class="label-head mb-10">PAN Certificate</p>
 											@if (Model.User.Doc_PANCopy != null)
 											{
 
@@ -240,7 +241,7 @@
 											@*<input type="file" class="form-control" accept="image/*">*@
 											@*@Html.EditorFor(m => m.User.Doc_RCCopy, new { htmlAttributes = new { @class = "form-control", type = "file", accept = "image/*" } })
 			<label for="input" class="control-label">Upload Registration</label><i class="bar"></i>*@
-											<p class="label-head mb-10">Registration Certificate*</p>
+											<p class="label-head mb-10">Registration Certificate</p>
 											@if (Model.User.Doc_RCCopy != null)
 											{
 
@@ -260,7 +261,7 @@
 											@*<input type="file" class="form-control" accept="image/*">*@
 											@*@Html.EditorFor(m => m.User.Doc_CompanyLogo, new { htmlAttributes = new { @class = "form-control", type = "file", accept = "image/*" } })
 			<label for="input" class="control-label">Company Logo</label><i class="bar"></i>*@
-											<p class="label-head mb-10">Logo*</p>
+											<p class="label-head mb-10">Logo</p>
 											@if (Model.User.Doc_CompanyLogo != null)
 											{
 
@@ -281,8 +282,9 @@
 										<div class="checkbox m-0">
 											<label>
 												@*<input type="checkbox" />*@
-												@Html.CheckBoxFor(m => m.User.TermsAndConditions)
+												@Html.CheckBoxFor(m => m.User.TermsAndConditions, new { id = "TermsAndConditions" })
 												<i class="helper"></i><a data-toggle="modal" data-target="#termsModal" href="#" class="hover-signup" data-dismiss="modal">Terms and Conditions</a>
+												<span class="error d-inline-block w-100" id=""></span>
 											</label>
 										</div>
 									</div>
