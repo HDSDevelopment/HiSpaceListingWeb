@@ -29,11 +29,12 @@
 									@*@Html.TextBoxFor(m => m.Phone, new { @class = "form-control", type = "text", placeholder = "Phone" })*@
 									<label for="input" class="control-label">Phone*</label><i class="bar"></i>
 								</div>
-								<div class="form-group col-sm-6">
-									<input class="form-control" id="Email" name="Email" placeholder="abc@gmail.com" type="email" value="">
-									@*@Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "abc@gmail.com" })*@
-									<label for="input" class="control-label">Email*</label><i class="bar"></i>
-								</div>
+                                <div class="form-group col-sm-6">
+                                    <input class="form-control" id="Email" name="Email" placeholder="abc@gmail.com" type="email" value="" onblur="errAlreadySignedUp(this.value)">
+                                    @*@Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "abc@gmail.com" })*@
+                                    <label for="input" class="control-label">Email*</label><i class="bar"></i>
+                                    <div class="error" id="error_EmailExists"></div>
+                                </div>
 								<div class="form-group col-sm-6">
 									<input class="form-control" id="Password" name="Password" placeholder="password" type="password" value="">
 									@*@Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password", placeholder = "password" })*@

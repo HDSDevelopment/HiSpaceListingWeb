@@ -29,7 +29,32 @@ function userCheck(check) {
 		return confirm("Are your sure want to recheck the user as background details?");
 	}
 }
+
+//checking already signed user
+function errAlreadySignedUp(email) {
+	//alert('In errAlreadySignedUp');
+	$.ajax({
+		type: "GET",
+		url: "/User/CheckAlreadySignedUp",
+		data: { Email: email },
+		//dataType: "html",
+		success: function (response) {
+			console.log(response);
+			if (response == "1")
+				$('#error_EmailExists').html('<span>Already signed up</span>');
+			else
+				$('#error_EmailExists').html('<span></span>');
+		},
+		error: function (response) {
+			alert("server not ready please try afterwards");
+		}
+	});
+
+}
+
 $(document).ready(function () {
+	
+
 
 	var optionsWeb = {
 		step_size: 1,

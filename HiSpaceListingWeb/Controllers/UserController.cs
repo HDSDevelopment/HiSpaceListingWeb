@@ -33,7 +33,7 @@ namespace HiSpaceListingWeb.Controllers
 			SetSessionVariables();
 			return PartialView("_SignupPartialView");
 		}
-
+		
 		public ActionResult Logout()
 		{
 			User session = null;
@@ -236,6 +236,32 @@ namespace HiSpaceListingWeb.Controllers
 				}
 			}
 			return RedirectToAction("ListingTable","Listing",new { UserID = model.User.UserId, UserType = model.User.UserType });
+		}
+
+		[HttpGet]
+		public ActionResult CheckAlreadySignedUp(string Email) {
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiUserEmailEixsts + Email);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var rs = result.Content.ReadAsAsync<bool>().Result;
+					if (rs == true)
+					{
+						return Content("1");
+					}
+					else
+					{
+						return Content("");
+					}
+				}
+			}
+			return Content("");
 		}
 
 		public void SetSessionVariables()
