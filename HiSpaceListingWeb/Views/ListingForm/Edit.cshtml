@@ -82,10 +82,10 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														@*<select class="form-control basic-select" id="list-type">
-							<option value="1">Commercial</option>
-							<option value="2">Co-Working</option>
-							<option value="3">RE-Professionals</option>
-						</select>*@
+																<option value="1">Commercial</option>
+																<option value="2">Co-Working</option>
+																<option value="3">RE-Professionals</option>
+															</select>*@
 														<select class="form-control basic-select" id="ListingType" name="ListingType" asp-for="ListingType"
 																asp-items="@(new SelectList(ViewBag.ListOfListType, "ListingTypeName", "ListingTypeName"))"></select>
 														<label for="select" class="control-label">List Type*</label><i class="bar"></i>
@@ -160,12 +160,12 @@
 													@*<span class="hi-error d-none">Phone is required</span>*@
 												</div>
 												@*<div class="col-md-3 col-sm-6">
-					<div class="form-group">
-						@Html.EditorFor(m => m.SecondaryPhone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999" } })
-						<label for="SecondaryPhone" class="control-label">SecondaryPhone</label>
-						<i class="bar"></i>
-					</div>
-				</div>*@
+														<div class="form-group">
+															@Html.EditorFor(m => m.SecondaryPhone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999" } })
+															<label for="SecondaryPhone" class="control-label">SecondaryPhone</label>
+															<i class="bar"></i>
+														</div>
+													</div>*@
 
 											</div>
 											@*row 3 all type-1*@
@@ -205,10 +205,10 @@
 												<div class="col-md-3 col-sm-6 type-1__input">
 													<div class="form-group">
 														@*<select class="form-control basic-select" id="level-type">
-							<option value="Retail">Retail</option>
-							<option value="Industries">Industries</option>
-							<option value="Warehouse">Warehouse</option>
-						</select>*@
+																<option value="Retail">Retail</option>
+																<option value="Industries">Industries</option>
+																<option value="Warehouse">Warehouse</option>
+															</select>*@
 														<select class="form-control basic-select" id="CommercialType" name="CommercialType" asp-for="CommercialType"
 																asp-items="@(new SelectList(ViewBag.ListOfCommercialCategory, "CommercialCategoryName", "CommercialCategoryName"))"></select>
 														<label for="select" class="control-label">Category</label><i class="bar"></i>
@@ -217,10 +217,10 @@
 												<div class="col-md-3 col-sm-6 type-1__input">
 													<div class="form-group">
 														@*<select class="form-control basic-select" id="level-infra">
-							<option value="Shell">Shell (Empty/unfurnished)</option>
-							<option value="Semi">Semi Furnished</option>
-							<option value="Fully">Fully Furnished</option>
-						</select>*@
+																<option value="Shell">Shell (Empty/unfurnished)</option>
+																<option value="Semi">Semi Furnished</option>
+																<option value="Fully">Fully Furnished</option>
+															</select>*@
 														<select class="form-control basic-select" id="CommercialInfraType" name="CommercialInfraType" asp-for="CommercialInfraType"
 																asp-items="@(new SelectList(ViewBag.ListOfCommercialInfa, "CommercialInfaName", "CommercialInfaDisplay"))"></select>
 														<label for="select" class="control-label">Infrastucture</label><i class="bar"></i>
@@ -229,9 +229,9 @@
 												<div class="col-md-3 col-sm-6 align-self-center type-2__input d-none">
 													<div class="form-group">
 														@*<select class="form-control basic-select" id="level-type-2">
-							<option value="Office">Office</option>
-							<option value="Cafe">Cafe</option>
-						</select>*@
+																<option value="Office">Office</option>
+																<option value="Cafe">Cafe</option>
+															</select>*@
 														<select class="form-control basic-select" id="CoworkingType" name="CoworkingType" asp-for="CoworkingType"
 																asp-items="@(new SelectList(ViewBag.ListOfCoworkingCategory, "CoworkingCategoryName", "CoworkingCategoryName"))"></select>
 														<label for="select" class="control-label">Category</label><i class="bar"></i>
@@ -386,7 +386,7 @@
 												<div class="col-md-3 col-sm-6 for-rental">
 													<div class="form-group">
 														@*<input type="number" id="MinPrice" class="" placeholder="000">*@
-														@Html.EditorFor(m => m.PriceMin, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type="number" } })
+														@Html.EditorFor(m => m.PriceMin, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
 														<label for="PriceMin" class="control-label">Min Price &#8377;</label>
 														<i class="bar"></i>
 													</div>
@@ -524,7 +524,7 @@
 
 
 
-			</div>*@
+												</div>*@
 											@*row 3 all type-3*@
 											<div class="row type-3 d-none">
 												<div class="col-md-3 col-sm-6">
@@ -712,12 +712,12 @@
 											<!--row 1-->
 											<div class="row">
 												@*<div class="col-md-3 col-sm-6">
-													<div class="form-group">
-														@Html.EditorFor(m => m.Fax, new { htmlAttributes = new { @class = "form-control", placeholder = "123456798" } })
-														<label for="Fax" class="control-label">Fax</label>
-														<i class="bar"></i>
-													</div>
-												</div>*@
+														<div class="form-group">
+															@Html.EditorFor(m => m.Fax, new { htmlAttributes = new { @class = "form-control", placeholder = "123456798" } })
+															<label for="Fax" class="control-label">Fax</label>
+															<i class="bar"></i>
+														</div>
+													</div>*@
 												<div class="col-md-3 col-sm-6">
 													<div class="form-group">
 														@*<input type="text" id="Pry_name" class="" placeholder="Name">*@
@@ -744,12 +744,12 @@
 													</div>
 												</div>
 												@*<div class="col-md-6 col-sm-6">
-					<div class="checkbox m-0">
-						<label>
-							<input type="checkbox" /><i class="helper"></i>Activate
-						</label>
-					</div>
-				</div>*@
+														<div class="checkbox m-0">
+															<label>
+																<input type="checkbox" /><i class="helper"></i>Activate
+															</label>
+														</div>
+													</div>*@
 											</div>
 										</div>
 									</div>
@@ -780,3 +780,8 @@
 	</section>
 </div>
 
+
+@section Scripts {
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDGZoZkDdeXNlOPbKUG1KIXvBY5cUgQQgk"></script>
+	<script src="~/js/customMap.js"></script>
+}

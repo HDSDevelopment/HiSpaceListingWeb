@@ -4,6 +4,7 @@
 	Layout = "~/Views/Shared/_WebLayout.cshtml";
 	@using Microsoft.AspNetCore.Http
 	@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+	var indianCulture = new System.Globalization.CultureInfo("hi-IN");
 }
 
 <div class="propertydetail nav-padding">
@@ -14,7 +15,7 @@
 					<ol class="breadcrumb mb-0">
 						<li class="breadcrumb-item"><a href="@Url.Action("Index", "Website")"> <i class="fas fa-home"></i> </a></li>
 
-						<li class="breadcrumb-item"><a href="@Url.Action( "PropertyList","Website")"> <i class="fas fa-chevron-right"></i> <span> All Property List</span></a></li>
+						<li class="breadcrumb-item"><a href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })"> <i class="fas fa-chevron-right"></i> <span> All Property List</span></a></li>
 						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span> Property Details</span></li>
 					</ol>
 				</div>
@@ -38,10 +39,16 @@
 									<div class="accordion-sec__detail">
 										<div class="lister-head">
 											<div class="lister-head__name">@Model.User.CompanyName</div>
-											<img class="lister-head__image img-fluid" src="@Model.User.Doc_CompanyLogo" alt="" />
+											@if (@Model.User.Doc_CompanyLogo != null)
+											{
+												<img class="lister-head__image img-fluid" src="@Model.User.Doc_CompanyLogo" alt="" />
+											}
 										</div>
 										<div class="lister-detail">
-											<div><i class="fas fa-globe"></i><b>Website: </b> <span>@Model.User.Website</span></div>
+											@if (@Model.User.Website != null)
+											{
+												<div><i class="fas fa-globe"></i><b>Website: </b> <span>@Model.User.Website</span></div>
+											}
 											<div><i class="fas fa-mobile-alt"></i><b>Phone: </b><span>@Model.User.Phone</span></div>
 											<div><i class="fas fa-city"></i><b>Total List </b><span>(@Model.ListerPropertyCount)</span></div>
 										</div>
@@ -99,6 +106,7 @@
 									<div class="owl-stage" style="transform: translate3d(-1220px, 0px, 0px); transition: all 1s ease 0s; width: 3660px;">
 										@if (Model.ListingImages != null || Model.ListingImages.Count() > 0)
 										{
+
 											@foreach (var item in Model.ListingImages)
 											{
 												<div class="owl-item" style="width: 610px;">
@@ -142,7 +150,7 @@
 												<li class="col-sm-6"><b>Level:</b> @Model.Listing.CommercialType</li>
 												@if (@Model.Listing.SpaceSize != null)
 												{
-													<li class="col-sm-6"><b>Size:</b> @Model.Listing.SpaceSize Sq.Ft.</li>
+													<li class="col-sm-6"><b>Size:</b> @string.Format(indianCulture, "{0:N}", Model.Listing.SpaceSize) Sq.Ft.</li>
 												}
 												@if (@Model.Listing.BuildYear != null)
 												{
@@ -150,7 +158,7 @@
 												}
 												@if (@Model.Listing.RecentInnovation != null)
 												{
-													<li class="col-sm-6"><b>Recent Innovation:</b> @Model.Listing.RecentInnovation.Value.ToString("dd/MMM/yyyy")</li>
+													<li class="col-sm-6"><b>Recent Renovation:</b> @Model.Listing.RecentInnovation.Value.ToString("dd/MMM/yyyy")</li>
 												}
 												<li class="col-sm-6"><b>Infra Type:</b> @Model.Listing.CommercialInfraType</li>
 											</ul>
@@ -159,47 +167,58 @@
 										<h6 class="text-primary mb-2 mb-sm-2">Price / Occupancy</h6>
 										<div class="mb-3">
 											<ul class="property-list list-unstyled row mb-3">
-												@if (Model.Listing.PriceMin != null && Model.Listing.PriceMax != null)
+												@if (Model.Listing.CMCW_PropertyFor == "Rental")
 												{
-													<li class="col-sm-6"><b>Price Range:</b> &#8377;@Model.Listing.PriceMin - &#8377;@Model.Listing.PriceMax</li>
+													@if (Model.Listing.PriceMin != null && Model.Listing.PriceMax != null)
+													{
+														<li class="col-sm-6"><b>Price Range:</b> &#8377;@string.Format(indianCulture, "{0:N}", Model.Listing.PriceMin) - &#8377;@string.Format(indianCulture, "{0:N}", Model.Listing.PriceMax)</li>
+													}
+
+													<li class="col-sm-6">
+														<b>Rent Duration:</b>
+														@if ((Model.Listing.RentalDay == true) && (Model.Listing.RentalDay == true) && (Model.Listing.RentalMonth == true))
+														{
+															@Html.Raw("Hour | Day | Month");
+														}
+														else if ((Model.Listing.RentalHour == true) && (Model.Listing.RentalDay == true))
+														{
+															@Html.Raw("Hour | Day");
+														}
+														else if ((Model.Listing.RentalHour == true) && (Model.Listing.RentalMonth == true))
+														{
+															@Html.Raw("Hour | Month");
+														}
+														else if ((Model.Listing.RentalMonth == true) && (Model.Listing.RentalDay == true))
+														{
+															@Html.Raw("Day | Month");
+														}
+														else if ((Model.Listing.RentalMonth == true))
+														{
+															@Html.Raw("Month");
+														}
+														else if ((Model.Listing.RentalDay == true))
+														{
+															@Html.Raw("Day");
+														}
+														else if ((Model.Listing.RentalHour == true))
+														{
+															@Html.Raw("Hour");
+														}
+														else
+														{
+															@Html.Raw("Not Specified");
+														}
+													</li>
+													<li class="col-sm-6"><b>Current Occupancy:</b> @Model.Listing.CurrentOccupancy</li>
+												}
+												else if (Model.Listing.CMCW_PropertyFor == "Sale")
+												{
+													@if (Model.Listing.CMCW_AproximatePrice != null)
+													{
+														<li class="col-sm-6"><b>Price Range:</b> &#8377;@string.Format(indianCulture, "{0:N}", Model.Listing.CMCW_AproximatePrice)</li>
+													}
 												}
 
-												<li class="col-sm-6">
-													<b>Rent Duration:</b>
-													@if ((Model.Listing.RentalDay == true) && (Model.Listing.RentalDay == true) && (Model.Listing.RentalMonth == true))
-													{
-														@Html.Raw("Hour | Day | Month");
-													}
-													else if ((Model.Listing.RentalHour == true) && (Model.Listing.RentalDay == true))
-													{
-														@Html.Raw("Hour | Day");
-													}
-													else if ((Model.Listing.RentalHour == true) && (Model.Listing.RentalMonth == true))
-													{
-														@Html.Raw("Hour | Month");
-													}
-													else if ((Model.Listing.RentalMonth == true) && (Model.Listing.RentalDay == true))
-													{
-														@Html.Raw("Day | Month");
-													}
-													else if ((Model.Listing.RentalMonth == true))
-													{
-														@Html.Raw("Month");
-													}
-													else if ((Model.Listing.RentalDay == true))
-													{
-														@Html.Raw("Day");
-													}
-													else if ((Model.Listing.RentalHour == true))
-													{
-														@Html.Raw("Hour");
-													}
-													else
-													{
-														@Html.Raw("Not Specified");
-													}
-												</li>
-												<li class="col-sm-6"><b>Current Occupancy:</b> @Model.Listing.CurrentOccupancy</li>
 											</ul>
 										</div>
 										<h6 class="text-primary mb-2 mb-sm-2">Contact</h6>
@@ -219,7 +238,7 @@
 												<li class="col-sm-6"><b>Level:</b> @Model.Listing.CoworkingType</li>
 												@if (@Model.Listing.SpaceSize != null)
 												{
-													<li class="col-sm-6"><b>Size:</b> @Model.Listing.SpaceSize Sq.Ft.</li>
+													<li class="col-sm-6"><b>Size:</b> @string.Format(indianCulture, "{0:N}", Model.Listing.SpaceSize) Sq.Ft.</li>
 												}
 												@if (@Model.Listing.BuildYear != null)
 												{
@@ -227,7 +246,7 @@
 												}
 												@if (@Model.Listing.RecentInnovation != null)
 												{
-													<li class="col-sm-6"><b>Recent Innovation:</b> @Model.Listing.RecentInnovation.Value.ToString("dd/MMM/yyyy")</li>
+													<li class="col-sm-6"><b>Recent Renovation:</b> @Model.Listing.RecentInnovation.Value.ToString("dd/MMM/yyyy")</li>
 												}
 											</ul>
 										</div>
@@ -281,47 +300,56 @@
 										<h6 class="text-primary mb-2 mb-sm-2">Price / Occupancy</h6>
 										<div class="mb-3">
 											<ul class="property-list list-unstyled row mb-3">
-												@if (Model.Listing.PriceMin != null && Model.Listing.PriceMax != null)
+												@if (Model.Listing.CMCW_PropertyFor == "Rental")
 												{
-													<li class="col-sm-6"><b>Price Range:</b> &#8377;@Model.Listing.PriceMin - &#8377;@Model.Listing.PriceMax</li>
+													@if (Model.Listing.PriceMin != null && Model.Listing.PriceMax != null)
+													{
+														<li class="col-sm-6"><b>Price Range:</b> &#8377;@string.Format(indianCulture, "{0:N}", Model.Listing.PriceMin) - &#8377;@string.Format(indianCulture, "{0:N}", Model.Listing.PriceMax)</li>
+														<li class="col-sm-6">
+															<b>Rent Duration:</b>
+															@if ((Model.Listing.RentalDay == true) && (Model.Listing.RentalDay == true) && (Model.Listing.RentalMonth == true))
+															{
+																@Html.Raw("Hour | Day | Month");
+															}
+															else if ((Model.Listing.RentalHour == true) && (Model.Listing.RentalDay == true))
+															{
+																@Html.Raw("Hour | Day");
+															}
+															else if ((Model.Listing.RentalHour == true) && (Model.Listing.RentalMonth == true))
+															{
+																@Html.Raw("Hour | Month");
+															}
+															else if ((Model.Listing.RentalMonth == true) && (Model.Listing.RentalDay == true))
+															{
+																@Html.Raw("Day | Month");
+															}
+															else if ((Model.Listing.RentalMonth == true))
+															{
+																@Html.Raw("Month");
+															}
+															else if ((Model.Listing.RentalDay == true))
+															{
+																@Html.Raw("Day");
+															}
+															else if ((Model.Listing.RentalHour == true))
+															{
+																@Html.Raw("Hour");
+															}
+															else
+															{
+																@Html.Raw("Not Specified");
+															}
+														</li>
+														<li class="col-sm-6"><b>Current Occupancy:</b> @Model.Listing.CurrentOccupancy</li>
+													}
 												}
-
-												<li class="col-sm-6">
-													<b>Rent Duration:</b>
-													@if ((Model.Listing.RentalDay == true) && (Model.Listing.RentalDay == true) && (Model.Listing.RentalMonth == true))
+												else if (Model.Listing.CMCW_PropertyFor == "Sale")
+												{
+													@if (Model.Listing.CMCW_AproximatePrice != null)
 													{
-														@Html.Raw("Hour | Day | Month");
+														<li class="col-sm-6"><b>Price Range:</b> &#8377;@string.Format(indianCulture, "{0:N}", Model.Listing.CMCW_AproximatePrice)</li>
 													}
-													else if ((Model.Listing.RentalHour == true) && (Model.Listing.RentalDay == true))
-													{
-														@Html.Raw("Hour | Day");
-													}
-													else if ((Model.Listing.RentalHour == true) && (Model.Listing.RentalMonth == true))
-													{
-														@Html.Raw("Hour | Month");
-													}
-													else if ((Model.Listing.RentalMonth == true) && (Model.Listing.RentalDay == true))
-													{
-														@Html.Raw("Day | Month");
-													}
-													else if ((Model.Listing.RentalMonth == true))
-													{
-														@Html.Raw("Month");
-													}
-													else if ((Model.Listing.RentalDay == true))
-													{
-														@Html.Raw("Day");
-													}
-													else if ((Model.Listing.RentalHour == true))
-													{
-														@Html.Raw("Hour");
-													}
-													else
-													{
-														@Html.Raw("Not Specified");
-													}
-												</li>
-												<li class="col-sm-6"><b>Current Occupancy:</b> @Model.Listing.CurrentOccupancy</li>
+												}
 											</ul>
 										</div>
 										<h6 class="text-primary mb-2 mb-sm-2">Contact</h6>
@@ -1509,15 +1537,33 @@
 										{
 											<div><i class="fas fa-user-check"></i> Green Building Verified by LEED India</div>
 										}
+										else
+										{
+											<div><i class="fas fa-user-check"></i> Green Building Applied through HiSpace</div>
+
+										}
 									</div>
 								</div>
 							</div>
 							<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">
 						}
 						@*<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">*@
-						<div class="map-info row">
-							<div id="map"></div>
-						</div>
+					<div class="map-info row">
+						@if (Model.Listing.latitude_view != null && Model.Listing.longitude_view != null)
+						{
+							<div class="display-none" id="lat">@Model.Listing.latitude_view</div>
+							<div class="display-none" id="lon">@Model.Listing.longitude_view</div>
+							<div class="display-none" id="map-zoom">15</div>
+						}
+						else
+						{
+							<div class="display-none" id="lat">20.593683</div>
+							<div class="display-none" id="lon">78.962883</div>
+							<div class="display-none" id="map-zoom">4</div>
+						}
+
+						<div id="map"></div>
+					</div>
 					</div>
 				</div>
 			</div>
@@ -1528,3 +1574,10 @@
 
 	</div>
 </div>
+
+
+@section Scripts {
+<script defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGZoZkDdeXNlOPbKUG1KIXvBY5cUgQQgk&callback=initMapLatLon">
+</script>
+}

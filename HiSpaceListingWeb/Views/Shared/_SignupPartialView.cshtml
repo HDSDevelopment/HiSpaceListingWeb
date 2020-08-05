@@ -17,51 +17,78 @@
 					<div class="tab-content" id="myTabContent">
 						<div class="tab-pane fade show active" id="signup" role="tabpanel" aria-labelledby="signup-tab">
 							@*<form class="form-row mt-4 align-items-center md-form" action="account-profile.html">*@
-							@using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form-row mt-4 align-items-center md-form", onSubmit = "signupValidate(event)" }))
+							@using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form-row md-form", onSubmit = "signupValidate(event)" }))
 							{
-							<div class="form-group col-sm-6">
-								<input class="form-control" id="sign-CompanyName" name="CompanyName" placeholder="Name" type="text" value="">
-								@*@Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", placeholder = "Company Name" })*@
-								<label for="input" class="control-label">Operator/Company Name*</label><i class="bar"></i>
-								<div class="error" id=""></div>
-							</div>
-							<div class="form-group col-sm-6">
-								<input class="form-control" id="sign-Phone" name="Phone" placeholder="Phone" type="number" value="" >
-								@*@Html.TextBoxFor(m => m.Phone, new { @class = "form-control", type = "text", placeholder = "Phone" })*@
-								<label for="input" class="control-label">Phone*</label><i class="bar"></i>
-								<div class="error" id=""></div>
-							</div>
-							<div class="form-group col-sm-6">
-								<input class="form-control" id="sign-Email" name="Email" placeholder="abc@gmail.com" type="email" value="">
-								@*@Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "abc@gmail.com" })*@
-								<label for="input" class="control-label">Email*</label><i class="bar"></i>
-								<div class="error" id=""></div>
-							</div>
-							<div class="form-group col-sm-6">
-								<input class="form-control" id="sign-Password" name="Password" placeholder="password" type="password" value="" >
-								@*@Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password", placeholder = "password" })*@
-								<label for="input" class="control-label">Password*</label><i class="bar"></i>
-								<div class="error" id=""></div>
-							</div>
-								
-							<div class="form-group col-sm-12">
-								<input class="form-control" id="sign-Address" name="Address" placeholder="No.00, Street" type="text" value="">
-								@*@Html.TextBoxFor(m => m.Address, new { @class = "form-control", type = "text", placeholder = "No.00, Street" })*@
-								<label for="input" class="control-label">Complete Address</label><i class="bar"></i>
-								<div class="error" id=""></div>
-							</div>
-							<div class="form-group col-sm-6">
-								<input class="form-control" id="sign-Website" name="Website" placeholder="www.abc.com" type="text" value="">
-								@*@Html.TextBoxFor(m => m.Website, new { @class = "form-control", type = "text", placeholder = "www.abc.com" })*@
-								<label for="input" class="control-label">Web Address</label><i class="bar"></i>
-								<div class="error" id=""></div>
-							</div>
-							<div class="form-group col-sm-6">
-								<input class="form-control" id="sign-Postalcode" name="Postalcode" placeholder="Postal code" type="number" value="">
-								@*@Html.TextBoxFor(m => m.Postalcode, new { @class = "form-control", type = "number", placeholder = "Postal code" })*@
-								<label for="input" class="control-label">Postal Code</label><i class="bar"></i>
-								<div class="error" id=""></div>
-							</div>
+								<div class="col-md-12 col-sm-12">
+									<div class="radio-group">
+										<div class="form-radio radio-items radio-item__caption">
+											<div class="radio">
+												<label>
+													<input type="radio" name="UserType" checked="checked" value="1" />
+													<i class="helper"></i>
+													<span class="radio-caption">
+														<span class="radio-head">Operator</span>
+														<span class="radio-desc">List Your Space or Real-Estate Profession</span>
+													</span>
+												</label>
+											</div>
+											<div class="radio">
+												<label>
+													<input type="radio" name="UserType" value="2" />
+													<i class="helper"></i>
+													<span class="radio-caption">
+														<span class="radio-head">User</span>
+														<span class="radio-desc">Need Space or Real-Estate people</span>
+													</span>
+												</label>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-sm-6">
+									<input class="form-control" id="sign-CompanyName" name="CompanyName" placeholder="Name" type="text" value="">
+									@*@Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", placeholder = "Company Name" })*@
+									<label for="input" class="control-label">Operator/Company Name*</label><i class="bar"></i>
+									<div class="error" id=""></div>
+								</div>
+								<div class="form-group col-sm-6">
+									<input class="form-control" id="sign-Phone" name="Phone" placeholder="Phone" type="number" value="">
+									@*@Html.TextBoxFor(m => m.Phone, new { @class = "form-control", type = "text", placeholder = "Phone" })*@
+									<label for="input" class="control-label">Phone*</label><i class="bar"></i>
+									<div class="error" id=""></div>
+								</div>
+								<div class="form-group col-sm-6">
+									<input class="form-control" id="sign-Email" name="Email" placeholder="abc@gmail.com" type="email" value="">
+									@*@Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "abc@gmail.com" })*@
+									<label for="input" class="control-label">Email*</label><i class="bar"></i>
+									<div class="error" id=""></div>
+								</div>
+								<div class="form-group col-sm-6">
+									<input class="form-control" id="sign-Password" name="Password" placeholder="password" type="password" value="">
+									@*@Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password", placeholder = "password" })*@
+									<label for="input" class="control-label">Password*</label><i class="bar"></i>
+									<div class="error" id=""></div>
+								</div>
+
+								<div class="form-group col-sm-12 operator-fields">
+									<input class="form-control" id="sign-Address" name="Address" placeholder="No.00, Street" type="text" value="">
+									@*@Html.TextBoxFor(m => m.Address, new { @class = "form-control", type = "text", placeholder = "No.00, Street" })*@
+									<label for="input" class="control-label">Complete Address</label><i class="bar"></i>
+									<div class="error" id=""></div>
+								</div>
+								<div class="form-group col-sm-6 operator-fields">
+									<input class="form-control" id="sign-Website" name="Website" placeholder="www.abc.com" type="text" value="">
+									@*@Html.TextBoxFor(m => m.Website, new { @class = "form-control", type = "text", placeholder = "www.abc.com" })*@
+									<label for="input" class="control-label">Web Address</label><i class="bar"></i>
+									<div class="error" id=""></div>
+								</div>
+								<div class="form-group col-sm-6 operator-fields">
+									<input class="form-control" id="sign-Postalcode" name="Postalcode" placeholder="Postal code" type="number" value="">
+									@*@Html.TextBoxFor(m => m.Postalcode, new { @class = "form-control", type = "number", placeholder = "Postal code" })*@
+									<label for="input" class="control-label">Postal Code</label><i class="bar"></i>
+									<div class="error" id=""></div>
+								</div>
 
 								<div class="row width-full">
 									<div class="col-sm-6">

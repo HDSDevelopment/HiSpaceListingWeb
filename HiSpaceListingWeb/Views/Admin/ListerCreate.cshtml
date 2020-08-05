@@ -30,38 +30,44 @@
 					<div class="card hi-card">
 						<div class="card-body">
 							@*<form class="form-row align-items-center md-form p-3" action="account-profile.html">*@
-							@using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form-row align-items-center md-form p-3", enctype = "multipart/form-data" }))
+							@using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form-row md-form p-3", enctype = "multipart/form-data", onSubmit = "EditUserValidate(event)", id = "editUserData" }))
 							{
 								@Html.AntiForgeryToken()
-								<div class="form-group col-md-3 col-sm-6">
-									@*<input type="text" class="form-control" placeholder="Company Name">*@
-									@Html.EditorFor(m => m.CompanyName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name" } })
-									<label for="input" class="control-label">Operator/Company Name*</label><i class="bar"></i>
-								</div>
-								<div class="form-group col-md-3 col-sm-6">
-									@*<input type="text" class="form-control" placeholder="Phone">*@
-									@Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Phone" } })
-									<label for="input" class="control-label">Phone*</label><i class="bar"></i>
-								</div>
-								<div class="form-group col-md-3 col-sm-6">
-									@*<input type="email" class="form-control" placeholder="abc@gmail.com">*@
-									@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Email" } })
-									<label for="input" class="control-label">Email*</label><i class="bar"></i>
-								</div>
-								<div class="form-group col-md-3 col-sm-6">
-									@*<input type="password" class="form-control" placeholder="password">*@
-									@Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Password" } })
-									<label for="input" class="control-label">Password*</label><i class="bar"></i>
-								</div>
-								<div class="form-group col-md-3 col-sm-6">
-									@*<input type="text" class="form-control" placeholder="www.abc.com">*@
-									@Html.EditorFor(m => m.Website, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Website" } })
-									<label for="input" class="control-label">Web Address</label><i class="bar"></i>
-								</div>
+							<div class="form-group col-md-3 col-sm-6">
+								@*<input type="text" class="form-control" placeholder="Company Name">*@
+								@Html.EditorFor(m => m.CompanyName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name" } })
+								<label for="input" class="control-label">Operator/Company Name*</label><i class="bar"></i>
+								<div class="error" id=""></div>
+							</div>
+							<div class="form-group col-md-3 col-sm-6">
+								@*<input type="text" class="form-control" placeholder="Phone">*@
+								@Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Phone" } })
+								<label for="input" class="control-label">Phone*</label><i class="bar"></i>
+								<div class="error" id=""></div>
+							</div>
+							<div class="form-group col-md-3 col-sm-6">
+								@*<input type="email" class="form-control" placeholder="abc@gmail.com">*@
+								@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Email" } })
+								<label for="input" class="control-label">Email*</label><i class="bar"></i>
+								<div class="error" id=""></div>
+							</div>
+							<div class="form-group col-md-3 col-sm-6">
+								@*<input type="password" class="form-control" placeholder="password">*@
+								@Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Password" } })
+								<label for="input" class="control-label">Password*</label><i class="bar"></i>
+								<div class="error" id=""></div>
+							</div>
+							<div class="form-group col-md-3 col-sm-6">
+								@*<input type="text" class="form-control" placeholder="www.abc.com">*@
+								@Html.EditorFor(m => m.Website, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Website" } })
+								<label for="input" class="control-label">Web Address</label><i class="bar"></i>
+								<div class="error" id=""></div>
+							</div>
 								<div class="form-group col-md-6 col-sm-12">
 									@*<input type="text" class="form-control" placeholder="No.00, street">*@
 									@Html.EditorFor(m => m.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Address" } })
-									<label for="input" class="control-label">Address Line</label><i class="bar"></i>
+									<label for="input" class="control-label">Address Line*</label><i class="bar"></i>
+									<div class="error" id=""></div>
 								</div>
 								@*<div class="form-group col-md-3 col-sm-6">
 				@Html.EditorFor(m => m.City, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter City" } })
@@ -80,35 +86,41 @@
 				@Html.EditorFor(m => m.Fax, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Fax" } })
 				<label for="input" class="control-label">Fax</label><i class="bar"></i>
 			</div>*@
-								<div class="form-group col-md-3 col-sm-6">
-									@Html.EditorFor(m => m.Postalcode, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PostalCode" } })
-									<label for="input" class="control-label">Postal Code</label><i class="bar"></i>
-								</div>
-								<div class="form-group col-md-3 col-sm-6">
-									@*<input type="text" class="form-control" placeholder="Contact Name">*@
-									@Html.EditorFor(m => m.PrimaryContactName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name" } })
-									<label for="input" class="control-label">Contact Person</label><i class="bar"></i>
-								</div>
-								<div class="form-group col-md-3 col-sm-6">
-									@*<input type="text" class="form-control" placeholder="9999999999">*@
-									@Html.EditorFor(m => m.PrimaryContactPhone, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Phone" } })
-									<label for="input" class="control-label">Contact Person N0.</label><i class="bar"></i>
-								</div>
-								<div class="form-group col-md-3 col-sm-6">
-									@*<input type="text" class="form-control" placeholder="12345ABCD">*@
-									@Html.EditorFor(m => m.GSTIN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter GSTIN" } })
-									<label for="input" class="control-label">GSTIN</label><i class="bar"></i>
-								</div>
-								<div class="form-group col-md-3 col-sm-6">
-									@*<input type="text" class="form-control" placeholder="12345ABCD">*@
-									@Html.EditorFor(m => m.PAN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PAN" } })
-									<label for="input" class="control-label">PAN</label><i class="bar"></i>
-								</div>
-								<div class="form-group col-md-3 col-sm-6">
-									@*<input type="text" class="form-control" placeholder="12345ABCD">*@
-									@Html.EditorFor(m => m.UAN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter UAN" } })
-									<label for="input" class="control-label">UAN</label><i class="bar"></i>
-								</div>
+						<div class="form-group col-md-3 col-sm-6">
+							@Html.EditorFor(m => m.Postalcode, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PostalCode" } })
+							<label for="input" class="control-label">Postal Code*</label><i class="bar"></i>
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-3 col-sm-6">
+							@*<input type="text" class="form-control" placeholder="Contact Name">*@
+							@Html.EditorFor(m => m.PrimaryContactName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name" } })
+							<label for="input" class="control-label">Contact Person*</label><i class="bar"></i>
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-3 col-sm-6">
+							@*<input type="text" class="form-control" placeholder="9999999999">*@
+							@Html.EditorFor(m => m.PrimaryContactPhone, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Phone" } })
+							<label for="input" class="control-label">Contact Person No.*</label><i class="bar"></i>
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-3 col-sm-6">
+							@*<input type="text" class="form-control" placeholder="12345ABCD">*@
+							@Html.EditorFor(m => m.GSTIN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter GSTIN" } })
+							<label for="input" class="control-label">GSTIN*</label><i class="bar"></i>
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-3 col-sm-6">
+							@*<input type="text" class="form-control" placeholder="12345ABCD">*@
+							@Html.EditorFor(m => m.PAN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PAN" } })
+							<label for="input" class="control-label">PAN*</label><i class="bar"></i>
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-3 col-sm-6">
+							@*<input type="text" class="form-control" placeholder="12345ABCD">*@
+							@Html.EditorFor(m => m.UAN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter UAN" } })
+							<label for="input" class="control-label">UAN*</label><i class="bar"></i>
+							<div class="error" id=""></div>
+						</div>
 								@*<div class="form-group col-md-3 col-sm-6">
 				<p class="label-head mb-10">PAN Certificate</p>
 				@if (Model.User.Doc_PANCopy != null)
@@ -165,7 +177,8 @@
 										<label>
 											@*<input type="checkbox" />*@
 											@Html.CheckBoxFor(m => m.TermsAndConditions)
-											<i class="helper"></i><a data-toggle="modal" data-target="#termsModal" href="#" class="hover-signup" data-dismiss="modal">Terms and Conditions</a>
+											<i class="helper"></i><a data-toggle="modal" data-target="#termsModal" href="#" class="hover-signup" data-dismiss="modal">Terms and Conditions*</a>
+											<div class="error" id=""></div>
 										</label>
 									</div>
 								</div>

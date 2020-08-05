@@ -75,63 +75,57 @@
 											<span class="prop-count">-</span>
 										}
 									</div>
+									@if(item.roles != null)
+									{
+										<div>
+											<span class="property-span__head">@item.Operator.CompanyName Roles: </span>
+											@foreach (var role in item.roles)
+											{
+											<span class="re-roles">@role</span>
+											}
+										</div>
+										
+									}
 									
 								</div>
-								<div class="property-details__section-r">
-									<div class="property-details__address">
-										<i class="fas fa-map-marker-alt fa-xs"></i>
-										@item.Operator.Address
-									</div>
-									<div>
-										<span class="property-span__head">@item.Operator.CompanyName Roles: </span>
-										<span class="re-roles">Owner | Operator </span>
-									</div>
-									@*<div>
-			<span class="property-span__head">Other Linked RE-Professionals</span>
-			<span class="property-span__rent">(10)</span>
-		</div>
-		<div>
-			<ul>
-				<li>
-					<a href="#">
-						<span>Professional 1</span>
-						<span>(Interior Design)</span>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<span>Professional 2</span>
-						<span>(Project Management)</span>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<span>Professional 3</span>
-						<span>(Leasing)</span>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<span>Professional 4</span>
-						<span>(Interior Design)</span>
-					</a>
-				</li>
-			</ul>
-		</div>*@
+							<div class="property-details__section-r">
+								@if(item.LinkedREProf != null)
+								{
+
+								<div>
+									<span class="property-span__head">Other Linked RE-Professionals</span>
+									<span class="property-span__rent">(@item.LinkedREProfCount)</span>
 								</div>
+								<div>
+									<ul>
+										@foreach (var ReProf in item.LinkedREProf)
+										{
+											<li>
+												<a href="#">
+													<span>@ReProf.REFirstName @ReProf.RELastName</span>
+													<span>(@ReProf.ProjectRole)</span>
+												</a>
+											</li>
+										}
+
+									</ul>
+								</div>
+								}
+								
+							</div>
+
+								
 
 
 							</div>
 
 
 							<div class="property-details__footer">
-								@if (item.Operator.Website != null)
-								{
-									<div class="property-details__address">
-										<i class="fas fa-globe fa-xs"></i>
-										<a href="@item.Operator.Website" target="_blank">@item.Operator.Website</a>
-									</div>
-								}
+								
+								<div class="property-details__address">
+									<i class="fas fa-map-marker-alt fa-xs"></i>
+									@item.Operator.Address
+								</div>
 								<div class="property-details__total">
 
 									<span class="property-span__tot">
@@ -141,6 +135,13 @@
 									<span class="property-span__occ">
 										<i class="fas fa-mobile fa-xs"></i>@item.Operator.Phone
 									</span>
+									@if (item.Operator.Website != null)
+									{
+										<div class="property-details__address">
+											<i class="fas fa-globe fa-xs"></i>
+											<a href="@item.Operator.Website" target="_blank">@item.Operator.Website</a>
+										</div>
+									}
 								</div>
 							</div>
 

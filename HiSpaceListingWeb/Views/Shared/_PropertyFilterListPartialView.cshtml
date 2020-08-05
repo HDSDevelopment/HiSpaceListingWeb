@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @model IEnumerable<HiSpaceListingService.ViewModel.PropertyDetailResponse>
+@{
+	var indianCulture = new System.Globalization.CultureInfo("hi-IN"); 
+}
 
 
 @if (Model != null || Model.Count() != 0)
@@ -107,9 +110,9 @@
 										<div class="property-span__head">Property for <span class="badge-info__underline">Rent</span></div>
 										<div class="d-block">
 											<span class="property-span__head text-sec">Min Price:</span>
-											<span>&#8377;@item.SpaceListing.PriceMin </span> -
+											<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.PriceMin) </span> -
 											<span class="property-span__head text-info">Max Price:</span>
-											<span>&#8377;@item.SpaceListing.PriceMax</span>
+											<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.PriceMax)</span>
 										</div>
 									}
 									else if (item.SpaceListing.CMCW_PropertyFor == "Sale")
@@ -117,7 +120,7 @@
 										<div class="property-span__head">Property for <span class="badge-sec__underline">Sale</span></div>
 										<div class="d-block">
 											<span class="property-span__head text-sec">Approximate Price:</span>
-											<span>&#8377;@item.SpaceListing.CMCW_AproximatePrice </span> -
+											<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.CMCW_AproximatePrice) </span> -
 										</div>
 									}
 
@@ -235,8 +238,8 @@
 
 						</div>
 						<div class="property-btn">
-							@*<a class="property-link btn btn-primary btn-block" href="@Url.Action("PropertyDetail", "Website", new { ListingID = item.SpaceListing.ListingId })">See Details</a>*@
-							<a class="property-link btn btn-primary btn-block" href="#">See Details</a>
+							<a class="property-link btn btn-primary btn-block" href="@Url.Action("PropertyDetail", "Website", new { ListingID = item.SpaceListing.ListingId })">See Details</a>
+							@*<a class="property-link btn btn-primary btn-block" href="#">See Details</a>*@
 						</div>
 						@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
 						{

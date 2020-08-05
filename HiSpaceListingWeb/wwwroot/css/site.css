@@ -1005,7 +1005,9 @@ hr {
 
 /*------------------------------------------map css------------------------------------*/
 #map {
-	height: 500px;
+	height: 450px;
+	width: 100%;
+	margin: 5px 15px 25px;
 }
 /* Optional: Makes the sample page fill the window. */
 html, body {
@@ -2139,6 +2141,7 @@ form.md-form .checkbox.checbox-switch-small {
 .error {
 	font-size: 12px;
 	color: #f00;
+	/*position: absolute;*/
 	margin-top: 3px;
 }
 
@@ -3003,3 +3006,52 @@ form.md-form .checkbox.checbox-switch-small {
 	left: 0;
 	font-weight: 600;
 }
+.md-form .radio-items.form-radio.radio-item__caption {
+	display: flex;
+	margin-bottom: 20px;
+}
+	.radio-item__caption .radio{
+		flex: 1;
+	}
+.radio-caption {
+	display: inline-block;
+	background: #dcdcdc;
+	padding: 10px;
+	width: 100%;
+	text-align: center;
+	border-radius: 30px;
+}
+.radio-head {
+	display: block;
+	font-size: 18px;
+	font-weight: 600;
+}
+.radio-desc {
+	font-size: 12px;
+}
+.md-form .radio-item__caption .radio .helper {
+	top: 35%;
+}
+.radio-item__caption input:checked ~ .radio-caption {
+	background: #2196f3;
+	
+	color: #fff;
+	text-shadow: 4px 8px 8px #000;
+	box-shadow: 9px 9px 25px -3px #000;
+}
+.md-form .form-radio, .md-form .form-group {
+	margin-bottom: 1.5rem;
+}
+.modal.show.signup .modal-dialog {
+	top: 5%;
+	max-width: 600px;
+}
+.modal.signup .modal-body {
+	padding: 30px;
+}
+.modal-open{
+	padding: 0 !important;
+}
+.signup.modal{
+	overflow: auto;
+} 

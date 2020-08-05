@@ -17,7 +17,7 @@
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
 				@*<form class="form-row mt-4 align-items-center" action="account-profile.html">*@
-				@using (Html.BeginForm("Login", "User", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-row mt-4 align-items-center md-form", onSubmit = "loginValidate(event)" , id="login-form"}))
+				@using (Html.BeginForm("Login", "User", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-row md-form", onSubmit = "loginValidate(event)", id = "login-form" }))
 				{
 					<div class="form-group col-sm-12">
 						<input class="form-control" id="Email" name="Email" placeholder="Email Id" type="email" value="">
@@ -31,18 +31,45 @@
 						<label for="input" class="control-label">Password*</label><i class="bar"></i>
 						<div class="error" id="error_Password"></div>
 					</div>
+					<div class="col-md-12 col-sm-12">
+						<div class="radio-group">
+							<div class="form-radio radio-items radio-item__caption">
+								<div class="radio">
+									<label>
+										<input type="radio" name="UserType" checked="checked" value="1" />
+										<i class="helper"></i>
+										<span class="radio-caption">
+											<span class="radio-head">Operator</span>
+											<span class="radio-desc">List Your Space or Real-Estate Profession</span>
+										</span>
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="UserType" value="2" />
+										<i class="helper"></i>
+										<span class="radio-caption">
+											<span class="radio-head">User</span>
+											<span class="radio-desc">Need Space or Real-Estate people</span>
+										</span>
+									</label>
+								</div>
+
+							</div>
+						</div>
+					</div>
 					<div class="col-sm-6">
 						<button type="submit" class="btn btn-primary btn-block">Login</button>
 					</div>
-					<div class="col-sm-6">
+					<div class="col-sm-6 align-self-center">
 						<ul class="list-unstyled d-flex mb-1 mt-sm-0 mt-3">
 							<li class="mr-1"><a class="modal-link__signup hover-signup" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }" data-dismiss="modal"><b>New Lister? Click here to <span class="text-sec">Signup</span></b></a></li>
 						</ul>
 					</div>
 
-					@*@section Scripts{ 
-					<partial name="_validationScriptsPartial" />
-					}*@
+					@*@section Scripts{
+			<partial name="_validationScriptsPartial" />
+			}*@
 					@*</form>*@
 				}
 			</div>

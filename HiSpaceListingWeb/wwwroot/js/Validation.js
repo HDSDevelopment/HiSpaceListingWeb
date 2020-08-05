@@ -116,7 +116,7 @@ function validate(formData, rules) {
 	//console.log(formData);
 	$.each(rules, function (i, n) {
 		var input = $(`#${formData.id} #${n.id}`);
-		console.log(input)
+		//console.log(input)
 		if (input.prop("tagName") == "textarea") {
 			var value = input.html();
 			//console.log(value);
@@ -158,7 +158,8 @@ function loginValidate(e) {
 	$(`#${formData.id} .error`).html(``);
 
 	let rules = [
-		{ "id": "Email", "validation": ["emptyRegx"]},
+		{
+			"id": "Email", "validation": ["emptyRegx", "emailRegx"]},
 		{ "id": "Password", "validation": ["emptyRegx"]},
 	];
 
@@ -181,19 +182,21 @@ function loginValidate(e) {
 
 //Signup validation
 function signupValidate(e) {
-	let formData = { "id": "ImageAddForm" };
+	
+	let formData = { "id": "signup form" };
 	$(`#${formData.id} .error`).html(``);
 
 	let rules = [
 		{ "id": "sign-CompanyName", "validation": ["emptyRegx"] },
 		{ "id": "sign-Phone", "validation": ["emptyRegx", "phoneRegx"] },
-		{ "id": "sign-Email", "validation": ["emptyRegx"] },
+		{
+			"id": "sign-Email", "validation": ["emptyRegx", "emailRegx"] },
 		{ "id": "sign-Password", "validation": ["emptyRegx", "passwordRegx"] },
 		//{ "id": "sign-Website", "validation": ["emptyRegx"] },
 		//{ "id": "sign-Postalcode", "validation": ["emptyRegx"] },
 
 	];
-
+	//console.log(rules)
 	var User_Website = "sign-Website";
 	var User_Postalcode = "sign-Postalcode";
 	if ($(`#${User_Website}`).val() && $(`#${User_Website}`).val() != "") {
@@ -202,9 +205,8 @@ function signupValidate(e) {
 	if ($(`#${User_Postalcode}`).val() && $(`#${User_Postalcode}`).val() != "") {
 		rules.push({ "id": "sign-Postalcode", "validation": ["postRegx"] });
 	}
-
 	validate(formData, rules);
-
+	
 	$(`#${formData.id} .error`).each(function (i) {
 		if ($(this).is(':empty')) {
 		}
@@ -233,10 +235,16 @@ function EditUserValidate(e) {
 		{ "id": "UAN", "validation": ["emptyRegx", "aadhaarRegx"] },
 		{ "id": "TermsAndConditions", "validation": ["checkboxRegx"] }
 	];
+	if ($("#Password").length) {
+		rules.push({
+			"id": "Password", "validation": ["emptyRegx","passwordRegx"] });
+	} else {
 
+	}
 	var User_Website = "Website";
 	if ($(`#${User_Website}`).val() && $(`#${User_Website}`).val() != "") {
-		rules.push({ "id": "Website", "validation": ["websiteRegx"] });
+		rules.push({
+			"id": "Website", "validation": ["websiteRegx"] });
 	}
 	validate(formData, rules);
 	$(`#${formData.id} .error`).each(function (i) {

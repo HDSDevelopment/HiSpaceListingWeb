@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace HiSpaceListingWeb.Controllers
 {
@@ -56,6 +57,10 @@ namespace HiSpaceListingWeb.Controllers
 		public ActionResult Login(User user)
 		{
 				User _user = null;
+				if(user.Email == "admin@gmail.com")
+				{
+					user.UserType = 0;
+				}
 				using (var client = new HttpClient())
 				{
 					client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
@@ -70,7 +75,8 @@ namespace HiSpaceListingWeb.Controllers
 						_user = readTask.Result;
 					}
 				}
-				if (_user != null && _user.UserId > 0 && _user.Email == user.Email && _user.Password == user.Password)
+				//operator check
+				if (_user != null && _user.UserId > 0 && _user.Email == user.Email && _user.Password == user.Password && _user.UserType == 1)
 				{
 					AssignSessionVariables(_user);
 					SetSessionVariables();
@@ -78,11 +84,19 @@ namespace HiSpaceListingWeb.Controllers
 					//			return RedirectToAction("ListingTable", new RouteValueDictionary(
 					//new { controller = "Listing", action = "ListingTable", UserID = _user.UserId }));
 				}
-				else if (_user != null && _user.UserId == 0 && _user.Email == user.Email && _user.Password == user.Password)
+				//admin check
+				else if (_user != null && _user.UserId == 0 && _user.Email == user.Email && _user.Password == user.Password && _user.UserType == 0)
 				{
 					AssignSessionVariables(_user);
 					SetSessionVariables();
 					return RedirectToAction("AdminLister", "Admin");
+				}
+				//User check
+				else if(_user != null && _user.UserId == 0 && _user.Email == user.Email && _user.Password == user.Password && _user.UserType == 2)
+				{
+					AssignSessionVariables(_user);
+					SetSessionVariables();
+					return RedirectToAction("Index", "Website");
 				}
 				else
 				{
@@ -95,11 +109,23 @@ namespace HiSpaceListingWeb.Controllers
 		public ActionResult Create(User model)
 		{
 			SetSessionVariables();
-			if(model != null)
+			User _user = null;
+			if (model != null)
 			{
-				model.UserType = 1;
+				if(model.UserType == 1)
+				{
+					model.UserStatus = "Incomplete";
+				}
+				else if(model.UserType == 2)
+				{
+					model.UserStatus = "User";
+				}
+				else if(model.UserType == null)
+				{
+					model.UserType = 1;
+					model.UserStatus = "Incomplete";
+				}
 				model.Status = true;
-				model.UserStatus = "Incomplete";
 				model.CreatedDateTime = DateTime.Now;
 				model.LoginCount = 0;
 
@@ -116,17 +142,20 @@ namespace HiSpaceListingWeb.Controllers
 					{
 						var rs = result.Content.ReadAsAsync<User>();
 						//return RedirectToAction("Index");
-						model = rs.Result;
+						_user = rs.Result;
 					}
-					TempData["Signup"] = "Signup Success";
+					
+					//SetSessionVariables();
 				}
 				ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
 			}
-			if(GetSessionObject().UserId != 0)
+			if(ViewBag.UserId == null)
 			{
+				//AssignSessionVariables(_user);
+				TempData["Signup"] = "Signup Success";
 				return RedirectToAction("Index", "Website");
 			}
-			else if (GetSessionObject().UserId == 0)
+			else if (ViewBag.UserId == 0)
 			{
 				return RedirectToAction("AdminLister", "Admin");
 			}

@@ -132,7 +132,7 @@
 						<li class="nav-item  ">
 							<a class="nav-link" href="@Url.Action( "Contact","Website")" id="navbarDropdown">Contact</a>
 						</li>
-						@if (ViewBag.UserId != null && ViewBag.UserId == 0)
+						@if (ViewBag.UserId != null && ViewBag.UserId == 0 && ViewBag.UserType == 0)
 						{
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -143,7 +143,7 @@
 								</ul>
 							</li>
 						}
-						else if (ViewBag.UserId != null && ViewBag.UserId > 0)
+						else if (ViewBag.UserId != null && ViewBag.UserId > 0 && ViewBag.UserType == 1)
 						{
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -151,6 +151,17 @@
 								</a>
 								<ul class="dropdown-menu">
 									<li><a class="dropdown-item" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})">My Listing</a></li>
+								</ul>
+							</li>
+						}
+						else if (ViewBag.UserId != null && ViewBag.UserId > 0 && ViewBag.UserType == 2)
+						{
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Dashboard <i class="fas fa-chevron-down fa-xs"></i>
+								</a>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="#">My Enquiries</a></li>
 								</ul>
 							</li>
 						}
@@ -301,8 +312,8 @@
 	<script src="~/js/datetimepicker/moment.min.js"></script>
 	<script src="~/js/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 	@*<script src="~/js/datetimepicker/datetimepicker.min.js"></script>*@
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDGZoZkDdeXNlOPbKUG1KIXvBY5cUgQQgk"></script>
-
+	
+	
 	@*<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyB59thq3ND2fzB_9zq5IZa3Ko2antbwRGw"></script>*@
 	@*<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyBFdQ1J1MYZYWYDvSlEXRZp-CN9q0po4nM"></script>*@
 
@@ -335,7 +346,7 @@
 
 	<!-- Template Scripts (Do not remove)-->
 	<script src="~/js/custom.js"></script>
-	<script src="~/js/customMap.js"></script>
+	@*<script src="~/js/customMap.js"></script>*@
 	<script src="~/js/Validation.js"></script>
 	<script src="~/js/site.js"></script>
 	@RenderSection("Scripts", required: false)

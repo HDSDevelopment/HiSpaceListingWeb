@@ -78,10 +78,10 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														@*<select class="form-control basic-select" id="list-type">
-						<option value="1">Commercial</option>
-						<option value="2">Co-Working</option>
-						<option value="3">RE-Professionals</option>
-					</select>*@
+																<option value="1">Commercial</option>
+																<option value="2">Co-Working</option>
+																<option value="3">RE-Professionals</option>
+															</select>*@
 														<select class="form-control basic-select" id="ListingType" name="ListingType" asp-for="ListingType"
 																asp-items="@(new SelectList(ViewBag.ListOfListType, "ListingTypeName", "ListingTypeName"))"></select>
 														<label for="select" class="control-label">List Type*</label><i class="bar"></i>
@@ -138,7 +138,7 @@
 												<div class="col-md-3 col-sm-6">
 													<div class="form-group">
 														@*<input type="text" id="l_Email" class=" required-input" placeholder="abc@gmail.com">*@
-														@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "abc@gmail.com",@type="email" } })
+														@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "abc@gmail.com", @type = "email" } })
 														<label for="Email" class="control-label">Email*</label>
 														<i class="bar"></i>
 														<div class="error"></div>
@@ -148,7 +148,7 @@
 												<div class="col-md-3 col-sm-6">
 													<div class="form-group">
 														@*<input type="text" id="Phone" class=" required-input" placeholder="9999999999">*@
-														@Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999",@type="number" } })
+														@Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999", @type = "number" } })
 														<label for="Phone" class="control-label">Phone*</label>
 														<i class="bar"></i>
 														<div class="error"></div>
@@ -156,438 +156,438 @@
 													@*<span class="hi-error d-none">Phone is required</span>*@
 												</div>
 												@*<div class="col-md-3 col-sm-6">
-			<div class="form-group">
-				@Html.EditorFor(m => m.SecondaryPhone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999" } })
-				<label for="SecondaryPhone" class="control-label">SecondaryPhone</label>
-				<i class="bar"></i>
-			</div>
-		</div>*@
-												
+														<div class="form-group">
+															@Html.EditorFor(m => m.SecondaryPhone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999" } })
+															<label for="SecondaryPhone" class="control-label">SecondaryPhone</label>
+															<i class="bar"></i>
+														</div>
+													</div>*@
+
 											</div>
 											@*row 3 all type-1*@
-										<div class="row form-type type-1">
-											<div class="col-md-3 col-sm-6">
-												<div class="form-group">
-													@*<input type="text" id="Name" class=" required-input" placeholder="List Name">*@
-													@Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name" } })
-													<label for="Name" class="control-label">property Name*</label>
-													<i class="bar"></i>
-													<div class="error"></div>
-												</div>
-												
-											</div>
-											<div class="col-md-3 col-sm-6">
-												<div class="radio-group">
-													<div class="radio-lable">
-														Property For*
+											<div class="row form-type type-1">
+												<div class="col-md-3 col-sm-6">
+													<div class="form-group">
+														@*<input type="text" id="Name" class=" required-input" placeholder="List Name">*@
+														@Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name" } })
+														<label for="Name" class="control-label">property Name*</label>
+														<i class="bar"></i>
+														<div class="error"></div>
 													</div>
-													<div class="form-radio radio-items">
-														<div class="radio">
-															<label>
-																<input type="radio" name="CMCW_PropertyFor" checked="checked" value="Rental" />
-																@*@Html.RadioButtonFor(m => m.CMCW_PropertyFor, "Rental", new { @checked = "checked", id = "" })*@
-																<i class="helper"></i>Rental
-															</label>
-														</div>
-														<div class="radio">
-															<label>
-																<input type="radio" name="CMCW_PropertyFor" value="Sale" />
-																@*@Html.RadioButtonFor(m => m.CMCW_PropertyFor, "Sale", new { id = "" })*@
-																<i class="helper"></i>Sale
-															</label>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="col-md-3 col-sm-6 type-1__input">
-												<div class="form-group">
-													@*<select class="form-control basic-select" id="level-type">
-					<option value="Retail">Retail</option>
-					<option value="Industries">Industries</option>
-					<option value="Warehouse">Warehouse</option>
-				</select>*@
-													<select class="form-control basic-select" id="CommercialType" name="CommercialType" asp-for="CommercialType"
-															asp-items="@(new SelectList(ViewBag.ListOfCommercialCategory, "CommercialCategoryName", "CommercialCategoryName"))"></select>
-													<label for="select" class="control-label">Category</label><i class="bar"></i>
-												</div>
-											</div>
-											<div class="col-md-3 col-sm-6 type-1__input">
-												<div class="form-group">
-													@*<select class="form-control basic-select" id="level-infra">
-					<option value="Shell">Shell (Empty/unfurnished)</option>
-					<option value="Semi">Semi Furnished</option>
-					<option value="Fully">Fully Furnished</option>
-				</select>*@
-													<select class="form-control basic-select" id="CommercialInfraType" name="CommercialInfraType" asp-for="CommercialInfraType"
-															asp-items="@(new SelectList(ViewBag.ListOfCommercialInfa, "CommercialInfaName", "CommercialInfaDisplay"))"></select>
-													<label for="select" class="control-label">Infrastucture</label><i class="bar"></i>
-												</div>
-											</div>
-											<div class="col-md-3 col-sm-6 align-self-center type-2__input d-none">
-												<div class="form-group">
-													@*<select class="form-control basic-select" id="level-type-2">
-					<option value="Office">Office</option>
-					<option value="Cafe">Cafe</option>
-				</select>*@
-													<select class="form-control basic-select" id="CoworkingType" name="CoworkingType" asp-for="CoworkingType"
-															asp-items="@(new SelectList(ViewBag.ListOfCoworkingCategory, "CoworkingCategoryName", "CoworkingCategoryName"))"></select>
-													<label for="select" class="control-label">Category</label><i class="bar"></i>
-												</div>
-											</div>
 
-											<div class="col-md-3 col-sm-6">
-												<div class="form-group">
-													@*<input type="number" id="Size" class="" placeholder="100">*@
-													@Html.EditorFor(m => m.SpaceSize, new { htmlAttributes = new { @class = "form-control", placeholder = "00.00", @type = "number" } })
-													<label for="SpaceSize" class="control-label">Space Size (Sq.ft)</label>
-													<i class="bar"></i>
 												</div>
-											</div>
-											<div class="col-md-3 col-sm-6 for-rental">
-												<div class="checkbox-group">
-													<div class="checkbox-lable">
-														Rental Options
-													</div>
-													<div class="checkbox-items">
-														<div class="checkbox">
-															<label>
-																@*<input type="checkbox" />*@
-																@Html.CheckBoxFor(m => m.RentalHour)
-																<i class="helper"></i>Hour
-															</label>
+												<div class="col-md-3 col-sm-6">
+													<div class="radio-group">
+														<div class="radio-lable">
+															Property For*
 														</div>
-														<div class="checkbox">
-															<label>
-																@*<input type="checkbox" />*@
-																@Html.CheckBoxFor(m => m.RentalDay)
-
-																<i class="helper"></i>Day
-															</label>
-														</div>
-														<div class="checkbox">
-															<label>
-																@*<input type="checkbox" checked="checked" />*@
-																@Html.CheckBoxFor(m => m.RentalMonth, new { @checked = "checked" })
-																<i class="helper"></i>Month
-															</label>
+														<div class="form-radio radio-items">
+															<div class="radio">
+																<label>
+																	<input type="radio" name="CMCW_PropertyFor" checked="checked" value="Rental" />
+																	@*@Html.RadioButtonFor(m => m.CMCW_PropertyFor, "Rental", new { @checked = "checked", id = "" })*@
+																	<i class="helper"></i>Rental
+																</label>
+															</div>
+															<div class="radio">
+																<label>
+																	<input type="radio" name="CMCW_PropertyFor" value="Sale" />
+																	@*@Html.RadioButtonFor(m => m.CMCW_PropertyFor, "Sale", new { id = "" })*@
+																	<i class="helper"></i>Sale
+																</label>
+															</div>
 														</div>
 													</div>
 												</div>
-											</div>
-											<div class="type-2-sub col-md-3 col-sm-6 mt-1rem align-self-center type-2__input type-2-sub__input d-none">
-												<div class="checkbox">
-													<label>
-														<input id="option_shared_space" type="checkbox" />
-														@*@Html.EditorFor(m => m.CW_Coworking, new { htmlAttributes = new { @class = "", @type="checkbox" } })*@
-														<i class="helper"></i>Shared Space
-													</label>
-												</div>
-												<div class="check-view row d-none">
-													<div class="col-md-6 col-sm-12">
-														<div class="form-group">
-															@*<input type="number" id="ss_no" class="" placeholder="0">*@
-															@Html.EditorFor(m => m.CW_Coworking, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
-															<label for="ss_no" class="control-label">No. of Space</label>
-															<i class="bar"></i>
-															<div class="error"></div>
-														</div>
-													</div>
-													<div class="col-md-6 col-sm-12">
-														<div class="form-group">
-															@*<input type="number" id="ss_total" class="" placeholder="0">*@
-															@Html.EditorFor(m => m.CW_CoworkingSeats, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
-															<label for="ss_total" class="control-label">Total Seats</label>
-															<i class="bar"></i>
-															<div class="error"></div>
-														</div>
+												<div class="col-md-3 col-sm-6 type-1__input">
+													<div class="form-group">
+														@*<select class="form-control basic-select" id="level-type">
+																<option value="Retail">Retail</option>
+																<option value="Industries">Industries</option>
+																<option value="Warehouse">Warehouse</option>
+															</select>*@
+														<select class="form-control basic-select" id="CommercialType" name="CommercialType" asp-for="CommercialType"
+																asp-items="@(new SelectList(ViewBag.ListOfCommercialCategory, "CommercialCategoryName", "CommercialCategoryName"))"></select>
+														<label for="select" class="control-label">Category</label><i class="bar"></i>
 													</div>
 												</div>
-											</div>
-											<div class="type-2-sub col-md-3 col-sm-6 mt-1rem align-self-center type-2__input type-2-sub__input d-none">
-												<div class="checkbox">
-													<label>
-														<input id="option_private_space" type="checkbox" /><i class="helper"></i>Private Space
-													</label>
-												</div>
-												<div class="check-view row d-none">
-													<div class="col-md-6 col-sm-12">
-														<div class="form-group">
-															@*<input type="number" id="ps_no" class="" placeholder="0">*@
-															@Html.EditorFor(m => m.CW_PrivateOffice, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
-															<label for="ps_no" class="control-label">No. of Space</label>
-															<i class="bar"></i>
-															<div class="error"></div>
-														</div>
-													</div>
-													<div class="col-md-6 col-sm-12">
-														<div class="form-group">
-															@*<input type="number" id="ps_total" class="" placeholder="0">*@
-															@Html.EditorFor(m => m.CW_PrivateOfficeSeats, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
-															<label for="ps_total" class="control-label">Total Seats</label>
-															<i class="bar"></i>
-															<div class="error"></div>
-														</div>
+												<div class="col-md-3 col-sm-6 type-1__input">
+													<div class="form-group">
+														@*<select class="form-control basic-select" id="level-infra">
+																<option value="Shell">Shell (Empty/unfurnished)</option>
+																<option value="Semi">Semi Furnished</option>
+																<option value="Fully">Fully Furnished</option>
+															</select>*@
+														<select class="form-control basic-select" id="CommercialInfraType" name="CommercialInfraType" asp-for="CommercialInfraType"
+																asp-items="@(new SelectList(ViewBag.ListOfCommercialInfa, "CommercialInfaName", "CommercialInfaDisplay"))"></select>
+														<label for="select" class="control-label">Infrastucture</label><i class="bar"></i>
 													</div>
 												</div>
-											</div>
-											<div class="type-2-sub col-md-3 col-sm-6 mt-1rem align-self-center type-2__input type-2-sub__input d-none">
-												<div class="checkbox">
-													<label>
-														<input id="option_meeting_room" type="checkbox" /><i class="helper"></i>Meeting Room
-													</label>
-												</div>
-												<div class="check-view row d-none">
-													<div class="col-md-6 col-sm-12">
-														<div class="form-group">
-															@*<input type="number" id="mr_no" class="" placeholder="0">*@
-															@Html.EditorFor(m => m.CW_MeetingRoom, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
-															<label for="mr_no" class="control-label">No. of Space</label>
-															<i class="bar"></i>
-															<div class="error"></div>
-														</div>
-													</div>
-													<div class="col-md-6 col-sm-12">
-														<div class="form-group">
-															@*<input type="number" id="mr_total" class="" placeholder="0">*@
-															@Html.EditorFor(m => m.CW_MeetingRoomSeats, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
-															<label for="mr_total" class="control-label">Total Seats</label>
-															<i class="bar"></i>
-															<div class="error"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="type-2-sub col-md-3 col-sm-6 type-2__input type-2-sub__input d-none">
-												<div class="radio-group">
-													<div class="radio-lable">
-														Virtual Office
-													</div>
-													<div class="form-radio radio-items">
-														<div class="radio">
-															<label>
-																@*<input type="radio" name="radio_2" checked="checked" />*@
-																@Html.RadioButtonFor(m => m.CW_VirtualOffice, true, new { @checked = "checked", id = "" })
-																<i class="helper"></i>Yes
-															</label>
-														</div>
-														<div class="radio">
-															<label>
-																@*<input type="radio" checked name="radio_2" />*@
-																@Html.RadioButtonFor(m => m.CW_VirtualOffice, false, new { id = "" })
-																<i class="helper"></i>No
-															</label>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="col-md-3 col-sm-6 for-rental">
-												<div class="form-group">
-													@*<input type="number" id="MinPrice" class="" placeholder="000">*@
-													@Html.EditorFor(m => m.PriceMin, new { htmlAttributes = new { @class = "form-control", placeholder = "000",@type="number" } })
-													<label for="PriceMin" class="control-label">Min Price &#8377;</label>
-													<i class="bar"></i>
-												</div>
-											</div>
-											<div class="col-md-3 col-sm-6 for-rental">
-												<div class="form-group">
-													@*<input type="number" id="MaxPrice" class="" placeholder="100000">*@
-													@Html.EditorFor(m => m.PriceMax, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
-													<label for="MaxPrice" class="control-label">Max Price &#8377;</label>
-													<i class="bar"></i>
-												</div>
-											</div>
-											<div class="form-group col-md-3 col-sm-6 datetimepickers">
-												<div class="form-group">
-													<div class='input-group date' id='BuildYearDiv'>
-														@*<input type='text' class="form-control" placeholder="YYYY/MM/DD"/>*@
-														@Html.TextBoxFor(m => m.BuildYear, new { @class = "form-control", placeholder = "DD/MM/YYYY", @type = "text" })
-														<label for="input" class="control-label">Build Year</label><i class="bar"></i>
-														<span class="input-group-addon">
-															<span class="far fa-calendar-alt"></span>
-														</span>
+												<div class="col-md-3 col-sm-6 align-self-center type-2__input d-none">
+													<div class="form-group">
+														@*<select class="form-control basic-select" id="level-type-2">
+																<option value="Office">Office</option>
+																<option value="Cafe">Cafe</option>
+															</select>*@
+														<select class="form-control basic-select" id="CoworkingType" name="CoworkingType" asp-for="CoworkingType"
+																asp-items="@(new SelectList(ViewBag.ListOfCoworkingCategory, "CoworkingCategoryName", "CoworkingCategoryName"))"></select>
+														<label for="select" class="control-label">Category</label><i class="bar"></i>
 													</div>
 												</div>
 
-											</div>
-											<div class="form-group col-md-3 col-sm-6 datetimepickers">
-												<div class="form-group">
-													<div class='input-group date' id='RecentInnovationDiv'>
-														@*<input type='text' class="form-control" placeholder="YYYY/MM/DD"/>*@
-														@Html.TextBoxFor(m => m.RecentInnovation, new { @class = "form-control", placeholder = "DD/MM/YYYY", @type = "text" })
-														<label for="input" class="control-label">Recent Renovation</label><i class="bar"></i>
-														<span class="input-group-addon">
-															<span class="far fa-calendar-alt"></span>
-														</span>
+												<div class="col-md-3 col-sm-6">
+													<div class="form-group">
+														@*<input type="number" id="Size" class="" placeholder="100">*@
+														@Html.EditorFor(m => m.SpaceSize, new { htmlAttributes = new { @class = "form-control", placeholder = "00.00", @type = "number" } })
+														<label for="SpaceSize" class="control-label">Space Size (Sq.ft)</label>
+														<i class="bar"></i>
 													</div>
 												</div>
-
-											</div>
-											<div class="col-md-3 col-sm-6 input-occupancy for-rental">
-												<div class="form-group">
-													@*<input type="number" id="CurrentOccupancy" class="" placeholder="00">*@
-													@Html.EditorFor(m => m.CurrentOccupancy, new { htmlAttributes = new { @class = "form-control", placeholder = "00", @type = "number" } })
-													<label for="CurrentOccupancy" class="control-label">Current Occupancy %</label>
-													<i class="bar"></i>
-												</div>
-											</div>
-											<div class="col-md-3 col-sm-6 for-sale d-none">
-												<div class="form-group">
-													@Html.EditorFor(m => m.CMCW_AproximatePrice, new { htmlAttributes = new { @class = "form-control", placeholder = "00", @type = "number" } })
-													<label for="CMCW_AproximatePrice" class="control-label">Aproximate Price &#8377;</label>
-													<i class="bar"></i>
-												</div>
-											</div>
-											@*property details RERA and other numbers*@
-											<div class="col-sm-12">
-												<h5 class="property-other__heading">Property Other details</h5>
-												<p>These details are used to link the Real Estate Professionals. Who are all you know and collabrate in your property.</p>
-											</div>
-											<div class="col-md-3 col-sm-6">
-												<div class="form-group">
-													@Html.EditorFor(m => m.CMCW_ReraId, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
-													<label for="CMCW_ReraId" class="control-label">RERA ID</label>
-													<i class="bar"></i>
-												</div>
-											</div>
-											<div class="col-md-3 col-sm-6">
-												<div class="form-group">
-													@Html.EditorFor(m => m.CMCW_SurveyNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
-													<label for="CMCW_SurveyNumber" class="control-label">Survey No.</label>
-													<i class="bar"></i>
-												</div>
-											</div>
-											<div class="col-md-3 col-sm-6">
-												<div class="form-group">
-													@Html.EditorFor(m => m.CMCW_PropertyTaxBillNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
-													<label for="CMCW_PropertyTaxBillNumber" class="control-label">Property Tax Bill No.</label>
-													<i class="bar"></i>
-												</div>
-											</div>
-											<div class="col-md-3 col-sm-6">
-												<div class="form-group">
-													@Html.EditorFor(m => m.CMCW_CTSNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
-													<label for="CMCW_CTSNumber" class="control-label">CTS No.</label>
-													<i class="bar"></i>
-												</div>
-											</div>
-											<div class="col-md-3 col-sm-6">
-												<div class="form-group">
-													@Html.EditorFor(m => m.CMCW_MilkatNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
-													<label for="CMCW_MilkatNumber" class="control-label">Milkat No.</label>
-													<i class="bar"></i>
-												</div>
-											</div>
-											<div class="col-md-3 col-sm-6">
-												<div class="form-group">
-													@Html.EditorFor(m => m.CMCW_GatNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
-													<label for="CMCW_GatNumber" class="control-label">Gat No.</label>
-													<i class="bar"></i>
-												</div>
-											</div>
-											<div class="col-md-3 col-sm-6">
-												<div class="form-group">
-													@Html.EditorFor(m => m.CMCW_PlotNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
-													<label for="CMCW_PlotNumber" class="control-label">Plot No.</label>
-													<i class="bar"></i>
-												</div>
-											</div>
-											<div class="col-md-12 col-sm-12 type-1__input input_intrest">
-												<div class="radio-group">
-													<div class="radio-lable">
-														Interested in modifying to Co-Working
-													</div>
-													<div class="form-radio radio-items">
-														<div class="radio">
-															<label>
-																@*<input type="radio" name="radio_1" checked="checked" />*@
-
-																@Html.RadioButtonFor(m => m.CM_IntrestedCoworking, true, new { @checked = "checked", id = "" })
-																<i class="helper"></i>Yes
-															</label>
+												<div class="col-md-3 col-sm-6 for-rental">
+													<div class="checkbox-group">
+														<div class="checkbox-lable">
+															Rental Options
 														</div>
-														<div class="radio">
-															<label>
-																@*<input type="radio" name="radio_1" />*@
-																@Html.RadioButtonFor(m => m.CM_IntrestedCoworking, false, new { id = "" })
-																<i class="helper"></i>No
-															</label>
+														<div class="checkbox-items">
+															<div class="checkbox">
+																<label>
+																	@*<input type="checkbox" />*@
+																	@Html.CheckBoxFor(m => m.RentalHour)
+																	<i class="helper"></i>Hour
+																</label>
+															</div>
+															<div class="checkbox">
+																<label>
+																	@*<input type="checkbox" />*@
+																	@Html.CheckBoxFor(m => m.RentalDay)
+
+																	<i class="helper"></i>Day
+																</label>
+															</div>
+															<div class="checkbox">
+																<label>
+																	@*<input type="checkbox" checked="checked" />*@
+																	@Html.CheckBoxFor(m => m.RentalMonth, new { @checked = "checked" })
+																	<i class="helper"></i>Month
+																</label>
+															</div>
 														</div>
 													</div>
 												</div>
+												<div class="type-2-sub col-md-3 col-sm-6 mt-1rem align-self-center type-2__input type-2-sub__input d-none">
+													<div class="checkbox">
+														<label>
+															<input id="option_shared_space" type="checkbox" />
+															@*@Html.EditorFor(m => m.CW_Coworking, new { htmlAttributes = new { @class = "", @type="checkbox" } })*@
+															<i class="helper"></i>Shared Space
+														</label>
+													</div>
+													<div class="check-view row d-none">
+														<div class="col-md-6 col-sm-12">
+															<div class="form-group">
+																@*<input type="number" id="ss_no" class="" placeholder="0">*@
+																@Html.EditorFor(m => m.CW_Coworking, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
+																<label for="ss_no" class="control-label">No. of Space</label>
+																<i class="bar"></i>
+																<div class="error"></div>
+															</div>
+														</div>
+														<div class="col-md-6 col-sm-12">
+															<div class="form-group">
+																@*<input type="number" id="ss_total" class="" placeholder="0">*@
+																@Html.EditorFor(m => m.CW_CoworkingSeats, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
+																<label for="ss_total" class="control-label">Total Seats</label>
+																<i class="bar"></i>
+																<div class="error"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="type-2-sub col-md-3 col-sm-6 mt-1rem align-self-center type-2__input type-2-sub__input d-none">
+													<div class="checkbox">
+														<label>
+															<input id="option_private_space" type="checkbox" /><i class="helper"></i>Private Space
+														</label>
+													</div>
+													<div class="check-view row d-none">
+														<div class="col-md-6 col-sm-12">
+															<div class="form-group">
+																@*<input type="number" id="ps_no" class="" placeholder="0">*@
+																@Html.EditorFor(m => m.CW_PrivateOffice, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
+																<label for="ps_no" class="control-label">No. of Space</label>
+																<i class="bar"></i>
+																<div class="error"></div>
+															</div>
+														</div>
+														<div class="col-md-6 col-sm-12">
+															<div class="form-group">
+																@*<input type="number" id="ps_total" class="" placeholder="0">*@
+																@Html.EditorFor(m => m.CW_PrivateOfficeSeats, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
+																<label for="ps_total" class="control-label">Total Seats</label>
+																<i class="bar"></i>
+																<div class="error"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="type-2-sub col-md-3 col-sm-6 mt-1rem align-self-center type-2__input type-2-sub__input d-none">
+													<div class="checkbox">
+														<label>
+															<input id="option_meeting_room" type="checkbox" /><i class="helper"></i>Meeting Room
+														</label>
+													</div>
+													<div class="check-view row d-none">
+														<div class="col-md-6 col-sm-12">
+															<div class="form-group">
+																@*<input type="number" id="mr_no" class="" placeholder="0">*@
+																@Html.EditorFor(m => m.CW_MeetingRoom, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
+																<label for="mr_no" class="control-label">No. of Space</label>
+																<i class="bar"></i>
+																<div class="error"></div>
+															</div>
+														</div>
+														<div class="col-md-6 col-sm-12">
+															<div class="form-group">
+																@*<input type="number" id="mr_total" class="" placeholder="0">*@
+																@Html.EditorFor(m => m.CW_MeetingRoomSeats, new { htmlAttributes = new { @class = "", placeholder = "00", @type = "number" } })
+																<label for="mr_total" class="control-label">Total Seats</label>
+																<i class="bar"></i>
+																<div class="error"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="type-2-sub col-md-3 col-sm-6 type-2__input type-2-sub__input d-none">
+													<div class="radio-group">
+														<div class="radio-lable">
+															Virtual Office
+														</div>
+														<div class="form-radio radio-items">
+															<div class="radio">
+																<label>
+																	@*<input type="radio" name="radio_2" checked="checked" />*@
+																	@Html.RadioButtonFor(m => m.CW_VirtualOffice, true, new { @checked = "checked", id = "" })
+																	<i class="helper"></i>Yes
+																</label>
+															</div>
+															<div class="radio">
+																<label>
+																	@*<input type="radio" checked name="radio_2" />*@
+																	@Html.RadioButtonFor(m => m.CW_VirtualOffice, false, new { id = "" })
+																	<i class="helper"></i>No
+																</label>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-3 col-sm-6 for-rental">
+													<div class="form-group">
+														@*<input type="number" id="MinPrice" class="" placeholder="000">*@
+														@Html.EditorFor(m => m.PriceMin, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
+														<label for="PriceMin" class="control-label">Min Price &#8377;</label>
+														<i class="bar"></i>
+													</div>
+												</div>
+												<div class="col-md-3 col-sm-6 for-rental">
+													<div class="form-group">
+														@*<input type="number" id="MaxPrice" class="" placeholder="100000">*@
+														@Html.EditorFor(m => m.PriceMax, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
+														<label for="MaxPrice" class="control-label">Max Price &#8377;</label>
+														<i class="bar"></i>
+													</div>
+												</div>
+												<div class="form-group col-md-3 col-sm-6 datetimepickers">
+													<div class="form-group">
+														<div class='input-group date' id='BuildYearDiv'>
+															@*<input type='text' class="form-control" placeholder="YYYY/MM/DD"/>*@
+															@Html.TextBoxFor(m => m.BuildYear, new { @class = "form-control", placeholder = "DD/MM/YYYY", @type = "text" })
+															<label for="input" class="control-label">Build Year</label><i class="bar"></i>
+															<span class="input-group-addon">
+																<span class="far fa-calendar-alt"></span>
+															</span>
+														</div>
+													</div>
+
+												</div>
+												<div class="form-group col-md-3 col-sm-6 datetimepickers">
+													<div class="form-group">
+														<div class='input-group date' id='RecentInnovationDiv'>
+															@*<input type='text' class="form-control" placeholder="YYYY/MM/DD"/>*@
+															@Html.TextBoxFor(m => m.RecentInnovation, new { @class = "form-control", placeholder = "DD/MM/YYYY", @type = "text" })
+															<label for="input" class="control-label">Recent Renovation</label><i class="bar"></i>
+															<span class="input-group-addon">
+																<span class="far fa-calendar-alt"></span>
+															</span>
+														</div>
+													</div>
+
+												</div>
+												<div class="col-md-3 col-sm-6 input-occupancy for-rental">
+													<div class="form-group">
+														@*<input type="number" id="CurrentOccupancy" class="" placeholder="00">*@
+														@Html.EditorFor(m => m.CurrentOccupancy, new { htmlAttributes = new { @class = "form-control", placeholder = "00", @type = "number" } })
+														<label for="CurrentOccupancy" class="control-label">Current Occupancy %</label>
+														<i class="bar"></i>
+													</div>
+												</div>
+												<div class="col-md-3 col-sm-6 for-sale d-none">
+													<div class="form-group">
+														@Html.EditorFor(m => m.CMCW_AproximatePrice, new { htmlAttributes = new { @class = "form-control", placeholder = "00", @type = "number" } })
+														<label for="CMCW_AproximatePrice" class="control-label">Aproximate Price &#8377;</label>
+														<i class="bar"></i>
+													</div>
+												</div>
+												@*property details RERA and other numbers*@
+												<div class="col-sm-12">
+													<h5 class="property-other__heading">Property Other details</h5>
+													<p>These details are used to link the Real Estate Professionals. Who are all you know and collabrate in your property.</p>
+												</div>
+												<div class="col-md-3 col-sm-6">
+													<div class="form-group">
+														@Html.EditorFor(m => m.CMCW_ReraId, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
+														<label for="CMCW_ReraId" class="control-label">RERA ID</label>
+														<i class="bar"></i>
+													</div>
+												</div>
+												<div class="col-md-3 col-sm-6">
+													<div class="form-group">
+														@Html.EditorFor(m => m.CMCW_SurveyNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
+														<label for="CMCW_SurveyNumber" class="control-label">Survey No.</label>
+														<i class="bar"></i>
+													</div>
+												</div>
+												<div class="col-md-3 col-sm-6">
+													<div class="form-group">
+														@Html.EditorFor(m => m.CMCW_PropertyTaxBillNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
+														<label for="CMCW_PropertyTaxBillNumber" class="control-label">Property Tax Bill No.</label>
+														<i class="bar"></i>
+													</div>
+												</div>
+												<div class="col-md-3 col-sm-6">
+													<div class="form-group">
+														@Html.EditorFor(m => m.CMCW_CTSNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
+														<label for="CMCW_CTSNumber" class="control-label">CTS No.</label>
+														<i class="bar"></i>
+													</div>
+												</div>
+												<div class="col-md-3 col-sm-6">
+													<div class="form-group">
+														@Html.EditorFor(m => m.CMCW_MilkatNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
+														<label for="CMCW_MilkatNumber" class="control-label">Milkat No.</label>
+														<i class="bar"></i>
+													</div>
+												</div>
+												<div class="col-md-3 col-sm-6">
+													<div class="form-group">
+														@Html.EditorFor(m => m.CMCW_GatNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
+														<label for="CMCW_GatNumber" class="control-label">Gat No.</label>
+														<i class="bar"></i>
+													</div>
+												</div>
+												<div class="col-md-3 col-sm-6">
+													<div class="form-group">
+														@Html.EditorFor(m => m.CMCW_PlotNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "ABCD12345" } })
+														<label for="CMCW_PlotNumber" class="control-label">Plot No.</label>
+														<i class="bar"></i>
+													</div>
+												</div>
+												<div class="col-md-12 col-sm-12 type-1__input input_intrest">
+													<div class="radio-group">
+														<div class="radio-lable">
+															Interested in modifying to Co-Working
+														</div>
+														<div class="form-radio radio-items">
+															<div class="radio">
+																<label>
+																	@*<input type="radio" name="radio_1" checked="checked" />*@
+
+																	@Html.RadioButtonFor(m => m.CM_IntrestedCoworking, true, new { @checked = "checked", id = "" })
+																	<i class="helper"></i>Yes
+																</label>
+															</div>
+															<div class="radio">
+																<label>
+																	@*<input type="radio" name="radio_1" />*@
+																	@Html.RadioButtonFor(m => m.CM_IntrestedCoworking, false, new { id = "" })
+																	<i class="helper"></i>No
+																</label>
+															</div>
+														</div>
+													</div>
+												</div>
 											</div>
-										</div>
 											@*row 3 all type-2*@
 											@*<div class="row type-2 d-none">
 
 
 
-		</div>*@
+												</div>*@
 											@*row 3 all type-3*@
-										<div class="row type-3 d-none">
-											<div class="col-md-3 col-sm-6">
-												<div class="form-group">
-													@*<input type="text" id="RE_FirstName" class=" required-input" placeholder="List Name">*@
-													@Html.EditorFor(m => m.RE_FirstName, new { htmlAttributes = new { @class = "form-control required-input", placeholder = "Enter Name" } })
-													<label for="RE_FirstName" class="control-label">First Name*</label>
-													<i class="bar"></i>
-													<div class="error"></div>
-												</div>
-											</div>
-											<div class="col-md-3 col-sm-6">
-												<div class="form-group">
-													@*<input type="text" id="RE_LastName" class=" required-input" placeholder="List Name">*@
-													@Html.EditorFor(m => m.RE_LastName, new { htmlAttributes = new { @class = "form-control required-input", placeholder = "Enter Name" } })
-													<label for="RE_LastName" class="control-label">Last Name*</label>
-													<i class="bar"></i>
-													<div class="error"></div>
-												</div>
-											</div>
-											
-											<div class="col-md-9 col-sm-12">
-												<div class="checkbox-group">
-													<div class="checkbox-lable">
-														Interest / Specialist
-													</div>
-													<div class="checkbox-items row">
-														<div class="checkbox col-md-3 m-0">
-															<label>
-																@*<input type="checkbox" />*@
-																@Html.CheckBoxFor(m => m.RE_Warehouse)
-																<i class="helper"></i>Warehouse
-															</label>
-														</div>
-														<div class="checkbox col-md-3 m-0">
-															<label>
-																@*<input type="checkbox" />*@
-																@Html.CheckBoxFor(m => m.RE_Office)
-																<i class="helper"></i>Office
-															</label>
-														</div>
-														<div class="checkbox col-md-3 m-0">
-															<label>
-																@*<input type="checkbox" checked="checked" />*@
-																@Html.CheckBoxFor(m => m.RE_Retail)
-																<i class="helper"></i>Retail
-															</label>
-														</div>
-														<div class="checkbox col-md-3 m-0">
-															<label>
-																@*<input type="checkbox" checked="checked" />*@
-																@Html.CheckBoxFor(m => m.RE_Coworking)
-																<i class="helper"></i>Co-Working
-															</label>
-														</div>
-														<div class="checkbox col-md-3 m-0">
-															<label>
-																@*<input type="checkbox" checked="checked" />*@
-																@Html.CheckBoxFor(m => m.RE_PropertyManagement)
-																<i class="helper"></i>Property Management
-															</label>
-														</div>
+											<div class="row type-3 d-none">
+												<div class="col-md-3 col-sm-6">
+													<div class="form-group">
+														@*<input type="text" id="RE_FirstName" class=" required-input" placeholder="List Name">*@
+														@Html.EditorFor(m => m.RE_FirstName, new { htmlAttributes = new { @class = "form-control required-input", placeholder = "Enter Name" } })
+														<label for="RE_FirstName" class="control-label">First Name*</label>
+														<i class="bar"></i>
+														<div class="error"></div>
 													</div>
 												</div>
+												<div class="col-md-3 col-sm-6">
+													<div class="form-group">
+														@*<input type="text" id="RE_LastName" class=" required-input" placeholder="List Name">*@
+														@Html.EditorFor(m => m.RE_LastName, new { htmlAttributes = new { @class = "form-control required-input", placeholder = "Enter Name" } })
+														<label for="RE_LastName" class="control-label">Last Name*</label>
+														<i class="bar"></i>
+														<div class="error"></div>
+													</div>
+												</div>
+
+												<div class="col-md-9 col-sm-12">
+													<div class="checkbox-group">
+														<div class="checkbox-lable">
+															Interest / Specialist
+														</div>
+														<div class="checkbox-items row">
+															<div class="checkbox col-md-3 m-0">
+																<label>
+																	@*<input type="checkbox" />*@
+																	@Html.CheckBoxFor(m => m.RE_Warehouse)
+																	<i class="helper"></i>Warehouse
+																</label>
+															</div>
+															<div class="checkbox col-md-3 m-0">
+																<label>
+																	@*<input type="checkbox" />*@
+																	@Html.CheckBoxFor(m => m.RE_Office)
+																	<i class="helper"></i>Office
+																</label>
+															</div>
+															<div class="checkbox col-md-3 m-0">
+																<label>
+																	@*<input type="checkbox" checked="checked" />*@
+																	@Html.CheckBoxFor(m => m.RE_Retail)
+																	<i class="helper"></i>Retail
+																</label>
+															</div>
+															<div class="checkbox col-md-3 m-0">
+																<label>
+																	@*<input type="checkbox" checked="checked" />*@
+																	@Html.CheckBoxFor(m => m.RE_Coworking)
+																	<i class="helper"></i>Co-Working
+																</label>
+															</div>
+															<div class="checkbox col-md-3 m-0">
+																<label>
+																	@*<input type="checkbox" checked="checked" />*@
+																	@Html.CheckBoxFor(m => m.RE_PropertyManagement)
+																	<i class="helper"></i>Property Management
+																</label>
+															</div>
+														</div>
+													</div>
+												</div>
 											</div>
-										</div>
 										</div>
 										@*map and address section*@
 										<div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="head-2">
@@ -707,12 +707,12 @@
 											<!--row 1-->
 											<div class="row">
 												@*<div class="col-md-3 col-sm-6">
-													<div class="form-group">
-														@Html.EditorFor(m => m.Fax, new { htmlAttributes = new { @class = "form-control", placeholder = "123456798" } })
-														<label for="Fax" class="control-label">Fax</label>
-														<i class="bar"></i>
-													</div>
-												</div>*@
+														<div class="form-group">
+															@Html.EditorFor(m => m.Fax, new { htmlAttributes = new { @class = "form-control", placeholder = "123456798" } })
+															<label for="Fax" class="control-label">Fax</label>
+															<i class="bar"></i>
+														</div>
+													</div>*@
 												<div class="col-md-3 col-sm-6">
 													<div class="form-group">
 														@*<input type="text" id="Pry_name" class="" placeholder="Name">*@
@@ -774,4 +774,9 @@
 		</div>
 	</section>
 </div>
+
+@section Scripts {
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDGZoZkDdeXNlOPbKUG1KIXvBY5cUgQQgk"></script>
+	<script src="~/js/customMap.js"></script>
+}
 

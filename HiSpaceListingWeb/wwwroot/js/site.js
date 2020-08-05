@@ -41,6 +41,20 @@ function userCheck(check) {
 }
 
 $(document).ready(function () {
+	//signup radio button change
+	//$('#signup input[type=radio][name=UserType]').change(function () {
+	$(document).on('change','#signup input[type=radio][name=UserType]', function () {
+		//operator
+		if (this.value == '1') {
+			$('.operator-fields').removeClass('d-none');
+			$('#sign-CompanyName + label').html('Operator/Company Name*');
+		}
+		//user
+		else if (this.value == '2') {
+			$('.operator-fields').addClass('d-none');
+			$('#sign-CompanyName + label').html('Name*');
+		}
+	});
 	//addons status alert section start
 	$('.status-alert__amenities').each(function (i, obj) {
 		if ($(this).html() == 0) {
@@ -307,17 +321,24 @@ $(document).ready(function () {
 
 ////map section
 //// Initialize and add the map
-//function initMapLatLon() {
-//	// The location of Uluru
-//	var uluru = { lat: -25.344, lng: 131.036 };
-//	// The map, centered at Uluru
-//	var map = new google.maps.Map(
-//		document.getElementById('map'), { zoom: 4, center: uluru });
-//	console.log(map);
-//	// The marker, positioned at Uluru
-//	var marker = new google.maps.Marker({ position: uluru, map: map });
-//}
-//initMapLatLon();
+function initMapLatLon() {
+	//alert('a')
+	console.log($('#lat').html());
+	console.log($('#lon').html());
+	var lat_num = parseFloat($('#lat').html());
+	var lon_num = parseFloat($('#lon').html());
+	var map_zoom = parseInt($('#map-zoom').html());
+	console.log(lat_num)
+	// The location of Uluru
+	var uluru = { lat: lat_num, lng: lon_num };
+	// The map, centered at Uluru
+	var map = new google.maps.Map(
+		document.getElementById('map'), { zoom: map_zoom, center: uluru });
+	console.log(map);
+	// The marker, positioned at Uluru
+	var marker = new google.maps.Marker({ position: uluru, map: map });
+}
+
 
 /*********tab navigation section start*********/
 
@@ -617,10 +638,18 @@ $(function () {
 			$('<div id="modal-container__signup" class="modal signup fade modal-try" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">' +
 				'<div id="modalbody" class="modal-dialog modal-content" role="document"' +
 				data + '</div></div>').modal();
-
+			if ($('#modal-container__signup').length) {
+				
+			} else {
+				$("body").addClass("overflow-hidden");
+				//$('.signup').css('overflow', 'auto');
+			}
 		});
 	});
-
+	//body remove class from hidden on the popup modal
+	$(document).on("click", ".modal .close", function () {
+		$("body").removeClass("overflow-hidden");
+	});
 	//model open for the list image section
 	$('body').on('click', '.modal-link__image', function (e) {
 		e.preventDefault();
