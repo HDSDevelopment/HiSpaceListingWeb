@@ -1,0 +1,123 @@
+﻿
+@{
+	ViewData["Title"] = "Professional Detail";
+	Layout = "~/Views/Shared/_WebLayout.cshtml";
+	@using Microsoft.AspNetCore.Http
+	@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+}
+@model HiSpaceListingWeb.ViewModel.PropertyListListerResponseWithFilterViewModel
+
+<div class="property-list nav-padding container">
+	<div class="bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<ol class="breadcrumb mb-0">
+						<li class="breadcrumb-item"><a href="@Url.Action("Index", "Website")"> <i class="fas fa-home"></i> </a></li>
+						@*<li class="breadcrumb-item"><i class="fas fa-chevron-right"></i><a href="@Url.Action( "PropertyList","Website")"> All Property List </a></li>*@
+						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span> RE-Professional </span></li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+	<section class="">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 mb-5 mb-lg-0">
+					<div class="mt-2">
+						<div class="widget accordion-sec">
+							<div class="widget-title widget-collapse">
+								<a class="ml-auto" data-toggle="collapse" href="#property-lister" role="button" aria-expanded="false" aria-controls="property-lister"><h6>Real Estate Professional Detail</h6> <i class="fas fa-chevron-down"></i> </a>
+							</div>
+							<div class="collapse show" id="property-lister">
+								<div class="accordion-sec__detail">
+									<div class="lister-head">
+										<div class="lister-head__name">@Model.PropertyList.SpaceUser.CompanyName</div>
+										@if (Model.PropertyList.SpaceUser.Doc_CompanyLogo != null)
+										{
+
+											<img class="lister-head__image img-fluid" src="@Model.PropertyList.SpaceUser.Doc_CompanyLogo" alt="" />
+										}
+									</div>
+									<div class="lister-detail">
+										<div><i class="fas fa-globe"></i><b>Website: </b> <span>@Model.PropertyList.SpaceUser.Website</span></div>
+										<div><i class="fas fa-mobile-alt"></i><b>Phone: </b><span>@Model.PropertyList.SpaceUser.Phone</span></div>
+										<div><i class="fas fa-city"></i><b>Total List </b><span>(@Model.PropertyList.PropertyCount)</span></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-3 mb-5 mb-lg-0">
+					<div class="sidebar sticky-top">
+						<div class="widget">
+							<a class="widget-head" href="javascript:void(0);" onclick="propertyListByUserId('@Model.PropertyList.SpaceUser.UserId');"><h6>All Properties</h6></a>
+						</div>
+						<div class="widget">
+							<div class="widget-title widget-collapse">
+
+								<a class="ml-auto" data-toggle="collapse" href="#property-list" role="button" aria-expanded="false" aria-controls="property-location"> <h6>Listed Properties</h6> <i class="fas fa-chevron-down"></i> </a>
+							</div>
+							<div class="collapse show" id="property-list">
+								<ul class="list-unstyled mb-0 pt-3">
+									@foreach (var item in Model.propertyAndPeople)
+									{
+										if (item.Name != null)
+										{
+											<li><a href="javascript:void(0);" onclick="propertyListByUserIdAndListingId('@Model.PropertyList.SpaceUser.UserId','@item.ListingId');">@item.Name<span class="ml-auto"></span></a></li>
+										}
+										else
+										{
+											<li><a href="javascript:void(0);" onclick="propertyListByUserIdAndListingId('@Model.PropertyList.SpaceUser.UserId','@item.ListingId');">@item.RE_FirstName @item.RE_LastName<span class="ml-auto"></span></a></li>
+										}
+
+									}
+								</ul>
+							</div>
+						</div>
+						<div class="widget">
+							<div class="widget-title widget-collapse">
+
+								<a class="ml-auto" data-toggle="collapse" href="#property-RELink" role="button" aria-expanded="false" aria-controls="property-location"> <h6>Liked RE-Professional</h6> <i class="fas fa-chevron-down"></i> </a>
+							</div>
+							<div class="collapse show" id="property-RELink">
+								<ul class="list-unstyled mb-0 pt-3">
+									@{
+										var peopleF = "null";
+										var peopleL = "null";
+
+									}
+									@foreach (var item in Model.linkedREPRofessionals)
+									{
+										@if ((!@peopleF.Equals(item.REFirstName)) && (!@peopleL.Equals(item.RELastName)))
+										{
+											<li><a href="@Url.Action("PeopleDetailListByListingId", "Detail", new { ListingId = item.ReProfessional_ListingId })">@item.REFirstName @item.RELastName<span class="ml-auto"></span></a></li>
+										}
+										peopleF = @item.REFirstName;
+										peopleL = @item.RELastName;
+
+
+									}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-9" id="detailPropertyResult">
+					@Html.Partial("_SelectedOperatorPropertyListPartialView", Model.PropertyList)
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+</div>
+
+
+@section Scripts {
+	<script src="~/js/CustomFilters.js"></script>
+}
+

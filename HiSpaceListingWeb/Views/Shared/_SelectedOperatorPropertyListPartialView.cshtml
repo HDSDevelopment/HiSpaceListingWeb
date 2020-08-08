@@ -1,20 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@model IEnumerable<HiSpaceListingService.ViewModel.PropertyDetailResponse>
+@model HiSpaceListingService.ViewModel.PropertyListListerResponse
 @{
-	var indianCulture = new System.Globalization.CultureInfo("hi-IN"); 
+	var indianCulture = new System.Globalization.CultureInfo("hi-IN");
 }
 
 
-@if (Model != null || Model.Count() != 0)
+@if (Model.PropertyDetail != null || Model.PropertyDetail.Count() != 0)
 {
-	<div class="result-count">Property Filter Count : <span>@Model.Count()</span></div>
-	@foreach (var item in Model)
+	<div class="result-count">Property Filter Count : <span>@Model.PropertyDetail.Count()</span></div>
+	@foreach (var item in Model.PropertyDetail)
 	{
-		@if (item.SpaceListing.ListingType != "RE-Professional")
-		{
-
-			<div class="property-item property-col-list mt-4">
+		<div class="property-item property-col-list mt-4">
 				<div class="row no-gutters">
 					<div class="col-lg-4 col-md-5 prop-image">
 						<div class="property-image bg-overlay-gradient-04">
@@ -50,7 +47,7 @@
 									<img class="img-fluid" src="~/images/avatar/placeholder.png" alt="">
 								</div>
 								<div class="property-agent-info">
-									<a class="property-agent-name" href="#">@item.SpaceUser.CompanyName</a>
+									<a class="property-agent-name" href="#">@Model.SpaceUser.CompanyName</a>
 									<span class="d-block">Operator Name</span>
 
 								</div>
@@ -78,7 +75,16 @@
 					<div class="col-lg-8 col-md-7 prop-details">
 						<div class="property-details">
 							<div class="property-details__head">
+								@if(item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
+								{
+
 								<div class="property-details__header">@item.SpaceListing.Name</div>
+								}
+								else
+								{
+								<div class="property-details__header">@item.SpaceListing.RE_FirstName @item.SpaceListing.RE_LastName</div>
+
+								}
 								<div class="property-details__amenities">
 									@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
 									{
@@ -253,8 +259,45 @@
 
 				</div>
 			</div>
-		}
 	}
+
+<div class="repro-item">
+	<div class="result-count">Linked Real Estate Professionals : <span>@Model.LinkedREProfCount</span></div>
+	<div class="owl-carousel owl-theme owl-loaded carousel-People">
+		<div class="people-operator">
+			<div class="people-operator__head m--tb-15">Linked Real Estate Professionals with us</div>
+			<div class="owl-stage-outer">
+				<div class="owl-stage">
+
+					@foreach (var repro in Model.LinkedREPRofessionals)
+					{
+						<div class="owl-item">
+							<div class="people-operator__list">
+								@if (repro.ImageUrl != null)
+								{
+									<img class="oper-img" src="@repro.ImageUrl" data-holder-rendered="true">
+								}
+								else
+								{
+									<img class="oper-img" src="~/images/operatorPlaceholder.png" data-holder-rendered="true">
+
+								}
+
+							<div>@repro.REFirstName @repro.RELastName</div>
+								<div class="opertor-details__list"><i class="fas fa-building"></i> @repro.ProjectName</div>
+								<div class="opertor-details__list"><i class="fas fa-user-tie"></i> @repro.ProjectRole</div>
+							<div class="property-btn property-btn__small">
+								<a class="property-link btn btn-sec btn-block"  href="@Url.Action("PeopleDetailListByListingId", "Detail", new { ListingId = repro.ReProfessional_ListingId })">Know More</a>
+							</div>
+							</div>
+						</div>
+					}
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
 }
 else
 {

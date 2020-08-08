@@ -7,6 +7,7 @@ $(document).ready(function () {
 	operatorFilterCount();
 });
 var filterPropertyResult = $('#filterPropertyResult');
+var detailPropertyResult = $('#detailPropertyResult');
 //Property list all
 function propertyListByAll() {
 	$.ajax({
@@ -24,6 +25,45 @@ function propertyListByAll() {
 		}
 	});
 }
+//Property List by its userid
+function propertyListByUserId(user) {
+	$.ajax({
+		type: "GET",
+		url: "/Detail/SelectOperatorPropertyListByAll",
+		data: { User: user },
+		dataType: "html",
+		success: function (response) {
+			//console.log(response);
+			detailPropertyResult.html('');
+			detailPropertyResult.html(response);
+			Peoplecarousel();
+		},
+		error: function (response) {
+			alert("server not ready please try afterwards");
+			//console.log(response);
+		}
+	});
+} 
+//Property List by its userid
+function propertyListByUserIdAndListingId(user,listingId) {
+	$.ajax({
+		type: "POST",
+		url: "/Detail/SelectOperatorPropertyListByUserIdAndListingId",
+		data: {User:user,ListingId:listingId},
+		dataType: "html",
+		//dataType: "html",
+		success: function (response) {
+			//console.log(response);
+			detailPropertyResult.html('');
+			detailPropertyResult.html(response);
+			Peoplecarousel();
+		},
+		error: function (response) {
+			alert("server not ready please try afterwards");
+			//console.log(response);
+		}
+	});
+} 
 //Property Location filter
 function propertyListByLocation(location) {
 	$.ajax({

@@ -101,7 +101,7 @@
 										@foreach (var ReProf in item.LinkedREProf)
 										{
 											<li>
-												<a href="#">
+												<a href="@Url.Action("PeopleDetailListByListingId", "Detail", new { ListingId = ReProf.ReProfessional_ListingId })">
 													<span>@ReProf.REFirstName @ReProf.RELastName</span>
 													<span>(@ReProf.ProjectRole)</span>
 												</a>
@@ -147,7 +147,7 @@
 
 						</div>
 						<div class="property-btn">
-							<a class="property-link btn btn-primary btn-block" href="#">See Details</a>
+							<a class="property-link btn btn-primary btn-block" href="@Url.Action("SelectOperatorPropertyList", "Detail", new { User = item.Operator.UserId })">See Details</a>
 						</div>
 						<div class="tooltip-wrapper list-data__check" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eco-Friendly Spaces click to see details"><i class="fas fa-check"></i></div>
 

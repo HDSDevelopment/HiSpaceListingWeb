@@ -9,9 +9,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-3 mb-5 mb-lg-0">
-				<div class="sidebar">
+				<div class="sidebar sticky-top">
 					<div class="widget">
-						<a class="widget-head" href="javascript:void(0);" onclick="operatorListByAll();">All Operators</a>
+						<a class="widget-head" href="javascript:void(0);" onclick="operatorListByAll();"><h6>All Operators</h6></a>
 					</div>
 					<div class="widget">
 						<div class="widget-title widget-collapse">
@@ -24,7 +24,7 @@
 								{
 									if (item.PropertyListerInUseCount > 0)
 									{
-										<li><a href="javascript:void(0);" onclick="operatorListByUser('@item.UserId');">@item.CompanyName<span class="ml-auto">(@item.PropertyListerInUseCount)</span></a></li>
+										<li><a href="javascript:void(0);" onclick="operatorListByUser('@item.UserId');">@item.CompanyName<span class="ml-auto">(Properties @item.PropertyListerInUseCount)</span></a></li>
 									}
 								}
 							</ul>

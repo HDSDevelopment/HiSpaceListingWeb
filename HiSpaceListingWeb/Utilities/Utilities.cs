@@ -126,6 +126,11 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiLisitingGetAllPropertyListCommercialAndCoworking = "GetAllPropertyListCommercialAndCoworking/";
 		public string ApiLisitingGetAllOperatorsList = "GetAllOperatorList/";
 		public string ApiLisitingGetAllPeopleList = "GetAllPeopleList/";
+		//details
+		public string ApiLisitingGetPropertyAndLinkedReProfessionalListByUserID = "GetPropertyAndLinkedReProfessionalListByUserID/";
+		public string ApiLisitingGetPropertyListByUserIDAndListingID = "GetPropertyListByUserIDAndListingID/";
+
+
 
 
 		#endregion Listing Controller
@@ -199,6 +204,8 @@ namespace HiSpaceListingWeb.Utilities
 
 		public string ApiCommonGetAmenityMasterList = "GetAmenityMasterList";
 		public string ApiCommonGetFacilityMasterList = "GetFacilityMasterList";
+		public string ApiCommonGetAllPropertySearchByUserID = "GetAllPropertySearchByUserID";
+		public string ApiCommonGetAllReProfessionalSearchByUserID = "GetAllReProfessionalSearchByUserID";
 
 		#endregion Common Controller
 

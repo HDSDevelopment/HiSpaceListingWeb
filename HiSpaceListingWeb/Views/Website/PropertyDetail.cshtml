@@ -53,7 +53,7 @@
 											<div><i class="fas fa-city"></i><b>Total List </b><span>(@Model.ListerPropertyCount)</span></div>
 										</div>
 										<div class="lister-btn">
-											<a class="btn btn-sm btn-primary" href="@Url.Action( "PropertyLister","Website",new { UserID = Model.User.UserId})">See Details</a>
+											<a class="btn btn-sm btn-primary" href="@Url.Action("SelectOperatorPropertyList", "Detail", new { User = Model.User.UserId})">See Details</a>
 										</div>
 									</div>
 								</div>
@@ -133,6 +133,17 @@
 									<button type="button" role="presentation" class="owl-next"><i class="fas fa-chevron-right"></i></button>
 								</div>
 								<div class="owl-dots disabled"></div>
+							</div>
+							@if (Model.Listing.CMCW_PropertyFor == "Rental")
+							{
+								ViewBag.propertyFor = "bg-info";
+							}
+							else
+							{
+								ViewBag.propertyFor = "bg-sec";
+							}
+							<div class="property-for @ViewBag.propertyFor">
+								<span class="">@Model.Listing.CMCW_PropertyFor</span>
 							</div>
 						</div>
 						<div class="property-info mt-5">
@@ -364,9 +375,9 @@
 									{
 										<div class="mb-3">
 											<ul class="property-list list-unstyled row mb-3">
-												<li class="col-sm-6"><b>Name:</b> <span class="">@Model.Listing.Name</span></li>
+												<li class="col-sm-6"><b>Name:</b> <span class="">@Model.Listing.RE_FirstName @Model.Listing.RE_LastName</span></li>
 												<li class="col-sm-6"><b>Type:</b> <span class="text-info font-weight-bold">@Model.Listing.ListingType</span></li>
-												<li class="col-sm-6"><b>Level:</b> @Model.Listing.REprofessionalsType</li>
+												@*<li class="col-sm-6"><b>Level:</b> @Model.Listing.REprofessionalsType</li>*@
 												<li class="col-sm-12">
 													<b>Intrested In:</b>
 													@if (@Model.Listing.RE_Coworking)
