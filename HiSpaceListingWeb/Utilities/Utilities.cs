@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using HiSpaceListingModels;
+using HiSpaceListingService.ViewModel;
 using HiSpaceListingWeb.Models;
 
 namespace HiSpaceListingWeb.Utilities
@@ -90,6 +91,7 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiUserUpdateUser = "UpdateUser/";
 		public string ApiUserDeleteUser = "DeleteUser/";
 		public string ApiUserApproveByUserId = "ApproveByUserId/";
+		public string ApiUserEmailEixsts = "UserEmailExists/";
 
 		#endregion User Controller
 
@@ -298,7 +300,17 @@ namespace HiSpaceListingWeb.Utilities
 			types.Add(new PropertyDocument() { PropertyDocumentID = 6, PropertyDocumentName = "PlotNumber", PropertyDocumentDisplay = "Plot No." });
 			return types;
 		}
-
+		public static List<UserDocumentProof> GetUserDocumentProofList()
+		{
+			List<UserDocumentProof> types = new List<UserDocumentProof>();
+			types.Add(new UserDocumentProof() { UserDocumentProofID = 0, UserDocumentProofName = "PleaseSelect", UserDocumentProofDisplay = "Please Select" });
+			types.Add(new UserDocumentProof() { UserDocumentProofID = 1, UserDocumentProofName = "Aadhaar", UserDocumentProofDisplay = "Aadhaar" });
+			types.Add(new UserDocumentProof() { UserDocumentProofID = 2, UserDocumentProofName = "PAN", UserDocumentProofDisplay = "PAN" });
+			types.Add(new UserDocumentProof() { UserDocumentProofID = 3, UserDocumentProofName = "DrivingLicense", UserDocumentProofDisplay = "Driving License" });
+			types.Add(new UserDocumentProof() { UserDocumentProofID = 4, UserDocumentProofName = "VoterID", UserDocumentProofDisplay = "Voter Id" });
+			types.Add(new UserDocumentProof() { UserDocumentProofID = 5, UserDocumentProofName = "GSTIN", UserDocumentProofDisplay = "GSTIN" });
+			return types;
+		}
 		public static List<FacilityDistance> GetFacilityDistances()
 		{
 			List<FacilityDistance> distance = new List<FacilityDistance>();
@@ -425,6 +437,29 @@ namespace HiSpaceListingWeb.Utilities
 			}
 			return amenities;
 		}
+
+		public static List<PropertyListerSearchResponse> GetOperatorsList()
+		{
+			List<PropertyListerSearchResponse> user = new List<PropertyListerSearchResponse>();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetAllOperatorSearch);
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PropertyListerSearchResponse>>();
+					readTask.Wait();
+					foreach (var item in readTask.Result.ToList())
+						user.Add(new PropertyListerSearchResponse() { UserId = item.UserId, CompanyName = item.CompanyName });
+				}
+
+			}
+			return user;
+		}
+
+		//operator list for the RE-professional project table
 
 		public static List<Facility> GetFacilityMasterList()
 		{

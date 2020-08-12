@@ -104,6 +104,7 @@ var regx = {
 	//"passwordRegx": { "rule": /^[A-Za-z]\w{5,26}$/, "error": "Minimum password length is minmum 6" },
 	"passwordRegx": { "rule": /[0-9a-zA-Z]{6,}/, "error": "Minimum password length is minmum 6" },
 	"checkboxRegx": { "rule": /true/, "error": "cannot be unchecked" },
+	//"selectRegx": { "rule": /PleaseSelect/, "error": "cannot be unselect" },
 	//"gstRegx": { "rule": /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/, "error": "Invalid GST" },
 	"gstRegx": { "rule": /^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$/, "error": "Invalid GST No." },
 	"panRegx": { "rule": /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/, "error": "Invalid PAN No." },
@@ -113,14 +114,25 @@ var regx = {
 	"numberRegx": { "rule": /^[+-]?\d+(\.\d+)?$/, "error": "Invalid No." }	
 }
 function validate(formData, rules) {
-	//console.log(formData);
+	console.log(formData);
 	$.each(rules, function (i, n) {
 		var input = $(`#${formData.id} #${n.id}`);
-		//console.log(input)
+		console.log(input)
+		console.log(input.prop("tagName"))
 		if (input.prop("tagName") == "textarea") {
 			var value = input.html();
 			//console.log(value);
-		} else {
+		}
+		else if (input.prop("tagName") == "SELECT") {
+			if (input.val() == "PleaseSelect") {
+				var value = "";
+			}
+			else {
+				var value = input.val();
+			}
+			console.log(value);
+		}
+		else {
 			var value = input.val();
 			//console.log(value);
 		}
@@ -129,7 +141,7 @@ function validate(formData, rules) {
 			//if (regx[k]["rule"] == "checkboxRegx") {
 			if (n.validation[0] == "checkboxRegx") {
 				value = input.prop("checked").toString();
-				console.log(value);
+				//console.log(value);
 			}
 			//console.log(n.validation[0]);
 			//console.log(value);
@@ -189,11 +201,8 @@ function signupValidate(e) {
 	let rules = [
 		{ "id": "sign-CompanyName", "validation": ["emptyRegx"] },
 		{ "id": "sign-Phone", "validation": ["emptyRegx", "phoneRegx"] },
-		{
-			"id": "sign-Email", "validation": ["emptyRegx", "emailRegx"] },
+		{"id": "sign-Email", "validation": ["emptyRegx", "emailRegx"] },
 		{ "id": "sign-Password", "validation": ["emptyRegx", "passwordRegx"] },
-		//{ "id": "sign-Website", "validation": ["emptyRegx"] },
-		//{ "id": "sign-Postalcode", "validation": ["emptyRegx"] },
 
 	];
 	//console.log(rules)
@@ -219,36 +228,64 @@ function signupValidate(e) {
 
 //validation for editing the user data
 function EditUserValidate(e) {
+	//console.log($("#User_ProofName").find(':selected'));
+	//console.log($("#User_ProofName").val());
 	let formData = { "id": "editUserData" };
 	$(`#${formData.id} .error`).html(``);
 	let rules = [
 		{ "id": "CompanyName", "validation": ["emptyRegx"] },
 		{ "id": "Phone", "validation": ["emptyRegx", "phoneRegx"] },
 		{ "id": "Email", "validation": ["emptyRegx", "emailRegx"] },
-		//{ "id": "Website", "validation": ["emptyRegx"] },
 		{ "id": "Address", "validation": ["emptyRegx"] },
 		{ "id": "Postalcode", "validation": ["emptyRegx", "postRegx"] },
-		{ "id": "PrimaryContactName", "validation": ["emptyRegx"] },
-		{ "id": "PrimaryContactPhone", "validation": ["emptyRegx", "phoneRegx"] },
-		{ "id": "GSTIN", "validation": ["emptyRegx", "gstRegx"] },
-		{ "id": "PAN", "validation": ["emptyRegx", "panRegx"] },
-		{ "id": "UAN", "validation": ["emptyRegx", "aadhaarRegx"] },
-		{ "id": "TermsAndConditions", "validation": ["checkboxRegx"] }
+		{ "id": "TermsAndConditions", "validation": ["checkboxRegx"] },
+		{ "id": "ProofNumber", "validation": ["emptyRegx"] },
+		{ "id": "ProofName", "validation": ["emptyRegx"] },
 	];
-	if ($("#Password").length) {
-		rules.push({
-			"id": "Password", "validation": ["emptyRegx","passwordRegx"] });
-	} else {
-
-	}
 	var User_Website = "Website";
+	//e.preventDefault();
 	if ($(`#${User_Website}`).val() && $(`#${User_Website}`).val() != "") {
 		rules.push({
 			"id": "Website", "validation": ["websiteRegx"] });
 	}
 	validate(formData, rules);
+	
 	$(`#${formData.id} .error`).each(function (i) {
 		if ($(this).is(':empty')) {
+
+		}
+		else {
+			e.preventDefault();
+			return;
+		}
+	})
+}
+
+//validation for admin creating the user data
+function adminAddUserValidate(e) {
+	//console.log($("#User_ProofName").find(':selected'));
+	//console.log($("#User_ProofName").val());
+	let formData = { "id": "adminAddUser" };
+	$(`#${formData.id} .error`).html(``);
+	let rules = [
+		{ "id": "CompanyName", "validation": ["emptyRegx"] },
+		{ "id": "Phone", "validation": ["emptyRegx", "phoneRegx"] },
+		{ "id": "Email", "validation": ["emptyRegx", "emailRegx"] },
+		{ "id": "Password", "validation": ["emptyRegx", "passwordRegx"] },
+		{ "id": "Address", "validation": ["emptyRegx"] },
+		{ "id": "Postalcode", "validation": ["emptyRegx", "postRegx"] },
+	];
+	var User_Website = "Website";
+	if ($(`#${User_Website}`).val() && $(`#${User_Website}`).val() != "") {
+		rules.push({
+			"id": "Website", "validation": ["websiteRegx"]
+		});
+	}
+	validate(formData, rules);
+
+	$(`#${formData.id} .error`).each(function (i) {
+		if ($(this).is(':empty')) {
+
 		}
 		else {
 			e.preventDefault();
@@ -269,26 +306,14 @@ function basicInformationValidate(e) {
 	];
 	var User_Website = "User_Website";
 	var User_Postalcode = "User_Postalcode";
-	var User_PrimaryContactPhone = "User_PrimaryContactPhone";
-	var User_GSTIN = "User_GSTIN";
-	var User_PAN = "User_PAN";
 	if ($(`#${User_Website}`).val() && $(`#${User_Website}`).val() != "") {
 		rules.push({ "id": "User_Website", "validation": ["websiteRegx"] });
 	}
-	if ($(`#${User_Postalcode}`).val() && $(`#${User_Postalcode}`).val()) {
+	if ($(`#${User_Postalcode}`).val() && $(`#${User_Postalcode}`).val() != "") {
 		rules.push({ "id": "User_Postalcode", "validation": ["postRegx"] });
 	}
-	if ($(`#${User_PrimaryContactPhone}`).val() && $(`#${User_PrimaryContactPhone}`).val()) {
-		rules.push({ "id": "User_PrimaryContactPhone", "validation": ["phoneRegx"] });
-	}
-	if ($(`#${User_GSTIN}`).val() && $(`#${User_GSTIN}`).val()) {
-		rules.push({ "id": "User_GSTIN", "validation": ["gstRegx"] });
-	}
-	if ($(`#${User_PAN}`).val() && $(`#${User_PAN}`).val() != "") {
-		rules.push({ "id": "User_PAN", "validation": ["panRegx"] });
-	}
+	
 	validate(formData, rules);
-
 	$(`#${formData.id} .error`).each(function (i) {
 
 		if ($(this).is(':empty')) {
@@ -314,6 +339,10 @@ $(document).on("change", "input[type='file']", function (e) {
 
 //image validation
 $(document).on("focus", "input", function (e) {
+	var input = $(this);
+	input.siblings(".error").html(``);
+})
+$(document).on("change", "select", function (e) {
 	var input = $(this);
 	input.siblings(".error").html(``);
 })

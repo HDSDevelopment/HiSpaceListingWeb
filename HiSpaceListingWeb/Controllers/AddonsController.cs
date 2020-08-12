@@ -14,6 +14,7 @@ using System.Linq;
 using static HiSpaceListingWeb.Utilities.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography.X509Certificates;
+using HiSpaceListingService.ViewModel;
 
 namespace HiSpaceListingWeb.Controllers
 {
@@ -700,11 +701,13 @@ namespace HiSpaceListingWeb.Controllers
 				model.ModifyBy = GetSessionObject().UserId;
 				model.ModifyDateTime = DateTime.Now;
 				model.ProjectName = rEProfessionalMasterViewModel.ProjectName;
+				model.OperatorName = rEProfessionalMasterViewModel.OperatorName;
 				model.Status = rEProfessionalMasterViewModel.Status;
 				model.ProjectRole = rEProfessionalMasterViewModel.ProjectRole;
 				model.PropertyReraId = rEProfessionalMasterViewModel.PropertyReraId;
 				model.PropertyAdditionalIdName = rEProfessionalMasterViewModel.PropertyAdditionalIdName;
 				model.PropertyAdditionalIdNumber = rEProfessionalMasterViewModel.PropertyAdditionalIdNumber;
+				model.LinkingStatus = "Requested";
 				using (var client = new HttpClient())
 				{
 					client.BaseAddress = new Uri(Common.Instance.ApiAddonsControllerName);
@@ -761,12 +764,14 @@ namespace HiSpaceListingWeb.Controllers
 						model2.ModifyDateTime = DateTime.Now;
 						model2.ProjectName = model.ProjectName;
 						model2.REProfessionalMasterId = model.REProfessionalMasterId;
+						model2.OperatorName = rEProfessionalMasterViewModel.OperatorName;
 						model2.Status = model.Status;
 						model2.ListingId = model.ListingId;
 						model2.ProjectRole = model.ProjectRole;
 						model2.PropertyReraId = model.PropertyReraId;
 						model2.PropertyAdditionalIdName = model.PropertyAdditionalIdName;
 						model2.PropertyAdditionalIdNumber = model.PropertyAdditionalIdNumber;
+						model2.LinkingStatus = "Requested";
 
 						var nextresponseTask = client.PutAsJsonAsync(Common.Instance.ApiAddonsUpdateProject + model2.REProfessionalMasterId, model2);
 						nextresponseTask.Wait();
@@ -905,6 +910,7 @@ namespace HiSpaceListingWeb.Controllers
 			SetSessionVariables();
 			ViewBag.ListOfProfessionalCategory = Common.GetProfessionalCategory();
 			ViewBag.ListOfGetPropertyDocumentList = Common.GetPropertyDocumentList();
+			ViewBag.ListOfOperators = Common.GetOperatorsList();
 			ViewBag.ListingId = id;
 			IEnumerable<REProfessionalMaster> listOfProjects = null;
 			using (var client = new HttpClient())
@@ -1450,6 +1456,50 @@ namespace HiSpaceListingWeb.Controllers
 				}
 			}
 			return PartialView("_AddGreenBuildingDataPartialView");
+		}
+		//dropdown by operator list
+		public ActionResult OperatorListDropdownl()
+		{
+			SetSessionVariables();
+			List<PropertyListerSearchResponse> vModel = new List<PropertyListerSearchResponse>();
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetAllOperatorSearch);
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PropertyListerSearchResponse>>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+
+			}
+			return Json(vModel);
+		}
+		//dropdown by property list
+		public ActionResult PropertyListDropdownl(string UserID)
+		{
+			SetSessionVariables();
+			List<PropertyAndPeopleDetailWithLinkedSearchResponse> vModel = new List<PropertyAndPeopleDetailWithLinkedSearchResponse>();
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetAllPropertySearchByUserID + "/" + UserID.ToString());
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PropertyAndPeopleDetailWithLinkedSearchResponse>>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+
+			}
+			return Json(vModel);
 		}
 
 		public void SetSessionVariables()

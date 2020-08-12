@@ -192,6 +192,40 @@ function peopleListByUser(listingId) {
 		}
 	});
 }
+$('body').on('click', '.listNavigation', function () {
+	console.log('test');
+});
+function GetURLParameter(sParam) {
+	var sPageURL = window.location.search.substring(1);
+	var sURLVariables = sPageURL.split('&');
+	for (var i = 0; i < sURLVariables.length; i++) {
+		var sParameterName = sURLVariables[i].split('=');
+		if (sParameterName[0] == sParam) {
+			return decodeURIComponent(sParameterName[1]);
+		}
+	}
+}
+
+var listShowType = GetURLParameter('ListShowType');
+console.log(listShowType);
+if (listShowType == 1) {
+	$('.nav-link, .tab-pane').removeClass('active');
+	$('.tab-pane').removeClass('show');
+	$('#tab-01-tab.nav-link, #tab-01.tab-pane').addClass('active');
+	$('#tab-01.tab-pane').addClass('show');
+
+} else if (listShowType == 2) {
+	$('.nav-link, .tab-pane').removeClass('active');
+	$('.tab-pane').removeClass('show');
+	$('#tab-02-tab.nav-link, #tab-02.tab-pane').addClass('active');
+	$('#tab-02.tab-pane').addClass('show');
+} else if (listShowType == 3) {
+	$('.nav-link, .tab-pane').removeClass('active');
+	$('.tab-pane').removeClass('show');
+	$('#tab-03-tab.nav-link, #tab-03.tab-pane').addClass('active');
+	$('#tab-03.tab-pane').addClass('show');
+}
+
 
 //professional sliders section
 Peoplecarousel = function () {
@@ -246,36 +280,3 @@ Peoplecarousel = function () {
 }
 Peoplecarousel();
 
-//$('body').on('click', '.listNavigation', function () {
-//	console.log('test');
-//});
-function GetURLParameter(sParam) {
-	var sPageURL = window.location.search.substring(1);
-	var sURLVariables = sPageURL.split('&');
-	for (var i = 0; i < sURLVariables.length; i++) {
-		var sParameterName = sURLVariables[i].split('=');
-		if (sParameterName[0] == sParam) {
-			return decodeURIComponent(sParameterName[1]);
-		}
-	}
-}
-
-var listShowType = GetURLParameter('ListShowType');
-console.log(listShowType);
-if (listShowType == 1) {
-	$('.nav-link, .tab-pane').removeClass('active');
-	$('.tab-pane').removeClass('show');
-	$('#tab-01-tab.nav-link, #tab-01.tab-pane').addClass('active');
-	$('#tab-01.tab-pane').addClass('show');
-
-} else if (listShowType == 2) {
-	$('.nav-link, .tab-pane').removeClass('active');
-	$('.tab-pane').removeClass('show');
-	$('#tab-02-tab.nav-link, #tab-02.tab-pane').addClass('active');
-	$('#tab-02.tab-pane').addClass('show');
-} else if (listShowType == 3) {
-	$('.nav-link, .tab-pane').removeClass('active');
-	$('.tab-pane').removeClass('show');
-	$('#tab-03-tab.nav-link, #tab-03.tab-pane').addClass('active');
-	$('#tab-03.tab-pane').addClass('show');
-}

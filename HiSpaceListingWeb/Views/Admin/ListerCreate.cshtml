@@ -11,9 +11,9 @@
 				<div class="col-12">
 					<ol class="breadcrumb mb-0">
 						<li class="breadcrumb-item"><a href="@Url.Action( "Index","Website")"> <i class="fas fa-home"></i> </a></li>
-						<li class="breadcrumb-item"><a href="@Url.Action( "AdminLister","Admin")"> <i class="fas fa-chevron-right"></i> <span>Lister Table</span></a></li>
+						<li class="breadcrumb-item"><a href="@Url.Action( "AdminLister","Admin")"> <i class="fas fa-chevron-right"></i> <span>HiSpace-User List</span></a></li>
 
-						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Add Operator</span></li>
+						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Add</span></li>
 					</ol>
 				</div>
 			</div>
@@ -25,12 +25,12 @@
 			<div class="row no-gutters">
 				<div class="col-md-12">
 					<div class="section-title d-flex align-items-center m--tb-15">
-						<h2>Operator Table</h2>
+						<h2>HiSpace-User Create</h2>
 					</div>
 					<div class="card hi-card">
 						<div class="card-body">
 							@*<form class="form-row align-items-center md-form p-3" action="account-profile.html">*@
-							@using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form-row md-form p-3", enctype = "multipart/form-data", onSubmit = "EditUserValidate(event)", id = "editUserData" }))
+							@using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form-row md-form p-3", enctype = "multipart/form-data", onSubmit = "adminAddUserValidate(event)", id = "adminAddUser" }))
 							{
 								@Html.AntiForgeryToken()
 							<div class="form-group col-md-3 col-sm-6">
@@ -47,7 +47,7 @@
 							</div>
 							<div class="form-group col-md-3 col-sm-6">
 								@*<input type="email" class="form-control" placeholder="abc@gmail.com">*@
-								@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Email" } })
+								@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Email", onblur = "errAlreadySignedUp(this.value,this)" } })
 								<label for="input" class="control-label">Email*</label><i class="bar"></i>
 								<div class="error" id=""></div>
 							</div>
@@ -91,36 +91,7 @@
 							<label for="input" class="control-label">Postal Code*</label><i class="bar"></i>
 							<div class="error" id=""></div>
 						</div>
-						<div class="form-group col-md-3 col-sm-6">
-							@*<input type="text" class="form-control" placeholder="Contact Name">*@
-							@Html.EditorFor(m => m.PrimaryContactName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name" } })
-							<label for="input" class="control-label">Contact Person*</label><i class="bar"></i>
-							<div class="error" id=""></div>
-						</div>
-						<div class="form-group col-md-3 col-sm-6">
-							@*<input type="text" class="form-control" placeholder="9999999999">*@
-							@Html.EditorFor(m => m.PrimaryContactPhone, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Phone" } })
-							<label for="input" class="control-label">Contact Person No.*</label><i class="bar"></i>
-							<div class="error" id=""></div>
-						</div>
-						<div class="form-group col-md-3 col-sm-6">
-							@*<input type="text" class="form-control" placeholder="12345ABCD">*@
-							@Html.EditorFor(m => m.GSTIN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter GSTIN" } })
-							<label for="input" class="control-label">GSTIN*</label><i class="bar"></i>
-							<div class="error" id=""></div>
-						</div>
-						<div class="form-group col-md-3 col-sm-6">
-							@*<input type="text" class="form-control" placeholder="12345ABCD">*@
-							@Html.EditorFor(m => m.PAN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PAN" } })
-							<label for="input" class="control-label">PAN*</label><i class="bar"></i>
-							<div class="error" id=""></div>
-						</div>
-						<div class="form-group col-md-3 col-sm-6">
-							@*<input type="text" class="form-control" placeholder="12345ABCD">*@
-							@Html.EditorFor(m => m.UAN, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter UAN" } })
-							<label for="input" class="control-label">UAN*</label><i class="bar"></i>
-							<div class="error" id=""></div>
-						</div>
+						
 								@*<div class="form-group col-md-3 col-sm-6">
 				<p class="label-head mb-10">PAN Certificate</p>
 				@if (Model.User.Doc_PANCopy != null)
@@ -172,16 +143,15 @@
 					<p class="font-15 text-danger">Logo Not Uploaded!</p>
 				}
 			</div>*@
-								<div class="col-md-12 col-sm-12">
+								@*<div class="col-md-12 col-sm-12">
 									<div class="checkbox m-0">
 										<label>
-											@*<input type="checkbox" />*@
 											@Html.CheckBoxFor(m => m.TermsAndConditions)
 											<i class="helper"></i><a data-toggle="modal" data-target="#termsModal" href="#" class="hover-signup" data-dismiss="modal">Terms and Conditions*</a>
 											<div class="error" id=""></div>
 										</label>
 									</div>
-								</div>
+								</div>*@
 								<div class="col-sm-6 mt-3">
 									<button type="submit" class="btn btn-sec">Submit</button>
 								</div>

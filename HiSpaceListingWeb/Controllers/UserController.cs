@@ -92,7 +92,7 @@ namespace HiSpaceListingWeb.Controllers
 					return RedirectToAction("AdminLister", "Admin");
 				}
 				//User check
-				else if(_user != null && _user.UserId == 0 && _user.Email == user.Email && _user.Password == user.Password && _user.UserType == 2)
+				else if(_user != null && _user.UserId > 0 && _user.Email == user.Email && _user.Password == user.Password && _user.UserType == 2)
 				{
 					AssignSessionVariables(_user);
 					SetSessionVariables();
@@ -216,17 +216,6 @@ namespace HiSpaceListingWeb.Controllers
 				model.RCCopy.CopyTo(new FileStream(filePath, FileMode.Create));
 				model.User.Doc_RCCopy = "\\" + UploadRootPath_removeRoot + uploadsFolder + DuplicateName;
 			}
-			//PANCopy image uploader
-			if (model.PANCopy != null)
-			{
-				OriginalName = model.PANCopy.FileName;
-				string extension = Path.GetExtension(OriginalName);
-				DuplicateName = "_PANCopy" + extension;
-
-				string filePath = Path.Combine(serverUploadsFolder, DuplicateName);
-				model.PANCopy.CopyTo(new FileStream(filePath, FileMode.Create));
-				model.User.Doc_PANCopy = "\\" + UploadRootPath_removeRoot + uploadsFolder + DuplicateName;
-			}
 			//Logo image uploader
 			if (model.Logo != null)
 			{
@@ -239,7 +228,7 @@ namespace HiSpaceListingWeb.Controllers
 				model.User.Doc_CompanyLogo = "\\" + UploadRootPath_removeRoot + uploadsFolder + DuplicateName;
 			}
 
-			if(model.User.Email != null && model.User.Password != null && model.User.CompanyName != null && model.User.Phone != null && model.User.GSTIN != null && model.User.PAN != null && model.User.UAN != null && model.User.Address != null && model.User.Postalcode != null && model.User.PrimaryContactName != null && model.User.PrimaryContactPhone != null && model.User.Status == true && model.User.TermsAndConditions == true)
+			if(model.User.Email != null && model.User.Password != null && model.User.CompanyName != null && model.User.Phone != null && model.User.Address != null && model.User.Postalcode != null && model.User.Status == true && model.User.TermsAndConditions == true)
 			{
 				model.User.UserStatus = "BackgroundCheck";
 			}
@@ -265,6 +254,34 @@ namespace HiSpaceListingWeb.Controllers
 				}
 			}
 			return RedirectToAction("ListingTable","Listing",new { UserID = model.User.UserId, UserType = model.User.UserType });
+		}
+
+
+		[HttpGet]
+		public ActionResult CheckAlreadySignedUp(string Email)
+		{
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiUserEmailEixsts + Email);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var rs = result.Content.ReadAsAsync<bool>().Result;
+					if (rs == true)
+					{
+						return Content("1");
+					}
+					else
+					{
+						return Content("");
+					}
+				}
+			}
+			return Content("");
 		}
 
 		public void SetSessionVariables()

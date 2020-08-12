@@ -8,6 +8,8 @@
 	<div class="result-count" id="opCount">People Filter Count : <span>@Model.Count()</span></div>
 	@foreach (var item in Model)
 	{
+		if (item.Projects.Any())
+		{
 		<div class="property-item property-col-list mt-4">
 			<div class="row no-gutters">
 				<div class="col-lg-12 col-md-12 prop-details">
@@ -18,7 +20,7 @@
 								<div class="property-details__header text-capitalize">@item.Listing.RE_FirstName<span> - </span> @item.Listing.RE_LastName</div>
 							</div>
 							<div class="property-details__role col-sm-6 align-self-center">
-								<div>Operator Name: <span class="property-details__role-name">@item.Operator.CompanyName</span></div>
+								<div>HiSpace-User Name: <span class="property-details__role-name">@item.Operator.CompanyName</span></div>
 								@if (item.Operator.Website != null)
 								{
 									<div>Website: <a href="@item.Operator.Website" target="_blank">@item.Operator.Website</a></div>
@@ -32,7 +34,7 @@
 											{
 											  <span class="re-roles">@roles.ProjectRole</span>
 											}
-											role = @roles.ProjectRole; 
+											role = @roles.ProjectRole;
 										}
 									</span>
 								</div>
@@ -74,7 +76,7 @@
 								{
 							<div class="owl-carousel owl-theme owl-loaded carousel-People">
 								<div class="people-operator">
-									<div class="people-operator__head">Linked Operators with us</div>
+									<div class="people-operator__head">Linked HiSpace-User with us</div>
 									<div class="owl-stage-outer">
 										<div class="owl-stage">
 
@@ -164,7 +166,11 @@
 				</div>
 			</div>
 		</div>
+		}
+		else
+		{
 
+		}
 	}
 
 }
