@@ -424,7 +424,15 @@
 								   "</div>");
 														ViewBag.Eco = @Html.Raw("---");
 													}
-												<tr>
+													if ((item.Listings.RE_FirstName == null && item.Listings.RE_LastName == null) && item.Listings.ListingType == "RE-Professional")
+													{
+														ViewBag.BlinkClass = "blink-bg";
+													}
+													else
+													{
+														ViewBag.BlinkClass = "";
+													}
+												<tr class="@ViewBag.BlinkClass">
 													<td>
 														@if (item.Listings.ListingType == "Commercial" || item.Listings.ListingType == "Co-Working")
 														{
@@ -432,7 +440,18 @@
 														}
 														else if (item.Listings.ListingType == "RE-Professional")
 														{
-															@Html.DisplayFor(modelItem => item.Listings.RE_FirstName)<span> </span>@Html.DisplayFor(modelItem => item.Listings.RE_LastName)
+															if (item.Listings.RE_FirstName == null && item.Listings.RE_LastName == null)
+															{
+																@section Scripts {
+																	<script>
+																		
+																	</script>
+																}
+															}
+															else
+															{
+																@Html.DisplayFor(modelItem => item.Listings.RE_FirstName)<span> </span>@Html.DisplayFor(modelItem => item.Listings.RE_LastName)
+															}
 														}
 
 													</td>
@@ -553,7 +572,17 @@
 								{
 
 								}
-								@*<div class="table-disabled"> Fill the Information to enable listing</div>*@
+							<div class="re-prof__nodata hi-alert__pry listing-note display-none"> 
+								<div>
+									Step 1: Please fill the RE-Professional details by click <span class="note-head"> <i class="fas fa-edit btn-icon text-pry"></i></span>
+								</div>
+								<div>
+									Step 2: Add your listed property as the<span class="note-head"> <i class="fas fa-city btn-icon text-info"></i></span> project and give the roles(Owner or Operator).
+								</div>
+								<div>
+									Step 3: Now Your <span class="note-head"> <i class="fas fa-plus-circle btn-icon text-pry"></i></span> Listing will enable You can add Properies/Space/RE-professionals/Projects.
+								</div>
+								 
 							</div>
 						</div>
 					</div>

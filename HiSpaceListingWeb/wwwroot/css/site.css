@@ -3115,3 +3115,37 @@ form.md-form .checkbox.checbox-switch-small {
 	cursor: no-drop;
 	background: rgb(224, 224, 224) !important;
 }
+/*form the auto re-prof*/
+#show_add_view.event-none{
+	background: #ffc46c;
+}
+.blink-bg {
+	color: #fff;
+	animation: blinkingBackground 2s infinite;
+}
+table.dataTable.display tbody tr.blink-bg > .sorting_1 {
+	animation: blinkingBackground 2s infinite;
+}
+
+@keyframes blinkingBackground {
+	0% {
+		background-color: #ffffff;
+	}
+
+	50% {
+		background-color: var(--pry-color);
+	}
+
+
+	100% {
+		background-color: #ffffff;
+	}
+}
+.hi-alert__pry {
+	padding: 5px;
+	background: #ff990059;
+	color: #212529;
+	font-size: 13px;
+	font-weight: 500;
+	margin: 0 25px 25px;
+}
