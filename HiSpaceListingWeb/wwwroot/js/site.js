@@ -2830,3 +2830,9 @@ function EditGreenBuildingForm(obj) {
 //*****************************adding Green Building data section end*******************************//
 //--------------------------------------------------------------------------------------------------//
 
+//automatically re-prof added and maintain 
+if ($('#listingTable').find('tr').hasClass('blink-bg') == true) {
+	console.log('yes')
+	$('.listingtable #show_add_view').addClass('event-none');
+	$('.re-prof__nodata').removeClass('display-none');
+}
