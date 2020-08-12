@@ -1,0 +1,178 @@
+﻿@{
+	ViewData["Title"] = "Professional Detail";
+	Layout = "~/Views/Shared/_WebLayout.cshtml";
+	@using Microsoft.AspNetCore.Http
+	@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+}
+@model IEnumerable<HiSpaceListingService.ViewModel.PropertyPeopleResponse>
+
+<div class="property-list nav-padding container">
+	<div class="bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<ol class="breadcrumb mb-0">
+						<li class="breadcrumb-item"><a href="@Url.Action("Index", "Website")"> <i class="fas fa-home"></i> </a></li>
+						@*<li class="breadcrumb-item"><i class="fas fa-chevron-right"></i><a href="@Url.Action( "PropertyList","Website")"> All Property List </a></li>*@
+						<li class="breadcrumb-item"><a href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu" ,"Filter",new {ListShowType=3 })"> <i class="fas fa-chevron-right"></i> <span> HiSpace List-RE Professional </span></a></li>
+						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span> Detail </span></li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="result-count mt-3" id="opCount">People / Real Estate Professional Details</div>
+	@foreach (var item in Model)
+	{
+		<div class=" property-col-list mt-4 mb-4">
+			<div class="row no-gutters">
+				<div class="col-lg-12 col-md-12 prop-details">
+					<div class="property-details">
+						<div class="row">
+							<div class="people-details__head col-sm-6">
+								<div class="people-details__head-logo text-uppercase">@item.Listing.RE_FirstName[0]<span></span>@item.Listing.RE_LastName[0]</div>
+								<div class="property-details__header text-capitalize">@item.Listing.RE_FirstName<span> - </span> @item.Listing.RE_LastName</div>
+							</div>
+							<div class="property-details__role col-sm-6 align-self-center">
+								<div>Operator Name: <span class="property-details__role-name">@item.Operator.CompanyName</span></div>
+								@if (item.Operator.Website != null)
+								{
+									<div>Website: <a href="@item.Operator.Website" target="_blank">@item.Operator.Website</a></div>
+								}
+								<div>
+									Role: <span class="property-details__role-type">
+										@{var role = "null";}
+										@foreach (var roles in item.Projects)
+										{
+											@if (!@role.Equals(roles.ProjectRole))
+											{
+												<span class="re-roles">@roles.ProjectRole</span>
+											}
+											role = @roles.ProjectRole;
+										}
+									</span>
+								</div>
+								<div class="property-details__address">
+									<i class="fas fa-map-marker-alt fa-xs"></i>
+									@if (item.Listing.street_number != null)
+									{
+										@Html.Raw(@item.Listing.street_number + ",");
+									}
+									@if (item.Listing.route != null)
+									{
+										@Html.Raw(@item.Listing.route + ",");
+									}
+									<span class="property-span__head">@item.Listing.locality</span>, @item.Listing.administrative_area_level_1. <span class="property-span__head">@item.Listing.postal_code</span>
+								</div>
+								<div class="">
+
+									<span class="property-span__tot">
+										<i class="fas fa-envelope fa-xs"></i>@item.Listing.Email
+									</span>
+									<span class="property-span__head"> | </span>
+									<span class="property-span__occ">
+										<i class="fas fa-mobile fa-xs"></i>@item.Listing.Phone
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="people-details__section">
+							<div class="people-projects">
+								<span class="property-span__head">Total Projects</span>
+								<span class="property-span__type badge-sec">@item.TotalProjects</span>
+							</div>
+							<div class="property-detail-img popup-gallery people-image__carousel">
+								<div class="property-facilities">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="mb-3">
+												<ul class="property-list facilities-list list-unstyled row mb-3">
+													@foreach (var pro in item.Projects)
+													{
+														<li class="col-sm-12">
+															<div class="row re-project align-items-center">
+																<div class="col-sm-3">
+																	<div class="re-project__name">@pro.ProjectName</div>
+																	<div class="re-project__image">
+																		<a href="@Url.Content(pro.ImageUrl)" target="_blank">
+																			<img class="img-fluid" alt="name" src="@Url.Content(pro.ImageUrl)" />
+																		</a>
+																	</div>
+																	
+																</div>
+																<div class="col-sm-9">
+																	<div class="re-project__desc">
+																		@pro.Description
+																	</div>
+																	<div class="re-project__doc">
+																		<a href="@Url.Content(pro.DocumentUrl)" target="_blank">
+																			<span class="addon-add delete-btn tooltip-wrapper text-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to view the project document"><i class="fas fa-file-alt btn-icon text-info"></i> Document</span>
+																		</a>
+																	</div>
+																</div>
+															</div>
+														</li>
+													}
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="mb-4">
+			<div class="result-count mb-2 mt-2" id="opCount">Linked operators with us</div>
+			@if (item.LinkedOpr != null)
+			{
+				<div class="owl-carousel owl-theme owl-loaded carousel-People">
+					<div class="people-operator">
+						<div class="owl-stage-outer">
+							<div class="owl-stage">
+
+								@foreach (var oper in item.LinkedOpr)
+								{
+								<div class="owl-item">
+									<div class="people-operator__list">
+										@if (oper.Doc_CompanyLogo != null)
+										{
+											<img class="oper-img" src="@oper.Doc_CompanyLogo" data-holder-rendered="true">
+										}
+										else
+										{
+											<img class="oper-img" src="~/images/operatorPlaceholder.png" data-holder-rendered="true">
+
+										}
+
+										<div>@oper.CompanyName</div>
+										<div class="opertor-details__list"><i class="fas fa-building"></i>@oper.PropertyName</div>
+										<div class="opertor-details__list"><i class="fas fa-user-tie"></i>@oper.ProjectRole</div>
+									<div class="property-btn property-btn__small">
+										<a class="property-link btn btn-sec btn-block" href="@Url.Action("SelectOperatorPropertyList", "Detail", new { User = oper.UserId })">Know More</a>
+									</div>
+									</div>
+								</div>
+								}
+							</div>
+
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+
+	}
+</div>
+@section Scripts {
+	<script src="~/js/CustomFilters.js"></script>
+}

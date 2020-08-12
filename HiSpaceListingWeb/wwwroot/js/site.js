@@ -17,6 +17,7 @@
 //	}
 //});
 
+
 //Stop Form Submission of Enter Key Press
 function stopRKey(evt) {
 	var evt = (evt) ? evt : ((event) ? event : null);
@@ -39,7 +40,32 @@ function userCheck(check) {
 		return confirm("Are your sure want to recheck the user as background details?");
 	}
 }
-
+//checking already signed user
+function errAlreadySignedUp(email,obj) {
+	//alert('In errAlreadySignedUp');
+	//console.log($(obj).html())
+	$.ajax({
+		type: "GET",
+		url: "/User/CheckAlreadySignedUp",
+		data: { Email: email },
+		context: this,
+		//dataType: "html",
+		success: function (response) {
+			console.log(response);
+			if (response == "1") {
+				//console.log($(obj).html());
+				$(obj).siblings('.error').html('<span>Already signed up</span>');
+				$(obj).val('');
+			}
+			else{
+				$(obj).siblings('.error').html('<span></span>');
+			}
+		},
+		error: function (response) {
+			alert("server not ready please try afterwards");
+		}
+	});
+}
 $(document).ready(function () {
 	//signup radio button change
 	//$('#signup input[type=radio][name=UserType]').change(function () {
@@ -141,7 +167,10 @@ $(document).ready(function () {
 	//	format: 'LT'
 	//});
 
-	$('#example').DataTable();
+	$('#listingTable').DataTable();
+	$('#linkOperators').DataTable();
+	$('#userEnquiry').DataTable();
+	$('#hispaceUser').DataTable();
 
 	//$('#example tbody').on('click', 'tr', function () {
 	//	var data = table.row(this).data();
@@ -354,11 +383,13 @@ $('.required-input').blur(function () {
 	}
 });
 
-function tabNavigation(nav,e) {
+function tabNavigation(nav, e) {
+	
 	var tabLength = parseInt($('.hi-tab').find('.nav-link').length);
 	var currentTab = parseInt($('.hi-tab .active').attr('data-id'));
 	var isValid = true;
 	let formData = { "id": "addListingForm" };
+	//console.log($(`#${formData.id}`).html())
 	$(`#${formData.id} .error`).html(``);
 	//console.log('click')
 	//disable the back btn on first tab
@@ -380,14 +411,14 @@ function tabNavigation(nav,e) {
 		if (currentTab == 1) {
 			//console.log(1);
 			let rules = [
-				{ "id": "Email", "validation": ["emptyRegx", "emailRegx"] },
-				{ "id": "Phone", "validation": ["emptyRegx", "phoneRegx"] }
+				//{ "id": "Email", "validation": ["emptyRegx", "emailRegx"] },
+				//{ "id": "Phone", "validation": ["emptyRegx", "phoneRegx"] }
 			];
 
 			if ($("#ListingType").val() == "Commercial") {
-				//console.log('comm');
+				console.log('comm');
 				rules.push({ "id": "Name", "validation": ["emptyRegx"] });
-				//console.log(rules);
+				console.log(rules);
 			}
 			else if ($("#ListingType").val() == "Co-Working") {
 				//console.log('cow');
@@ -460,7 +491,7 @@ function tabNavigation(nav,e) {
 			}
 		}
 		else if (currentTab == 3) {
-			
+
 		}
 
 		checkRequiredInput(currentTab);
@@ -471,13 +502,19 @@ function tabNavigation(nav,e) {
 			$('.tab-next-btn').css('display', 'none');
 			$('.tab-submit').css('display', 'inline-block');
 		}
+		
 	}
 	//click submit button
 	else if (nav == 2) {
-		//console.log(3);
+		//e.preventDefault();
+		//return false;
+		console.log(3);
 		let rules = [
-			{ "id": "Description", "validation": ["emptyRegx"] }
+			{ "id": "Description", "validation": ["emptyRegx"] },
+			{ "id": "Email", "validation": ["emptyRegx", "emailRegx"] },
+			{ "id": "Phone", "validation": ["emptyRegx", "phoneRegx"] }
 		];
+		console.log(rules)
 		validate(formData, rules);
 		$(`#${formData.id} .error`).each(function (i) {
 			if ($(this).is(':empty')) {
@@ -748,9 +785,22 @@ $(function () {
 				data + '</div></div>').modal();
 
 		});
-		//setTimeout(function () {
-		//	$('.ProjectRole').select2();
-		//}, 1000);
+		setTimeout(function () {
+			$('.project-upload__row').each(function (e) {
+				//console.log($(this).find('.operatorDropdown').attr('class'));
+				if ($(this).find('.operatorName').hasClass('cantedit') == true) {
+					$('.basic-select + .select2-container').addClass("event-none");
+					console.log('yes')
+				} else {
+					operatorListDropdown();
+					$('.basic-select').select2();
+					console.log('no')
+
+				}
+			})
+			
+			
+		}, 1000);
 		
 	});
 
@@ -1234,41 +1284,176 @@ function deleteImage(obj, imageId) {
 //--------------------------------------------------------------------------------------------------//
 //************************************adding Project section start************************************//
 //--------------------------------------------------------------------------------------------------//
+//$(document).ready(function () {
+	//Property list all
+	function operatorListDropdown() {
+		$.ajax({
+			type: "GET",
+			url: "/Addons/OperatorListDropdownl",
+			data: {},
+			context: this,
+			dataType: "json",
+			success: function (response) {
+				//console.log(response);
+				$(".project-upload__row:first-child .operatorDropdown").html("");
+				$(".project-upload__row:first-child .operatorDropdown").append("<option user-id='Please select' value='Please select'>--Please select--</option>");
+				for (var key in response) {
+					if (response.hasOwnProperty(key)) {
+						//console.log(response[key].companyName)
+						$(".project-upload__row:first-child .operatorDropdown").append("<option user-id=" + response[key].userId + " value=" + response[key].companyName + ">" + response[key].companyName + "</option>");
+					}
+				}
+				//console.log($('.project-upload__row:first-child. operatorDropdown').html());
+				$('.project-upload__row:first-child .operatorDropdown').select2();
+
+			},
+			error: function (response) {
+				alert("server not ready please try afterwards");
+			}
+		});
+	}
+	$(document).on('click', '.displayExistingOperator', function (event) {
+		$(this).closest('.operator-nonexist').addClass('display-none');
+		$(this).closest('.operator-nonexist').siblings('.operator-exist').removeClass('display-none');
+		//property section
+		$(this).closest('.operator-main-div').siblings('.property-main-div').find('.property-nonexist').addClass('display-none');
+		$(this).closest('.operator-main-div').siblings('.property-main-div').find('.property-exist').removeClass('display-none');
+		//remove the property list button class to activate
+		$(this).closest('.operator-main-div').siblings('.property-main-div').find('.property-nonexist .displayExistingProperty').removeClass('event-none');
+	});
+	$(document).on('click', '.displayNonExistingOperator', function (event) {
+		$(this).closest('.operator-exist').siblings('.operator-nonexist').removeClass('display-none');
+		$(this).closest('.operator-exist').addClass('display-none');
+		//property section
+		$(this).closest('.operator-main-div').siblings('.property-main-div').find('.property-nonexist').removeClass('display-none');
+		$(this).closest('.operator-main-div').siblings('.property-main-div').find('.property-exist').addClass('display-none');
+		//disable the property list button
+		$(this).closest('.operator-main-div').siblings('.property-main-div').find('.property-nonexist .displayExistingProperty').addClass('event-none');
+	});
+	$(document).on('click', '.displayExistingProperty', function (event) {
+		$(this).closest('.property-nonexist').addClass('display-none');
+		$(this).closest('.property-nonexist').siblings('.property-exist').removeClass('display-none');
+	});
+	$(document).on('click', '.displayNonExistingProperty', function (event) {
+		$(this).closest('.property-exist').siblings('.property-nonexist').removeClass('display-none');
+		$(this).closest('.property-exist').addClass('display-none');
+	});
+	$(document).on('change', '.operatorName', function (event) {
+		//console.log($(this).closest('.operatorDropdown').select2().find(":selected").data("user-id"));
+		var testInteger = /^\d+$/.test($(this).val());
+		//console.log($(this).val());
+		//console.log($(this).find(":selected").html());
+		//console.log($(this).find(":selected").attr('user-id'));
+		//console.log($(this).prop('user-id'));
+		if ($(this).val() != "Please select") {
+			//console.log($(this).closest('.operator-main-div').siblings('.property-main-div').html());
+			//console.log(testInteger);
+			//$(this).closest('.operator-main-div').siblings('.property-main-div').removeClass('event-none__property');
+			var propertyListTag = $(this).closest('.operator-main-div').siblings('.property-main-div').find(".propertyDropdown");
+			//console.log($(this).closest('.operator-main-div').html())
+			$.ajax({
+				type: "GET",
+				url: "/Addons/PropertyListDropdownl",
+				data: { UserId: $(this).find(":selected").attr('user-id') },
+				context: this,
+				dataType: "json",
+				success: function (response) {
+					console.log(response);
+					//console.log($(this).closest('.operator-main-div').html())
+					propertyListTag.html("");
+					propertyListTag.append("<option value='Please select'>--Please select--</option>");
+
+					for (var key in response) {
+						if (response.hasOwnProperty(key)) {
+							//console.log(response[key].companyName)
+							if (response[key].name != null) {
+
+								propertyListTag.append("<option value=" + response[key].name + ">" + response[key].name + "</option>");
+							}
+						}
+					}
+					propertyListTag.select2();
+					//console.log($('.propertyDropdown').html());
+				},
+				error: function (response) {
+					alert("server not ready please try afterwards");
+				}
+			});
+			$(this).closest('.operator-main-div').siblings('.property-main-div').removeClass('event-none__property');
+
+		}
+		//else if ($(this).val() != "Please select" && testInteger == false) {
+		//	console.log(1)
+		//	$(this).closest('.operator-main-div').siblings('.property-main-div').removeClass('event-none__property');
+		//}
+		else if ($(this).val() == "Please select") {
+			//console.log(2)
+			$(this).closest('.operator-main-div').siblings('.property-main-div').addClass('event-none__property');
+		}
+	});
+//})
+
+
+
 //project upload section start
 function addProject(obj) {
+	operatorListDropdown();
+
 	var listingId = $(obj).attr('data-listingid');
-	$('.project-upload').append(
-		'<div class="row project-upload__row">' +
+	$('.project-upload').prepend(
+		'<div class="row project-upload__row mb-4">' +
 		'<div class="display-none">'+
 		'<div class="form-group">'+
 		'<input type="text" class="form-control projectId event-none" placeholder="id" value="0">'+
 		'<label for="input" class="control-label">Project id</label><i class="bar"></i>'+
 		'</div>'+
-		'</div>'+
-		'<div class=" col-md-3 col-sm-6  align-self-center">' +
+		'</div>' +
+		//operator List
+		'<div class=" col-md-3 col-sm-6 align-self-center operator-main-div">' +
+
+		'<div class="operator-exist">' +
+		'<div class="font-11">If Operator Not Exist click <span class="displayNonExistingOperator bg-primary small-btn__action">Add</span></div>' +
+		'<div class="form-group operatorDropdown-div">' +
+		'<select class="form-control basic-select operatorDropdown operatorName">' +
+		'</select>' +
+		'<label for="input" class="control-label">Operator Name</label><i class="bar"></i>' +
+		'</div>' +
+		'</div>' +
+
+		'<div class="operator-nonexist display-none">' +
+		'<div class="font-11">Select on listed operator <span class="displayExistingOperator bg-sec small-btn__action">Operator List</span></div>' +
 		'<div class="form-group">' +
-		'<input type="text" class="form-control projectName" placeholder="project Name">' +
-		'<label for="input" class="control-label">project Name</label><i class="bar"></i>' +
+		'<input type="text" user-id="new" class="form-control operatorName" placeholder="Operator Name">' +
+		'<label for="input" class="control-label">Operator Name</label><i class="bar"></i>' +
 		'</div>' +
 		'</div>' +
-		'<div class=" col-md-3 col-sm-6 align-self-center">' +
+
+		'</div>' +
+		//Property list
+		'<div class=" col-md-3 col-sm-6  align-self-center property-main-div event-none__property">' +
+
+		'<div class="property-exist">' +
+		'<div class="font-11">If Property Not Exist click <span class="displayNonExistingProperty bg-primary small-btn__action">Add</span></div>' +
+		'<div class="form-group propertyDropdown-div">' +
+		'<select class="form-control basic-select propertyDropdown propertyName">' +
+		'<option value=" ">Select Operator First</option>' +
+		'</select>' +
+		'<label for="input" class="control-label">Property Name</label><i class="bar"></i>' +
+		'</div>' +
+		'</div>' +
+
+		'<div class="property-nonexist display-none">' +
+		'<div class="font-11">Select on listed property <span class="displayExistingProperty bg-sec small-btn__action">property List</span></div>' +
 		'<div class="form-group">' +
-		'<input type="file" class="form-control projectImage" accept="project/*">' +
-		'<label for="input" class="control-label">Upload project Image</label><i class="bar"></i>' +
+		'<input type="text" class="form-control propertyName" placeholder="property Name">' +
+		'<label for="input" class="control-label">Property Name</label><i class="bar"></i>' +
 		'</div>' +
 		'</div>' +
-		'<div class=" col-md-2 col-sm-6 align-self-center">' +
-		'<div class="form-group">' +
-		'<input type="file" class="form-control projectDoucument" accept="project/*">' +
-		'<label for="input" class="control-label">Upload project Document</label><i class="bar"></i>' +
+
 		'</div>' +
-		'</div>' +
-		'<div class=" col-md-4 col-sm-6 align-self-center">' +
-		'<div class="form-group">' +
-		'<textarea type="text" class="form-control projectDesc" rows="3" placeholder="Enter your text..."></textarea>' +
-		'<label for="input" class="control-label">Description</label><i class="bar"></i>' +
-		'</div>' +
-		'</div>' +
+
+		
+		
 		'<div class=" col-md-3 col-sm-6 align-self-center">'+
 			'<div class="form-group">'+
 				'<select class="form-control basic-select ProjectRole">'+
@@ -1307,7 +1492,26 @@ function addProject(obj) {
 					'<input type="text" class="form-control PropertyAdditionalIdNumber" placeholder="ABCD12345">'+
 						'<label for="input" class="control-label">Document Value/No.</label><i class="bar"></i>'+
 								'</div>'+
-				'</div>'+
+		'</div>' +
+		'<div class=" col-md-6 col-sm-12 align-self-center">' +
+		'<div class="form-group">' +
+		'<textarea type="text" class="form-control projectDesc" rows="3" placeholder="Enter your text..."></textarea>' +
+		'<label for="input" class="control-label">Description</label><i class="bar"></i>' +
+		'</div>' +
+		'</div>' +
+		'<div class=" col-md-3 col-sm-6 align-self-center">' +
+		'<div class="form-group">' +
+		'<input type="file" class="form-control projectImage" accept="project/*">' +
+		'<label for="input" class="control-label">Upload project Image</label><i class="bar"></i>' +
+		'</div>' +
+		'</div>' +
+
+		'<div class=" col-md-2 col-sm-6 align-self-center">' +
+		'<div class="form-group">' +
+		'<input type="file" class="form-control projectDoucument" accept="project/*">' +
+		'<label for="input" class="control-label">Upload project Document</label><i class="bar"></i>' +
+		'</div>' +
+		'</div>' +
 		//'<div class="col-md-1 col-sm-6 m-b--15 align-self-center">' +
 		//'<div class="checkbox m-0">' +
 		//'<label>' +
@@ -1323,8 +1527,10 @@ function addProject(obj) {
 		'</div>' +
 		'</div>'
 	);
-	$('.project-upload__row:last-child .ProjectRole').select2();
-	$('.project-upload__row:last-child .PropertyAdditionalIdName').select2();
+	$('.project-upload__row:first-child .ProjectRole').select2();
+	$('.project-upload__row:first-child .PropertyAdditionalIdName').select2();
+	$('.project-upload__row:first-child .operatorDropdown').select2();
+	$('.project-upload__row:first-child .propertyDropdown').select2();
 }
 function deleteRowProject(obj) {
 	$(obj).closest('.project-upload__row').remove();
@@ -1340,7 +1546,14 @@ function AddProjectForm(obj) {
 	var pProjectId;
 	var Imagefiles = $(row).find('.projectImage').get(0).files;
 	var Documentfiles = $(row).find('.projectDoucument').get(0).files;
-	var pName = $(row).find('.projectName').val();
+
+	var pName = $(row).find('.propertyName:visible').val();
+	console.log(pName)
+
+	var oName = $(row).find('.operatorName:visible').val();
+	console.log(oName)
+
+
 	var pImagePath = $(row).find('.projectImage').val();
 	var pDocumentPath = $(row).find('.projectDoucument').val();
 	var pDesc = $(row).find('.projectDesc').val();
@@ -1358,6 +1571,7 @@ function AddProjectForm(obj) {
 	formData.append("REProfessionalMasterId", pProjectId);
 	formData.append("ListingId", listingId);
 	formData.append("ProjectName", pName);
+	formData.append("OperatorName", oName);
 	formData.append("ImageUrl", pImagePath);
 	formData.append("DocumentUrl", pDocumentPath);
 	formData.append("Status", pStatus);
@@ -1366,7 +1580,7 @@ function AddProjectForm(obj) {
 	formData.append("PropertyReraId", pRera);
 	formData.append("PropertyAdditionalIdName", pAdditionalIdName);
 	formData.append("PropertyAdditionalIdNumber", pAdditionalIdValue);
-
+	//console.log(formData)
 	//var url = '@Url.Action("UploadImage", "Addons")';
 	$.ajax({
 		type: "POST",
@@ -1379,7 +1593,13 @@ function AddProjectForm(obj) {
 				console.log(response);
 				$(row).addClass("addons-row");
 				$(row).removeClass("addons-row__edit");
-				$(row).find('.projectName').addClass("event-none");
+
+				$(row).find('.propertyName').addClass("event-none");
+				$(row).find('.propertyName + .select2-container').addClass("event-none");
+
+				$(row).find('.operatorName').addClass("event-none");
+				$(row).find('.operatorName + .select2-container').addClass("event-none");
+
 				$(row).find('.projectDesc').addClass("event-none");
 				$(row).find('.PropertyReraId').addClass("event-none");
 				$(row).find('.PropertyAdditionalIdNumber').addClass("event-none");
@@ -1437,7 +1657,18 @@ function EditProjectForm(obj) {
 	var row = $(obj).closest('.project-upload__row');
 	$(row).removeClass("addons-row");
 	$(row).addClass("addons-row__edit");
-	$(row).find('.projectName').removeClass("event-none");
+
+	//operator name section
+
+
+	$(row).find('.propertyName').removeClass("event-none");
+	$(row).find('.propertyName.cantedit').addClass("event-none");
+	$(row).find('.propertyName + .select2-container').removeClass("event-none");
+	$(row).find('.operatorName').removeClass("event-none");
+	$(row).find('.operatorName.cantedit').addClass("event-none");
+	$(row).find('.operatorName + .select2-container').removeClass("event-none");
+
+
 	$(row).find('.projectDesc').removeClass("event-none");
 	$(row).find('.ProjectRole').removeClass("event-none");
 	$(row).find('.PropertyAdditionalIdName').removeClass("event-none");
@@ -1474,14 +1705,19 @@ function clearRowProject(obj, projectId) {
 				$(row).addClass("addons-row");
 				$(row).removeClass("addons-row__edit");
 				$(row).find('.projectId').val(response.reProfessionalMasterId);
-				$(row).find('.projectName').addClass("event-none");
+
+				$(row).find('.propertyName').addClass("event-none");
+				$(row).find('.propertyName + .select2-container').addClass("event-none");
+				$(row).find('.operatorName').addClass("event-none");
+				$(row).find('.operatorName + .select2-container').addClass("event-none");
+
 				$(row).find('.projectDesc').addClass("event-none");
 				$(row).find('.PropertyReraId').addClass("event-none");
 				$(row).find('.PropertyAdditionalIdNumber').addClass("event-none");
 				$(row).find('.ProjectRole + .select2-container').addClass("event-none");
 				$(row).find('.PropertyAdditionalIdName + .select2-container').addClass("event-none");
 
-				$(row).find('.projectName').val(response.projectName);
+				$(row).find('.propertyName').val(response.projectName);
 				$(row).find('.ProjectRole').val(response.projectRole);
 				$(row).find('.projectDesc').html(response.description);
 				if (response.imageUrl != null) {

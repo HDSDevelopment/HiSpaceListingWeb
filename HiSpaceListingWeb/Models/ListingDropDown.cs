@@ -67,4 +67,10 @@ namespace HiSpaceListingWeb.Models
 		public string PropertyDocumentName { set; get; }
 		public string PropertyDocumentDisplay { set; get; }
 	}
+	public class UserDocumentProof
+	{
+		public int UserDocumentProofID { set; get; }
+		public string UserDocumentProofName { set; get; }
+		public string UserDocumentProofDisplay { set; get; }
+	}
 }

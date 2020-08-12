@@ -23,6 +23,16 @@ namespace HiSpaceListingWeb.Controllers
 			SetSessionVariables();
 			return View();
 		}
+		public ActionResult LinkedPeople()
+		{
+			SetSessionVariables();
+			return View("LinkedOperators");
+		}
+		public ActionResult UserEnquiry()
+		{
+			SetSessionVariables();
+			return View("UserEnquiries");
+		}
 
 		//public ActionResult ListingTable(int UserID, int UserType)
 		//{
@@ -90,6 +100,7 @@ namespace HiSpaceListingWeb.Controllers
 		{
 			SetSessionVariables();
 			UserMasterViewModel vModel = new UserMasterViewModel();
+			ViewBag.ListOfGetUserDocumentProofList = Common.GetUserDocumentProofList();
 			if (UserType != 0)
 			{
 				using (var client = new HttpClient())

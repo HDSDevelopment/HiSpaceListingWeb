@@ -15,8 +15,8 @@
 					<ol class="breadcrumb mb-0">
 						<li class="breadcrumb-item"><a href="@Url.Action("Index", "Website")"> <i class="fas fa-home"></i> </a></li>
 
-						<li class="breadcrumb-item"><a href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})"> <i class="fas fa-chevron-right"></i> <span>List Table</span></a></li>
-						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Edit List</span></li>
+						<li class="breadcrumb-item"><a href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})"> <i class="fas fa-chevron-right"></i> <span>User Details/Listing</span></a></li>
+						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Edit</span></li>
 					</ol>
 				</div>
 			</div>
@@ -27,13 +27,13 @@
 			<div class="row no-gutters">
 				<div class="col-md-12">
 					<div class="section-title d-flex align-items-center m--tb-15">
-						<h2>Edit Property/RE-Professional</h2>
+						<h2>Edit Property/Space/RE-Professional</h2>
 					</div>
 				</div>
 			</div>
 			<div class="">
 				@*<form class="form-row align-items-center md-form" action="account-profile.html">*@
-				@using (Html.BeginForm("Update", "ListingForm", FormMethod.Post, new { id = "addListingForm", @class = "form-row align-items-center md-form", enctype = "multipart/form-data" }))
+				@using (Html.BeginForm("Update", "ListingForm", FormMethod.Post, new { id = "addListingForm", @class = "form-row align-items-center md-form", enctype = "multipart/form-data"}))
 				{
 					@Html.AntiForgeryToken()
 					@Html.HiddenFor(m => m.UserId);
@@ -138,36 +138,6 @@
 												</div>
 											</div>
 											<!--row 2-->
-											<div class="row">
-												<div class="col-md-3 col-sm-6">
-													<div class="form-group">
-														@*<input type="text" id="l_Email" class=" required-input" placeholder="abc@gmail.com">*@
-														@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "abc@gmail.com", @type = "email" } })
-														<label for="Email" class="control-label">Email*</label>
-														<i class="bar"></i>
-														<div class="error"></div>
-													</div>
-													@*<span class="hi-error d-none">Email is required</span>*@
-												</div>
-												<div class="col-md-3 col-sm-6">
-													<div class="form-group">
-														@*<input type="text" id="Phone" class=" required-input" placeholder="9999999999">*@
-														@Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999", @type = "number" } })
-														<label for="Phone" class="control-label">Phone*</label>
-														<i class="bar"></i>
-														<div class="error"></div>
-													</div>
-													@*<span class="hi-error d-none">Phone is required</span>*@
-												</div>
-												@*<div class="col-md-3 col-sm-6">
-														<div class="form-group">
-															@Html.EditorFor(m => m.SecondaryPhone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999" } })
-															<label for="SecondaryPhone" class="control-label">SecondaryPhone</label>
-															<i class="bar"></i>
-														</div>
-													</div>*@
-
-											</div>
 											@*row 3 all type-1*@
 											<div class="row form-type type-1">
 												<div class="col-md-3 col-sm-6">
@@ -176,8 +146,8 @@
 														@Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control required-input", placeholder = "Enter Name" } })
 														<label for="Name" class="control-label">property Name*</label>
 														<i class="bar"></i>
-													</div>
 													<div class="error"></div>
+													</div>
 												</div>
 												<div class="col-md-3 col-sm-6">
 													<div class="radio-group">
@@ -711,28 +681,25 @@
 										<div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="head-3">
 											<!--row 1-->
 											<div class="row">
-												@*<div class="col-md-3 col-sm-6">
-														<div class="form-group">
-															@Html.EditorFor(m => m.Fax, new { htmlAttributes = new { @class = "form-control", placeholder = "123456798" } })
-															<label for="Fax" class="control-label">Fax</label>
-															<i class="bar"></i>
-														</div>
-													</div>*@
 												<div class="col-md-3 col-sm-6">
 													<div class="form-group">
-														@*<input type="text" id="Pry_name" class="" placeholder="Name">*@
-														@Html.EditorFor(m => m.PrimaryConatctName, new { htmlAttributes = new { @class = "form-control", placeholder = "Name" } })
-														<label for="Pry_name" class="control-label">Primary Contact Person</label>
+														@*<input type="text" id="l_Email" class=" required-input" placeholder="abc@gmail.com">*@
+														@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "abc@gmail.com", @type = "email" } })
+														<label for="Email" class="control-label">Email*</label>
 														<i class="bar"></i>
+														<div class="error"></div>
 													</div>
+													@*<span class="hi-error d-none">Email is required</span>*@
 												</div>
 												<div class="col-md-3 col-sm-6">
 													<div class="form-group">
-														@*<input type="text" id="Pry_phone" class="" placeholder="9999999999">*@
-														@Html.EditorFor(m => m.PrimaryConatctPhone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999" } })
-														<label for="Pry_phone" class="control-label">Primary Contact Phone</label>
+														@*<input type="text" id="Phone" class=" required-input" placeholder="9999999999">*@
+														@Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999", @type = "number" } })
+														<label for="Phone" class="control-label">Phone*</label>
 														<i class="bar"></i>
+														<div class="error"></div>
 													</div>
+													@*<span class="hi-error d-none">Phone is required</span>*@
 												</div>
 												<div class="col-md-6 col-sm-6">
 													<div class="form-group">
@@ -744,12 +711,12 @@
 													</div>
 												</div>
 												@*<div class="col-md-6 col-sm-6">
-														<div class="checkbox m-0">
-															<label>
-																<input type="checkbox" /><i class="helper"></i>Activate
-															</label>
-														</div>
-													</div>*@
+			<div class="checkbox m-0">
+				<label>
+					<input type="checkbox" /><i class="helper"></i>Activate
+				</label>
+			</div>
+		</div>*@
 											</div>
 										</div>
 									</div>
@@ -764,9 +731,9 @@
 							<div class="card-body hi-form__foot">
 								<div class="row hi-btn-event">
 									<div class="col-12">
-										<a href="javascript:void(0);" onclick="tabNavigation(0);" class="btn btn-primary text-uppercase tab-back-btn">Back</a>
-										<a href="javascript:void(0);" onclick="tabNavigation(1);" class="btn btn-primary text-uppercase tab-next-btn float-right">Next</a>
-										<input href="javascript:void(0);" onclick="tabNavigation(2);" type="submit" class="btn btn-success text-uppercase tab-submit float-right bmw-submit" value="Submit" />
+										<a href="javascript:void(0);" onclick="tabNavigation(0,event);" class="btn btn-primary text-uppercase tab-back-btn">Back</a>
+										<a href="javascript:void(0);" onclick="tabNavigation(1,event);" class="btn btn-primary text-uppercase tab-next-btn float-right">Next</a>
+										<input href="javascript:void(0);" onclick="tabNavigation(2,event);" type="submit" class="btn btn-success text-uppercase tab-submit float-right bmw-submit" value="Submit" />
 									</div>
 								</div>
 							</div>

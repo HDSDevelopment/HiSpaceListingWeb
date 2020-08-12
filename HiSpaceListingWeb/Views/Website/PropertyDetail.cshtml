@@ -15,8 +15,8 @@
 					<ol class="breadcrumb mb-0">
 						<li class="breadcrumb-item"><a href="@Url.Action("Index", "Website")"> <i class="fas fa-home"></i> </a></li>
 
-						<li class="breadcrumb-item"><a href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })"> <i class="fas fa-chevron-right"></i> <span> All Property List</span></a></li>
-						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span> Property Details</span></li>
+						<li class="breadcrumb-item"><a href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })"> <i class="fas fa-chevron-right"></i> <span> HiSpace List-Property/Space</span></a></li>
+						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span> Detail</span></li>
 					</ol>
 				</div>
 			</div>
@@ -33,7 +33,7 @@
 						<div class="sticky-top">
 							<div class="widget accordion-sec">
 								<div class="widget-title widget-collapse">
-									<a class="ml-auto" data-toggle="collapse" href="#property-lister" role="button" aria-expanded="false" aria-controls="property-lister"><h6>Lister Detail</h6> <i class="fas fa-chevron-down"></i> </a>
+									<a class="ml-auto" data-toggle="collapse" href="#property-lister" role="button" aria-expanded="false" aria-controls="property-lister"><h6>HiSpace-User Detail</h6> <i class="fas fa-chevron-down"></i> </a>
 								</div>
 								<div class="collapse show" id="property-lister">
 									<div class="accordion-sec__detail">
@@ -53,7 +53,7 @@
 											<div><i class="fas fa-city"></i><b>Total List </b><span>(@Model.ListerPropertyCount)</span></div>
 										</div>
 										<div class="lister-btn">
-											<a class="btn btn-sm btn-primary" href="@Url.Action( "PropertyLister","Website",new { UserID = Model.User.UserId})">See Details</a>
+											<a class="btn btn-sm btn-primary" href="@Url.Action("SelectOperatorPropertyList", "Detail", new { User = Model.User.UserId})">See Details</a>
 										</div>
 									</div>
 								</div>
@@ -133,6 +133,17 @@
 									<button type="button" role="presentation" class="owl-next"><i class="fas fa-chevron-right"></i></button>
 								</div>
 								<div class="owl-dots disabled"></div>
+							</div>
+							@if (Model.Listing.CMCW_PropertyFor == "Rental")
+							{
+								ViewBag.propertyFor = "bg-info";
+							}
+							else
+							{
+								ViewBag.propertyFor = "bg-sec";
+							}
+							<div class="property-for @ViewBag.propertyFor">
+								<span class="">@Model.Listing.CMCW_PropertyFor</span>
 							</div>
 						</div>
 						<div class="property-info mt-5">
@@ -364,9 +375,9 @@
 									{
 										<div class="mb-3">
 											<ul class="property-list list-unstyled row mb-3">
-												<li class="col-sm-6"><b>Name:</b> <span class="">@Model.Listing.Name</span></li>
+												<li class="col-sm-6"><b>Name:</b> <span class="">@Model.Listing.RE_FirstName @Model.Listing.RE_LastName</span></li>
 												<li class="col-sm-6"><b>Type:</b> <span class="text-info font-weight-bold">@Model.Listing.ListingType</span></li>
-												<li class="col-sm-6"><b>Level:</b> @Model.Listing.REprofessionalsType</li>
+												@*<li class="col-sm-6"><b>Level:</b> @Model.Listing.REprofessionalsType</li>*@
 												<li class="col-sm-12">
 													<b>Intrested In:</b>
 													@if (@Model.Listing.RE_Coworking)

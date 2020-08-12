@@ -19,6 +19,8 @@ namespace HiSpaceListingWeb.ViewModel
 		public string PropertyReraId { set; get; }
 		public string PropertyAdditionalIdName { set; get; }
 		public string PropertyAdditionalIdNumber { set; get; }
+		public string OperatorName { set; get; }
+		public string LinkingStatus { set; get; }
 		public IFormFile File_Image { set; get; }
 		public IFormFile File_Document { set; get; }
 	}

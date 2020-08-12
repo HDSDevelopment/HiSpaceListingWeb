@@ -139,29 +139,30 @@
 									Dashboard <i class="fas fa-chevron-down fa-xs"></i>
 								</a>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="@Url.Action( "AdminLister","Admin")">Operators</a></li>
+									<li><a class="dropdown-item" href="@Url.Action( "AdminLister","Admin")">HiSpace-User List</a></li>
 								</ul>
 							</li>
 						}
 						else if (ViewBag.UserId != null && ViewBag.UserId > 0 && ViewBag.UserType == 1)
 						{
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Dashboard <i class="fas fa-chevron-down fa-xs"></i>
-								</a>
-								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})">My Listing</a></li>
-								</ul>
-							</li>
+					<li class="nav-item dropdown bg-sec">
+						<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Dashboard <i class="fas fa-chevron-down fa-xs"></i>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})">User Details/Listing</a></li>
+							<li><a class="dropdown-item" href="@Url.Action( "LinkedPeople","Listing")">Linked People/Professional</a></li>
+						</ul>
+					</li>
 						}
 						else if (ViewBag.UserId != null && ViewBag.UserId > 0 && ViewBag.UserType == 2)
 						{
-							<li class="nav-item dropdown">
+							<li class="nav-item dropdown bg-sec">
 								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									Dashboard <i class="fas fa-chevron-down fa-xs"></i>
 								</a>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="#">My Enquiries</a></li>
+									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing")">Enquiries</a></li>
 								</ul>
 							</li>
 						}
