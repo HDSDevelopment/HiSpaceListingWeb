@@ -100,7 +100,8 @@ var regx = {
 	"websiteRegx": { "rule": /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/, "error": "Invalid Website Url" },
 	"emptyRegx": { "rule": /([^\s])/, "error": "The field is required" },
 	"phoneRegx": { "rule": /^\d{10}$/, "error": "Invalid Phone no" },
-	"emailRegx": { "rule": /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, "error": "Invalid Email" },
+	//"emailRegx": { "rule": /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, "error": "Invalid Email" },
+	"emailRegx": { "rule": /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "error": "Invalid Email" },
 	//"passwordRegx": { "rule": /^[A-Za-z]\w{5,26}$/, "error": "Minimum password length is minmum 6" },
 	"passwordRegx": { "rule": /[0-9a-zA-Z]{6,}/, "error": "Minimum password length is minmum 6" },
 	"checkboxRegx": { "rule": /true/, "error": "cannot be unchecked" },
@@ -171,8 +172,32 @@ function loginValidate(e) {
 
 	let rules = [
 		{
-			"id": "Email", "validation": ["emptyRegx", "emailRegx"]},
+			"id": "Email", "validation": ["emptyRegx"]},
 		{ "id": "Password", "validation": ["emptyRegx"]},
+	];
+
+	validate(formData, rules);
+
+	$(`#${formData.id} .error`).each(function (i) {
+		if ($(this).is(':empty')) {
+		}
+		else {
+			e.preventDefault();
+			return;
+		}
+	})
+}
+
+//enquiryFormValidate
+function enquiryFormValidate(e) {
+	//e.preventDefault();
+	let formData = { "id": "enquiryForm" };
+	$(`#${formData.id} .error`).html(``);
+
+	let rules = [{ "id": "Sender_Name", "validation": ["emptyRegx"]},
+		{ "id": "Sender_Phone", "validation": ["emptyRegx"] },
+		{ "id": "Sender_Email", "validation": ["emptyRegx"] },
+		{ "id": "Sender_Message", "validation": ["emptyRegx"] },
 	];
 
 	validate(formData, rules);
@@ -201,7 +226,7 @@ function signupValidate(e) {
 	let rules = [
 		{ "id": "sign-CompanyName", "validation": ["emptyRegx"] },
 		{ "id": "sign-Phone", "validation": ["emptyRegx", "phoneRegx"] },
-		{"id": "sign-Email", "validation": ["emptyRegx", "emailRegx"] },
+		{"id": "sign-Email", "validation": ["emptyRegx"] },
 		{ "id": "sign-Password", "validation": ["emptyRegx", "passwordRegx"] },
 
 	];
@@ -235,12 +260,12 @@ function EditUserValidate(e) {
 	let rules = [
 		{ "id": "CompanyName", "validation": ["emptyRegx"] },
 		{ "id": "Phone", "validation": ["emptyRegx", "phoneRegx"] },
-		{ "id": "Email", "validation": ["emptyRegx", "emailRegx"] },
+		{ "id": "Email", "validation": ["emptyRegx"] },
 		{ "id": "Address", "validation": ["emptyRegx"] },
 		{ "id": "Postalcode", "validation": ["emptyRegx", "postRegx"] },
 		{ "id": "TermsAndConditions", "validation": ["checkboxRegx"] },
-		{ "id": "ProofNumber", "validation": ["emptyRegx"] },
-		{ "id": "ProofName", "validation": ["emptyRegx"] },
+		//{ "id": "ProofNumber", "validation": ["emptyRegx"] },
+		//{ "id": "ProofName", "validation": ["emptyRegx"] },
 	];
 	var User_Website = "Website";
 	//e.preventDefault();
@@ -270,7 +295,7 @@ function adminAddUserValidate(e) {
 	let rules = [
 		{ "id": "CompanyName", "validation": ["emptyRegx"] },
 		{ "id": "Phone", "validation": ["emptyRegx", "phoneRegx"] },
-		{ "id": "Email", "validation": ["emptyRegx", "emailRegx"] },
+		{ "id": "Email", "validation": ["emptyRegx"] },
 		{ "id": "Password", "validation": ["emptyRegx", "passwordRegx"] },
 		{ "id": "Address", "validation": ["emptyRegx"] },
 		{ "id": "Postalcode", "validation": ["emptyRegx", "postRegx"] },
@@ -301,7 +326,7 @@ function basicInformationValidate(e) {
 	let rules = [
 		{ "id": "User_CompanyName", "validation": ["emptyRegx"] },
 		{ "id": "User_Phone", "validation": ["emptyRegx", "phoneRegx"] },
-		{ "id": "User_Email", "validation": ["emptyRegx", "emailRegx"] },
+		{ "id": "User_Email", "validation": ["emptyRegx"] },
 		{ "id": "User_TermsAndConditions", "validation": ["checkboxRegx"] }
 	];
 	var User_Website = "User_Website";

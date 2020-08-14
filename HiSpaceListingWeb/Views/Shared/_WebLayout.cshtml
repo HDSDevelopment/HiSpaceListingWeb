@@ -53,6 +53,7 @@
 	<link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
+
 	<!--=================================
 	header -->
 	<header class="header">
@@ -151,7 +152,7 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})">User Details/Listing</a></li>
-							<li><a class="dropdown-item" href="@Url.Action( "LinkedPeople","Listing")">Linked People/Professional</a></li>
+							<li><a class="dropdown-item" href="@Url.Action( "LinkedPeople","Listing",new { UserID = ViewBag.UserId})">Linked People/Professional</a></li>
 						</ul>
 					</li>
 						}
@@ -320,6 +321,7 @@
 
 	@*new api account*@
 	@*<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyAV1J9BkKhGYPDtKrIw45zIVPgdIjnrWSI"></script>*@
+	@*<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyA-i-AiLbdowFFJ0pw9GxhdAnEWYdzGgis"></script>*@
 
 
 	<script src="~/js/popper/popper.min.js"></script>

@@ -22,12 +22,12 @@
 							{
 								@foreach (var image in item.ListingImagesList.Take(1))
 								{
-									<img class="img-fluid" src="@image.ImageUrl" alt="">
+									<img class="img-fluid image-list" src="@image.ImageUrl" alt="">
 								}
 							}
 							else
 							{
-								<img class="img-fluid" src="~/images/property/list/01.jpg" alt="">
+								<img class="img-fluid image-list" src="~/images/property/Noimage.jpg" alt="">
 							}
 							<div class="property-lable">
 								@if (item.SpaceListing.ListingType == "Commercial")
@@ -238,8 +238,15 @@
 
 						</div>
 						<div class="property-btn">
+							@if (ViewBag.UserId != null)
+							{
 							<a class="property-link btn btn-primary btn-block" href="@Url.Action("PropertyDetail", "Website", new { ListingID = item.SpaceListing.ListingId })">See Details</a>
-							@*<a class="property-link btn btn-primary btn-block" href="#">See Details</a>*@
+							}
+							else
+							{
+								<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }">See Details</a>
+							}
+							
 						</div>
 						@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
 						{

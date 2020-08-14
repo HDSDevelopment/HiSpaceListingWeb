@@ -155,7 +155,14 @@
 
 						</div>
 						<div class="property-btn">
-							<a class="property-link btn btn-primary btn-block" href="@Url.Action("SelectOperatorPropertyList", "Detail", new { User = item.Operator.UserId })">See Details</a>
+							@if (ViewBag.UserId != null)
+							{
+								<a class="property-link btn btn-primary btn-block" href="@Url.Action("SelectOperatorPropertyList", "Detail", new { User = item.Operator.UserId })">See Details</a>
+							}
+							else
+							{
+						<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }">See Details</a>
+							}
 						</div>
 						<div class="tooltip-wrapper list-data__check" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eco-Friendly Spaces click to see details"><i class="fas fa-check"></i></div>
 

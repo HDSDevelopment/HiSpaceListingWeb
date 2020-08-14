@@ -76,6 +76,46 @@ namespace HiSpaceListingWeb.Controllers
 			return View(vModel);
 		}
 
+		[HttpPost]
+		public ActionResult UserEnquiry(Enquiry model)
+		{
+			SetSessionVariables();
+			Enquiry enquiry = null;
+			if (model != null)
+			{
+				using (var client = new HttpClient())
+				{
+					client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
+					//HTTP POST
+					var postTask = client.PostAsJsonAsync<Enquiry>
+						(Common.Instance.ApiSendEnquiryEmail, model);
+					postTask.Wait();
+					var result = postTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var rs = result.Content.ReadAsAsync<bool>().Result;
+						var sr = rs;
+
+						if (sr == true)
+						{
+							//AssignSessionVariables(_user);
+							TempData["SendStatus"] = "Enquired Success";
+							return RedirectToAction("Index", "Website");
+						}
+						else
+						{
+							TempData["SendStatus"] = "Enquiry Failed";
+							return RedirectToAction("Index", "Website");
+						}
+					}
+				}
+
+				ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+			}
+			
+			return RedirectToAction("Index", "Website");
+		}
+
 		public void SetSessionVariables()
 		{
 			#region
