@@ -101,7 +101,7 @@ var regx = {
 	"emptyRegx": { "rule": /([^\s])/, "error": "The field is required" },
 	"phoneRegx": { "rule": /^\d{10}$/, "error": "Invalid Phone no" },
 	//"emailRegx": { "rule": /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, "error": "Invalid Email" },
-	"emailRegx": { "rule": /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "error": "Invalid Email" },
+	"emailRegx": { "rule": /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)$/, "error": "Invalid Email" },
 	//"passwordRegx": { "rule": /^[A-Za-z]\w{5,26}$/, "error": "Minimum password length is minmum 6" },
 	"passwordRegx": { "rule": /[0-9a-zA-Z]{6,}/, "error": "Minimum password length is minmum 6" },
 	"checkboxRegx": { "rule": /true/, "error": "cannot be unchecked" },

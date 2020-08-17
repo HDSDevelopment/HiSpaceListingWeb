@@ -453,7 +453,7 @@
 								<div class="col-sm-9">
 									@if (Model.Listing.Description != null)
 									{
-										<p>@Model.Listing.Description</p>
+										@Html.Raw(@Model.Listing.Description);
 									}
 									else
 									{

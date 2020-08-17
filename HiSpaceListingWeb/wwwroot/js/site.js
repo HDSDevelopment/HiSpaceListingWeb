@@ -88,6 +88,13 @@ function errAlreadySignedUp(email,obj) {
 	});
 }
 $(document).ready(function () {
+	// Initialize Editor
+	$('.textarea-editor').summernote({
+		//height: 200, // set editor height
+		minHeight: 150 // set minimum height of editor
+		//maxHeight: null, // set maximum height of editor
+		//focus: true // set focus to editable area after initializing summernote
+	});
 	//signup radio button change
 	//$('#signup input[type=radio][name=UserType]').change(function () {
 	$(document).on('change','#signup input[type=radio][name=UserType]', function () {

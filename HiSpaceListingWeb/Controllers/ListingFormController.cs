@@ -185,6 +185,7 @@ namespace HiSpaceListingWeb.Controllers
 				model.ModifyDateTime = DateTime.Now;
 				model.ModifyBy = model.ModifyBy;
 				model.UserId = model.UserId;
+			model.Status = true;
 			if (model.ListingType == "Commercial")
 			{
 				model.CoworkingType = null;
