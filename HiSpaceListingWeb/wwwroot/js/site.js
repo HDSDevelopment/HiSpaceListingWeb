@@ -1160,7 +1160,7 @@ function AddImageForm(obj) {
 	var iName = $(row).find('.imageName').val();
 	var iImagePath = $(row).find('.imageFilePath').val();
 	//if ($(row).find('.imageCheck').is(':checked')) {
-	//		iStatus = true;
+			iStatus = true;
 	//	} else {
 	//		iStatus = false;
 	//}
