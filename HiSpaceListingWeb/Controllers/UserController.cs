@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -144,21 +145,34 @@ namespace HiSpaceListingWeb.Controllers
 						//return RedirectToAction("Index");
 						_user = rs.Result;
 					}
-					
+
+					//email for signup success
+					var signupTask = client.GetAsync(Common.Instance.ApiSendSignupSuccess + _user.Email.ToString() + "/" + _user.CompanyName.ToString() + "/" + _user.Password.ToString());
+					signupTask.Wait();
+
+					var Sresult = signupTask.Result;
+					if (Sresult.IsSuccessStatusCode)
+					{
+						//var rs = result.Content.ReadAsAsync<bool>().Result;
+						//var sr = rs;
+					}
+
 					//SetSessionVariables();
 				}
+				if (ViewBag.UserId == null)
+				{
+					//AssignSessionVariables(_user);
+					TempData["Signup"] = "Signup Success";
+					return RedirectToAction("Index", "Website");
+				}
+				else if (ViewBag.UserId == 0)
+				{
+					return RedirectToAction("AdminLister", "Admin");
+				}
+
 				ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
 			}
-			if(ViewBag.UserId == null)
-			{
-				//AssignSessionVariables(_user);
-				TempData["Signup"] = "Signup Success";
-				return RedirectToAction("Index", "Website");
-			}
-			else if (ViewBag.UserId == 0)
-			{
-				return RedirectToAction("AdminLister", "Admin");
-			}
+			
 			return RedirectToAction("Index", "Website");
 		}
 
@@ -180,7 +194,65 @@ namespace HiSpaceListingWeb.Controllers
 					var sr = rs;
 				}
 			}
+			//Geting user details
+			using (var client = new HttpClient())
+			{
+				User user = null;
+				client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
+				//HTTP GET
+				var responseTask = client.GetAsync(Common.Instance.ApiUserGetUser + UserId.ToString());
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<User>();
+					readTask.Wait();
+					//user = readTask.Result;
+					user = readTask.Result;
+
+					//background verification
+					if (user.UserStatus == "Completed")
+					{
+						//HTTP GET
+						var signupTask = client.GetAsync(Common.Instance.ApiSendBackgroundCheckEmail + user.Email.ToString() + "/" + user.CompanyName.ToString());
+						signupTask.Wait();
+
+						var Sresult = signupTask.Result;
+						if (Sresult.IsSuccessStatusCode)
+						{
+							//var rs = result.Content.ReadAsAsync<bool>().Result;
+							//var sr = rs;
+						}
+					}
+
+				}
+
+			}
+			
+			
 			return RedirectToAction("AdminLister", "Admin");
+		}
+
+		[HttpGet]
+		public ActionResult ReApprove(int REProfessionalMasterId, string Status)
+		{
+			SetSessionVariables();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
+				//HTTP GET
+				var responseTask = client.GetAsync(Common.Instance.ApiApproveByReMasterId + REProfessionalMasterId + "/" + Status);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var rs = result.Content.ReadAsAsync<bool>().Result;
+					var sr = rs;
+				}
+			}
+			return RedirectToAction("LinkedPeople", "Listing", new { UserID = GetSessionObject().UserId });
 		}
 
 
@@ -227,14 +299,16 @@ namespace HiSpaceListingWeb.Controllers
 				model.Logo.CopyTo(new FileStream(filePath, FileMode.Create));
 				model.User.Doc_CompanyLogo = "\\" + UploadRootPath_removeRoot + uploadsFolder + DuplicateName;
 			}
-
-			if(model.User.Email != null && model.User.Password != null && model.User.CompanyName != null && model.User.Phone != null && model.User.Address != null && model.User.Postalcode != null && model.User.Status == true && model.User.TermsAndConditions == true)
+			if(model.User.UserStatus != "Completed")
 			{
-				model.User.UserStatus = "BackgroundCheck";
-			}
-			else
-			{
-				model.User.UserStatus = "Incomplete";
+				if(model.User.Email != null && model.User.Password != null && model.User.CompanyName != null && model.User.Phone != null && model.User.Address != null && model.User.Postalcode != null && model.User.Status == true && model.User.TermsAndConditions == true)
+				{
+					model.User.UserStatus = "BackgroundCheck";
+				}
+				else
+				{
+					model.User.UserStatus = "Incomplete";
+				}
 			}
 
 			using (var client = new HttpClient())

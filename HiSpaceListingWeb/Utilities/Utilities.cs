@@ -92,6 +92,14 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiUserDeleteUser = "DeleteUser/";
 		public string ApiUserApproveByUserId = "ApproveByUserId/";
 		public string ApiUserEmailEixsts = "UserEmailExists/";
+		//re approve
+		public string ApiApproveByReMasterId = "ApproveByReMasterId/";
+		//Email
+		public string ApiSendSignupSuccess = "SendSignupSuccess/";
+		public string ApiSendEnquiryEmail = "SendEnquiryEmail/";
+		public string ApiSendBackgroundCheckEmail = "SendBackgroundCheckEmail/";
+
+
 
 		#endregion User Controller
 
@@ -131,6 +139,9 @@ namespace HiSpaceListingWeb.Utilities
 		//details
 		public string ApiLisitingGetPropertyAndLinkedReProfessionalListByUserID = "GetPropertyAndLinkedReProfessionalListByUserID/";
 		public string ApiLisitingGetPropertyListByUserIDAndListingID = "GetPropertyListByUserIDAndListingID/";
+		//re-link
+		public string ApiLisitingGetLinkedReProfessionalListByUserIDForApproval = "GetLinkedReProfessionalListByUserIDForApproval/";
+
 
 
 

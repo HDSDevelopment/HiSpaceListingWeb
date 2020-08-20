@@ -7,6 +7,41 @@
 	var indianCulture = new System.Globalization.CultureInfo("hi-IN");
 }
 
+@{
+	var enquiry = "";
+	if (TempData.ContainsKey("SendStatus"))
+	{
+		enquiry = TempData["SendStatus"] as string;
+	}
+}
+
+<!-- Modal -->
+<div class="modal message fade" id="enquirySuccess" tabindex="-1" role="dialog" aria-labelledby="enquirySuccessModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header border-0 bg-sec">
+				<h5 class="modal-title" id="enquirySuccessModalLabel">Welcome To HiSpace </h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				@if (enquiry == "1")
+				{
+					<p class="text-sec font-weight-bold">Your Enquiry Sent Successfull</p>
+				}
+				else
+				{
+					<p class="text-pry font-weight-bold">Your enquiry is failed!</p>
+					<p>Please try again later</p>
+				}
+			</div>
+		</div>
+
+	</div>
+</div>
+
 <div class="propertydetail nav-padding">
 	<div class="bg-light">
 		<div class="container">
@@ -24,6 +59,8 @@
 	</div>
 
 	<div class="wrapper">
+
+
 		<!--=================================
 		Property details -->
 		<section class="space-pt--50 ">
@@ -50,6 +87,7 @@
 												<div><i class="fas fa-globe"></i><b>Website: </b> <span>@Model.User.Website</span></div>
 											}
 											<div><i class="fas fa-mobile-alt"></i><b>Phone: </b><span>@Model.User.Phone</span></div>
+											<div><i class="fas fa-globe"></i><b>Email: </b><span>@Model.User.Email</span></div>
 											<div><i class="fas fa-city"></i><b>Total List </b><span>(@Model.ListerPropertyCount)</span></div>
 										</div>
 										<div class="lister-btn">
@@ -63,37 +101,69 @@
 								<div class="">
 									<h3 class="text-center">Enquiry</h3>
 								</div>
-								<form class="md-form form-row ">
+								@using (Html.BeginForm("UserEnquiry", "Website", FormMethod.Post, new { @class = "form-row p-3 md-form", enctype = "multipart/form-data", onSubmit = "enquiryFormValidate(event)", id = "enquiryForm" }))
+								{
+									<div class="display-none">
+										<div class="form-group">
+											<input type="text" id="ListingId" name="ListingId" value="@Model.Listing.ListingId">
+											<label for="input" class="control-label">Listing id</label><i class="bar"></i>
+
+										</div>
+									</div>
+									<div class="display-none">
+										<div class="form-group">
+											<input type="text" id="Listing_UserId" name="Listing_UserId" value="@Model.Listing.UserId">
+											<label for="input" class="control-label">Listing UserId</label><i class="bar"></i>
+										</div>
+									</div>
+									<div class="display-none">
+										<div class="form-group">
+											<input type="text" id="Sender_UserId" name="Sender_UserId" value="@ViewBag.UserId">
+											<label for="input" class="control-label">Sender UserId</label><i class="bar"></i>
+										</div>
+									</div>
+									<div class="display-none">
+										<div class="form-group">
+											<input type="text" id="To_Email" name="To_Email" value="@Model.User.Email">
+											<label for="input" class="control-label">To Email</label><i class="bar"></i>
+										</div>
+									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
-											<input type="text" placeholder="Name" />
-											<label for="input" class="control-label">Name</label><i class="bar"></i>
+											<input type="text" id="Sender_Name" name="Sender_Name" placeholder="Name" />
+											<label for="input" class="control-label">Name*</label><i class="bar"></i>
+											<div class="error" id=""></div>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<input type="text" placeholder="9999999999" />
-											<label for="input" class="control-label">Phone</label><i class="bar"></i>
+											<input type="text" id="Sender_Phone" name="Sender_Phone" placeholder="9999999999" />
+											<label for="input" class="control-label">Phone*</label><i class="bar"></i>
+											<div class="error" id=""></div>
 										</div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<input type="text" placeholder="abc@gmail.com" />
-											<label for="input" class="control-label">Email</label><i class="bar"></i>
+											<input type="email" id="Sender_Email" name="Sender_Email" placeholder="abc@gmail.com" />
+											<label for="input" class="control-label">Email*</label><i class="bar"></i>
+											<div class="error" id=""></div>
 										</div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<textarea type="text" rows="2" placeholder="Enter your message here..."></textarea>
-											<label for="input" class="control-label">Message</label><i class="bar"></i>
+											<textarea type="text" id="Sender_Message" name="Sender_Message" rows="2" placeholder="Enter your message here..."></textarea>
+											<label for="input" class="control-label">Message*</label><i class="bar"></i>
+											<div class="error" id=""></div>
 										</div>
 									</div>
 									<div class="col-md-12 d-flex justify-content-center mb-3">
-										<a href="#" class="btn btn-primary btn-sm">Enquiry Now</a>
+										@*<a class="btn btn-primary btn-sm">Enquiry Now</a>*@
+										<button type="submit" class="btn btn-primary">Enquiry Now</button>
 									</div>
 
-								</form>
+									@*</form>*@
+								}
 							</div>
 						</div>
 					</div>
@@ -104,7 +174,7 @@
 
 								<div class="owl-stage-outer">
 									<div class="owl-stage" style="transform: translate3d(-1220px, 0px, 0px); transition: all 1s ease 0s; width: 3660px;">
-										@if (Model.ListingImages != null || Model.ListingImages.Count() > 0)
+										@if (Model.ListingImages.Any())
 										{
 
 											@foreach (var item in Model.ListingImages)
@@ -120,7 +190,7 @@
 										{
 											<div class="owl-item" style="width: 610px;">
 												<div class="item">
-													<a class="portfolio-img" href="~/images/property/list/01.jpg"><img class="img-fluid" src="~/images/property/list/01.jpg" alt=""></a>
+													<a class="portfolio-img" href="~/images/property/Noimage.jpg"><img class="img-fluid" src="~/images/property/Noimage.jpg" alt=""></a>
 												</div>
 											</div>
 										}
@@ -420,7 +490,7 @@
 								<div class="col-sm-9">
 									@if (Model.Listing.Description != null)
 									{
-										<p>@Model.Listing.Description</p>
+										@Html.Raw(@Model.Listing.Description);
 									}
 									else
 									{
@@ -443,42 +513,49 @@
 										<div class="col-sm-9">
 											<div class="row">
 												<div class="mb-3">
-													<ul class="amenities-list list-unstyled row mb-3">
-														@foreach (var item in Model.Amenities)
-														{
-															@if (item.AmenitiesPayment == "Free")
+													@if (Model.Amenities.Any())
+													{
+														<ul class="amenities-list list-unstyled row mb-3">
+															@foreach (var item in Model.Amenities)
 															{
-																<li class="col-sm-6">
-																	<i class="fas fa-check-circle text-sec"></i>
-																	@item.Name
-																</li>
+																@if (item.AmenitiesPayment == "Free")
+																{
+																	<li class="col-sm-6">
+																		<i class="fas fa-check-circle text-sec"></i>
+																		@item.Name
+																	</li>
+																}
+																else if (item.AmenitiesPayment == "Paid")
+																{
+																	<li class="col-sm-12">
+																		<i class="fas fa-check-circle text-pry"></i>
+																		@item.Name
+																		<span class="spliter">|</span>
+																		<span class="font-weight-bold">Paid</span>
+																		<span class="spliter">|</span>
+																		<span>&#8377;@item.Price/Usage</span>
+																	</li>
+																}
+																else if (item.AmenitiesPayment == "PartiallyPaid")
+																{
+																	<li class="col-sm-12">
+																		<i class="fas fa-check-circle text-pry"></i>
+																		@item.Name
+																		<span class="spliter">|</span>
+																		<span class="font-weight-bold">Partially Paid</span>
+																		<span class="spliter">|</span>
+																		<span class="">Free Count<span class="text-sufix">(@item.PartialCount)</span></span>
+																		<span class="spliter">|</span>
+																		<span>&#8377;@item.Price/Usage</span>
+																	</li>
+																}
 															}
-															else if (item.AmenitiesPayment == "Paid")
-															{
-																<li class="col-sm-12">
-																	<i class="fas fa-check-circle text-pry"></i>
-																	@item.Name
-																	<span class="spliter">|</span>
-																	<span class="font-weight-bold">Paid</span>
-																	<span class="spliter">|</span>
-																	<span>&#8377;@item.Price/Usage</span>
-																</li>
-															}
-															else if (item.AmenitiesPayment == "PartiallyPaid")
-															{
-																<li class="col-sm-12">
-																	<i class="fas fa-check-circle text-pry"></i>
-																	@item.Name
-																	<span class="spliter">|</span>
-																	<span class="font-weight-bold">Partially Paid</span>
-																	<span class="spliter">|</span>
-																	<span class="">Free Count<span class="text-sufix">(@item.PartialCount)</span></span>
-																	<span class="spliter">|</span>
-																	<span>&#8377;@item.Price/Usage</span>
-																</li>
-															}
-														}
-													</ul>
+														</ul>
+													}
+													else
+													{
+														<div>Not Specified</div>
+													}
 												</div>
 												<div class="note">
 													<div>
@@ -505,15 +582,22 @@
 										</div>
 										<div class="col-sm-9">
 											<div class="mb-3">
-												<ul class="property-list facilities-list list-unstyled row mb-3">
-													@foreach (var item in Model.Facilities)
-													{
-														<li class="col-sm-6">
-															<i class="fab fa-gratipay text-info"></i>@item.Name
-															<span>@item.FacilityDistance</span>
-														</li>
-													}
-												</ul>
+												@if (Model.Facilities.Any())
+												{
+													<ul class="property-list facilities-list list-unstyled row mb-3">
+														@foreach (var item in Model.Facilities)
+														{
+															<li class="col-sm-6">
+																<i class="fab fa-gratipay text-info"></i>@item.Name
+																<span>@item.FacilityDistance</span>
+															</li>
+														}
+													</ul>
+												}
+												else
+												{
+													<div>Not Specified</div>
+												}
 											</div>
 										</div>
 									</div>
@@ -531,33 +615,40 @@
 									</div>
 									<div class="col-sm-9">
 										<div class="mb-3">
-											<ul class="property-list facilities-list list-unstyled row mb-3">
-												@foreach (var item in Model.REProfessionalMasters)
-												{
-													<li class="col-sm-12">
-														<div class="row re-project">
-															<div class="col-sm-4">
-																<div class="re-project__name">@item.ProjectName</div>
-																<div class="re-project__image">
-																	<a href="@Url.Content(item.ImageUrl)" target="_blank">
-																		<img class="img-fluid" alt="name" src="@Url.Content(item.ImageUrl)" />
-																	</a>
+											@if (Model.REProfessionalMasters.Any())
+											{
+												<ul class="property-list facilities-list list-unstyled row mb-3">
+													@foreach (var item in Model.REProfessionalMasters)
+													{
+														<li class="col-sm-12">
+															<div class="row re-project">
+																<div class="col-sm-4">
+																	<div class="re-project__name">@item.ProjectName</div>
+																	<div class="re-project__image">
+																		<a href="@Url.Content(item.ImageUrl)" target="_blank">
+																			<img class="img-fluid" alt="name" src="@Url.Content(item.ImageUrl)" />
+																		</a>
+																	</div>
+																	<div class="re-project__doc">
+																		<a href="@Url.Content(item.DocumentUrl)" target="_blank">
+																			<span class="addon-add delete-btn tooltip-wrapper text-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to view the project document"><i class="fas fa-file-alt btn-icon text-info"></i> Document</span>
+																		</a>
+																	</div>
 																</div>
-																<div class="re-project__doc">
-																	<a href="@Url.Content(item.DocumentUrl)" target="_blank">
-																		<span class="addon-add delete-btn tooltip-wrapper text-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to view the project document"><i class="fas fa-file-alt btn-icon text-info"></i> Document</span>
-																	</a>
+																<div class="col-sm-8">
+																	<div class="re-project__desc">
+																		@item.Description
+																	</div>
 																</div>
 															</div>
-															<div class="col-sm-8">
-																<div class="re-project__desc">
-																	@item.Description
-																</div>
-															</div>
-														</div>
-													</li>
-												}
-											</ul>
+														</li>
+													}
+												</ul>
+											}
+											else
+											{
+												<div>Not Specified</div>
+											}
 										</div>
 									</div>
 								</div>
@@ -978,6 +1069,10 @@
 												}
 
 
+											}
+											else
+											{
+												<li>Not Specified</li>
 											}
 										</ul>
 									</div>
@@ -1559,22 +1654,22 @@
 							<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">
 						}
 						@*<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">*@
-					<div class="map-info row">
-						@if (Model.Listing.latitude_view != null && Model.Listing.longitude_view != null)
-						{
-							<div class="display-none" id="lat">@Model.Listing.latitude_view</div>
-							<div class="display-none" id="lon">@Model.Listing.longitude_view</div>
-							<div class="display-none" id="map-zoom">15</div>
-						}
-						else
-						{
-							<div class="display-none" id="lat">20.593683</div>
-							<div class="display-none" id="lon">78.962883</div>
-							<div class="display-none" id="map-zoom">4</div>
-						}
+						<div class="map-info row">
+							@if (Model.Listing.latitude_view != null && Model.Listing.longitude_view != null)
+							{
+								<div class="display-none" id="lat">@Model.Listing.latitude_view</div>
+								<div class="display-none" id="lon">@Model.Listing.longitude_view</div>
+								<div class="display-none" id="map-zoom">15</div>
+							}
+							else
+							{
+								<div class="display-none" id="lat">20.593683</div>
+								<div class="display-none" id="lon">78.962883</div>
+								<div class="display-none" id="map-zoom">4</div>
+							}
 
-						<div id="map"></div>
-					</div>
+							<div id="map"></div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -1588,7 +1683,18 @@
 
 
 @section Scripts {
-<script defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGZoZkDdeXNlOPbKUG1KIXvBY5cUgQQgk&callback=initMapLatLon">
-</script>
+	@if (enquiry != "")
+	{
+	<script>
+		$(document).ready(function () {
+			$('#enquirySuccess').modal('show');
+		});
+	</script>
+	}
+	<script defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGZoZkDdeXNlOPbKUG1KIXvBY5cUgQQgk&callback=initMapLatLon">
+	</script>
+	@*<script defer
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-i-AiLbdowFFJ0pw9GxhdAnEWYdzGgis&callback=initMapLatLon">
+		</script>*@
 }

@@ -16,8 +16,21 @@
 //		$('.scroll-padding').css({ "padding-top": "0" });
 //	}
 //});
-
-
+//Loader
+$('body').append('<div style="" id="loadingDiv"><div class="loader">Loading...</div></div>');
+$(window).on('load', function () {
+	$('body').addClass('overflow-hidden')
+	setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
+});
+function removeLoader() {
+	$("#loadingDiv").fadeOut(500, function () {
+		//consol.log('test')
+		// fadeOut complete. Remove the loading div
+		$("#loadingDiv").remove(); //makes page more lightweight 
+		$('body').removeClass('overflow-hidden')
+		
+	});
+}
 //Stop Form Submission of Enter Key Press
 function stopRKey(evt) {
 	var evt = (evt) ? evt : ((event) ? event : null);
@@ -38,6 +51,14 @@ function userCheck(check) {
 	}
 	else if (check == 1) {
 		return confirm("Are your sure want to recheck the user as background details?");
+	}
+}
+function reCheck(check) {
+	if (check == 0) {
+		return confirm("Are your sure want to approve the Real-Estate Professional?");
+	}
+	else if (check == 1) {
+		return confirm("Are your sure want to disapprove the Real-Estate Professional?");
 	}
 }
 //checking already signed user
@@ -66,7 +87,27 @@ function errAlreadySignedUp(email,obj) {
 		}
 	});
 }
+//pagination 
+function PaginationCall() {
+	$(".paginate").paginga({
+		// use default options
+		itemsPerPage: 5
+	});
+};
 $(document).ready(function () {
+	
+	PaginationCall();
+	// Initialize Editor
+	$(document).on('click', '.page-nav', function () {
+		PaginationCall();
+	});
+	// Initialize Editor
+	$('.textarea-editor').summernote({
+		//height: 200, // set editor height
+		minHeight: 150 // set minimum height of editor
+		//maxHeight: null, // set maximum height of editor
+		//focus: true // set focus to editable area after initializing summernote
+	});
 	//signup radio button change
 	//$('#signup input[type=radio][name=UserType]').change(function () {
 	$(document).on('change','#signup input[type=radio][name=UserType]', function () {
@@ -170,7 +211,9 @@ $(document).ready(function () {
 	$('#listingTable').DataTable();
 	$('#linkOperators').DataTable();
 	$('#userEnquiry').DataTable();
-	$('#hispaceUser').DataTable();
+	$('#hispaceUser').DataTable({
+		"order": [[0, "desc"]]
+	});
 
 	//$('#example tbody').on('click', 'tr', function () {
 	//	var data = table.row(this).data();
@@ -678,14 +721,15 @@ $(function () {
 			if ($('#modal-container__signup').length) {
 				
 			} else {
-				$("body").addClass("overflow-hidden");
+				//$("body").addClass("overflow-hidden");
 				//$('.signup').css('overflow', 'auto');
 			}
 		});
 	});
+
 	//body remove class from hidden on the popup modal
 	$(document).on("click", ".modal .close", function () {
-		$("body").removeClass("overflow-hidden");
+		//$("body").removeClass("overflow-hidden");
 	});
 	//model open for the list image section
 	$('body').on('click', '.modal-link__image', function (e) {
@@ -1138,7 +1182,7 @@ function AddImageForm(obj) {
 	var iName = $(row).find('.imageName').val();
 	var iImagePath = $(row).find('.imageFilePath').val();
 	//if ($(row).find('.imageCheck').is(':checked')) {
-	//		iStatus = true;
+			iStatus = true;
 	//	} else {
 	//		iStatus = false;
 	//}

@@ -1,11 +1,11 @@
 ﻿
-
 @{
 	ViewData["Title"] = "LinkedOperators";
 	Layout = "~/Views/Shared/_WebLayout.cshtml";
 }
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<HiSpaceListingModels.LinkedREPRofessionals>
 
-@*test*@
 <div class="LinkedOperators nav-padding">
 	<div class="bg-light mb-4">
 		<div class="container">
@@ -16,85 +16,94 @@
 
 						@if (ViewBag.UserId != null && ViewBag.UserId > 0)
 						{
-							<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Linked People</span></li>
+							<li class="breadcrumb-item"> <i class="fas fa-chevron-right"></i> <span>Dashboard</span></li>
+							<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Linked People/Professional</span></li>
 						}
 					</ol>
 				</div>
 			</div>
 		</div>
 	</div>
-
-		<section class="">
-			<div class="container p-0">
-				<div class="row no-gutters">
-					<div class="col-md-12">
-						<div class="section-title d-flex align-items-center m--tb-15">
-							<h2>Linked People Details</h2>
-						</div>
-						<div class="card hi-card">
-							<div class="card-body">
-								<div class="datatable-wrapper table-responsive">
-									<table id="linkOperators" class="display display compact table table-striped mdtable">
-										<thead>
-											<tr>
-												<th>FirstName</th>
-												<th>LastName</th>
-												<th>Property Name</th>
-												<th>Role</th>
-												<th>Link Approval Status</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>
-													Test
-												</td>
-												<td>
-													Last Name
-												</td>
-												<td>
-													Property A
-												</td>
-												<td>
-													Property Manager
-												</td>
-												<td class="p-0">
+@if (Model != null || Model.Count() != 0)
+{
+	<section class="">
+		<div class="container p-0">
+			<div class="row no-gutters">
+				<div class="col-md-12">
+					<div class="section-title d-flex align-items-center m--tb-15">
+						<h2>Linked People Details</h2>
+					</div>
+					<div class="card hi-card">
+						<div class="card-body">
+							<div class="datatable-wrapper table-responsive">
+								<table id="linkOperators" class="display display compact table table-striped mdtable">
+									<thead>
+										<tr>
+											<th>FirstName</th>
+											<th>LastName</th>
+											<th>Property Name</th>
+											<th>Role</th>
+											<th>Linked HiSpace-User</th>
+											<th>Approval Status</th>
+											@*<th>Action</th>*@
+										</tr>
+									</thead>
+									<tbody>
+										@foreach(var item in Model)
+										{
+										<tr>
+											<td>
+												@item.REFirstName
+											</td>
+											<td>
+												@item.RELastName
+											</td>
+											<td>
+												@item.ProjectName
+											</td>
+											<td>
+												@item.ProjectRole
+											</td>
+											<td>
+												@item.RE_UserName
+											</td>
+											<td class="p-0">
+												@if (item.LinkingStatus == "Requested")
+												{
 													<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
 
-														<a onclick="return userCheck(1);" href="##" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="The people is linked inside your property">
-															<i class="fas btn-icon fa-times-circle text-pry"></i>
+														<a onclick="return reCheck(0);" href="@Url.Action("ReApprove", "User", new { REProfessionalMasterId = item.REProfessionalMasterId, Status = "Approved" })" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to approve the Re-Professional into your property">
+															<i class="fas btn-icon fa-times-circle text-pry"></i>Requsted
 														</a>
 													</div>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													Test
-												</td>
-												<td>
-													Last Name
-												</td>
-												<td>
-													Property B
-												</td>
-												<td>
-													Property Manager
-												</td>
-												<td class="p-0">
+												}
+												else if (item.LinkingStatus == "Approved")
+												{
 													<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
-														<a onclick="return userCheck(1);" href="##" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="The people is linked inside your property">
-															<i class="fas btn-icon fa-thumbs-up text-sec"></i>
+														<a onclick="return reCheck(1);" href="@Url.Action("ReApprove", "User", new { REProfessionalMasterId = item.REProfessionalMasterId, Status = "Requested" })" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to disapprove the Re-Professional into your property">
+															<i class="fas btn-icon fa-thumbs-up text-sec"></i><span class="text-sec">Approved</span>
 														</a>
 													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
+												}
+											</td>
+											@*<td class="p-0">
+												<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
+													<a href="@Url.Action("ListingTable", "Listing")" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="View">
+														<i class="fas fa-eye btn-icon text-info"></i>
+													</a>
+												</div>
+											</td>*@
+										</tr>
+										}
+										
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</section>
+		</div>
+	</section>
+}
 </div>

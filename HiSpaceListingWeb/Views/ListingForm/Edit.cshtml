@@ -701,15 +701,14 @@
 													</div>
 													@*<span class="hi-error d-none">Phone is required</span>*@
 												</div>
-												<div class="col-md-6 col-sm-6">
+												@*<div class="col-md-6 col-sm-6">
 													<div class="form-group">
-														@*<textarea rows="5" id="desc" class="" placeholder="Enter your text here..."></textarea>*@
 														@Html.TextAreaFor(m => m.Description, new { @class = "", placeholder = "Enter your text here..." })
 														<label for="desc" class="control-label">Description* (Minimum 100 characters)</label>
 														<i class="bar"></i>
 														<div class="error"></div>
 													</div>
-												</div>
+												</div>*@
 												@*<div class="col-md-6 col-sm-6">
 			<div class="checkbox m-0">
 				<label>
@@ -717,6 +716,14 @@
 				</label>
 			</div>
 		</div>*@
+												<div class="col-md-12 col-sm-12">
+													<div class="form-group">
+														@Html.TextAreaFor(m => m.Description, new { placeholder = "", @class = "form-control textarea-editor" })
+														<label for="desc" class="control-label">Description* (Minimum 100 characters)</label>
+														<i class="bar"></i>
+														<div class="error"></div>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -750,5 +757,6 @@
 
 @section Scripts {
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDGZoZkDdeXNlOPbKUG1KIXvBY5cUgQQgk"></script>
+	@*<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyA-i-AiLbdowFFJ0pw9GxhdAnEWYdzGgis"></script>*@
 	<script src="~/js/customMap.js"></script>
 }

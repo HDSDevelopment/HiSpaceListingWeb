@@ -19,11 +19,13 @@ function propertyListByAll() {
 			//console.log(response);
 			filterPropertyResult.html('');
 			filterPropertyResult.html(response);
+			PaginationCall();
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");
 		}
 	});
+	
 }
 //Property List by its userid
 function propertyListByUserId(user) {
@@ -37,12 +39,14 @@ function propertyListByUserId(user) {
 			detailPropertyResult.html('');
 			detailPropertyResult.html(response);
 			Peoplecarousel();
+			PaginationCall();
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");
 			//console.log(response);
 		}
 	});
+	
 } 
 //Property List by its userid
 function propertyListByUserIdAndListingId(user,listingId) {
@@ -57,12 +61,14 @@ function propertyListByUserIdAndListingId(user,listingId) {
 			detailPropertyResult.html('');
 			detailPropertyResult.html(response);
 			Peoplecarousel();
+			PaginationCall();
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");
 			//console.log(response);
 		}
 	});
+	
 } 
 //Property Location filter
 function propertyListByLocation(location) {
@@ -75,11 +81,13 @@ function propertyListByLocation(location) {
 			//console.log(response);
 			filterPropertyResult.html('');
 			filterPropertyResult.html(response);
+			PaginationCall();
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");
 		}
 	});
+	
 }
 //Property Type filter
 function propertyListByType(type) {
@@ -92,11 +100,13 @@ function propertyListByType(type) {
 			//console.log(response);
 			filterPropertyResult.html('');
 			filterPropertyResult.html(response);
+			PaginationCall();
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");
 		}
 	});
+	
 }
 //Property User filter
 function propertyListByUser(user) {
@@ -109,11 +119,13 @@ function propertyListByUser(user) {
 			//console.log(response);
 			filterPropertyResult.html('');
 			filterPropertyResult.html(response);
+			PaginationCall();
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");
 		}
 	});
+	
 }
 
 var filterOperatorResult = $('#filterOperatorResult');
@@ -129,6 +141,7 @@ function operatorListByAll() {
 			filterOperatorResult.html('');
 			filterOperatorResult.html(response);
 			operatorFilterCount();
+			PaginationCall();
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");
@@ -148,6 +161,7 @@ function operatorListByUser(user) {
 			filterOperatorResult.html('');
 			filterOperatorResult.html(response);
 			operatorFilterCount();
+			PaginationCall();
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");
@@ -167,6 +181,7 @@ function peopleListByAll() {
 			filterProfessionalResult.html('');
 			filterProfessionalResult.html(response);
 			Peoplecarousel();
+			PaginationCall();
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");
@@ -186,6 +201,7 @@ function peopleListByUser(listingId) {
 			filterProfessionalResult.html('');
 			filterProfessionalResult.html(response);
 			Peoplecarousel();
+			PaginationCall();
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");

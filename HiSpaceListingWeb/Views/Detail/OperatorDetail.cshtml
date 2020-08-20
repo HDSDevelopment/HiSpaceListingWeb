@@ -15,7 +15,7 @@
 					<ol class="breadcrumb mb-0">
 						<li class="breadcrumb-item"><a href="@Url.Action("Index", "Website")"> <i class="fas fa-home"></i> </a></li>
 						@*<li class="breadcrumb-item"><i class="fas fa-chevron-right"></i><a href="@Url.Action( "PropertyList","Website")"> All Property List </a></li>*@
-						<li class="breadcrumb-item"><a href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu" ,"Filter",new {ListShowType=2 })"> <i class="fas fa-chevron-right"></i> <span> HiSpace List-User </span></a></li>
+						<li class="breadcrumb-item"><a href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu" ,"Filter",new {ListShowType=2 })"> <i class="fas fa-chevron-right"></i> <span> HiSpace List-Operator/Owner </span></a></li>
 						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span> Detail </span></li>
 					</ol>
 				</div>
@@ -54,7 +54,7 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-3 mb-5 mb-lg-0">
-					<div class="sidebar sticky-top">
+					<div class="sidebar ">
 						<div class="widget">
 							<a class="widget-head" href="javascript:void(0);" onclick="propertyListByUserId('@Model.PropertyList.SpaceUser.UserId');"><h6>All Properties</h6></a>
 						</div>

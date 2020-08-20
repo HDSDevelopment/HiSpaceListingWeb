@@ -23,10 +23,33 @@ namespace HiSpaceListingWeb.Controllers
 			SetSessionVariables();
 			return View();
 		}
-		public ActionResult LinkedPeople()
+		public ActionResult LinkedPeople(int UserID)
 		{
 			SetSessionVariables();
-			return View("LinkedOperators");
+			List<LinkedREPRofessionals> model = new List<LinkedREPRofessionals>();
+			using (var client = new HttpClient())
+			{
+				//IEnumerable<Listing> listingList = null;
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				//HTTP GET
+				var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetLinkedReProfessionalListByUserIDForApproval + UserID.ToString());
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<LinkedREPRofessionals>>();
+					readTask.Wait();
+					//listingList = readTask.Result.ToList();
+					model = readTask.Result.ToList();
+				}
+				else
+				{
+					//vModel.ListingList = Enumerable.Empty<Listing>();
+					ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+				}
+			}
+			return View("LinkedOperators", model);
 		}
 		public ActionResult UserEnquiry()
 		{

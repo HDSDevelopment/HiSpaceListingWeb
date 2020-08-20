@@ -676,43 +676,51 @@
 										<div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="head-3">
 											<!--row 1-->
 											<div class="row">
-													<div class="col-md-3 col-sm-6">
-														<div class="form-group">
-															@*<input type="text" id="l_Email" class=" required-input" placeholder="abc@gmail.com">*@
-															@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "abc@gmail.com", @type = "email" } })
-															<label for="Email" class="control-label">Email*</label>
-															<i class="bar"></i>
-															<div class="error"></div>
-														</div>
-														@*<span class="hi-error d-none">Email is required</span>*@
-													</div>
-													<div class="col-md-3 col-sm-6">
-														<div class="form-group">
-															@*<input type="text" id="Phone" class=" required-input" placeholder="9999999999">*@
-															@Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999", @type = "number" } })
-															<label for="Phone" class="control-label">Phone*</label>
-															<i class="bar"></i>
-															<div class="error"></div>
-														</div>
-														@*<span class="hi-error d-none">Phone is required</span>*@
-													</div>
-													
-												<div class="col-md-6 col-sm-6">
+												<div class="col-md-3 col-sm-6">
 													<div class="form-group">
-														@*<textarea rows="5" id="desc" class="" placeholder="Enter your text here..."></textarea>*@
-														@Html.TextAreaFor(m => m.Description, new { @class = "", placeholder = "Enter your text here..." })
+														@*<input type="text" id="l_Email" class=" required-input" placeholder="abc@gmail.com">*@
+														@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "abc@gmail.com", @type = "email" } })
+														<label for="Email" class="control-label">Email*</label>
+														<i class="bar"></i>
+														<div class="error"></div>
+													</div>
+													@*<span class="hi-error d-none">Email is required</span>*@
+												</div>
+												<div class="col-md-3 col-sm-6">
+													<div class="form-group">
+														@*<input type="text" id="Phone" class=" required-input" placeholder="9999999999">*@
+														@Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999", @type = "number" } })
+														<label for="Phone" class="control-label">Phone*</label>
+														<i class="bar"></i>
+														<div class="error"></div>
+													</div>
+													@*<span class="hi-error d-none">Phone is required</span>*@
+												</div>
+
+												@*<div class="col-md-6 col-sm-6">
+			<div class="form-group">
+				@Html.TextAreaFor(m => m.Description, new { @class = "", placeholder = "Enter your text here..." })
+				<label for="desc" class="control-label">Description* (Minimum 100 characters)</label>
+				<i class="bar"></i>
+				<div class="error"></div>
+			</div>
+
+		</div>*@
+												<div class="col-md-12 col-sm-12">
+													<div class="form-group">
+														@Html.TextAreaFor(m => m.Description, new { placeholder = "", @class = "form-control textarea-editor" })
 														<label for="desc" class="control-label">Description* (Minimum 100 characters)</label>
 														<i class="bar"></i>
 														<div class="error"></div>
 													</div>
 												</div>
 												@*<div class="col-md-6 col-sm-6">
-														<div class="checkbox m-0">
-															<label>
-																<input type="checkbox" /><i class="helper"></i>Activate
-															</label>
-														</div>
-													</div>*@
+			<div class="checkbox m-0">
+				<label>
+					<input type="checkbox" /><i class="helper"></i>Activate
+				</label>
+			</div>
+		</div>*@
 											</div>
 										</div>
 									</div>
@@ -745,6 +753,7 @@
 
 @section Scripts {
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDGZoZkDdeXNlOPbKUG1KIXvBY5cUgQQgk"></script>
+	@*<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyA-i-AiLbdowFFJ0pw9GxhdAnEWYdzGgis"></script>*@
 	<script src="~/js/customMap.js"></script>
 }
 
