@@ -7,6 +7,41 @@
 	var indianCulture = new System.Globalization.CultureInfo("hi-IN");
 }
 
+@{
+	var enquiry = "";
+	if (TempData.ContainsKey("SendStatus"))
+	{
+		enquiry = TempData["SendStatus"] as string;
+	}
+}
+
+<!-- Modal -->
+<div class="modal message fade" id="enquirySuccess" tabindex="-1" role="dialog" aria-labelledby="enquirySuccessModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header border-0 bg-sec">
+				<h5 class="modal-title" id="enquirySuccessModalLabel">Welcome To HiSpace </h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				@if (enquiry == "1")
+				{
+					<p class="text-sec font-weight-bold">Your Enquiry Sent Successfull</p>
+				}
+				else
+				{
+					<p class="text-pry font-weight-bold">Your enquiry is failed!</p>
+					<p>Please try again later</p>
+				}
+			</div>
+		</div>
+
+	</div>
+</div>
+
 <div class="propertydetail nav-padding">
 	<div class="bg-light">
 		<div class="container">
@@ -24,6 +59,8 @@
 	</div>
 
 	<div class="wrapper">
+
+
 		<!--=================================
 		Property details -->
 		<section class="space-pt--50 ">
@@ -64,13 +101,13 @@
 								<div class="">
 									<h3 class="text-center">Enquiry</h3>
 								</div>
-								@using (Html.BeginForm("UserEnquiry", "Website", FormMethod.Post, new { @class = "form-row p-3 md-form", enctype = "multipart/form-data", onSubmit="enquiryFormValidate(event)", id="enquiryForm" }))
+								@using (Html.BeginForm("UserEnquiry", "Website", FormMethod.Post, new { @class = "form-row p-3 md-form", enctype = "multipart/form-data", onSubmit = "enquiryFormValidate(event)", id = "enquiryForm" }))
 								{
 									<div class="display-none">
 										<div class="form-group">
 											<input type="text" id="ListingId" name="ListingId" value="@Model.Listing.ListingId">
 											<label for="input" class="control-label">Listing id</label><i class="bar"></i>
-											
+
 										</div>
 									</div>
 									<div class="display-none">
@@ -478,42 +515,42 @@
 												<div class="mb-3">
 													@if (Model.Amenities.Any())
 													{
-													<ul class="amenities-list list-unstyled row mb-3">
-														@foreach (var item in Model.Amenities)
-														{
-															@if (item.AmenitiesPayment == "Free")
+														<ul class="amenities-list list-unstyled row mb-3">
+															@foreach (var item in Model.Amenities)
 															{
-																<li class="col-sm-6">
-																	<i class="fas fa-check-circle text-sec"></i>
-																	@item.Name
-																</li>
+																@if (item.AmenitiesPayment == "Free")
+																{
+																	<li class="col-sm-6">
+																		<i class="fas fa-check-circle text-sec"></i>
+																		@item.Name
+																	</li>
+																}
+																else if (item.AmenitiesPayment == "Paid")
+																{
+																	<li class="col-sm-12">
+																		<i class="fas fa-check-circle text-pry"></i>
+																		@item.Name
+																		<span class="spliter">|</span>
+																		<span class="font-weight-bold">Paid</span>
+																		<span class="spliter">|</span>
+																		<span>&#8377;@item.Price/Usage</span>
+																	</li>
+																}
+																else if (item.AmenitiesPayment == "PartiallyPaid")
+																{
+																	<li class="col-sm-12">
+																		<i class="fas fa-check-circle text-pry"></i>
+																		@item.Name
+																		<span class="spliter">|</span>
+																		<span class="font-weight-bold">Partially Paid</span>
+																		<span class="spliter">|</span>
+																		<span class="">Free Count<span class="text-sufix">(@item.PartialCount)</span></span>
+																		<span class="spliter">|</span>
+																		<span>&#8377;@item.Price/Usage</span>
+																	</li>
+																}
 															}
-															else if (item.AmenitiesPayment == "Paid")
-															{
-																<li class="col-sm-12">
-																	<i class="fas fa-check-circle text-pry"></i>
-																	@item.Name
-																	<span class="spliter">|</span>
-																	<span class="font-weight-bold">Paid</span>
-																	<span class="spliter">|</span>
-																	<span>&#8377;@item.Price/Usage</span>
-																</li>
-															}
-															else if (item.AmenitiesPayment == "PartiallyPaid")
-															{
-																<li class="col-sm-12">
-																	<i class="fas fa-check-circle text-pry"></i>
-																	@item.Name
-																	<span class="spliter">|</span>
-																	<span class="font-weight-bold">Partially Paid</span>
-																	<span class="spliter">|</span>
-																	<span class="">Free Count<span class="text-sufix">(@item.PartialCount)</span></span>
-																	<span class="spliter">|</span>
-																	<span>&#8377;@item.Price/Usage</span>
-																</li>
-															}
-														}
-													</ul>
+														</ul>
 													}
 													else
 													{
@@ -1617,22 +1654,22 @@
 							<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">
 						}
 						@*<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">*@
-					<div class="map-info row">
-						@if (Model.Listing.latitude_view != null && Model.Listing.longitude_view != null)
-						{
-							<div class="display-none" id="lat">@Model.Listing.latitude_view</div>
-							<div class="display-none" id="lon">@Model.Listing.longitude_view</div>
-							<div class="display-none" id="map-zoom">15</div>
-						}
-						else
-						{
-							<div class="display-none" id="lat">20.593683</div>
-							<div class="display-none" id="lon">78.962883</div>
-							<div class="display-none" id="map-zoom">4</div>
-						}
+						<div class="map-info row">
+							@if (Model.Listing.latitude_view != null && Model.Listing.longitude_view != null)
+							{
+								<div class="display-none" id="lat">@Model.Listing.latitude_view</div>
+								<div class="display-none" id="lon">@Model.Listing.longitude_view</div>
+								<div class="display-none" id="map-zoom">15</div>
+							}
+							else
+							{
+								<div class="display-none" id="lat">20.593683</div>
+								<div class="display-none" id="lon">78.962883</div>
+								<div class="display-none" id="map-zoom">4</div>
+							}
 
-						<div id="map"></div>
-					</div>
+							<div id="map"></div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -1646,10 +1683,18 @@
 
 
 @section Scripts {
-<script defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGZoZkDdeXNlOPbKUG1KIXvBY5cUgQQgk&callback=initMapLatLon">
-</script>
-@*<script defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-i-AiLbdowFFJ0pw9GxhdAnEWYdzGgis&callback=initMapLatLon">
-</script>*@
+	@if (enquiry != "")
+	{
+	<script>
+		$(document).ready(function () {
+			$('#enquirySuccess').modal('show');
+		});
+	</script>
+	}
+	<script defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGZoZkDdeXNlOPbKUG1KIXvBY5cUgQQgk&callback=initMapLatLon">
+	</script>
+	@*<script defer
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-i-AiLbdowFFJ0pw9GxhdAnEWYdzGgis&callback=initMapLatLon">
+		</script>*@
 }

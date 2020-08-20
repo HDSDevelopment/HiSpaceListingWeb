@@ -159,20 +159,20 @@ namespace HiSpaceListingWeb.Controllers
 
 					//SetSessionVariables();
 				}
-
+				if (ViewBag.UserId == null)
+				{
+					//AssignSessionVariables(_user);
+					TempData["Signup"] = "Signup Success";
+					return RedirectToAction("Index", "Website");
+				}
+				else if (ViewBag.UserId == 0)
+				{
+					return RedirectToAction("AdminLister", "Admin");
+				}
 
 				ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
 			}
-			if(ViewBag.UserId == null)
-			{
-				//AssignSessionVariables(_user);
-				TempData["Signup"] = "Signup Success";
-				return RedirectToAction("Index", "Website");
-			}
-			else if (ViewBag.UserId == 0)
-			{
-				return RedirectToAction("AdminLister", "Admin");
-			}
+			
 			return RedirectToAction("Index", "Website");
 		}
 

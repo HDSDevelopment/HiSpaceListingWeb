@@ -87,7 +87,20 @@ function errAlreadySignedUp(email,obj) {
 		}
 	});
 }
+//pagination 
+function PaginationCall() {
+	$(".paginate").paginga({
+		// use default options
+		itemsPerPage: 5
+	});
+};
 $(document).ready(function () {
+	
+	PaginationCall();
+	// Initialize Editor
+	$(document).on('click', '.page-nav', function () {
+		PaginationCall();
+	});
 	// Initialize Editor
 	$('.textarea-editor').summernote({
 		//height: 200, // set editor height
@@ -198,7 +211,9 @@ $(document).ready(function () {
 	$('#listingTable').DataTable();
 	$('#linkOperators').DataTable();
 	$('#userEnquiry').DataTable();
-	$('#hispaceUser').DataTable();
+	$('#hispaceUser').DataTable({
+		"order": [[0, "desc"]]
+	});
 
 	//$('#example tbody').on('click', 'tr', function () {
 	//	var data = table.row(this).data();

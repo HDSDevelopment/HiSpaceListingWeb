@@ -9,261 +9,279 @@
 @if (Model != null || Model.Count() != 0)
 {
 	<div class="result-count">Property Filter Count : <span>@Model.Count()</span></div>
-	@foreach (var item in Model)
-	{
-		@if (item.SpaceListing.ListingType != "RE-Professional")
-		{
+	<div class="paginate">
+		<div class="pager">
+			<div class="firstPage pager-icon">&laquo;</div>
+			<div class="previousPage pager-icon">&lsaquo;</div>
+			<div class="pageNumbers custom-scrollbar"></div>
+			<div class="nextPage pager-icon">&rsaquo;</div>
+			<div class="lastPage pager-icon">&raquo;</div>
+		</div>
+		<div class="page-items">
+			@foreach (var item in Model)
+			{
+				@if (item.SpaceListing.ListingType != "RE-Professional")
+				{
 
-			<div class="property-item property-col-list mt-4">
-				<div class="row no-gutters">
-					<div class="col-lg-4 col-md-5 prop-image">
-						<div class="property-image bg-overlay-gradient-04">
-							@if (item.ListingImagesList.Count() != 0)
-							{
-								@foreach (var image in item.ListingImagesList.Take(1))
-								{
-									<img class="img-fluid image-list" src="@image.ImageUrl" alt="">
-								}
-							}
-							else
-							{
-								<img class="img-fluid image-list" src="~/images/property/Noimage.jpg" alt="">
-							}
-							<div class="property-lable">
-								@if (item.SpaceListing.ListingType == "Commercial")
-								{
-									<span class="badge badge-md badge-pry">@item.SpaceListing.ListingType</span>
-								}
-								else if (item.SpaceListing.ListingType == "Co-Working")
-								{
-									<span class="badge badge-md badge-sec">@item.SpaceListing.ListingType</span>
+					<div class="property-item property-col-list mt-4">
+						<div class="row no-gutters">
+							<div class="col-lg-4 col-md-5 prop-image">
+								<div class="property-image bg-overlay-gradient-04">
+									@if (item.ListingImagesList.Count() != 0)
+									{
+										@foreach (var image in item.ListingImagesList.Take(1))
+										{
+											<img class="img-fluid image-list" src="@image.ImageUrl" alt="">
+										}
+									}
+									else
+									{
+										<img class="img-fluid image-list" src="~/images/property/Noimage.jpg" alt="">
+									}
+									<div class="property-lable">
+										@if (item.SpaceListing.ListingType == "Commercial")
+										{
+											<span class="badge badge-md badge-pry">@item.SpaceListing.ListingType</span>
+										}
+										else if (item.SpaceListing.ListingType == "Co-Working")
+										{
+											<span class="badge badge-md badge-sec">@item.SpaceListing.ListingType</span>
 
-								}
-								else if (item.SpaceListing.ListingType == "RE-Professional")
-								{
-									<span class="badge badge-md badge-info">@item.SpaceListing.ListingType</span>
+										}
+										else if (item.SpaceListing.ListingType == "RE-Professional")
+										{
+											<span class="badge badge-md badge-info">@item.SpaceListing.ListingType</span>
 
-								}
-							</div>
-							<div class="property-agent">
-								<div class="property-agent-image">
-									<img class="img-fluid" src="~/images/avatar/placeholder.png" alt="">
-								</div>
-								<div class="property-agent-info">
-									<a class="property-agent-name" href="#">@item.SpaceUser.CompanyName</a>
-									<span class="d-block">HiSpace-User Name</span>
-
-								</div>
-							</div>
-							@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
-							{
-								@if (item.AvailableHealthCheck != 0 || item.AvailableGreenBuildingCheck != 0)
-								{
-									<div class="list-data">
-										<div class="list-health">
-											<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Health verified space click to see details"><i class="fas fa-temperature-low btn-icon text-sec"></i></span>
+										}
+									</div>
+									<div class="property-agent">
+										<div class="property-agent-image">
+											<img class="img-fluid" src="~/images/avatar/placeholder.png" alt="">
 										</div>
-										<div class="list-green">
-											<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Green Building verified space click to see details"><i class="fas fa-tree btn-icon text-sec"></i></span>
+										<div class="property-agent-info">
+											<a class="property-agent-name" href="#">@item.SpaceUser.CompanyName</a>
+											<span class="d-block">HiSpace-User Name</span>
+
 										</div>
 									</div>
-								}
-							}
-
-							@*<div class="property-agent-popup">
-									<a href="#"><i class="fas fa-camera"></i> 03</a>
-								</div>*@
-						</div>
-					</div>
-					<div class="col-lg-8 col-md-7 prop-details">
-						<div class="property-details">
-							<div class="property-details__head">
-								<div class="property-details__header">@item.SpaceListing.Name</div>
-								<div class="property-details__amenities">
 									@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
 									{
-										<span class="property-details__am">Amenities (@item.AvailableAmenities)</span>
-										<span class="property-details__fa">Facilities (@item.AvailableFacilities)</span>
+										@if (item.AvailableHealthCheck != 0 || item.AvailableGreenBuildingCheck != 0)
+										{
+											<div class="list-data">
+												<div class="list-health">
+													<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Health verified space click to see details"><i class="fas fa-temperature-low btn-icon text-sec"></i></span>
+												</div>
+												<div class="list-green">
+													<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Green Building verified space click to see details"><i class="fas fa-tree btn-icon text-sec"></i></span>
+												</div>
+											</div>
+										}
+									}
+
+									@*<div class="property-agent-popup">
+										<a href="#"><i class="fas fa-camera"></i> 03</a>
+									</div>*@
+								</div>
+							</div>
+							<div class="col-lg-8 col-md-7 prop-details">
+								<div class="property-details">
+									<div class="property-details__head">
+										<div class="property-details__header">@item.SpaceListing.Name</div>
+										<div class="property-details__amenities">
+											@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
+											{
+												<span class="property-details__am">Amenities (@item.AvailableAmenities)</span>
+												<span class="property-details__fa">Facilities (@item.AvailableFacilities)</span>
+											}
+											else
+											{
+												<span class="property-details__am">Projects (@item.AvailableProjects)</span>
+											}
+										</div>
+									</div>
+									<div class="property-details__desc">
+										@if (item.SpaceListing.Description == null)
+										{
+											@Html.Raw("I truly believe Augustine’s words are true and if you look at history you know it is true.There are many people in.");
+										}
+										else
+										{
+
+											@Html.Raw(@item.SpaceListing.Description);
+										}
+									</div>
+									<div class="property-details__section">
+										@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
+										{
+											@if (item.SpaceListing.CMCW_PropertyFor == "Rental")
+											{
+												<div class="property-span__head">Property for <span class="badge-info__underline">Rent</span></div>
+												<div class="d-block">
+													<span class="property-span__head text-sec">Min Price:</span>
+													<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.PriceMin) </span> -
+													<span class="property-span__head text-info">Max Price:</span>
+													<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.PriceMax)</span>
+												</div>
+											}
+											else if (item.SpaceListing.CMCW_PropertyFor == "Sale")
+											{
+												<div class="property-span__head">Property for <span class="badge-sec__underline">Sale</span></div>
+												<div class="d-block">
+													<span class="property-span__head text-sec">Approximate Price:</span>
+													<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.CMCW_AproximatePrice) </span> -
+												</div>
+											}
+
+										}
+									</div>
+
+									<div class="property-details__section">
+										<div>
+											<span class="property-span__head">Type: </span>
+											@if (item.SpaceListing.ListingType == "Commercial")
+											{
+												<span class="property-span__type badge-pry">@item.SpaceListing.ListingType</span>
+											}
+											else if (item.SpaceListing.ListingType == "Co-Working")
+											{
+												<span class="property-span__type badge-sec">@item.SpaceListing.ListingType</span>
+
+											}
+											else if (item.SpaceListing.ListingType == "RE-Professional")
+											{
+												<span class="property-span__type badge-info">@item.SpaceListing.ListingType</span>
+
+											}
+										</div>
+										<div>
+											@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
+											{
+												@if (item.SpaceListing.CMCW_PropertyFor == "Rental")
+												{
+													<span class="property-span__head">Rent: </span>
+													<span class="property-span__rent">
+														@if ((item.SpaceListing.RentalHour == true) && (item.SpaceListing.RentalDay == true) && (item.SpaceListing.RentalMonth == true))
+														{
+															@Html.Raw("Hour | Day | Month");
+														}
+														else if ((item.SpaceListing.RentalHour == true) && (item.SpaceListing.RentalDay == true))
+														{
+															@Html.Raw("Hour | Day");
+														}
+														else if ((item.SpaceListing.RentalHour == true) && (item.SpaceListing.RentalMonth == true))
+														{
+															@Html.Raw("Hour | Month");
+														}
+														else if ((item.SpaceListing.RentalMonth == true) && (item.SpaceListing.RentalDay == true))
+														{
+															@Html.Raw("Day | Month");
+														}
+														else if ((item.SpaceListing.RentalMonth == true))
+														{
+															@Html.Raw("Month");
+														}
+														else if ((item.SpaceListing.RentalDay == true))
+														{
+															@Html.Raw("Day");
+														}
+														else if ((item.SpaceListing.RentalHour == true))
+														{
+															@Html.Raw("Hour");
+														}
+														else
+														{
+															@Html.Raw("Not Specified");
+														}
+													</span>
+												}
+
+
+											}
+
+										</div>
+
+
+									</div>
+
+
+									<div class="property-details__footer">
+										<div class="property-details__address">
+											<i class="fas fa-map-marker-alt fa-xs"></i>
+											@if (item.SpaceListing.street_number != null)
+											{
+												@Html.Raw(@item.SpaceListing.street_number + ",");
+											}
+											@if (item.SpaceListing.route != null)
+											{
+												@Html.Raw(@item.SpaceListing.route + ",");
+											}
+											<span class="property-span__head">@item.SpaceListing.locality</span>, @item.SpaceListing.administrative_area_level_1. <span class="property-span__head">@item.SpaceListing.postal_code</span>
+										</div>
+										<div class="property-details__total">
+
+											@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
+											{
+												@*<span class="property-span__tot">
+													<i class="fas fa-circle fa-xs"></i>Total: @if (item.SpaceListing.TotalSeats != null)@item.SpaceListing.TotalSeats
+													else
+														@Html.Raw("Not Available")
+												</span>
+												<span class="property-span__head"> | </span>*@
+												@if (item.SpaceListing.CMCW_PropertyFor == "Rental")
+												{
+
+													<span class="property-span__occ">
+														<i class="fas fa-chart-pie fa-xs"></i>Occupied: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
+														else
+															@Html.Raw("Not Available")
+													</span>
+												}
+											}
+											else
+											{
+
+											}
+										</div>
+									</div>
+
+								</div>
+								<div class="property-btn">
+									@if (ViewBag.UserId != null)
+									{
+										<a class="property-link btn btn-primary btn-block" href="@Url.Action("PropertyDetail", "Website", new { ListingID = item.SpaceListing.ListingId })">See Details</a>
 									}
 									else
 									{
-										<span class="property-details__am">Projects (@item.AvailableProjects)</span>
+										<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }">See Details</a>
 									}
-								</div>
-							</div>
-							<div class="property-details__desc">
-								@if (item.SpaceListing.Description == null)
-								{
-									@Html.Raw("I truly believe Augustine’s words are true and if you look at history you know it is true.There are many people in.");
-								}
-								else
-								{
 
-									@Html.Raw(@item.SpaceListing.Description);
-								}
-							</div>
-							<div class="property-details__section">
+								</div>
 								@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
 								{
-									@if (item.SpaceListing.CMCW_PropertyFor == "Rental")
+									@if (item.AvailableHealthCheck != 0 || item.AvailableGreenBuildingCheck != 0)
 									{
-										<div class="property-span__head">Property for <span class="badge-info__underline">Rent</span></div>
-										<div class="d-block">
-											<span class="property-span__head text-sec">Min Price:</span>
-											<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.PriceMin) </span> -
-											<span class="property-span__head text-info">Max Price:</span>
-											<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.PriceMax)</span>
-										</div>
+										<div class="tooltip-wrapper list-data__check" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eco-Friendly Spaces click to see details"><i class="fas fa-leaf"></i></div>
 									}
-									else if (item.SpaceListing.CMCW_PropertyFor == "Sale")
-									{
-										<div class="property-span__head">Property for <span class="badge-sec__underline">Sale</span></div>
-										<div class="d-block">
-											<span class="property-span__head text-sec">Approximate Price:</span>
-											<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.CMCW_AproximatePrice) </span> -
-										</div>
-									}
-
 								}
-							</div>
 
-							<div class="property-details__section">
-								<div>
-									<span class="property-span__head">Type: </span>
-									@if (item.SpaceListing.ListingType == "Commercial")
-									{
-										<span class="property-span__type badge-pry">@item.SpaceListing.ListingType</span>
-									}
-									else if (item.SpaceListing.ListingType == "Co-Working")
-									{
-										<span class="property-span__type badge-sec">@item.SpaceListing.ListingType</span>
-
-									}
-									else if (item.SpaceListing.ListingType == "RE-Professional")
-									{
-										<span class="property-span__type badge-info">@item.SpaceListing.ListingType</span>
-
-									}
-								</div>
-								<div>
-									@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
-									{
-										@if (item.SpaceListing.CMCW_PropertyFor == "Rental")
-										{
-											<span class="property-span__head">Rent: </span>
-											<span class="property-span__rent">
-												@if ((item.SpaceListing.RentalHour == true) && (item.SpaceListing.RentalDay == true) && (item.SpaceListing.RentalMonth == true))
-												{
-													@Html.Raw("Hour | Day | Month");
-												}
-												else if ((item.SpaceListing.RentalHour == true) && (item.SpaceListing.RentalDay == true))
-												{
-													@Html.Raw("Hour | Day");
-												}
-												else if ((item.SpaceListing.RentalHour == true) && (item.SpaceListing.RentalMonth == true))
-												{
-													@Html.Raw("Hour | Month");
-												}
-												else if ((item.SpaceListing.RentalMonth == true) && (item.SpaceListing.RentalDay == true))
-												{
-													@Html.Raw("Day | Month");
-												}
-												else if ((item.SpaceListing.RentalMonth == true))
-												{
-													@Html.Raw("Month");
-												}
-												else if ((item.SpaceListing.RentalDay == true))
-												{
-													@Html.Raw("Day");
-												}
-												else if ((item.SpaceListing.RentalHour == true))
-												{
-													@Html.Raw("Hour");
-												}
-												else
-												{
-													@Html.Raw("Not Specified");
-												}
-											</span>
-										}
-
-
-									}
-
-								</div>
-
-
-							</div>
-
-
-							<div class="property-details__footer">
-								<div class="property-details__address">
-									<i class="fas fa-map-marker-alt fa-xs"></i>
-									@if (item.SpaceListing.street_number != null)
-									{
-										@Html.Raw(@item.SpaceListing.street_number + ",");
-									}
-									@if (item.SpaceListing.route != null)
-									{
-										@Html.Raw(@item.SpaceListing.route + ",");
-									}
-									<span class="property-span__head">@item.SpaceListing.locality</span>, @item.SpaceListing.administrative_area_level_1. <span class="property-span__head">@item.SpaceListing.postal_code</span>
-								</div>
-								<div class="property-details__total">
-
-									@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
-									{
-										@*<span class="property-span__tot">
-												<i class="fas fa-circle fa-xs"></i>Total: @if (item.SpaceListing.TotalSeats != null)@item.SpaceListing.TotalSeats
-												else
-													@Html.Raw("Not Available")
-											</span>
-											<span class="property-span__head"> | </span>*@
-										@if (item.SpaceListing.CMCW_PropertyFor == "Rental")
-										{
-
-											<span class="property-span__occ">
-												<i class="fas fa-chart-pie fa-xs"></i>Occupied: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
-												else
-													@Html.Raw("Not Available")
-											</span>
-										}
-									}
-									else
-									{
-
-									}
-								</div>
 							</div>
 
 						</div>
-						<div class="property-btn">
-							@if (ViewBag.UserId != null)
-							{
-							<a class="property-link btn btn-primary btn-block" href="@Url.Action("PropertyDetail", "Website", new { ListingID = item.SpaceListing.ListingId })">See Details</a>
-							}
-							else
-							{
-								<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }">See Details</a>
-							}
-							
-						</div>
-						@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
-						{
-							@if (item.AvailableHealthCheck != 0 || item.AvailableGreenBuildingCheck != 0)
-							{
-								<div class="tooltip-wrapper list-data__check" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eco-Friendly Spaces click to see details"><i class="fas fa-leaf"></i></div>
-							}
-						}
-
 					</div>
-
-				</div>
-			</div>
-		}
-	}
+				}
+			}
+		</div>
+		<div class="pager">
+			<div class="firstPage pager-icon">&laquo;</div>
+			<div class="previousPage pager-icon">&lsaquo;</div>
+			<div class="pageNumbers custom-scrollbar"></div>
+			<div class="nextPage pager-icon">&rsaquo;</div>
+			<div class="lastPage pager-icon">&raquo;</div>
+		</div>
+	</div>
 }
 else
 {
-	<div>Test the value is null</div>
+	<div>No List Available</div>
 }

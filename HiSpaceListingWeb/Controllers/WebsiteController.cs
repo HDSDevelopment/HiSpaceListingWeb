@@ -83,12 +83,13 @@ namespace HiSpaceListingWeb.Controllers
 			Enquiry enquiry = null;
 			if (model != null)
 			{
+				model.CreatedDateTime = DateTime.Now;
 				using (var client = new HttpClient())
 				{
 					client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
 					//HTTP POST
-					var postTask = client.PostAsJsonAsync<Enquiry>
-						(Common.Instance.ApiSendEnquiryEmail, model);
+
+					var postTask = client.PostAsJsonAsync<Enquiry>(Common.Instance.ApiSendEnquiryEmail, model);
 					postTask.Wait();
 					var result = postTask.Result;
 					if (result.IsSuccessStatusCode)
@@ -99,13 +100,13 @@ namespace HiSpaceListingWeb.Controllers
 						if (sr == true)
 						{
 							//AssignSessionVariables(_user);
-							TempData["SendStatus"] = "Enquired Success";
-							return RedirectToAction("Index", "Website");
+							TempData["SendStatus"] = "1";
+							return RedirectToAction("PropertyDetail", "Website", new { ListingID = model.ListingId });
 						}
 						else
 						{
-							TempData["SendStatus"] = "Enquiry Failed";
-							return RedirectToAction("Index", "Website");
+							TempData["SendStatus"] = "0";
+							return RedirectToAction("PropertyDetail", "Website", new { ListingID = model.ListingId });
 						}
 					}
 				}
