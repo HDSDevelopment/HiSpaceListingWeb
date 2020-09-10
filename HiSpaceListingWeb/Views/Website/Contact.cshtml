@@ -3,6 +3,40 @@
     Layout = "~/Views/Shared/_WebLayout.cshtml";
     @using Microsoft.AspNetCore.Http
 }
+@{
+	var enquiry = "";
+	if (TempData.ContainsKey("SendStatus"))
+	{
+		enquiry = TempData["SendStatus"] as string;
+	}
+}
+
+<!-- Modal -->
+<div class="modal message fade" id="enquirySuccess" tabindex="-1" role="dialog" aria-labelledby="enquirySuccessModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header border-0 bg-sec">
+				<h5 class="modal-title" id="enquirySuccessModalLabel">Welcome To HiSpace </h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				@if (enquiry == "1")
+				{
+					<p class="text-sec font-weight-bold">Your Enquiry Sent Successfull</p>
+				}
+				else
+				{
+					<p class="text-pry font-weight-bold">Your enquiry is failed!</p>
+					<p>Please try again later</p>
+				}
+			</div>
+		</div>
+
+	</div>
+</div>
 
 	<div class="contact nav-padding">
 		<div class="bg-light">
@@ -46,7 +80,7 @@
 								</div>
 								<div class="ml-3">
 									<h6>Email</h6>
-									<p>support@Hispace.com</p>
+									<p>support@highbrowdiligence.com</p>
 								</div>
 							</div>
 							<div class="d-flex mb-3">
@@ -84,52 +118,55 @@
 					<div class="col-lg-7 mt-4 mt-lg-0">
 						<div class="contact-form">
 							<h4 class="mb-4">Need assistance? Please complete the contact form</h4>
-							<form>
+							@*<form>*@
+								@using (Html.BeginForm("ContactEnquiry", "Website", FormMethod.Post, new { @class = "", onSubmit = "ContactEnquiryValidate(event)", @id="contact_form" }))
+								{
 								<div class="form-row">
-									<div class="form-group col-md-6">
-										<input type="text" class="form-control" id="name" placeholder="Your name">
-									</div>
-									<div class="form-group col-md-6">
-										<input type="email" class="form-control" id="inputEmail4" placeholder="Your email">
-									</div>
-									<div class="form-group col-md-6">
-										<input type="text" class="form-control" id="phone" placeholder="Your phone">
-									</div>
-									<div class="form-group col-md-6">
-										<input type="text" class="form-control" id="subject" placeholder="Subject">
+									<div class="form-group col-md-12">
+										<input type="text" class="form-control" id="ce_name" name="ce_name" placeholder="Name*">
+										<div class="error" id=""></div>
 									</div>
 									<div class="form-group col-md-12">
-										<textarea class="form-control" rows="4" placeholder="Your message"></textarea>
+										<input type="email" class="form-control" id="ce_email" name="ce_email" placeholder="Email*">
+										<div class="error" id=""></div>
 									</div>
 									<div class="form-group col-md-12">
-										<div class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" id="customCheck1">
-											<label class="custom-control-label pr-5" for="customCheck1">I consent to having this website store my submitted information so they can respond to my inquiry.</label>
-										</div>
+										<input type="number" class="form-control" id="ce_phone" name="ce_phone" placeholder="Phone*">
+										<div class="error" id=""></div>
 									</div>
+									<div class="form-group col-md-12">
+										<textarea class="form-control" id="ce_text" name="ce_text" rows="4" placeholder="Message*"></textarea>
+										<div class="error" id=""></div>
+									</div>
+									<div class="col-md-12 form-group">
+                                         <div id="html_element1"></div>
+									<span id="html_element1_error" class="error"></span>
+                                    </div>
 									<div class="col-md-12">
-										<a class="btn btn-primary" href="#">Send message</a>
-									</div>
+						<button type="submit" class="btn btn-primary">Send message</button>
+					</div>
 								</div>
-							</form>
+								}
+							@*</form>*@
 						</div>
 					</div>
 				</div>
-				@*<div class="row mt-1 mt-md-2">
-					<div class="col-12">
-						<h4 class="mb-4 my-4 my-sm-5">Additional contact Info</h4>
-					</div>
-					<div class="col-md-4">
-						<div class="d-flex">
-							<i class="flaticon-time-call font-xlll text-primary"></i>
-							<div class="ml-4">
-								<h5>Head offices</h5>
-								<p>Our Estate Agency offices can help with you buying or selling a home.</p>
-								<a href="#">Click to contact an  branch</a>
-							</div>
-						</div>
-					</div>
-				</div>*@
 			</div>
 		</section>
 	</div>
+
+
+@section Scripts {
+	<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer></script>
+<script>
+	//google-recapcha
+		var html_element1;
+		 var onloadCallback = function() {
+			  html_element1 = grecaptcha.render('html_element1', {
+          'sitekey' : '6Lf2bMoZAAAAANA1p_3VsOmb4uONQOJBb3byh9Im'
+        });
+	};
+		//end
+</script>
+}

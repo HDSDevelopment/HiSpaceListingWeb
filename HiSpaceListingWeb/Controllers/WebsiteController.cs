@@ -30,6 +30,7 @@ namespace HiSpaceListingWeb.Controllers
 			return View();
 		}
 		
+		
 		public ActionResult FilterPartialView()
 		{
 			SetSessionVariables();
@@ -74,6 +75,45 @@ namespace HiSpaceListingWeb.Controllers
 				}
 			}
 			return View(vModel);
+		}
+
+
+		[HttpPost]
+		public ActionResult ContactEnquiry(IFormCollection form)
+		{
+			string name = form["ce_name"];
+			string email = form["ce_email"];
+			string phone = form["ce_phone"];
+			string text = form["ce_text"];
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
+				//HTTP POST
+
+				var postTask = client.GetAsync(Common.Instance.ApiSendContactEnquiryEmail + name + "/" + email + "/" + phone + "/" + text);
+				postTask.Wait();
+				var result = postTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var rs = result.Content.ReadAsAsync<bool>().Result;
+					var sr = rs;
+
+					if (sr == true)
+					{
+						//AssignSessionVariables(_user);
+						TempData["SendStatus"] = "1";
+						return RedirectToAction("Contact", "Website");
+					}
+					else
+					{
+						TempData["SendStatus"] = "0";
+						return RedirectToAction("Contact", "Website");
+					}
+				}
+			}
+
+			ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+			return RedirectToAction("Contact", "Website");
 		}
 
 		[HttpPost]

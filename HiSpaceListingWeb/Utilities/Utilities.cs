@@ -98,6 +98,7 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiSendSignupSuccess = "SendSignupSuccess/";
 		public string ApiSendEnquiryEmail = "SendEnquiryEmail/";
 		public string ApiSendBackgroundCheckEmail = "SendBackgroundCheckEmail/";
+		public string ApiSendContactEnquiryEmail = "SendContactEnquiryEmail/";
 
 
 
