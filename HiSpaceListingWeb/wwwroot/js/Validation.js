@@ -112,7 +112,8 @@ var regx = {
 	"aadhaarRegx": { "rule": /^([0-9]){12}$/, "error": "Invalid Aadhaar No." },
 	"postRegx": { "rule": /^[1-9][0-9]{5}$/, "error": "Invalid Postal No." },
 	//"postRegx": { "rule": /^\d{6}$/, "error": "Invalid Postal No." },
-	"numberRegx": { "rule": /^[+-]?\d+(\.\d+)?$/, "error": "Invalid No." }	
+	"numberRegx": { "rule": /^[+-]?\d+(\.\d+)?$/, "error": "Invalid No." },
+	"googleCapcha": {"rule": /([^\s])/, "error": "You can't leave Captcha Code empty" }
 }
 function validate(formData, rules) {
 	console.log(formData);
@@ -131,7 +132,14 @@ function validate(formData, rules) {
 			else {
 				var value = input.val();
 			}
-			console.log(value);
+			//console.log(value);
+		}
+		else if (input.prop("tagName") == "DIV") {
+			var captchaId = input.prop("id");
+			if (captchaId == "html_element1") {
+				var value = grecaptcha.getResponse(html_element1);
+				//console.log(value);
+			}
 		}
 		else {
 			var value = input.val();
@@ -176,6 +184,32 @@ function loginValidate(e) {
 		{ "id": "Password", "validation": ["emptyRegx"]},
 	];
 
+	validate(formData, rules);
+
+	$(`#${formData.id} .error`).each(function (i) {
+		if ($(this).is(':empty')) {
+		}
+		else {
+			e.preventDefault();
+			return;
+		}
+	})
+}
+
+//Contact enquiry validation
+function ContactEnquiryValidate(e) {
+	//e.preventDefault();
+	let formData = { "id": "contact_form" };
+	$(`#${formData.id} .error`).html(``);
+
+	let rules = [
+		{
+			"id": "ce_name", "validation": ["emptyRegx"]},
+		{ "id": "ce_email", "validation": ["emptyRegx"]},
+		{ "id": "ce_phone", "validation": ["emptyRegx"]},
+		{ "id": "ce_text", "validation": ["emptyRegx"]},
+		{ "id": "html_element1", "validation": ["googleCapcha"]},
+	];
 	validate(formData, rules);
 
 	$(`#${formData.id} .error`).each(function (i) {
