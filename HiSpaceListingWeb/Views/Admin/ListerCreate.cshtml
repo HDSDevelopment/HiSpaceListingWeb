@@ -143,15 +143,15 @@
 					<p class="font-15 text-danger">Logo Not Uploaded!</p>
 				}
 			</div>*@
-								@*<div class="col-md-12 col-sm-12">
+								<div class="col-md-12 col-sm-12">
 									<div class="checkbox m-0">
 										<label>
 											@Html.CheckBoxFor(m => m.TermsAndConditions)
-											<i class="helper"></i><a data-toggle="modal" data-target="#termsModal" href="#" class="hover-signup" data-dismiss="modal">Terms and Conditions*</a>
-											<div class="error" id=""></div>
+											<i class="helper"></i><span onclick="newWindow('@Url.Action( "Contact","Website")')">Terms and Conditions*</span>
+											<span class="error d-inline-block w-100" id=""></span>
 										</label>
 									</div>
-								</div>*@
+								</div>
 								<div class="col-sm-6 mt-3">
 									<button type="submit" class="btn btn-sec">Submit</button>
 								</div>

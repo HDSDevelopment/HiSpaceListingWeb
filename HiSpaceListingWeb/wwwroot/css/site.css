@@ -3225,15 +3225,7 @@ table.dataTable.display tbody tr.blink-bg > .sorting_1 {
 	}
 }
 
-#loadingDiv {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: #00000065;
-	z-index: 100;
-}
+
 .nav-footer{
 	display: inline-block;
 }
@@ -3438,3 +3430,57 @@ table.dataTable.display tbody tr.blink-bg > .sorting_1 {
    float: right;
 }
 
+/*.body-height__adjust{
+	height: 100vh;
+	overflow: hidden;
+}*/
+/*#loadingDiv {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #00000065;
+	z-index: 100;
+}*/
+
+/*New Loader*/
+.loader_new {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('../images/pageLoader.gif') 50% 50% no-repeat #ffffffd9;
+    /*opacity: .8;*/
+}
+.loader_new-sub {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('../images/pageLoader.gif') 50% 50% no-repeat #ffffffd9;
+    /*opacity: .8;*/
+}
+
+.admin-property__listing .md-crud-menu a:hover i {
+     box-shadow: 3px 3px 10px -4px #939393;
+     text-shadow: unset; 
+	 cursor: default;
+}
+.admin-property__listing .md-crud-menu.md-crud-menu__active a:hover i {
+	 cursor: pointer;
+}
+.admin-property__listing .md-crud-menu .btn-icon {
+    background: #fff0;
+}
+.admin-property__listing .md-crud-menu.md-crud-menu__active .btn-icon {
+    background: #fff;
+}
+.md-crud-menu a.menu__inactive,  .md-crud-menu span.menu__inactive{
+        cursor: no-drop;
+    opacity: 0.5;
+}

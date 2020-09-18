@@ -115,20 +115,21 @@ namespace HiSpaceListingWeb.Controllers
 			{
 				if(model.UserType == 1)
 				{
-					model.UserStatus = "Incomplete";
+					model.UserState = "Basic";
 				}
 				else if(model.UserType == 2)
 				{
-					model.UserStatus = "User";
+					model.UserState = "Guest";
 				}
 				else if(model.UserType == null)
 				{
 					model.UserType = 1;
-					model.UserStatus = "Incomplete";
+					model.UserState = "Basic";
 				}
 				model.Status = true;
 				model.CreatedDateTime = DateTime.Now;
 				model.LoginCount = 0;
+				model.TermsAndConditions = true;
 
 				User NewUser = new User();
 				using(var client = new HttpClient())
@@ -177,6 +178,27 @@ namespace HiSpaceListingWeb.Controllers
 		}
 
 		[HttpGet]
+		public ActionResult AdminLevelUserApprove(int UserId, bool Status)
+		{
+			SetSessionVariables();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
+				//HTTP GET
+				var responseTask = client.GetAsync(Common.Instance.ApiApproveAdminByUserId + UserId + "/" + Status);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var rs = result.Content.ReadAsAsync<bool>().Result;
+					var sr = rs;
+				}
+			}
+			return RedirectToAction("AdminLister", "Admin");
+		}
+
+		[HttpGet]
 		public ActionResult UserApprove(int UserId, string Status)
 		{
 			SetSessionVariables();
@@ -212,7 +234,7 @@ namespace HiSpaceListingWeb.Controllers
 					user = readTask.Result;
 
 					//background verification
-					if (user.UserStatus == "Completed")
+					if (user.UserState == "Complete")
 					{
 						//HTTP GET
 						var signupTask = client.GetAsync(Common.Instance.ApiSendBackgroundCheckEmail + user.Email.ToString() + "/" + user.CompanyName.ToString());
@@ -299,18 +321,18 @@ namespace HiSpaceListingWeb.Controllers
 				model.Logo.CopyTo(new FileStream(filePath, FileMode.Create));
 				model.User.Doc_CompanyLogo = "\\" + UploadRootPath_removeRoot + uploadsFolder + DuplicateName;
 			}
-			if(model.User.UserStatus != "Completed")
+			if(model.User.UserState != "Advance")
 			{
-				if(model.User.Email != null && model.User.Password != null && model.User.CompanyName != null && model.User.Phone != null && model.User.Address != null && model.User.Postalcode != null && model.User.Status == true && model.User.TermsAndConditions == true)
+				if(model.User.Email != null && model.User.Password != null && model.User.CompanyName != null && model.User.Phone != null && model.User.Address != null && model.User.Postalcode != null &&  model.User.TermsAndConditions == true && model.User.ProofName != null && model.User.ProofNumber != null && model.User.Doc_RCCopy != null)
 				{
-					model.User.UserStatus = "BackgroundCheck";
+					model.User.UserState = "Advance";
 				}
 				else
 				{
-					model.User.UserStatus = "Incomplete";
+					model.User.UserState = "Basic";
 				}
 			}
-
+			model.User.Status = true;
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
@@ -379,14 +401,14 @@ namespace HiSpaceListingWeb.Controllers
 			HttpContext.Session.SetInt32(Common.SessionUserType, _UserType);
 			HttpContext.Session.SetInt32(Common.SessionUserId, _user.UserId);
 			HttpContext.Session.SetString(Common.SessionUserCompanyName, _user.CompanyName);
-			if(_user.UserStatus == null)
+			if(_user.UserState == null)
 			{
-				_user.UserStatus = "Admin";
-				HttpContext.Session.SetString(Common.SessionUserStatus, _user.UserStatus);
+				_user.UserState = "Admin";
+				HttpContext.Session.SetString(Common.SessionUserStatus, _user.UserState);
 			}
 			else
 			{
-				HttpContext.Session.SetString(Common.SessionUserStatus, _user.UserStatus);
+				HttpContext.Session.SetString(Common.SessionUserStatus, _user.UserState);
 			}
 		}
 

@@ -16,21 +16,52 @@
 //		$('.scroll-padding').css({ "padding-top": "0" });
 //	}
 //});
-//Loader
-$('body').append('<div style="" id="loadingDiv"><div class="loader">Loading...</div></div>');
-$(window).on('load', function () {
-	$('body').addClass('overflow-hidden')
-	setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
-});
-function removeLoader() {
-	$("#loadingDiv").fadeOut(500, function () {
-		//consol.log('test')
-		// fadeOut complete. Remove the loading div
-		$("#loadingDiv").remove(); //makes page more lightweight 
-		$('body').removeClass('overflow-hidden')
+
+//$(document).ready(function() {
+
+//    // Executes when the HTML document is loaded and the DOM is ready
+//    $('body').addClass('body-height__adjust')
+//});
+
+
+////Loader and ready
+//$(window).on('load', function () {
+//	$('body').addClass('body-height__adjust')
+//	$('body').append('<div style="" id="loadingDiv"><div class="loader">Loading...</div></div>');	
+//	setTimeout(removeLoader, 2000000); //wait for page load PLUS two seconds.
+//});
+//function removeLoader() {
+//	$("#loadingDiv").fadeOut(500, function () {
+//		//consol.log('test')
+//		// fadeOut complete. Remove the loading div
+//		$("#loadingDiv").remove(); //makes page more lightweight 
+//		$('body').removeClass('body-height__adjust')
 		
-	});
+//	});
+//}
+/*---------------------------------------------------------------------*/
+/*-------------------New Window style start----------------------------*/
+/*---------------------------------------------------------------------*/
+function newWindow(url){
+	window.open(url, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1200,height=750,top=20,left=10");
 }
+
+/*---------------------------------------------------------------------*/
+/*-------------------New Window style end------------------------------*/
+/*---------------------------------------------------------------------*/
+$(window).on('load', function() {
+    $(".loader_new-sub").fadeOut("slow");
+    $(".loader_new").fadeOut("slow");
+});
+//Remove the sub loader
+function removeLoader() {
+	setTimeout(function () {
+$(".loader_new-sub").fadeOut("slow");
+	$(".loader_new-sub").remove();
+	}, 100);
+	
+};
+
 //Stop Form Submission of Enter Key Press
 function stopRKey(evt) {
 	var evt = (evt) ? evt : ((event) ? event : null);
@@ -51,6 +82,33 @@ function userCheck(check) {
 	}
 	else if (check == 1) {
 		return confirm("Are your sure want to recheck the user as background details?");
+	}
+}
+//admin level user check
+function adminLevelUserCheck(check) {
+	if (check == 0) {
+		return confirm("Are your sure want to block the HiSpace user?");
+	}
+	else if (check == 1) {
+		return confirm("Are your sure want to activate the HiSpace user?");
+	}
+}
+//user level listing check
+function userLevelListCheck(check) {
+	if (check == 0) {
+		return confirm("Are your sure want to deactivate the space/professional?");
+	}
+	else if (check == 1) {
+		return confirm("Are your sure want to activate the space/professional?");
+	}
+}
+//Admin level listing check
+function adminLevelListCheck(check) {
+	if (check == 0) {
+		return confirm("Are your sure want to deactivate the space/professional?");
+	}
+	else if (check == 1) {
+		return confirm("Are your sure want to activate the space/professional?");
 	}
 }
 function reCheck(check) {
@@ -211,6 +269,7 @@ $(document).ready(function () {
 	$('#listingTable').DataTable();
 	$('#linkOperators').DataTable();
 	$('#userEnquiry').DataTable();
+	$('#hispaceUserList').DataTable();
 	$('#hispaceUser').DataTable({
 		"order": [[0, "desc"]]
 	});
@@ -742,8 +801,14 @@ $(function () {
 			$('<div id="modal-container__image" class="modal image fade modal-try" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">' +
 				'<div id="modalbody" class="modal-dialog modal-lg modal-content" role="document"' +
 				data + '</div></div>').modal();
-
+			
+			setTimeout(function () {
+				$(".modal:visible .modal-dialog").append("<div class='loader_new-sub'></div>");
+			}, 500);
 		});
+		setTimeout(function () {
+			removeLoader();
+		}, 2000);
 	});
 
 	//model open for the list hours section
@@ -757,7 +822,9 @@ $(function () {
 			$('<div id="modal-container__hours" class="modal hours fade modal-try" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">' +
 				'<div id="modalbody" class="modal-dialog modal-lg modal-content" role="document"' +
 				data + '</div></div>').modal();
-
+			setTimeout(function () {
+				$(".modal:visible .modal-dialog").append("<div class='loader_new-sub'></div>");
+			}, 500);
 		});
 		setTimeout(function () {
 			//console.log($('#AllTimeCheck').html())
@@ -813,7 +880,9 @@ $(function () {
 				$('.sch-1, .sch-2, .sch-3').css('display', 'none');
 				$('.sch-4').css('display', 'block');
 			}
-		}, 1000);
+
+			removeLoader();
+		}, 2000);
 	});
 
 	//model open for the list project section
@@ -827,6 +896,9 @@ $(function () {
 			$('<div id="modal-container__project" class="modal project fade modal-info" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">' +
 				'<div id="modalbody" class="modal-dialog modal-xl modal-content" role="document"' +
 				data + '</div></div>').modal();
+			setTimeout(function () {
+				$(".modal:visible .modal-dialog").append("<div class='loader_new-sub'></div>");
+			}, 500);
 
 		});
 		setTimeout(function () {
@@ -843,8 +915,8 @@ $(function () {
 				}
 			})
 			
-			
-		}, 1000);
+			removeLoader();
+		}, 2000);
 		
 	});
 
@@ -859,7 +931,9 @@ $(function () {
 			$('<div id="modal-container__amenities" class="modal amenities fade modal-try" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">' +
 				'<div id="modalbody" class="modal-dialog modal-xl modal-content" role="document"' +
 				data + '</div></div>').modal();
-
+			setTimeout(function () {
+				$(".modal:visible .modal-dialog").append("<div class='loader_new-sub'></div>");
+			}, 500);
 		});
 
 	//select type on edit
@@ -878,7 +952,8 @@ $(function () {
 				$(this).children('.am-price').removeClass('d-none');
 			}
 		});
-	}, 1000);
+		removeLoader();
+	}, 2000);
 	});
 
 	//model open for the list facilities section
@@ -892,8 +967,13 @@ $(function () {
 			$('<div id="modal-container__facilities" class="modal facilities fade modal-sec" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">' +
 				'<div id="modalbody" class="modal-dialog modal-lg modal-content" role="document"' +
 				data + '</div></div>').modal();
-
+			setTimeout(function () {
+				$(".modal:visible .modal-dialog").append("<div class='loader_new-sub'></div>");
+			}, 500);
 		});
+		setTimeout(function () {
+			removeLoader();
+		}, 2000);
 	});
 
 	//model open for the list filter section
@@ -922,7 +1002,9 @@ $(function () {
 			$('<div id="modal-container__healthCheck" class="modal filter fade modal-sec" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">' +
 				'<div id="modalbody" class="modal-dialog modal-lg modal-content" role="document"' +
 				data + '</div></div>').modal();
-
+			setTimeout(function () {
+				$(".modal:visible .modal-dialog").append("<div class='loader_new-sub'></div>");
+			}, 500);
 		});
 		//select type on edit
 		setTimeout(function () {
@@ -1049,7 +1131,8 @@ $(function () {
 					$('#Moisture_Grade span').attr('class', 'text-danger');
 					}
 			}
-		}, 1000);
+			removeLoader();
+		}, 2000);
 	});
 
 	//model open for the GreenBuilding check section
@@ -1063,7 +1146,9 @@ $(function () {
 			$('<div id="modal-container__greenBuildingData" class="modal filter fade modal-sec" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">' +
 				'<div id="modalbody" class="modal-dialog modal-lg modal-content" role="document"' +
 				data + '</div></div>').modal();
-
+			setTimeout(function () {
+				$(".modal:visible .modal-dialog").append("<div class='loader_new-sub'></div>");
+			}, 500);
 		});
 
 		setTimeout(function () {
@@ -1114,7 +1199,8 @@ $(function () {
 				$(this).siblings('.rate-value').val($(this).rate("getValue"));
 				console.log($(this).siblings('.rate-value').val());
 			});
-		}, 1000)
+			removeLoader();
+		}, 2000)
 		
 	});
 
@@ -1125,9 +1211,10 @@ $(function () {
 //--------------------------------------------------------------------------------------------------//
 //image upload section start
 function addImage(obj) {
+	$(".modal:visible .modal-body").append("<div class='loader_new-sub'></div>");
 	//debugger
 	var listingId = $(obj).attr('data-listingid');
-	$('.image-upload').append(
+	$('.image-upload').prepend(
 		'<div class="row image-upload__row">' +
 		'<div class=" col-md-4 col-sm-6 align-self-center">' +
 		'<div class="display-none">' +
@@ -1138,14 +1225,14 @@ function addImage(obj) {
 		'</div>' +
 		'<div class="form-group">' +
 		'<input type="text" class="form-control imageName" placeholder="Image Name">' +
-		'<label for="input" class="control-label">Image Name</label><i class="bar"></i>' +
+		'<label for="input" class="control-label">Image Name*</label><i class="bar"></i>' +
 		'<div class="error"></div>'+
 		'</div>	' +
 		'</div>' +
 		'<div class=" col-md-4 col-sm-6 align-self-center">' +
 		'<div class="form-group">' +
 		'<input type="file" class="form-control imageFilePath"  accept="image/x-png,image/gif,image/jpeg">' +
-		'<label for="input" class="control-label">Upload Image</label><i class="bar"></i>' +
+		'<label for="input" class="control-label">Upload Image*</label><i class="bar"></i>' +
 		'<div class="error"></div>'+
 		'</div>' +
 		'</div>' +
@@ -1164,14 +1251,19 @@ function addImage(obj) {
 		'</div>' +
 		'</div>'
 	);
+	removeLoader();
 };
+
+//delete the row
 function deleteRowImage(that) {
+	$(".modal:visible .modal-body").append("<div class='loader_new-sub'></div>");
 	$(that).closest('.image-upload__row').remove();
+	removeLoader();
 	//console.log($(that).parents().find('.image-upload__row').html());
 };
+
 //image upload section end
 function AddImageForm(obj) {
-
 	//debugger
 	var listingId = $(obj).attr('data-listingid');
 	//console.log(listingId)
@@ -1195,7 +1287,10 @@ function AddImageForm(obj) {
 		$(row).find('.imageFilePath').siblings('.error').html('This feild is required');
 	}
 	if (iName == "" || iImagePath == "") {
+		console.log('b')
 		return false;
+	} else {
+		$(".modal:visible .modal-body").append("<div class='loader_new-sub'></div>");
 	}
 	//image validation end
 
@@ -1242,9 +1337,11 @@ function AddImageForm(obj) {
 					);
 				};
 				$(obj).addClass('display-none');
+				removeLoader();
 			}
 		},
 		error: function (response) {
+			removeLoader();
 			alert("server not ready please upload afterwards");
 		}
 	});
@@ -1252,6 +1349,7 @@ function AddImageForm(obj) {
 
 //edit image section
 function EditImageForm(obj) {
+	$(".modal:visible .modal-body").append("<div class='loader_new-sub'></div>");
 	var row = $(obj).closest('.image-upload__row');
 	$(row).removeClass("addons-row");
 	$(row).addClass("addons-row__edit");
@@ -1262,10 +1360,12 @@ function EditImageForm(obj) {
 	$(obj).siblings('.addon-add, .addon-clear').removeClass('display-none');
 	$(obj).siblings('.addon-delete').addClass('display-none');
 	$(obj).addClass('display-none');
+	removeLoader();
 }
 
 //Reset image section
 function clearRowImage(obj, imageId) {
+	$(".modal:visible .modal-body").append("<div class='loader_new-sub'></div>");
 	//console.log(imageId)
 	var row = $(obj).closest('.image-upload__row');
 	$.ajax({
@@ -1280,6 +1380,7 @@ function clearRowImage(obj, imageId) {
 				$(row).removeClass("addons-row__edit");
 				$(row).find('.imageId').attr("value",response.listingImagesId);
 				$(row).find('.imageName').addClass("event-none");
+				$(row).find('.error').html("");
 				$(row).find('.imageName').val(response.name);
 				$(row).find('.imageFilePath').parent().parent().append(
 					'<div class="addon-image__div"><a href=' + response.imageUrl +' target="_blank"><img class="addon-image" alt="name" src=' + response.imageUrl + ' /></a></div>'
@@ -1289,9 +1390,11 @@ function clearRowImage(obj, imageId) {
 				$(obj).siblings('.addon-edit, .addon-delete').removeClass('display-none');
 				$(obj).siblings('.addon-add').addClass('display-none');
 				$(obj).addClass('display-none');
+				removeLoader();
 			}
 		},
 		error: function (response) {
+			removeLoader();
 			alert(response);
 		}
 	})
@@ -1299,6 +1402,7 @@ function clearRowImage(obj, imageId) {
 
 //Delete image section
 function deleteImage(obj, imageId) {
+	$(".modal:visible .modal-body").append("<div class='loader_new-sub'></div>");
 	var row = $(obj).closest('.image-upload__row');
 	if (imageId != 0) {
 		$.ajax({
@@ -1313,6 +1417,7 @@ function deleteImage(obj, imageId) {
 				}
 			},
 			error: function (response) {
+				removeLoader();
 				alert("server not ready please delete afterwards");
 			}
 		})
@@ -1441,6 +1546,7 @@ function deleteImage(obj, imageId) {
 
 //project upload section start
 function addProject(obj) {
+	$(".modal:visible .modal-body").append("<div class='loader_new-sub'></div>");
 	operatorListDropdown();
 
 	var listingId = $(obj).attr('data-listingid');
@@ -1460,7 +1566,7 @@ function addProject(obj) {
 		'<div class="form-group operatorDropdown-div">' +
 		'<select class="form-control basic-select operatorDropdown operatorName">' +
 		'</select>' +
-		'<label for="input" class="control-label">Operator Name</label><i class="bar"></i>' +
+		'<label for="input" class="control-label">Operator Name*</label><i class="bar"></i>' +
 		'</div>' +
 		'</div>' +
 
@@ -1468,7 +1574,7 @@ function addProject(obj) {
 		'<div class="font-11">Select on listed operator <span class="displayExistingOperator bg-sec small-btn__action">Operator List</span></div>' +
 		'<div class="form-group">' +
 		'<input type="text" user-id="new" class="form-control operatorName" placeholder="Operator Name">' +
-		'<label for="input" class="control-label">Operator Name</label><i class="bar"></i>' +
+		'<label for="input" class="control-label">Operator Name*</label><i class="bar"></i>' +
 		'</div>' +
 		'</div>' +
 
@@ -1482,7 +1588,7 @@ function addProject(obj) {
 		'<select class="form-control basic-select propertyDropdown propertyName">' +
 		'<option value=" ">Select Operator First</option>' +
 		'</select>' +
-		'<label for="input" class="control-label">Property Name</label><i class="bar"></i>' +
+		'<label for="input" class="control-label">Property Name*</label><i class="bar"></i>' +
 		'</div>' +
 		'</div>' +
 
@@ -1490,7 +1596,7 @@ function addProject(obj) {
 		'<div class="font-11">Select on listed property <span class="displayExistingProperty bg-sec small-btn__action">property List</span></div>' +
 		'<div class="form-group">' +
 		'<input type="text" class="form-control propertyName" placeholder="property Name">' +
-		'<label for="input" class="control-label">Property Name</label><i class="bar"></i>' +
+		'<label for="input" class="control-label">Property Name*</label><i class="bar"></i>' +
 		'</div>' +
 		'</div>' +
 
@@ -1540,13 +1646,15 @@ function addProject(obj) {
 		'<div class=" col-md-6 col-sm-12 align-self-center">' +
 		'<div class="form-group">' +
 		'<textarea type="text" class="form-control projectDesc" rows="3" placeholder="Enter your text..."></textarea>' +
-		'<label for="input" class="control-label">Description</label><i class="bar"></i>' +
+		'<label for="input" class="control-label">Description*</label><i class="bar"></i>' +
+		'<div class="error"></div>'+
 		'</div>' +
 		'</div>' +
 		'<div class=" col-md-3 col-sm-6 align-self-center">' +
 		'<div class="form-group">' +
 		'<input type="file" class="form-control projectImage" accept="project/*">' +
-		'<label for="input" class="control-label">Upload project Image</label><i class="bar"></i>' +
+		'<label for="input" class="control-label">Upload project Image*</label><i class="bar"></i>' +
+		'<div class="error"></div>'+
 		'</div>' +
 		'</div>' +
 
@@ -1575,9 +1683,13 @@ function addProject(obj) {
 	$('.project-upload__row:first-child .PropertyAdditionalIdName').select2();
 	$('.project-upload__row:first-child .operatorDropdown').select2();
 	$('.project-upload__row:first-child .propertyDropdown').select2();
+	removeLoader();
 }
+
 function deleteRowProject(obj) {
+	$(".modal:visible .modal-body").append("<div class='loader_new-sub'></div>");
 	$(obj).closest('.project-upload__row').remove();
+	removeLoader();
 };
 
 //project upload section end
@@ -1605,6 +1717,19 @@ function AddProjectForm(obj) {
 	var pRera = $(row).find('.PropertyReraId').val();
 	var pAdditionalIdName = $(row).find('.PropertyAdditionalIdName').val();
 	var pAdditionalIdValue = $(row).find('.PropertyAdditionalIdNumber').val();
+	//project validation start
+	if (pDesc == "") {
+		$(row).find('.projectDesc').siblings('.error').html('This feild is required');
+	}
+	if (pImagePath == "") {
+		$(row).find('.projectImage').siblings('.error').html('This feild is required');
+	}
+	if (pDesc == "" || pImagePath == "") {
+		return false;
+	} else {
+		$(".modal:visible .modal-body").append("<div class='loader_new-sub'></div>");
+	}
+	//project validation end
 	if ($(row).find('.projectId').length) {
 		pProjectId = $(row).find('.projectId').val();
 	} else {
@@ -1688,9 +1813,11 @@ function AddProjectForm(obj) {
 					);
 				};
 				$(obj).addClass('display-none');
+				removeLoader();
 			}
 		},
 		error: function (response) {
+			removeLoader();
 			alert("server not ready please upload afterwards");
 		}
 	});
@@ -1698,6 +1825,7 @@ function AddProjectForm(obj) {
 
 //edit project section
 function EditProjectForm(obj) {
+	$(".modal:visible .modal-body").append("<div class='loader_new-sub'></div>");
 	var row = $(obj).closest('.project-upload__row');
 	$(row).removeClass("addons-row");
 	$(row).addClass("addons-row__edit");
@@ -1732,11 +1860,13 @@ function EditProjectForm(obj) {
 	$(obj).siblings('.addon-add, .addon-clear').removeClass('display-none');
 	$(obj).siblings('.addon-delete').addClass('display-none');
 	$(obj).addClass('display-none');
+	removeLoader();
 }
 
 //Reset project section
 function clearRowProject(obj, projectId) {
 	//console.log(imageId)
+	$(".modal:visible .modal-body").append("<div class='loader_new-sub'></div>");
 	var row = $(obj).closest('.project-upload__row');
 	$.ajax({
 		type: "GET",
@@ -1792,9 +1922,11 @@ function clearRowProject(obj, projectId) {
 				$(obj).siblings('.addon-edit, .addon-delete').removeClass('display-none');
 				$(obj).siblings('.addon-add').addClass('display-none');
 				$(obj).addClass('display-none');
+				removeLoader();
 			}
 		},
 		error: function (response) {
+			removeLoader();
 			alert(response);
 		}
 	})
@@ -1803,6 +1935,7 @@ function clearRowProject(obj, projectId) {
 
 //Delete project section
 function deleteProject(obj, projectId) {
+	$(".modal:visible .modal-body").append("<div class='loader_new-sub'></div>");
 	var row = $(obj).closest('.project-upload__row');
 	if (projectId != 0) {
 		$.ajax({
@@ -1817,6 +1950,7 @@ function deleteProject(obj, projectId) {
 				}
 			},
 			error: function (response) {
+				removeLoader();
 				alert("server not ready please delete afterwards");
 			}
 		})

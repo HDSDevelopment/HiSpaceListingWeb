@@ -5,7 +5,7 @@
 	@using Microsoft.AspNetCore.Http
 	@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 }
-@model IEnumerable<HiSpaceListingModels.User>
+@model IEnumerable<HiSpaceListingService.ViewModel.AdminUserListResponse>
 
 	<div class="listingtable nav-padding">
 		<div class="bg-light mb-4">
@@ -45,7 +45,8 @@
 												<th>Hs-User Name</th>
 												<th>Phone</th>
 												<th>Email</th>
-												<th>HS-User Progress</th>
+												<th>User Information</th>
+												<th>Listed Properties</th>
 												<th>Status</th>
 												<th>Action</th>
 											</tr>
@@ -53,53 +54,79 @@
 										<tbody>
 											@foreach (var item in Model)
 											{
-												@if (item.UserId > 0 && item.UserType == 1)
+												@if (item.User.UserId > 0 && item.User.UserType == 1)
 												{
 											<tr>
-												<td>@Html.DisplayFor(modelItem => item.UserId)</td>
-												<td>@Html.DisplayFor(modelItem => item.CompanyName)</td>
-												<td>@Html.DisplayFor(modelItem => item.Phone)</td>
-												<td>@Html.DisplayFor(modelItem => item.Email)</td>
-												@if (item.UserStatus == "Incomplete")
+												<td>@Html.DisplayFor(modelItem => item.User.UserId)</td>
+												<td>@Html.DisplayFor(modelItem => item.User.CompanyName)</td>
+												<td>@Html.DisplayFor(modelItem => item.User.Phone)</td>
+												<td>@Html.DisplayFor(modelItem => item.User.Email)</td>
+												@if (item.User.UserState == "Basic")
 												{
-													<td class="text-pry font-weight-bold">@Html.DisplayFor(modelItem => item.UserStatus)</td>
+													<td class="text-pry font-weight-bold">@Html.DisplayFor(modelItem => item.User.UserState)</td>
 												}
-												else if (item.UserStatus == "BackgroundCheck")
+												else if (item.User.UserState == "Advance")
 												{
-													<td class="text-info font-weight-bold">@Html.DisplayFor(modelItem => item.UserStatus)</td>
+													<td class="text-sec font-weight-bold">@Html.DisplayFor(modelItem => item.User.UserState)</td>
 												}
-												else if (item.UserStatus == "Completed")
+												else
 												{
-													<td class="text-sec font-weight-bold">@Html.DisplayFor(modelItem => item.UserStatus)</td>
+													<td class="text-pry font-weight-bold">@Html.DisplayFor(modelItem => item.User.UserState)</td>
 												}
+												
 												<td class="p-0">
 													<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
-														@if (item.UserStatus == "Incomplete")
-														{
-
-															<a class="action-disabled tooltip-wrapper" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="" data-original-title="User is in incomplete stage">
-																<i class="fas btn-icon fa-times-circle text-pry"></i>
-															</a>
-														}
-														else if (item.UserStatus == "BackgroundCheck")
-														{
-															<a onclick="return userCheck(0);" href="@Url.Action("UserApprove", "User", new { UserId = item.UserId, Status = "Completed" })" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to verified the user">
-																<i class="fas btn-icon fa-times-circle text-pry"></i>
-															</a>
-														}
-														else if (item.UserStatus == "Completed")
-														{
-															<a onclick="return userCheck(1);" href="@Url.Action("UserApprove", "User", new { UserId = item.UserId, Status = "BackgroundCheck" })" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to recheck the background">
-																<i class="fas btn-icon fa-thumbs-up text-sec"></i>
-															</a>
-														}
-
-
+														<span>
+															
+																@if (item.TotalProperties != 0)
+																{
+																	<a href="@Url.Action("AdminPropertyList", "Admin", new { UserID = item.User.UserId, UserType = item.User.UserType })" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to view the listed property/Professional">
+																<i class="fas fa-list btn-icon text-try"></i>
+																</a>
+																	<span class="status-alert status-alert__images">
+																		@item.TotalProperties
+																	</span>
+																}
+																else
+																{
+																	<a href="javascript:function() { return false; }" class="tooltip-wrapper menu__inactive" data-toggle="tooltip" data-placement="top" title="" data-original-title="No properties/Professional listed">
+																<i class="fas fa-list btn-icon text-try"></i>
+																</a>
+																	<span class="status-alert status-alert__empty menu__inactive">
+																		@item.TotalProperties
+																	</span>
+																}
+															
+														</span>
 													</div>
 												</td>
+												@*@{var AdminStatusvalue = @item.User.AdminStatus.ToString(); }*@
+												@*<td>@item.User.AdminStatus.ToString()</td>*@
+												@if (@item.User.Status.ToString() == "True")
+												{
+													<td class="p-0">
+														<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
+															<a onclick="return adminLevelUserCheck(0);" href="@Url.Action("AdminLevelUserApprove", "User", new { UserId = item.User.UserId, Status = false })" class="tooltip-wrapper text-sec" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to block the user">
+																<i class="fas btn-icon fa-check-circle text-sec"></i> Active
+															</a>
+														</div>
+													</td>
+												}
+												else
+												{
+													<td class="p-0">
+														<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
+															<a onclick="return adminLevelUserCheck(1);" href="@Url.Action("AdminLevelUserApprove", "User", new { UserId = item.User.UserId, Status = true})" class="tooltip-wrapper text-pry" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to activate the user">
+																
+																<i class="fas btn-icon fa-times-circle text-pry"></i> Block
+															</a>
+														</div>
+													</td>
+												}
+												
 												<td class="p-0">
 													<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
-														<a href="@Url.Action("ListingTable", "Listing", new { UserID = item.UserId, UserType = item.UserType })" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit or View">
+														<a href="@Url.Action("ListingTable", "Listing", new { UserID = item.User.UserId, UserType = item.User.UserType })" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit or View">
 															<i class="fas fa-edit btn-icon text-warning"></i>
 														</a>
 														@*<a href="/" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">

@@ -33,14 +33,14 @@
 							<div class=" col-md-4 col-sm-6 align-self-center">
 								<div class="form-group">
 									<input type="text" class="form-control imageName" placeholder="Image Name">
-									<label for="input" class="control-label">Image Name</label><i class="bar"></i>
+									<label for="input" class="control-label">Image Name*</label><i class="bar"></i>
 									<div class="error"></div>
 								</div>
 							</div>
 							<div class=" col-md-4 col-sm-6 align-self-center">
 								<div class="form-group">
 									<input type="file" class="form-control imageFilePath" accept="image/x-png,image/gif,image/jpeg">
-									<label for="input" class="control-label">Upload Image</label><i class="bar"></i>
+									<label for="input" class="control-label">Upload Image*</label><i class="bar"></i>
 									<div class="error"></div>
 								</div>
 							</div>
@@ -74,13 +74,15 @@
 						<div class=" col-md-4 col-sm-6 align-self-center">
 							<div class="form-group">
 								<input type="text" class="form-control imageName event-none" placeholder="Image Name" value="@item.Name">
-								<label for="input" class="control-label">Image Name</label><i class="bar"></i>
+								<label for="input" class="control-label">Image Name*</label><i class="bar"></i>
+								<div class="error"></div>
 							</div>
 						</div>
 						<div class=" col-md-4 col-sm-6 align-self-center">
 							<div class="form-group display-none">
 								<input type="file" class="form-control imageFilePath" accept="image/*" value="@item.ImageUrl">
-								<label for="input" class="control-label">Upload Image</label><i class="bar"></i>
+								<label for="input" class="control-label">Upload Image*</label><i class="bar"></i>
+								<div class="error"></div>
 							</div>
 							<div class="addon-image__div"><a href="@Url.Content(item.ImageUrl)" target="_blank"><img class="addon-image" alt="name" src="@Url.Content(item.ImageUrl)" /></a></div>
 						</div>

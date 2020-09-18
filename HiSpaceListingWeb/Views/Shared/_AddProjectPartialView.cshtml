@@ -37,14 +37,14 @@
 									<div class="form-group operatorDropdown-div">
 										<select class="form-control basic-select operatorDropdown operatorName">
 										</select>
-										<label for="input" class="control-label">Operator Name</label><i class="bar"></i>
+										<label for="input" class="control-label">Operator Name*</label><i class="bar"></i>
 									</div>
 								</div>
 								<div class="operator-nonexist display-none">
 									<div class="font-11">Select on listed operator <span class="displayExistingOperator bg-sec small-btn__action">Operator List</span></div>
 									<div class="form-group">
 										<input type="text" class="form-control operatorName" placeholder="Operator Name">
-										<label for="input" class="control-label">Operator Name</label><i class="bar"></i>
+										<label for="input" class="control-label">Operator Name*</label><i class="bar"></i>
 									</div>
 								</div>
 							</div>
@@ -56,14 +56,14 @@
 										<select class="form-control basic-select propertyDropdown propertyName">
 											<option value=" ">Select Operator First</option>
 										</select>
-										<label for="input" class="control-label">Property Name</label><i class="bar"></i>
+										<label for="input" class="control-label">Property Name*</label><i class="bar"></i>
 									</div>
 								</div>
 								<div class="property-nonexist display-none">
 									<div class="font-11">Select on listed property <span class="displayExistingProperty bg-sec small-btn__action">property List</span></div>
 									<div class="form-group">
 										<input type="text" class="form-control propertyName" placeholder="property Name">
-										<label for="input" class="control-label">Property Name</label><i class="bar"></i>
+										<label for="input" class="control-label">Property Name*</label><i class="bar"></i>
 									</div>
 								</div>
 							</div>
@@ -112,13 +112,15 @@
 							<div class=" col-md-6 col-sm-12 align-self-center">
 								<div class="form-group">
 									<textarea type="text" class="form-control projectDesc" rows="3" placeholder="Enter your text..."></textarea>
-									<label for="input" class="control-label">Description</label><i class="bar"></i>
+									<label for="input" class="control-label">Description*</label><i class="bar"></i>
+									<div class="error"></div>
 								</div>
 							</div>
 							<div class=" col-md-3 col-sm-6 align-self-center">
 								<div class="form-group">
 									<input type="file" class="form-control projectImage" accept="project/*">
-									<label for="input" class="control-label">Upload project Image</label><i class="bar"></i>
+									<label for="input" class="control-label">Upload project Image*</label><i class="bar"></i>
+									<div class="error"></div>
 								</div>
 							</div>
 							<div class=" col-md-2 col-sm-6 align-self-center">
@@ -160,7 +162,7 @@
 							<div class="operator-nonexist">
 								<div class="form-group">
 									<input type="text" user-id="new" class="form-control operatorName cantedit event-none" placeholder="Operator Name" value="@item.OperatorName">
-									<label for="input" class="control-label">Operator Name</label><i class="bar"></i>
+									<label for="input" class="control-label">Operator Name*</label><i class="bar"></i>
 								</div>
 							</div>
 						</div>
@@ -178,7 +180,7 @@
 							<div class="property-nonexist">
 								<div class="form-group">
 									<input type="text" class="form-control propertyName cantedit event-none" placeholder="property Name" value="@item.ProjectName">
-									<label for="input" class="control-label">Property Name</label><i class="bar"></i>
+									<label for="input" class="control-label">Property Name*</label><i class="bar"></i>
 								</div>
 							</div>
 						</div>
@@ -222,13 +224,15 @@
 						<div class=" col-md-6 col-sm-12 align-self-center">
 							<div class="form-group">
 								<textarea type="text" class="form-control projectDesc event-none" rows="3" placeholder="Enter your text..." value="@item.Description">@item.Description</textarea>
-								<label for="input" class="control-label">Description</label><i class="bar"></i>
+								<label for="input" class="control-label">Description*</label><i class="bar"></i>
+								<div class="error"></div>
 							</div>
 						</div>
 						<div class=" col-md-3 col-sm-6 align-self-center">
 							<div class="form-group display-none">
 								<input type="file" class="form-control projectImage" accept="project/*" value="@item.ImageUrl">
-								<label for="input" class="control-label">Upload project Image</label><i class="bar"></i>
+								<label for="input" class="control-label">Upload project Image*</label><i class="bar"></i>
+								<div class="error"></div>
 							</div>
 							@if (item.ImageUrl != null)
 							{

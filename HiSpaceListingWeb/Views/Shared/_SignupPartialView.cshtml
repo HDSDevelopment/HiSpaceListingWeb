@@ -70,7 +70,7 @@
 								<div class="form-group col-sm-12 operator-fields">
 									<input class="form-control" id="sign-Address" name="Address" placeholder="No.00, Street" type="text" value="">
 									@*@Html.TextBoxFor(m => m.Address, new { @class = "form-control", type = "text", placeholder = "No.00, Street" })*@
-									<label for="input" class="control-label">Complete Address</label><i class="bar"></i>
+									<label for="input" class="control-label">Complete Address*</label><i class="bar"></i>
 									<div class="error" id=""></div>
 								</div>
 								<div class="form-group col-sm-6 operator-fields">
@@ -82,10 +82,18 @@
 								<div class="form-group col-sm-6 operator-fields">
 									<input class="form-control" id="sign-Postalcode" name="Postalcode" placeholder="Postal code" type="number" value="">
 									@*@Html.TextBoxFor(m => m.Postalcode, new { @class = "form-control", type = "number", placeholder = "Postal code" })*@
-									<label for="input" class="control-label">Postal Code</label><i class="bar"></i>
+									<label for="input" class="control-label">Postal Code*</label><i class="bar"></i>
 									<div class="error" id=""></div>
 								</div>
-
+								<div class="col-md-12 col-sm-12">
+										<div class="checkbox m-0">
+											<label>
+												<input type="checkbox" id="TermsAndConditions" name="TermsAndConditions"/>
+												<i class="helper"></i><span onclick="newWindow('@Url.Action( "Contact","Website")')">Terms and Conditions*</span>
+												<span class="error d-inline-block w-100" id=""></span>
+											</label>
+										</div>
+									</div>
 								<div class="row width-full">
 									<div class="col-sm-6">
 										<button type="submit" class="btn btn-sec btn-block">Signup</button>

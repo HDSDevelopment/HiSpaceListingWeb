@@ -86,6 +86,7 @@ namespace HiSpaceListingWeb.Utilities
 
 		public string ApiUserAuthenticateUser = "AuthenticateUser/";
 		public string ApiUserGetUsers = "GetUsers/";
+		public string ApiUserGetUsersAndPropertyCount = "GetUsersAndPropertyCount/";
 		public string ApiUserGetUser = "GetUser/";
 		public string ApiUserAddUser = "AddUser/";
 		public string ApiUserUpdateUser = "UpdateUser/";
@@ -94,6 +95,8 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiUserEmailEixsts = "UserEmailExists/";
 		//re approve
 		public string ApiApproveByReMasterId = "ApproveByReMasterId/";
+		//admin active and block
+		public string ApiApproveAdminByUserId = "ApproveAdminByUserId/";
 		//Email
 		public string ApiSendSignupSuccess = "SendSignupSuccess/";
 		public string ApiSendEnquiryEmail = "SendEnquiryEmail/";
@@ -142,7 +145,11 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiLisitingGetPropertyListByUserIDAndListingID = "GetPropertyListByUserIDAndListingID/";
 		//re-link
 		public string ApiLisitingGetLinkedReProfessionalListByUserIDForApproval = "GetLinkedReProfessionalListByUserIDForApproval/";
-
+		//User level listing check
+		public string ApiUserLevelListApprove = "UserLevelListApprove/";
+		//Admin level list check
+		public string ApiAdminLevelListApprove = "AdminLevelListApprove/";
+		
 
 
 

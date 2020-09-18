@@ -39,27 +39,21 @@
 					<div class="widget accordion-sec col-md-12 mb-2">
 						@if (ViewBag.UserId != null && ViewBag.UserId > 0)
 						{
-							@if (Model.User.UserStatus == "Incomplete")
-							{
-								<div class="status-message">
-									<i class="fas fa-exclamation-circle"></i>
-									<p>Please complete the from fields to enable and add property ( Commercial, Co-Working ), People ( Real Estate Professional ) section.</p>
-								</div>
-							}
-							else if (Model.User.UserStatus == "BackgroundCheck")
-							{
-								<div class="status-message">
-									<i class="fas fa-user-cog"></i>
-									<p>Background check is inprogress. Once it complete listing property ( Commercial, Co-Working ), People ( Real Estate Professional )will enable for you.</p>
-								</div>
-							}
-							else if (Model.User.UserStatus == "Completed")
+							@if (Model.User.UserState == "Basic")															
 							{
 								<div class="status-message">
 									<i class="fas fa-user-check text-sec"></i>
-									<p>You are a verified user please add your property ( Commercial, Co-Working ), People ( Real Estate Professional ) below.</p>
+									<p>Welcome! Please add your property ( Commercial, Co-Working ), People ( Real Estate Professional ) below.</p>
 								</div>
 							}
+							else if (Model.User.UserState == "Advance")
+							{
+								<div class="status-message">
+									<i class="fas fa-user-check text-sec"></i>
+									<p>Welcome! Please add your property ( Commercial, Co-Working ), People ( Real Estate Professional ) below.</p>
+								</div>
+							}
+
 							<div class="widget-title widget-collapse">
 								<a class="ml-auto" data-toggle="collapse" href="#property-lister" role="button" aria-expanded="false" aria-controls="property-lister"><h6>Basic Information</h6> <i class="fas fa-chevron-down"></i> </a>
 							</div>
@@ -71,9 +65,11 @@
 							</div>
 							ViewBag.card = "card hi-card";
 							ViewBag.cardbody = "card-body";
+							ViewBag.cardbodyShow = "show";
+							
 						}
-						 
-						<div class="collapse show @ViewBag.card" id="property-lister">
+
+						<div class="collapse @ViewBag.cardbodyShow @ViewBag.card" id="property-lister">
 							<div class="accordion-sec__detail @ViewBag.cardbody">
 
 								@*<form class="form-row align-items-center md-form p-3" action="account-profile.html">*@
@@ -82,7 +78,7 @@
 									@Html.AntiForgeryToken()
 									@Html.HiddenFor(m => m.User.UserId)
 									@Html.HiddenFor(m => m.User.UserType)
-									@Html.HiddenFor(m => m.User.UserStatus)
+									@Html.HiddenFor(m => m.User.UserState)
 									@Html.HiddenFor(m => m.User.Status)
 									@Html.HiddenFor(m => m.User.Doc_CompanyLogo)
 									@Html.HiddenFor(m => m.User.Doc_RCCopy)
@@ -220,9 +216,9 @@
 									<div class="col-md-12 col-sm-12">
 										<div class="checkbox m-0">
 											<label>
-												@*<input type="checkbox" />*@
+															 
 												@Html.CheckBoxFor(m => m.User.TermsAndConditions, new { id = "TermsAndConditions" })
-												<i class="helper"></i><a data-toggle="modal" data-target="#termsModal" href="#" class="hover-signup" data-dismiss="modal">Terms and Conditions</a>
+												<i class="helper"></i><span onclick="newWindow('@Url.Action( "Contact","Website")')">Terms and Conditions*</span>
 												<span class="error d-inline-block w-100" id=""></span>
 											</label>
 										</div>
@@ -253,7 +249,7 @@
 						<div class="col-md-12">
 							<div>
 								<span class="font-weight-bold">Note: </span>
-								Please fill the basic details to enable the <span class="text-pry font-weight-bold">Property Listing Section</span>
+								Please fill the all details in Basic Information to become the <span class="text-pry font-weight-bold">HiSpace verified user</span>
 							</div>
 						</div>
 					}
@@ -303,13 +299,14 @@
 													<th>Name</th>
 													<th>Type</th>
 													<th>For</th>
-													<th>Phone</th>
+													@*<th>Phone</th>*@
 													<th>City</th>
 													@*<th>Current occ.</th>*@
 													<th><i class="fas fa-business-time"></i> Hours</th>
 													<th><i class="fas fa-images"></i> Images</th>
 													<th><i class="fab fa-gratipay"></i> Addons</th>
 													<th>Status</th>
+													<th>Verification</th>
 													<th><i class="fas fa-leaf"></i> Eco-Friendly</th>
 													<th>Action</th>
 												</tr>
@@ -318,13 +315,22 @@
 												@foreach (var item in Model.ListingList)
 												{
 													//checking the status
-													@if (item.Listings.Status == true)
+													@*@if (item.Listings.Status == true)
 													{
 														ViewBag.ListStatus = @Html.Raw("<i class='fas fa-check text-success'></i>");
 													}
 													else
 													{
 														ViewBag.ListStatus = @Html.Raw("<i class='fas fa-times text-danger'></i>");
+													}*@
+													//Verification
+													@if (item.Listings.AdminStatus.ToString() == "True")
+													{
+														ViewBag.Verification = @Html.Raw("<span class='text-success'>Verified</span>");
+													}
+													else
+													{
+														ViewBag.Verification = @Html.Raw("<span class='text-danger'>Not Verified</span>");
 													}
 													//checking the type and addons
 													@if (item.Listings.ListingType == "Commercial")
@@ -469,9 +475,9 @@
 														}
 
 													</td>
-													<td>
+													@*<td>
 														@Html.DisplayFor(modelItem => item.Listings.Phone)
-													</td>
+													</td>*@
 													<td>
 														@Html.DisplayFor(modelItem => item.Listings.locality)
 													</td>
@@ -533,9 +539,34 @@
 													<td class="p-0">
 														@ViewBag.TypeAddons
 													</td>
-													<td>
+													@*<td>
 														<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
 															@ViewBag.ListStatus
+														</div>
+													</td>*@
+													<td class="p-0">
+														@if (@item.Listings.Status.ToString() == "True")
+														{
+														<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
+															<a onclick="return userLevelListCheck(0);" href="@Url.Action("UserLevelListCheck", "Listing", new { ListingId = item.Listings.ListingId, Status = false })" class="tooltip-wrapper text-sec" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to unactivate the space/professional">
+																<i class="fas btn-icon fa-check-circle text-sec"></i> Active
+															</a>
+														</div>
+														}
+														else
+														{													
+														<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
+															<a onclick="return userLevelListCheck(1);" href="@Url.Action("UserLevelListCheck", "Listing", new { ListingId = item.Listings.ListingId, Status = true })" class="tooltip-wrapper text-pry" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to activate the space/professional">
+																
+																<i class="fas btn-icon fa-times-circle text-pry"></i> Block
+															</a>
+														</div>
+													
+														}
+													</td>
+													<td>
+														<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
+															@ViewBag.Verification
 														</div>
 													</td>
 													<td class="p-0 text-center">
@@ -560,18 +591,18 @@
 										</table>
 									</div>
 								</div>
-								@if (Model.User.UserStatus == "Incomplete")
+								@*@if (Model.User.UserState == "Incomplete")
 								{
 									<div class="table-disabled"> Fill the Information to enable listing</div>
 								}
-								else if (Model.User.UserStatus == "BackgroundCheck")
+								else if (Model.User.UserState == "BackgroundCheck")
 								{
 									<div class="table-disabled"> Background checking is inprogress</div>
 								}
-								else if (Model.User.UserStatus == "Completed")
+								else if (Model.User.UserState == "Completed")
 								{
 
-								}
+								}*@
 							<div class="re-prof__nodata hi-alert__pry listing-note display-none"> 
 								<div>
 									Step 1: Please fill the RE-Professional details by click <span class="note-head"> <i class="fas fa-edit btn-icon text-pry"></i></span>
@@ -587,6 +618,7 @@
 						</div>
 					</div>
 				</div>
+				
 			</section>
 		}
 		</div>

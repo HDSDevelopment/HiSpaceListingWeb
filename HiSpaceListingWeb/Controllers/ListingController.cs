@@ -182,6 +182,50 @@ namespace HiSpaceListingWeb.Controllers
 
 		}
 
+		//User level listing check
+		[HttpGet]
+		public ActionResult UserLevelListCheck(int ListingId, bool Status)
+		{
+			SetSessionVariables();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				//HTTP GET
+				var responseTask = client.GetAsync(Common.Instance.ApiUserLevelListApprove + ListingId + "/" + Status);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var rs = result.Content.ReadAsAsync<bool>().Result;
+					var sr = rs;
+				}
+			}
+			return RedirectToAction("ListingTable", "Listing", new { UserID = GetSessionObject().UserId, UserType = GetSessionObject().UserType });
+		}
+
+		//Admin level listing check
+		[HttpGet]
+		public ActionResult AdminLevelListCheck(int ListingId, bool Status, int UserId, int UserType)
+		{
+			SetSessionVariables();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				//HTTP GET
+				var responseTask = client.GetAsync(Common.Instance.ApiAdminLevelListApprove + ListingId + "/" + Status);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var rs = result.Content.ReadAsAsync<bool>().Result;
+					var sr = rs;
+				}
+			}
+			return RedirectToAction("AdminPropertyList", "Admin", new { UserID = UserId, UserType = UserType});
+		}
+
 		public void SetSessionVariables()
 		{
 			#region

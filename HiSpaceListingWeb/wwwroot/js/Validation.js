@@ -262,16 +262,15 @@ function signupValidate(e) {
 		{ "id": "sign-Phone", "validation": ["emptyRegx", "phoneRegx"] },
 		{"id": "sign-Email", "validation": ["emptyRegx"] },
 		{ "id": "sign-Password", "validation": ["emptyRegx", "passwordRegx"] },
+		{ "id": "sign-Address", "validation": ["emptyRegx"] },
+		{ "id": "sign-Postalcode", "validation": ["emptyRegx", "postRegx"] },
+		{ "id": "TermsAndConditions", "validation": ["checkboxRegx"] },
 
 	];
 	//console.log(rules)
 	var User_Website = "sign-Website";
-	var User_Postalcode = "sign-Postalcode";
 	if ($(`#${User_Website}`).val() && $(`#${User_Website}`).val() != "") {
 		rules.push({ "id": "sign-Website", "validation": ["websiteRegx"] });
-	}
-	if ($(`#${User_Postalcode}`).val() && $(`#${User_Postalcode}`).val() != "") {
-		rules.push({ "id": "sign-Postalcode", "validation": ["postRegx"] });
 	}
 	validate(formData, rules);
 	
@@ -333,6 +332,7 @@ function adminAddUserValidate(e) {
 		{ "id": "Password", "validation": ["emptyRegx", "passwordRegx"] },
 		{ "id": "Address", "validation": ["emptyRegx"] },
 		{ "id": "Postalcode", "validation": ["emptyRegx", "postRegx"] },
+		{ "id": "TermsAndConditions", "validation": ["checkboxRegx"] },
 	];
 	var User_Website = "Website";
 	if ($(`#${User_Website}`).val() && $(`#${User_Website}`).val() != "") {
