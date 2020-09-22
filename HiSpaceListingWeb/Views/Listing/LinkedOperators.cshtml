@@ -45,7 +45,7 @@
 											<th>Role</th>
 											<th>Linked HiSpace-User</th>
 											<th>Approval Status</th>
-											@*<th>Action</th>*@
+											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -86,13 +86,15 @@
 													</div>
 												}
 											</td>
-											@*<td class="p-0">
-												<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
-													<a href="@Url.Action("ListingTable", "Listing")" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="View">
-														<i class="fas fa-eye btn-icon text-info"></i>
-													</a>
-												</div>
-											</td>*@
+											<td class="p-0">
+												<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
+														<span class="modal-link__repro" data-targeturl="@Url.Action("LinkedPeopleDetail", "Listing",@item)" data-dismiss="modal">
+															<a href="javascript:function() { return false; }" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to view the Linked RE-Professional/People Detail">
+																<i class="fas fa-eye btn-icon text-info"></i>
+															</a>
+														</span>
+													</div>
+											</td>
 										</tr>
 										}
 										

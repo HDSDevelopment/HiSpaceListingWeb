@@ -51,10 +51,58 @@ namespace HiSpaceListingWeb.Controllers
 			}
 			return View("LinkedOperators", model);
 		}
-		public ActionResult UserEnquiry()
+
+		//Get linked reprofessional details
+		public ActionResult LinkedPeopleDetail(int Property_ListingId,int ReProfessional_ListingId,int REProfessionalMasterId,int UserId,string ProjectRole,string ProjectName,string REFirstName, string RELastName, string ImageUrl, string OperatorName, string LinkingStatus, string RE_UserName, string RE_Address)
+		{
+
+			SetSessionVariables();
+			LinkedREPRofessionals model = new LinkedREPRofessionals();
+			model.Property_ListingId = Property_ListingId;
+			model.ReProfessional_ListingId = ReProfessional_ListingId;
+			model.REProfessionalMasterId = REProfessionalMasterId;
+			model.UserId = UserId;
+			model.ProjectRole = ProjectRole;
+			model.ProjectName = ProjectName;
+			model.REFirstName = REFirstName;
+			model.RELastName = RELastName;
+			model.ImageUrl = ImageUrl;
+			model.OperatorName = OperatorName;
+			model.LinkingStatus = LinkingStatus;
+			model.RE_UserName = RE_UserName;
+			model.RE_Address = RE_Address;
+			return PartialView("_LinkedPeopleDetailPartialView", model);
+		}
+
+
+			//Get Enquiry list 
+			public ActionResult UserEnquiry(int UserId, int UserType, string Type)
 		{
 			SetSessionVariables();
-			return View("UserEnquiries");
+			List<EnquiryListResponse> model = new List<EnquiryListResponse>();
+			using (var client = new HttpClient())
+			{
+				//IEnumerable<Listing> listingList = null;
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				//HTTP GET
+				var responseTask = client.GetAsync(Common.Instance.ApiGetEnquiryListByUserIdAndUserType + UserId +"/" + UserType + "/" + Type);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<EnquiryListResponse>>();
+					readTask.Wait();
+					model = readTask.Result.ToList();
+				}
+				else
+				{
+					//vModel.ListingList = Enumerable.Empty<Listing>();
+					ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+				}
+			}
+
+			return View("UserEnquiries",model);
 		}
 
 		//public ActionResult ListingTable(int UserID, int UserType)

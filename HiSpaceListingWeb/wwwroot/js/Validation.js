@@ -256,8 +256,10 @@ function signupValidate(e) {
 	
 	let formData = { "id": "signup form" };
 	$(`#${formData.id} .error`).html(``);
+	let rules;
 
-	let rules = [
+	if ($('#sign-Address').is(':visible')) {
+		rules = [
 		{ "id": "sign-CompanyName", "validation": ["emptyRegx"] },
 		{ "id": "sign-Phone", "validation": ["emptyRegx", "phoneRegx"] },
 		{"id": "sign-Email", "validation": ["emptyRegx"] },
@@ -265,8 +267,18 @@ function signupValidate(e) {
 		{ "id": "sign-Address", "validation": ["emptyRegx"] },
 		{ "id": "sign-Postalcode", "validation": ["emptyRegx", "postRegx"] },
 		{ "id": "TermsAndConditions", "validation": ["checkboxRegx"] },
+		];
+	} else {
+		rules = [
+		{ "id": "sign-CompanyName", "validation": ["emptyRegx"] },
+		{ "id": "sign-Phone", "validation": ["emptyRegx", "phoneRegx"] },
+		{"id": "sign-Email", "validation": ["emptyRegx"] },
+		{ "id": "sign-Password", "validation": ["emptyRegx", "passwordRegx"] },
+		{ "id": "TermsAndConditions", "validation": ["checkboxRegx"] },
+		];
+	}
 
-	];
+	
 	//console.log(rules)
 	var User_Website = "sign-Website";
 	if ($(`#${User_Website}`).val() && $(`#${User_Website}`).val() != "") {

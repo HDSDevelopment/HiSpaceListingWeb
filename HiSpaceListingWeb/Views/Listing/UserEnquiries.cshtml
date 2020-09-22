@@ -2,8 +2,15 @@
 @{
 	ViewData["Title"] = "UserEnquiries";
 	Layout = "~/Views/Shared/_WebLayout.cshtml";
+	@using Microsoft.AspNetCore.Http
+	@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 }
+@model IEnumerable<HiSpaceListingService.ViewModel.EnquiryListResponse>
 
+@{
+	ViewBag.RequestedType = Context.Request.Query["Type"];
+
+}
 @*test*@
 <div class="UserEnquiries nav-padding">
 	<div class="bg-light mb-4">
@@ -15,7 +22,14 @@
 
 						@if (ViewBag.UserId != null && ViewBag.UserId > 0)
 						{
-							<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Enquiries</span></li>
+							@if (ViewBag.RequestedType == "My")
+							{
+								<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>My Enquiries</span></li>
+							}else if(ViewBag.RequestedType == "User")
+							{
+								<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Recived Enquiries</span></li>
+							}
+							
 						}
 					</ol>
 				</div>
@@ -28,7 +42,14 @@
 			<div class="row no-gutters">
 				<div class="col-md-12">
 					<div class="section-title d-flex align-items-center m--tb-15">
-						<h2>Your Enquiries</h2>
+						@if (ViewBag.RequestedType == "My")
+						{
+							<h2>My Enquiries</h2>
+						}else if(ViewBag.RequestedType == "User")
+						{
+							<h2>Recived Enquiries</h2>
+						}
+						
 					</div>
 					<div class="card hi-card">
 						<div class="card-body">
@@ -36,41 +57,52 @@
 								<table id="userEnquiry" class="display display compact table table-striped mdtable">
 									<thead>
 										<tr>
-											<th>Operator</th>
-											<th>Property Name</th>
-											<th>Date of Enquiry</th>
-											<th>Message</th>
+											@if (ViewBag.RequestedType == "My")
+											{
+												<th>HiSpace-User</th>
+												<th>Requested Property</th>
+												<th>Property Type</th>
+												<th>Date of Enquiry</th>
+												<th>Message</th>
+											}else if(ViewBag.RequestedType == "User")
+											{
+												<th>Requested Property</th>
+												<th>Name</th>
+												<th>Email</th>
+												<th>Phone</th>
+												<th>Date of Enquiry</th>
+												<th>Message</th>
+											}
 										</tr>
 									</thead>
 									<tbody>
-										@*<tr>
-											<td>
-												Next Space
-											</td>
-											<td>
-												Commercial space
-											</td>
-											<td>
-												07-Aug-2020
-											</td>
-											<td>
-												Need sapce for rental
-											</td>
-										</tr>
-										<tr>
-											<td>
-												Makeshift
-											</td>
-											<td>
-												Coworking space
-											</td>
-											<td>
-												06-July-2020
-											</td>
-											<td>
-												Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book
-											</td>
-										</tr>*@
+										@if (ViewBag.RequestedType == "My")
+											{
+												@foreach (var item in Model)
+												{
+													<tr>
+														<td>@Html.DisplayFor(modelItem => item.OperatorName)</td>
+														<td>@Html.DisplayFor(modelItem => item.PropertyName)</td>
+														<td>@Html.DisplayFor(modelItem => item.Type)</td>
+														<td>@Html.DisplayFor(modelItem => item.Enquiry.CreatedDateTime)</td>
+														<td>@Html.DisplayFor(modelItem => item.Enquiry.Sender_Message)</td>
+													</tr>
+												}
+											}
+										else if(ViewBag.RequestedType == "User")
+											{
+												@foreach (var item in Model)
+												{
+													<tr>
+														<td>@Html.DisplayFor(modelItem => item.PropertyName)</td>
+														<td>@Html.DisplayFor(modelItem => item.Enquiry.Sender_Name)</td>
+														<td>@Html.DisplayFor(modelItem => item.Enquiry.Sender_Phone)</td>
+														<td>@Html.DisplayFor(modelItem => item.Enquiry.Sender_Email)</td>
+														<td>@Html.DisplayFor(modelItem => item.Enquiry.CreatedDateTime)</td>
+														<td>@Html.DisplayFor(modelItem => item.Enquiry.Sender_Message)</td>
+													</tr>
+												}
+											}
 									</tbody>
 								</table>
 							</div>

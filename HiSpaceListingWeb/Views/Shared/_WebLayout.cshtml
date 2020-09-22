@@ -155,8 +155,8 @@
 								<ul class="dropdown-menu">
 									<li><a class="dropdown-item" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})">My Details/Listing</a></li>
 									<li><a class="dropdown-item" href="@Url.Action( "LinkedPeople","Listing",new { UserID = ViewBag.UserId})">Linked People/Professional</a></li>
-									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing")">Recived Enquiries</a></li>
-									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing")">My Enquiries</a></li>
+									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "User"})">Recived Enquiries</a></li>
+									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "My"})">My Enquiries</a></li>
 								</ul>
 							</li>
 						}
@@ -167,7 +167,7 @@
 									Dashboard <i class="fas fa-chevron-down fa-xs"></i>
 								</a>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing")">My Enquiries</a></li>
+									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "My"})">My Enquiries</a></li>
 								</ul>
 							</li>
 						}

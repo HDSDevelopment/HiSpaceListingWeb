@@ -1,0 +1,57 @@
+﻿@*
+	For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model HiSpaceListingModels.LinkedREPRofessionals
+
+
+@*Adding image section start*@
+<div class="modal-content">
+	<div class="modal-header border-0">
+		<h5 class="modal-title" id="reproModalLabel"><i class="fas fa-user"> </i> Linked RE-Professional/People Detail </h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<div class="tab-content col-sm-12" id="">
+			<div class="row">
+				<div class="col-md-6">
+					<div><span>First Name: </span> @Model.REFirstName</div>
+				</div>
+				<div class="col-md-6">
+					<div><span>Last Name: </span> @Model.RELastName</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div><span>Project Name: </span> @Model.ProjectName</div>
+				</div>
+				<div class="col-md-6">
+					<div><span>Project Role: </span> @Model.ProjectRole</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div><span>Linked HiSpace-User/Company name: </span> @Model.OperatorName</div>
+				</div>
+				<div class="col-md-6">
+					<div><span>Address: </span> @Model.RE_Address</div>
+				</div>
+			</div>
+			<div class="row">
+				
+				<div class="col-md-6">
+					<div>
+						<span>Image: </span> 
+						<div class="gallery">
+							<a href="@Model.ImageUrl" target="_blank" class="view1"><img src="@Model.ImageUrl" class="img-fluid" alt="Image"></a>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

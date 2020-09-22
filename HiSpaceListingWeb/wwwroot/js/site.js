@@ -811,6 +811,27 @@ $(function () {
 		}, 2000);
 	});
 
+	//model open for the Linked re-professional detail view
+	$('body').on('click', '.modal-link__repro', function (e) {
+		e.preventDefault();
+
+		$("#modal-container__repro").remove();
+
+		$.get($(this).data("targeturl"), function (data) {
+
+			$('<div id="modal-container__repro" class="modal image fade modal-try" tabindex="-1" role="dialog" aria-labelledby="reproModalLabel" aria-hidden="true">' +
+				'<div id="modalbody" class="modal-dialog modal-lg modal-content" role="document"' +
+				data + '</div></div>').modal();
+			
+			setTimeout(function () {
+				$(".modal:visible .modal-dialog").append("<div class='loader_new-sub'></div>");
+			}, 500);
+		});
+		setTimeout(function () {
+			removeLoader();
+		}, 2000);
+	});
+
 	//model open for the list hours section
 	$('body').on('click', '.modal-link__hours', function (e) {
 		e.preventDefault();
@@ -1517,7 +1538,7 @@ function deleteImage(obj, imageId) {
 							//console.log(response[key].companyName)
 							if (response[key].name != null) {
 
-								propertyListTag.append("<option value=" + response[key].name + ">" + response[key].name + "</option>");
+								propertyListTag.append("<option value="+response[key].name+">" + response[key].name + "</option>");
 							}
 						}
 					}
@@ -1703,10 +1724,20 @@ function AddProjectForm(obj) {
 	var Imagefiles = $(row).find('.projectImage').get(0).files;
 	var Documentfiles = $(row).find('.projectDoucument').get(0).files;
 
-	var pName = $(row).find('.propertyName:visible').val();
+	var pName;
+	if ($('.propertyDropdown').is(':visible')) {
+		pName = $(row).find('.propertyName:visible option:selected').text();
+	} else {
+		pName = $(row).find('.propertyName:visible').val();
+	}	 
 	console.log(pName)
 
-	var oName = $(row).find('.operatorName:visible').val();
+	var oName;
+	if ($('.operatorDropdown').is(':visible')) {
+	oName = $(row).find('.operatorName:visible option:selected').text();
+	} else {
+		oName = $(row).find('.operatorName:visible').val();
+	}
 	console.log(oName)
 
 

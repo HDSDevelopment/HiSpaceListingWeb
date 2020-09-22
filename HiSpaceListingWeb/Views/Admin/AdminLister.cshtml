@@ -54,7 +54,7 @@
 										<tbody>
 											@foreach (var item in Model)
 											{
-												@if (item.User.UserId > 0 && item.User.UserType == 1)
+												@if (item.User.UserId > 0)
 												{
 											<tr>
 												<td>@Html.DisplayFor(modelItem => item.User.UserId)</td>
@@ -69,11 +69,17 @@
 												{
 													<td class="text-sec font-weight-bold">@Html.DisplayFor(modelItem => item.User.UserState)</td>
 												}
+												else if(item.User.UserState == "Guest")
+												{
+													<td class="text-info font-weight-bold">@Html.DisplayFor(modelItem => item.User.UserState)</td>
+												}
 												else
 												{
 													<td class="text-pry font-weight-bold">@Html.DisplayFor(modelItem => item.User.UserState)</td>
 												}
 												
+												@if (item.User.UserType == 1)
+												{
 												<td class="p-0">
 													<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
 														<span>
@@ -100,6 +106,12 @@
 														</span>
 													</div>
 												</td>
+
+												}
+												else
+												{
+													<td>---</td>
+												}
 												@*@{var AdminStatusvalue = @item.User.AdminStatus.ToString(); }*@
 												@*<td>@item.User.AdminStatus.ToString()</td>*@
 												@if (@item.User.Status.ToString() == "True")
@@ -123,7 +135,8 @@
 														</div>
 													</td>
 												}
-												
+												@if (item.User.UserType == 1)
+												{
 												<td class="p-0">
 													<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
 														<a href="@Url.Action("ListingTable", "Listing", new { UserID = item.User.UserId, UserType = item.User.UserType })" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit or View">
@@ -134,6 +147,10 @@
 														</a>*@
 													</div>
 												</td>
+												}
+												else { 
+												<td>---</td>
+												}
 											</tr>
 													}
 												}

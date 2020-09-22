@@ -149,6 +149,8 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiUserLevelListApprove = "UserLevelListApprove/";
 		//Admin level list check
 		public string ApiAdminLevelListApprove = "AdminLevelListApprove/";
+		//Get Enquiry list
+		public string ApiGetEnquiryListByUserIdAndUserType = "GetEnquiryListByUserIdAndUserType/";
 		
 
 

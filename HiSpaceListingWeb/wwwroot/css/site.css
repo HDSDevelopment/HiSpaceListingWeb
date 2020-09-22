@@ -3484,3 +3484,12 @@ table.dataTable.display tbody tr.blink-bg > .sorting_1 {
         cursor: no-drop;
     opacity: 0.5;
 }
+#modal-container__repro.modal {
+	top: 10%;
+}
+#modal-container__repro.modal .row{
+	margin-bottom: 15px;
+}
+#modal-container__repro.modal .row span{
+	font-weight: 600;
+}
