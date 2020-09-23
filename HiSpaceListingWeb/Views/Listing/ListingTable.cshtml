@@ -83,6 +83,9 @@
 									@Html.HiddenFor(m => m.User.Doc_CompanyLogo)
 									@Html.HiddenFor(m => m.User.Doc_RCCopy)
 									@Html.HiddenFor(m => m.User.Password)
+									@Html.HiddenFor(m => m.User.City)
+									@Html.HiddenFor(m => m.User.State)
+									@Html.HiddenFor(m => m.User.Country)
 									<div class="form-group col-md-3 col-sm-6">
 										@*<input type="text" class="form-control" placeholder="Company Name">*@
 										@Html.EditorFor(m => m.User.CompanyName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name", id = "CompanyName" } })

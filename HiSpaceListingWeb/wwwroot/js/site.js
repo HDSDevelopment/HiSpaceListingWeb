@@ -152,6 +152,53 @@ function PaginationCall() {
 		itemsPerPage: 5
 	});
 };
+//Get the location name using the geolocator
+function getLocationUsingPostalCode(postal, obj) {
+	console.log(postal)
+	if (postal != "" || postal != null) {
+		$.ajax({
+			type: "GET",
+			url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + postal + "&key=AIzaSyDGZoZkDdeXNlOPbKUG1KIXvBY5cUgQQgk",
+			context: this,
+			//dataType: "html",
+			success: function (response) {
+				console.log(response.results[0]);
+				var signup_location, signup_state, signup_country;
+				if (response.status == "OK") {
+					//console.log(response.status);
+					var address_components = response.results[0].address_components;
+					$.each(address_components, function (index, component) {
+						var types = component.types;
+						$.each(types, function (index, type) {
+							if (type == 'administrative_area_level_2') {
+								signup_location = component.long_name;
+								$('.sign-city').val(signup_location);
+							}
+							if (type == 'administrative_area_level_1') {
+								signup_state = component.long_name;
+								$('.sign-state').val(signup_state);
+							}
+							if (type == 'country') {
+								signup_country = component.long_name;
+								$('.sign-country').val(signup_country);
+							}
+						});
+					});
+					console.log(signup_location + ", " + signup_state + ", " + signup_country);
+					console.log($('.sign-country').val())
+				} else {
+					$('#sign-Postalcode').siblings('.error').html("Invalid Postal Code");
+					$(obj).siblings('.error').html("Invalid Postal Code");
+				}
+			},
+			error: function (response) {
+				alert("Please fill the postal code");
+			}
+		});
+	}
+}
+
+
 $(document).ready(function () {
 	
 	PaginationCall();

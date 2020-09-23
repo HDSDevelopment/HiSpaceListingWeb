@@ -43,7 +43,27 @@ namespace HiSpaceListingWeb.Controllers
         {
 			SetSessionVariables();
 			return View();
-        } 
+        }
+		public ActionResult AdminPropertyDetail(int ListingID)
+		{
+			SetSessionVariables();
+			PropertyDetailViewModelResponse vModel = new PropertyDetailViewModelResponse();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiListingGetPropertyDetailByListingID + ListingID.ToString());
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<PropertyDetailViewModelResponse>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+			}
+			return View(vModel);
+		}
 		public ActionResult AdminPropertyList(int UserID, int UserType)
         {
 			SetSessionVariables();

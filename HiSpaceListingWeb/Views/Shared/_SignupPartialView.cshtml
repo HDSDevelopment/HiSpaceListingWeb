@@ -80,11 +80,26 @@
 									<div class="error" id=""></div>
 								</div>
 								<div class="form-group col-sm-6 operator-fields">
-									<input class="form-control" id="sign-Postalcode" name="Postalcode" placeholder="Postal code" type="number" value="">
+									<input class="form-control" id="sign-Postalcode" name="Postalcode" placeholder="Postal code" type="number" value=""  onblur="getLocationUsingPostalCode(this.value,this)">
 									@*@Html.TextBoxFor(m => m.Postalcode, new { @class = "form-control", type = "number", placeholder = "Postal code" })*@
 									<label for="input" class="control-label">Postal Code*</label><i class="bar"></i>
 									<div class="error" id=""></div>
 								</div>
+								//Hidden elements
+								//city
+								<div class="form-group col-sm-12 display-none">
+									<input class="form-control sign-city" id="" name="City" placeholder="No.00, Street" type="text" value="">
+								</div>
+								//state
+								<div class="form-group col-sm-12 display-none">
+									<input class="form-control sign-state" id="" name="State" placeholder="No.00, Street" type="text" value="">
+								</div>
+								//country
+								<div class="form-group col-sm-12 display-none">
+									<input class="form-control sign-country" id="" name="Country" placeholder="No.00, Street" type="text" value="">
+								</div>
+
+
 								<div class="col-md-12 col-sm-12">
 										<div class="checkbox m-0">
 											<label>

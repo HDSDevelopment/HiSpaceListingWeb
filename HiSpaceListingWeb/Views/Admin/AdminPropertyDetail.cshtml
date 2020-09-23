@@ -1,0 +1,1558 @@
+﻿@model HiSpaceListingService.ViewModel.PropertyDetailViewModelResponse
+@{
+	ViewData["Title"] = "AdminPropertyDetail";
+	Layout = "~/Views/Shared/_WebLayout.cshtml";
+	@using Microsoft.AspNetCore.Http
+	@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+	var indianCulture = new System.Globalization.CultureInfo("hi-IN");
+}
+
+<div class="propertydetail nav-padding">
+	<div class="bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<ol class="breadcrumb mb-0">
+							<li class="breadcrumb-item"><a href="@Url.Action( "Index","Website")"> <i class="fas fa-home"></i> </a></li>
+								<li class="breadcrumb-item"> <i class="fas fa-chevron-right"></i> <span>Dashboard</span></li>
+								<li class="breadcrumb-item"> <i class="fas fa-chevron-right"></i> <a href="@Url.Action("AdminLister", "Admin")"><span>User Details/Listing</span></a></li>
+								<li class="breadcrumb-item"> <i class="fas fa-chevron-right"></i> <a href="@Url.Action("AdminPropertyList", "Admin",new{UserID=Model.User.UserId,UserType=Model.User.UserType})"><span>Property/Space/Professional Listing</span></a></li>
+								<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Details</span></li>
+							
+						</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="wrapper">
+
+
+		<!--=================================
+		Property details -->
+		<section class="space-pt--50 ">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 order-lg-1">
+						<div class="property-info">
+							<div class="row">
+								<div class="col-sm-3 mb-3 mb-sm-0">
+									<h5>Property details</h5>
+								</div>
+								<div class="col-sm-9">
+									@if (Model.Listing.ListingType == "Commercial")
+									{
+										<div class="mb-3">
+											<ul class="property-list list-unstyled row mb-3">
+												<li class="col-sm-6"><b>Name:</b> <span class="">@Model.Listing.Name</span></li>
+												<li class="col-sm-6"><b>Type:</b> <span class="text-pry font-weight-bold">@Model.Listing.ListingType</span></li>
+												<li class="col-sm-6"><b>Level:</b> @Model.Listing.CommercialType</li>
+												@if (@Model.Listing.SpaceSize != null)
+												{
+													<li class="col-sm-6"><b>Size:</b> @string.Format(indianCulture, "{0:N}", Model.Listing.SpaceSize) Sq.Ft.</li>
+												}
+												@if (@Model.Listing.CMCW_PropertyFor != null)
+												{
+													<li class="col-sm-6"><b>Property For:</b> @Model.Listing.CMCW_PropertyFor</li>
+												}
+												@if (@Model.Listing.BuildYear != null)
+												{
+													<li class="col-sm-6"><b>Year Built:</b> @Model.Listing.BuildYear.Value.ToString("dd/MMM/yyyy")</li>
+												}
+												@if (@Model.Listing.RecentInnovation != null)
+												{
+													<li class="col-sm-6"><b>Recent Renovation:</b> @Model.Listing.RecentInnovation.Value.ToString("dd/MMM/yyyy")</li>
+												}
+												<li class="col-sm-6"><b>Infra Type:</b> @Model.Listing.CommercialInfraType</li>
+											</ul>
+										</div>
+
+										<h6 class="text-primary mb-2 mb-sm-2">Price / Occupancy</h6>
+										<div class="mb-3">
+											<ul class="property-list list-unstyled row mb-3">
+												@if (Model.Listing.CMCW_PropertyFor == "Rental")
+												{
+													@if (Model.Listing.PriceMin != null && Model.Listing.PriceMax != null)
+													{
+														<li class="col-sm-6"><b>Price Range:</b> &#8377;@string.Format(indianCulture, "{0:N}", Model.Listing.PriceMin) - &#8377;@string.Format(indianCulture, "{0:N}", Model.Listing.PriceMax)</li>
+													}
+
+													<li class="col-sm-6">
+														<b>Rent Duration:</b>
+														@if ((Model.Listing.RentalDay == true) && (Model.Listing.RentalDay == true) && (Model.Listing.RentalMonth == true))
+														{
+															@Html.Raw("Hour | Day | Month");
+														}
+														else if ((Model.Listing.RentalHour == true) && (Model.Listing.RentalDay == true))
+														{
+															@Html.Raw("Hour | Day");
+														}
+														else if ((Model.Listing.RentalHour == true) && (Model.Listing.RentalMonth == true))
+														{
+															@Html.Raw("Hour | Month");
+														}
+														else if ((Model.Listing.RentalMonth == true) && (Model.Listing.RentalDay == true))
+														{
+															@Html.Raw("Day | Month");
+														}
+														else if ((Model.Listing.RentalMonth == true))
+														{
+															@Html.Raw("Month");
+														}
+														else if ((Model.Listing.RentalDay == true))
+														{
+															@Html.Raw("Day");
+														}
+														else if ((Model.Listing.RentalHour == true))
+														{
+															@Html.Raw("Hour");
+														}
+														else
+														{
+															@Html.Raw("Not Specified");
+														}
+													</li>
+													<li class="col-sm-6"><b>Current Occupancy:</b> @Model.Listing.CurrentOccupancy</li>
+												}
+												else if (Model.Listing.CMCW_PropertyFor == "Sale")
+												{
+													@if (Model.Listing.CMCW_AproximatePrice != null)
+													{
+														<li class="col-sm-6"><b>Price Range:</b> &#8377;@string.Format(indianCulture, "{0:N}", Model.Listing.CMCW_AproximatePrice)</li>
+													}
+												}
+
+											</ul>
+										</div>
+										<h6 class="text-primary mb-2 mb-sm-2">Contact</h6>
+										<div class="mb-3">
+											<ul class="property-list list-unstyled row mb-3">
+												<li class="col-sm-6"><b>Phone:</b> @Model.Listing.Phone</li>
+												<li class="col-sm-6"><b>Email:</b> @Model.Listing.Email</li>
+												@if (@Model.Listing.locality != null)
+												{
+													<li class="col-sm-6"><b>Location:</b> @Model.Listing.locality</li>
+												}
+												@if (@Model.Listing.administrative_area_level_1 != null)
+												{
+													<li class="col-sm-6"><b>State:</b> @Model.Listing.administrative_area_level_1</li>
+												}
+												@if (@Model.Listing.country != null)
+												{
+													<li class="col-sm-6"><b>Country:</b> @Model.Listing.country</li>
+												}
+												@if (@Model.Listing.postal_code != null)
+												{
+													<li class="col-sm-6"><b>Postal Code:</b> @Model.Listing.postal_code</li>
+												}
+											</ul>
+										</div>
+									}
+									else if (Model.Listing.ListingType == "Co-Working")
+									{
+										<div class="mb-3">
+											<ul class="property-list list-unstyled row mb-3">
+												<li class="col-sm-6"><b>Name:</b> <span class="">@Model.Listing.Name</span></li>
+												<li class="col-sm-6"><b>Type:</b> <span class="text-sec font-weight-bold">@Model.Listing.ListingType</span></li>
+												<li class="col-sm-6"><b>Level:</b> @Model.Listing.CoworkingType</li>
+												@if (@Model.Listing.SpaceSize != null)
+												{
+													<li class="col-sm-6"><b>Size:</b> @string.Format(indianCulture, "{0:N}", Model.Listing.SpaceSize) Sq.Ft.</li>
+												}
+												@if (@Model.Listing.BuildYear != null)
+												{
+													<li class="col-sm-6"><b>Year Built:</b> @Model.Listing.BuildYear.Value.ToString("dd/MMM/yyyy")</li>
+												}
+												@if (@Model.Listing.RecentInnovation != null)
+												{
+													<li class="col-sm-6"><b>Recent Renovation:</b> @Model.Listing.RecentInnovation.Value.ToString("dd/MMM/yyyy")</li>
+												}
+											</ul>
+										</div>
+										@if (Model.Listing.CoworkingType == "Office")
+										{
+											<h6 class="text-primary mb-2 mb-sm-2">Additional details</h6>
+											<div class="mb-3">
+												<ul class="property-list list-unstyled row mb-3">
+													@if (Model.Listing.CW_MeetingRoom != null)
+													{
+														<li class="col-sm-6"><b>No.of Meeting Rooms:</b> @Model.Listing.CW_MeetingRoom</li>
+														<li class="col-sm-6"><b>No.of seats:</b> @Model.Listing.CW_MeetingRoomSeats</li>
+													}
+													@if (Model.Listing.CW_Coworking != null)
+													{
+														<li class="col-sm-6"><b>No.of Shared Workspace:</b> @Model.Listing.CW_Coworking</li>
+														<li class="col-sm-6"><b>No.of seats:</b> @Model.Listing.CW_CoworkingSeats</li>
+													}
+													@if (Model.Listing.CW_PrivateOffice != null)
+													{
+														<li class="col-sm-6"><b>No.of Private Office:</b> @Model.Listing.CW_PrivateOffice</li>
+														<li class="col-sm-6"><b>No.of seats:</b> @Model.Listing.CW_PrivateOfficeSeats</li>
+													}
+													@if (Model.Listing.CW_VirtualOffice)
+													{
+														<li class="col-sm-6"><b>Virtual Office:</b> Available</li>
+													}
+													else
+													{
+														<li class="col-sm-6"><b>Virtual Office:</b> Not Available</li>
+													}
+												</ul>
+											</div>
+										}
+										else if (Model.Listing.CoworkingType == "Cafe")
+										{
+											<h6 class="text-primary mb-2 mb-sm-2">Additional details</h6>
+											<div class="mb-3">
+												<ul class="property-list list-unstyled row mb-3">
+													@if (Model.Listing.CW_CafeSeats != null)
+													{
+														<li class="col-sm-6"><b>No.of seats:</b> @Model.Listing.CW_CafeSeats</li>
+													}
+													else
+													{
+														<li class="col-sm-6"><b>No.of seats:</b> Not Specified</li>
+													}
+												</ul>
+											</div>
+										}
+										<h6 class="text-primary mb-2 mb-sm-2">Price / Occupancy</h6>
+										<div class="mb-3">
+											<ul class="property-list list-unstyled row mb-3">
+												@if (Model.Listing.CMCW_PropertyFor == "Rental")
+												{
+													@if (Model.Listing.PriceMin != null && Model.Listing.PriceMax != null)
+													{
+														<li class="col-sm-6"><b>Price Range:</b> &#8377;@string.Format(indianCulture, "{0:N}", Model.Listing.PriceMin) - &#8377;@string.Format(indianCulture, "{0:N}", Model.Listing.PriceMax)</li>
+														<li class="col-sm-6">
+															<b>Rent Duration:</b>
+															@if ((Model.Listing.RentalDay == true) && (Model.Listing.RentalDay == true) && (Model.Listing.RentalMonth == true))
+															{
+																@Html.Raw("Hour | Day | Month");
+															}
+															else if ((Model.Listing.RentalHour == true) && (Model.Listing.RentalDay == true))
+															{
+																@Html.Raw("Hour | Day");
+															}
+															else if ((Model.Listing.RentalHour == true) && (Model.Listing.RentalMonth == true))
+															{
+																@Html.Raw("Hour | Month");
+															}
+															else if ((Model.Listing.RentalMonth == true) && (Model.Listing.RentalDay == true))
+															{
+																@Html.Raw("Day | Month");
+															}
+															else if ((Model.Listing.RentalMonth == true))
+															{
+																@Html.Raw("Month");
+															}
+															else if ((Model.Listing.RentalDay == true))
+															{
+																@Html.Raw("Day");
+															}
+															else if ((Model.Listing.RentalHour == true))
+															{
+																@Html.Raw("Hour");
+															}
+															else
+															{
+																@Html.Raw("Not Specified");
+															}
+														</li>
+														<li class="col-sm-6"><b>Current Occupancy:</b> @Model.Listing.CurrentOccupancy</li>
+													}
+												}
+												else if (Model.Listing.CMCW_PropertyFor == "Sale")
+												{
+													@if (Model.Listing.CMCW_AproximatePrice != null)
+													{
+														<li class="col-sm-6"><b>Price Range:</b> &#8377;@string.Format(indianCulture, "{0:N}", Model.Listing.CMCW_AproximatePrice)</li>
+													}
+												}
+											</ul>
+										</div>
+										<h6 class="text-primary mb-2 mb-sm-2">Contact</h6>
+										<div class="mb-3">
+											<ul class="property-list list-unstyled row mb-3">
+												<li class="col-sm-6"><b>Phone:</b> @Model.Listing.Phone</li>
+												<li class="col-sm-6"><b>Email:</b> @Model.Listing.Email</li>
+											</ul>
+										</div>
+									}
+									else if (Model.Listing.ListingType == "RE-Professional")
+									{
+										<div class="mb-3">
+											<ul class="property-list list-unstyled row mb-3">
+												<li class="col-sm-6"><b>Name:</b> <span class="">@Model.Listing.RE_FirstName @Model.Listing.RE_LastName</span></li>
+												<li class="col-sm-6"><b>Type:</b> <span class="text-info font-weight-bold">@Model.Listing.ListingType</span></li>
+												@*<li class="col-sm-6"><b>Level:</b> @Model.Listing.REprofessionalsType</li>*@
+												<li class="col-sm-12">
+													<b>Intrested In:</b>
+													@if (@Model.Listing.RE_Coworking)
+													{
+														@Html.Raw(" Co-Working |")
+													}
+													@if (@Model.Listing.RE_Office)
+													{
+														@Html.Raw(" Office |")
+													}
+													@if (@Model.Listing.RE_PropertyManagement)
+													{
+														@Html.Raw(" Property-Management |")
+													}
+													@if (@Model.Listing.RE_Retail)
+													{
+														@Html.Raw(" Retail |")
+													}
+												</li>
+											</ul>
+										</div>
+										<h6 class="text-primary mb-2 mb-sm-2">Contact</h6>
+										<div class="mb-3">
+											<ul class="property-list list-unstyled row mb-3">
+												<li class="col-sm-6"><b>Phone:</b> @Model.Listing.Phone</li>
+												<li class="col-sm-6"><b>Email:</b> @Model.Listing.Email</li>
+											</ul>
+										</div>
+									}
+
+								</div>
+							</div>
+						</div>
+						<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">
+						<div class="property-description">
+							<div class="row">
+								<div class="col-sm-3 mb-3 mb-sm-0">
+									<h5>Description</h5>
+								</div>
+								<div class="col-sm-9">
+									@if (Model.Listing.Description != null)
+									{
+										@Html.Raw(@Model.Listing.Description);
+									}
+									else
+									{
+										<p>The home features private entry copper-clad door leading to salon with marble floors. Stunning great room has soaring 45 foot ceilings with glass windows, polished concrete floors, exposed brick &amp; sculptural steel beams. The chef's kitchen has honed granite counters, high-end S/S appliances, French cabinets &amp; gas range.</p>
+										<p>Floor-to-ceiling windows accentuate the panoramic vistas that sweep across the Golden Gate Bridge, the downtown skyline, the artfully lit Bay Bridge and beyond. The floor plan features two bedroom suites, kitchen, living/dining room, two view terraces and ample storage space. </p>
+									}
+								</div>
+							</div>
+						</div>
+						@if (Model.Listing.ListingType == "Commercial" || Model.Listing.ListingType == "Co-Working")
+						{
+							@if (Model.Amenities != null)
+							{
+								<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">
+								<div class="property-amenities">
+									<div class="row">
+										<div class="col-sm-3 mb-3 mb-sm-0">
+											<h5>Amenities</h5>
+										</div>
+										<div class="col-sm-9">
+											<div class="row">
+												<div class="mb-3">
+													@if (Model.Amenities.Any())
+													{
+														<ul class="amenities-list list-unstyled row mb-3">
+															@foreach (var item in Model.Amenities)
+															{
+																@if (item.AmenitiesPayment == "Free")
+																{
+																	<li class="col-sm-6">
+																		<i class="fas fa-check-circle text-sec"></i>
+																		@item.Name
+																	</li>
+																}
+																else if (item.AmenitiesPayment == "Paid")
+																{
+																	<li class="col-sm-12">
+																		<i class="fas fa-check-circle text-pry"></i>
+																		@item.Name
+																		<span class="spliter">|</span>
+																		<span class="font-weight-bold">Paid</span>
+																		<span class="spliter">|</span>
+																		<span>&#8377;@item.Price/Usage</span>
+																	</li>
+																}
+																else if (item.AmenitiesPayment == "PartiallyPaid")
+																{
+																	<li class="col-sm-12">
+																		<i class="fas fa-check-circle text-pry"></i>
+																		@item.Name
+																		<span class="spliter">|</span>
+																		<span class="font-weight-bold">Partially Paid</span>
+																		<span class="spliter">|</span>
+																		<span class="">Free Count<span class="text-sufix">(@item.PartialCount)</span></span>
+																		<span class="spliter">|</span>
+																		<span>&#8377;@item.Price/Usage</span>
+																	</li>
+																}
+															}
+														</ul>
+													}
+													else
+													{
+														<div>Not Specified</div>
+													}
+												</div>
+												<div class="note">
+													<div>
+														<i class="fas fa-check-circle text-sec"></i>
+														<span class="font-weight-bold">Free Aminities</span>
+													</div>
+													<div>
+														<i class="fas fa-check-circle text-pry"></i>
+														<span class="font-weight-bold">Paid (or) Partialy Paid Aminities</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							}
+							@if (Model.Facilities != null)
+							{
+								<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">
+								<div class="property-facilities">
+									<div class="row">
+										<div class="col-sm-3 mb-3 mb-sm-0">
+											<h5>Facilities</h5>
+										</div>
+										<div class="col-sm-9">
+											<div class="mb-3">
+												@if (Model.Facilities.Any())
+												{
+													<ul class="property-list facilities-list list-unstyled row mb-3">
+														@foreach (var item in Model.Facilities)
+														{
+															<li class="col-sm-6">
+																<i class="fab fa-gratipay text-info"></i>@item.Name
+																<span>@item.FacilityDistance</span>
+															</li>
+														}
+													</ul>
+												}
+												else
+												{
+													<div>Not Specified</div>
+												}
+											</div>
+										</div>
+									</div>
+								</div>
+							}
+
+						}
+						else if (Model.Listing.ListingType == "RE-Professional")
+						{
+							<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">
+							<div class="property-facilities">
+								<div class="row">
+									<div class="col-sm-3 mb-3 mb-sm-0">
+										<h5>RE Projects</h5>
+									</div>
+									<div class="col-sm-9">
+										<div class="mb-3">
+											@if (Model.REProfessionalMasters.Any())
+											{
+												<ul class="property-list facilities-list list-unstyled row mb-3">
+													@foreach (var item in Model.REProfessionalMasters)
+													{
+														<li class="col-sm-12">
+															<div class="row re-project">
+																<div class="col-sm-4">
+																	<div class="re-project__name">@item.ProjectName</div>
+																	<div class="re-project__image">
+																		<a href="@Url.Content(item.ImageUrl)" target="_blank">
+																			<img class="img-fluid" alt="name" src="@Url.Content(item.ImageUrl)" />
+																		</a>
+																	</div>
+																	<div class="re-project__doc">
+																		<a href="@Url.Content(item.DocumentUrl)" target="_blank">
+																			<span class="addon-add delete-btn tooltip-wrapper text-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to view the project document"><i class="fas fa-file-alt btn-icon text-info"></i> Document</span>
+																		</a>
+																	</div>
+																</div>
+																<div class="col-sm-8">
+																	<div class="re-project__desc">
+																		@item.Description
+																	</div>
+																</div>
+															</div>
+														</li>
+													}
+												</ul>
+											}
+											else
+											{
+												<div>Not Specified</div>
+											}
+										</div>
+									</div>
+								</div>
+							</div>
+						}
+						<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">
+						<div class="property-available">
+							<div class="row">
+								<div class="col-sm-3 mb-3 mb-sm-0">
+									<h5>Available Time</h5>
+								</div>
+								<div class="col-sm-9">
+									<div class="mb-3">
+										<ul class="property-list available-list list-unstyled row mb-3">
+											@if (Model.WorkingHours != null)
+											{
+												//Mon
+												TimeSpan? monOpen;
+												string monOpen_s;
+												DateTime? monOpen_dt = new DateTime();
+												if (Model.WorkingHours.MonOpen != null)
+												{
+													monOpen = TimeSpan.Parse(Model.WorkingHours.MonOpen);
+													monOpen_s = monOpen.ToString();
+													monOpen_dt = Convert.ToDateTime(monOpen_s);
+												}
+												else
+												{
+													monOpen = null;
+													monOpen_dt.Value.ToString();
+												}
+												TimeSpan? monClose;
+												string monClose_s;
+												DateTime? monClose_dt = new DateTime();
+												if (Model.WorkingHours.MonClose != null)
+												{
+													monClose = TimeSpan.Parse(Model.WorkingHours.MonClose);
+													monClose_s = monClose.ToString();
+													monClose_dt = Convert.ToDateTime(monClose_s);
+												}
+												else
+												{
+													monClose = null;
+													monClose_dt.Value.ToString();
+												}
+
+												//Tue
+												TimeSpan? tueOpen;
+												string tueOpen_s;
+												DateTime? tueOpen_dt = new DateTime();
+												if (Model.WorkingHours.TueOpen != null)
+												{
+													tueOpen = TimeSpan.Parse(Model.WorkingHours.TueOpen);
+													tueOpen_s = tueOpen.ToString();
+													tueOpen_dt = Convert.ToDateTime(tueOpen_s);
+												}
+												else
+												{
+													tueOpen = null;
+													tueOpen_dt.Value.ToString();
+												}
+												TimeSpan? tueClose;
+												string tueClose_s;
+												DateTime? tueClose_dt = new DateTime();
+												if (Model.WorkingHours.TueClose != null)
+												{
+													tueClose = TimeSpan.Parse(Model.WorkingHours.TueClose);
+													tueClose_s = tueClose.ToString();
+													tueClose_dt = Convert.ToDateTime(tueClose_s);
+												}
+												else
+												{
+													tueClose = null;
+													tueClose_dt.Value.ToString();
+												}
+
+												//wed
+												TimeSpan? wedOpen;
+												string wedOpen_s;
+												DateTime? wedOpen_dt = new DateTime();
+												if (Model.WorkingHours.WedOpen != null)
+												{
+													wedOpen = TimeSpan.Parse(Model.WorkingHours.WedOpen);
+													wedOpen_s = wedOpen.ToString();
+													wedOpen_dt = Convert.ToDateTime(wedOpen_s);
+												}
+												else
+												{
+													wedOpen = null;
+													wedOpen_dt.Value.ToString();
+												}
+												TimeSpan? wedClose;
+												string wedClose_s;
+												DateTime? wedClose_dt = new DateTime();
+												if (Model.WorkingHours.WedClose != null)
+												{
+													wedClose = TimeSpan.Parse(Model.WorkingHours.WedClose);
+													wedClose_s = wedClose.ToString();
+													wedClose_dt = Convert.ToDateTime(wedClose_s);
+												}
+												else
+												{
+													wedClose = null;
+													wedClose_dt.Value.ToString();
+												}
+
+												//Thu
+												TimeSpan? thuOpen;
+												string thuOpen_s;
+												DateTime? thuOpen_dt = new DateTime();
+												if (Model.WorkingHours.ThuOpen != null)
+												{
+													thuOpen = TimeSpan.Parse(Model.WorkingHours.ThuOpen);
+													thuOpen_s = thuOpen.ToString();
+													thuOpen_dt = Convert.ToDateTime(thuOpen_s);
+												}
+												else
+												{
+													thuOpen = null;
+													thuOpen_dt.Value.ToString();
+												}
+												TimeSpan? thuClose;
+												string thuClose_s;
+												DateTime? thuClose_dt = new DateTime();
+												if (Model.WorkingHours.ThuClose != null)
+												{
+													thuClose = TimeSpan.Parse(Model.WorkingHours.ThuClose);
+													thuClose_s = thuClose.ToString();
+													thuClose_dt = Convert.ToDateTime(thuClose_s);
+												}
+												else
+												{
+													thuClose = null;
+													thuClose_dt.Value.ToString();
+												}
+
+												//Fri
+												TimeSpan? friOpen;
+												string friOpen_s;
+												DateTime? friOpen_dt = new DateTime();
+												if (Model.WorkingHours.FriOpen != null)
+												{
+													friOpen = TimeSpan.Parse(Model.WorkingHours.FriOpen);
+													friOpen_s = friOpen.ToString();
+													friOpen_dt = Convert.ToDateTime(friOpen_s);
+												}
+												else
+												{
+													friOpen = null;
+													friOpen_dt.Value.ToString();
+												}
+												TimeSpan? friClose;
+												string friClose_s;
+												DateTime? friClose_dt = new DateTime();
+												if (Model.WorkingHours.FriClose != null)
+												{
+													friClose = TimeSpan.Parse(Model.WorkingHours.FriClose);
+													friClose_s = friClose.ToString();
+													friClose_dt = Convert.ToDateTime(friClose_s);
+												}
+												else
+												{
+													friClose = null;
+													friClose_dt.Value.ToString();
+												}
+
+												//Sat
+												TimeSpan? satOpen;
+												string satOpen_s;
+												DateTime? satOpen_dt = new DateTime();
+												if (Model.WorkingHours.SatOpen != null)
+												{
+													satOpen = TimeSpan.Parse(Model.WorkingHours.SatOpen);
+													satOpen_s = satOpen.ToString();
+													satOpen_dt = Convert.ToDateTime(satOpen_s);
+												}
+												else
+												{
+													satOpen = null;
+													satOpen_dt.Value.ToString();
+												}
+												TimeSpan? satClose;
+												string satClose_s;
+												DateTime? satClose_dt = new DateTime();
+												if (Model.WorkingHours.SatClose != null)
+												{
+													satClose = TimeSpan.Parse(Model.WorkingHours.SatClose);
+													satClose_s = satClose.ToString();
+													satClose_dt = Convert.ToDateTime(satClose_s);
+												}
+												else
+												{
+													satClose = null;
+													satClose_dt.Value.ToString();
+												}
+
+												//Sun
+												TimeSpan? sunOpen;
+												string sunOpen_s;
+												DateTime? sunOpen_dt = new DateTime();
+												if (Model.WorkingHours.SunOpen != null)
+												{
+													sunOpen = TimeSpan.Parse(Model.WorkingHours.SunOpen);
+													sunOpen_s = sunOpen.ToString();
+													sunOpen_dt = Convert.ToDateTime(sunOpen_s);
+												}
+												else
+												{
+													sunOpen = null;
+													sunOpen_dt.Value.ToString();
+												}
+												TimeSpan? sunClose;
+												string sunClose_s;
+												DateTime? sunClose_dt = new DateTime();
+												if (Model.WorkingHours.SunClose != null)
+												{
+													sunClose = TimeSpan.Parse(Model.WorkingHours.SunClose);
+													sunClose_s = sunClose.ToString();
+													sunClose_dt = Convert.ToDateTime(sunClose_s);
+												}
+												else
+												{
+													sunClose = null;
+													sunClose_dt.Value.ToString();
+												}
+
+												//24/7 time
+												if (Model.WorkingHours.Is24 == true)
+												{
+													<li>
+														<i class="fas fa-business-time text-sec"></i>
+														<div>
+															24Hours/7Days
+															<span>(24/7)</span>
+														</div>
+													</li>
+												}
+												else if ((Model.WorkingHours.Is24 == false) && (Model.WorkingHours.MonAvail == true) && (Model.WorkingHours.TueAvail == true) && (Model.WorkingHours.WedAvail == true) && (Model.WorkingHours.ThuAvail == true) && (Model.WorkingHours.FriAvail == true) && (Model.WorkingHours.SatAvail == false) && (Model.WorkingHours.SunAvail == false) && (new[] { monOpen, tueOpen, wedOpen, thuOpen, friOpen }.Contains(monOpen)) && (new[] { monClose, tueClose, wedClose, thuClose, friClose }.Contains(monClose)))
+												{
+													<li>
+														<i class="fas fa-business-time text-sec"></i>
+														<div>
+															Monday - Friday
+															<span>( @monOpen_dt.Value.ToString("hh:mm tt") - @monClose_dt.Value.ToString("hh:mm tt") )</span>
+														</div>
+													</li>
+													<li>
+														<i class="fa fa-times-circle text-pry" aria-hidden="true"></i>
+														<div>
+															Saturday <span> Closed</span>
+														</div>
+													</li>
+													<li>
+														<i class="fa fa-times-circle text-pry" aria-hidden="true"></i>
+														<div>
+															Sunday <span> Closed</span>
+														</div>
+													</li>
+												}
+												else if ((Model.WorkingHours.Is24 == false) && (Model.WorkingHours.MonAvail == true) && (Model.WorkingHours.TueAvail == true) && (Model.WorkingHours.WedAvail == true) && (Model.WorkingHours.ThuAvail == true) && (Model.WorkingHours.FriAvail == true) && (Model.WorkingHours.SatAvail == true) && (Model.WorkingHours.SunAvail == false) && (new[] { monOpen, tueOpen, wedOpen, thuOpen, friOpen }.Contains(monOpen)) && (new[] { monClose, tueClose, wedClose, thuClose, friClose }.Contains(monClose)))
+												{
+													<li>
+														<i class="fas fa-business-time text-sec"></i>
+														<div>
+															Monday - Friday
+															<span>( @monOpen_dt.Value.ToString("hh:mm tt") - @monClose_dt.Value.ToString("hh:mm tt") )</span>
+														</div>
+													</li>
+													<li>
+														<i class="fas fa-business-time text-sec"></i>
+														<div>
+															Saturday <span>( @satOpen_dt.Value.ToString("hh:mm tt") - @satClose_dt.Value.ToString("hh:mm tt") )</span>
+														</div>
+													</li>
+													<li>
+														<i class="fa fa-times-circle text-pry" aria-hidden="true"></i>
+														<div>
+															Sunday <span> Closed</span>
+														</div>
+													</li>
+
+												}
+												else
+												{
+													//mon
+													if (Model.WorkingHours.MonAvail == true)
+													{
+														<li>
+															<i class="fas fa-business-time text-sec"></i>
+															<div>
+																Monday <span>( @monOpen_dt.Value.ToString("hh:mm tt") - @monClose_dt.Value.ToString("hh:mm tt") )</span>
+															</div>
+														</li>
+													}
+													else
+													{
+														<li>
+															<i class="fa fa-times-circle text-pry" aria-hidden="true"></i>
+															<div>
+																Monday <span> Closed</span>
+															</div>
+														</li>
+													}
+													//tue
+													if (Model.WorkingHours.TueAvail == true)
+													{
+														<li>
+															<i class="fas fa-business-time text-sec"></i>
+															<div>
+																Tuesday <span>( @tueOpen_dt.Value.ToString("hh:mm tt") - @tueClose_dt.Value.ToString("hh:mm tt") )</span>
+															</div>
+														</li>
+													}
+													else
+													{
+														<li>
+															<i class="fa fa-times-circle text-pry" aria-hidden="true"></i>
+															<div>
+																Tuesday <span> Closed</span>
+															</div>
+														</li>
+													}
+													//wed
+													if (Model.WorkingHours.WedAvail == true)
+													{
+														<li>
+															<i class="fas fa-business-time text-sec"></i>
+															<div>
+																Wednesday <span>( @wedOpen_dt.Value.ToString("hh:mm tt") - @wedClose_dt.Value.ToString("hh:mm tt") )</span>
+															</div>
+														</li>
+													}
+													else
+													{
+														<li>
+															<i class="fa fa-times-circle text-pry" aria-hidden="true"></i>
+															<div>
+																Wednesday <span> Closed</span>
+															</div>
+														</li>
+													}
+													//thu
+													if (Model.WorkingHours.ThuAvail == true)
+													{
+														<li>
+															<i class="fas fa-business-time text-sec"></i>
+															<div>
+																Thursday <span>( @thuOpen_dt.Value.ToString("hh:mm tt") - @thuClose_dt.Value.ToString("hh:mm tt") )</span>
+															</div>
+														</li>
+													}
+													else
+													{
+														<li>
+															<i class="fa fa-times-circle text-pry" aria-hidden="true"></i>
+															<div>
+																Thursday <span> Closed</span>
+															</div>
+														</li>
+													}
+													//fri
+													if (Model.WorkingHours.FriAvail == true)
+													{
+														<li>
+															<i class="fas fa-business-time text-sec"></i>
+															<div>
+																Friday <span>( @friOpen_dt.Value.ToString("hh:mm tt") - @friClose_dt.Value.ToString("hh:mm tt") )</span>
+															</div>
+														</li>
+													}
+													else
+													{
+														<li>
+															<i class="fa fa-times-circle text-pry" aria-hidden="true"></i>
+															<div>
+																Friday <span> Closed</span>
+															</div>
+														</li>
+													}
+													//sat
+													if (Model.WorkingHours.SatAvail == true)
+													{
+														<li>
+															<i class="fas fa-business-time text-sec"></i>
+															<div>
+																Saturday <span>( @satOpen_dt.Value.ToString("hh:mm tt") - @satClose_dt.Value.ToString("hh:mm tt") )</span>
+															</div>
+														</li>
+													}
+													else
+													{
+														<li>
+															<i class="fa fa-times-circle text-pry" aria-hidden="true"></i>
+															<div>
+																Saturday <span> Closed</span>
+															</div>
+														</li>
+													}
+													//sun
+													if (Model.WorkingHours.SunAvail == true)
+													{
+														<li>
+															<i class="fas fa-business-time text-sec"></i>
+															<div>
+																Sunday <span>( @sunOpen_dt.Value.ToString("hh:mm tt") - @sunClose_dt.Value.ToString("hh:mm tt") )</span>
+															</div>
+														</li>
+													}
+													else
+													{
+														<li>
+															<i class="fa fa-times-circle text-pry" aria-hidden="true"></i>
+															<div>
+																Sunday <span> Closed</span>
+															</div>
+														</li>
+													}
+												}
+
+
+											}
+											else
+											{
+												<li>Not Specified</li>
+											}
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">
+
+						@if (Model.HealthCheck != null)
+						{
+							<div class="property-healthcheck">
+								<div class="row">
+									<div class="col-sm-3 mb-3 mb-sm-0">
+										<h5>Health Check</h5>
+									</div>
+									<div class="col-sm-9 property-healthcheck__table">
+										<div class="row font-weight-bold">
+											<div class="col-sm-4 font-weight-bold ">
+												Health Checker
+											</div>
+											<div class="col-sm-3">
+												Health Data
+											</div>
+											<div class="col-sm-5">
+												<span>Grade</span>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4 font-weight-bold">
+												Air Quality Index
+											</div>
+											<div class="col-sm-3">
+												@Model.HealthCheck.AQI_Data
+											</div>
+											<div class="col-sm-5">
+												@if (Model.HealthCheck.AQI_Data == "0-50")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
+												}
+												else if (Model.HealthCheck.AQI_Data == "51-100")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
+												}
+												else if (Model.HealthCheck.AQI_Data == "101-200")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
+												}
+												else if (Model.HealthCheck.AQI_Data == "201-300")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
+												}
+												else if (Model.HealthCheck.AQI_Data == "301-400")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
+												}
+												else if (Model.HealthCheck.AQI_Data == "401-500")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.AQI_Grade</span>
+												}
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4 font-weight-bold">
+												Temperature(˚F)
+											</div>
+											<div class="col-sm-3">
+												@Model.HealthCheck.Temperature_Data
+											</div>
+											<div class="col-sm-5">
+												@if (Model.HealthCheck.Temperature_Data == "<95")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.Temperature_Grade</span>
+												}
+												else if (Model.HealthCheck.Temperature_Data == "95-99.9")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.Temperature_Grade</span>
+												}
+												else if (Model.HealthCheck.Temperature_Data == "100-104")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.Temperature_Grade</span>
+												}
+												else if (Model.HealthCheck.Temperature_Data == ">104")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.Temperature_Grade</span>
+												}
+
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4 font-weight-bold">
+												Humidity(RH%)
+											</div>
+											<div class="col-sm-3">
+												@Model.HealthCheck.Humidity_Data
+											</div>
+											<div class="col-sm-5">
+												@if (Model.HealthCheck.Humidity_Data == "<30")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.Humidity_Grade</span>
+												}
+												else if (Model.HealthCheck.Humidity_Data == "30-50")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.Humidity_Grade</span>
+												}
+												else if (Model.HealthCheck.Humidity_Data == ">50")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.Humidity_Grade</span>
+												}
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4 font-weight-bold">
+												Co2(PPM)
+											</div>
+											<div class="col-sm-3">
+												@Model.HealthCheck.CO2_Data
+											</div>
+											<div class="col-sm-5">
+												@if (Model.HealthCheck.CO2_Data == "<400")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
+												}
+												else if (Model.HealthCheck.CO2_Data == "400-599")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
+												}
+												else if (Model.HealthCheck.CO2_Data == "600-999")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
+												}
+												else if (Model.HealthCheck.CO2_Data == "1000-1499")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
+												}
+												else if (Model.HealthCheck.CO2_Data == "1500-1999")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
+												}
+												else if (Model.HealthCheck.CO2_Data == ">2000")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.CO2_Grade</span>
+												}
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4 font-weight-bold">
+												Co(PPM)
+											</div>
+											<div class="col-sm-3">
+												@Model.HealthCheck.CO_Data
+											</div>
+											<div class="col-sm-5">
+												@if (Model.HealthCheck.CO_Data == "<4.4")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+												}
+												else if (Model.HealthCheck.CO_Data == "4.4-9.4")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+												}
+												else if (Model.HealthCheck.CO_Data == "9.5-12.4")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+												}
+												else if (Model.HealthCheck.CO_Data == "12.5-15.4")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+												}
+												else if (Model.HealthCheck.CO_Data == "15.5-30.4")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+												}
+												else if (Model.HealthCheck.CO_Data == "30.5-40.4")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+												}
+												else if (Model.HealthCheck.CO_Data == ">40.5")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.CO_Grade</span>
+												}
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4 font-weight-bold">
+												PM2.5(µg/m3)
+											</div>
+											<div class="col-sm-3">
+												@Model.HealthCheck.PM2Point5_Data
+											</div>
+											<div class="col-sm-5">
+												@if (Model.HealthCheck.PM2Point5_Data == "<15.4")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+												}
+												else if (Model.HealthCheck.PM2Point5_Data == "15.4-40.4")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+												}
+												else if (Model.HealthCheck.PM2Point5_Data == "40.5-65.4")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+												}
+												else if (Model.HealthCheck.PM2Point5_Data == "65.5-150.4")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+												}
+												else if (Model.HealthCheck.PM2Point5_Data == "150.5-250.4")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+												}
+												else if (Model.HealthCheck.PM2Point5_Data == "250.5-350.4")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+												}
+												else if (Model.HealthCheck.PM2Point5_Data == ">350.5")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.PM2Point5_Grade</span>
+												}
+
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4 font-weight-bold">
+												PM10(µg/m3)
+											</div>
+											<div class="col-sm-3">
+												@Model.HealthCheck.PM10_Data
+											</div>
+											<div class="col-sm-5">
+												@if (Model.HealthCheck.PM10_Data == "<=54")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+												}
+												else if (Model.HealthCheck.PM10_Data == "55-154")
+												{
+													<span class="text-sec font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+												}
+												else if (Model.HealthCheck.PM10_Data == "155-254")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+												}
+												else if (Model.HealthCheck.PM10_Data == "255-354")
+												{
+													<span class="text-pry font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+												}
+												else if (Model.HealthCheck.PM10_Data == "355-424")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+												}
+												else if (Model.HealthCheck.PM10_Data == "425-504")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+												}
+												else if (Model.HealthCheck.PM10_Data == ">505")
+												{
+													<span class="text-danger font-weight-bold">@Model.HealthCheck.PM10_Grade</span>
+												}
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4 font-weight-bold">
+												Moisture(%)
+											</div>
+											<div class="col-sm-3">
+												@Model.HealthCheck.Moisture_Data
+											</div>
+											<div class="col-sm-5">
+												@if (Model.HealthCheck.Moisture_Data == "5%-12%")
+												{
+													<span class="text-sec"><i class="fab fa-pagelines"></i></span>
+												}
+												else if (Model.HealthCheck.Moisture_Data == "13%-17%")
+												{
+													<span class="text-pry"><i class="fab fa-pagelines"></i></span>
+												}
+												else if (Model.HealthCheck.Moisture_Data == "<5% or >17%")
+												{
+													<span class="text-danger"><i class="fas fa-lead"></i></span>
+												}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">
+						}
+						@if (Model.GreenBuildingCheck != null)
+						{
+							//Green Building Data
+							<div class="greenBuilding-check">
+								<div class="row">
+									<div class="col-sm-12">
+										<h5 class="">Green Building Data</h5>
+									</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-12 mb-3 mb-sm-0">
+												<h5>Site & Facility Management</h5>
+											</div>
+											<div class="col-sm-12 green-web__table">
+												<div class="row">
+													<div class="col-sm-1">1</div>
+													<div class="col-sm-6">Green Policy</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_GreenPolicy"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">2</div>
+													<div class="col-sm-6">Waste Collection & Disposal</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_WasteCD"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">3</div>
+													<div class="col-sm-6">Eco-friendly Commuting Practices</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_Commuting"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">4</div>
+													<div class="col-sm-6">Eco-friendly Landscaping Practices</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_Landscaping"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">5</div>
+													<div class="col-sm-6">Heat Island Reduction, Non-roof</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_NonRoof"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">6</div>
+													<div class="col-sm-6">Heat Island Reduction, Roof</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_Roof"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">7</div>
+													<div class="col-sm-6">Outdoor Light Pollution Reduction</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_PollutionReduction"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">8</div>
+													<div class="col-sm-6">Building Operations & Maintenance</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.SF_BuildingOM"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									@*Health & Comfort*@
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-12 mb-3 mb-sm-0">
+												<h5>Health & Comfort</h5>
+											</div>
+											<div class="col-sm-12 green-web__table">
+												<div class="row">
+													<div class="col-sm-1">1</div>
+													<div class="col-sm-6">Tobacco Smoke Control</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_SmokeControl"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">2</div>
+													<div class="col-sm-6">Fresh Air Ventilation</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_VEntilation"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">3</div>
+													<div class="col-sm-6">Carbon dioxide Monitoring & Control</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_CO2Control"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">4</div>
+													<div class="col-sm-6">Isolation of Polluting Equipment & Systems</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_PollutionEquipment"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">5</div>
+													<div class="col-sm-6">Eco-friendly Housekeeping Chemicals</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_EcoChemicals"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">6</div>
+													<div class="col-sm-6">Thermal Comfort, Indoor Temperature & RH</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_ThermalComfort"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">7</div>
+													<div class="col-sm-6">Facilities for Differently Abled People</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_AbledPeople"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">8</div>
+													<div class="col-sm-6">Occupant Well-being Facilities</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.HC_Facilities"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									@*Water Efficiency*@
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-12 mb-3 mb-sm-0">
+												<h5>Water Efficiency</h5>
+											</div>
+											<div class="col-sm-12 green-web__table">
+												<div class="row">
+													<div class="col-sm-1">1</div>
+													<div class="col-sm-6">Water Efficient Fixtures</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Fixtures"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">2</div>
+													<div class="col-sm-6">Rain Water Harvesting</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Harvesting"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">3</div>
+													<div class="col-sm-6">Waste Water Treatment</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Treatment"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">4</div>
+													<div class="col-sm-6">Waste Water Reuse</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Reuse"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">5</div>
+													<div class="col-sm-6">Water Metering</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_Metering"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">6</div>
+													<div class="col-sm-6">Turf Area</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.WE_TurfArea"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									@*Energy Efficiency*@
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-12 mb-3 mb-sm-0">
+												<h5>Energy Efficiency</h5>
+											</div>
+											<div class="col-sm-12 green-web__table">
+												<div class="row">
+													<div class="col-sm-1">1</div>
+													<div class="col-sm-6">Eco-friendly Refrigerants & Halons</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_Refrigerants"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">2</div>
+													<div class="col-sm-6">Minimum Energy Performance</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_MinimumEP"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">3</div>
+													<div class="col-sm-6">Improved Energy Performance</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_ImprovedEP"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">4</div>
+													<div class="col-sm-6">On site Renewable Energy</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_OnSiteRE"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">5</div>
+													<div class="col-sm-6">Off Site Renewable Energy</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_OffSiteRE"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">6</div>
+													<div class="col-sm-6">Energy Metering</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.EE_EnergyMetering"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									@*Innovation Category*@
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-12 mb-3 mb-sm-0">
+												<h5>Innovation Category</h5>
+											</div>
+											<div class="col-sm-12 green-web__table">
+												<div class="row">
+													<div class="col-sm-1">1</div>
+													<div class="col-sm-6">Innovation Credits</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.IC_Innovation"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-1">2</div>
+													<div class="col-sm-6">IGBC AP</div>
+													<div class="col-sm-5">
+														<div class="rate-web event-none" data-rate-value="@Model.GreenBuildingCheck.IC_IGBC"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6 align-self-center gb-verified">
+										@if (Model.GreenBuildingCheck.CertifiedBy == "GRIHA")
+										{
+											<div><i class="fas fa-user-check"></i> Green Building Verified by GRIHA Council</div>
+										}
+										else if (Model.GreenBuildingCheck.CertifiedBy == "ECBC")
+										{
+											<div><i class="fas fa-user-check"></i> Green Building Verified by ECBC Council</div>
+										}
+										else if (Model.GreenBuildingCheck.CertifiedBy == "IGBC")
+										{
+											<div><i class="fas fa-user-check"></i> Green Building Verified by IGBC Council</div>
+										}
+										else if (Model.GreenBuildingCheck.CertifiedBy == "LEED")
+										{
+											<div><i class="fas fa-user-check"></i> Green Building Verified by LEED India</div>
+										}
+										else
+										{
+											<div><i class="fas fa-user-check"></i> Green Building Applied through HiSpace</div>
+
+										}
+									</div>
+								</div>
+							</div>
+							<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">
+						}
+						@*<hr class="mt-3 mb-3 mb-sm-3 mt-sm-3">*@
+						@if(Model.ListingImages != null)
+						{
+							<div class="property-description">
+							<div class="row">
+								<div class="col-sm-3 mb-3 mb-sm-0">
+									<h5>Images</h5>
+								</div>
+								<div class="col-sm-9">
+									<div class="property-detail-img popup-gallery row">
+										@if (Model.ListingImages.Any())
+										{
+
+											@foreach (var item in Model.ListingImages)
+											{
+												<div class="col-sm-3 m-b--15">
+												<div class="owl-item">
+													<div class="item">
+														<a class="portfolio-img" href="@item.ImageUrl"><img class="img-fluid" src="@item.ImageUrl" alt=""></a>
+													</div>
+												</div>
+													</div>
+											}
+										}
+									</div>
+									</div>
+							</div>
+						</div>
+						}
+						<div class="map-info row">
+							@if (Model.Listing.latitude_view != null && Model.Listing.longitude_view != null)
+							{
+								<div class="display-none" id="lat">@Model.Listing.latitude_view</div>
+								<div class="display-none" id="lon">@Model.Listing.longitude_view</div>
+								<div class="display-none" id="map-zoom">15</div>
+							}
+							else
+							{
+								<div class="display-none" id="lat">20.593683</div>
+								<div class="display-none" id="lon">78.962883</div>
+								<div class="display-none" id="map-zoom">4</div>
+							}
+
+							<div id="map"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--=================================
+		Property details -->
+
+
+	</div>
+</div>
+
+
+@section Scripts {
+	<script defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGZoZkDdeXNlOPbKUG1KIXvBY5cUgQQgk&callback=initMapLatLon">
+	</script>
+	@*<script defer
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-i-AiLbdowFFJ0pw9GxhdAnEWYdzGgis&callback=initMapLatLon">
+		</script>*@
+}

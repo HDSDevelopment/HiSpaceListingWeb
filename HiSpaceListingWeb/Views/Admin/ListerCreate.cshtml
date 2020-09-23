@@ -69,28 +69,25 @@
 									<label for="input" class="control-label">Address Line*</label><i class="bar"></i>
 									<div class="error" id=""></div>
 								</div>
-								@*<div class="form-group col-md-3 col-sm-6">
-				@Html.EditorFor(m => m.City, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter City" } })
-				<label for="input" class="control-label">City</label><i class="bar"></i>
-			</div>
-			<div class="form-group col-md-3 col-sm-6">
-				@Html.EditorFor(m => m.State, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter State" } })
-				<label for="input" class="control-label">State</label><i class="bar"></i>
-			</div>
-			<div class="form-group col-md-3 col-sm-6">
-				@Html.EditorFor(m => m.Country, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Country" } })
-				<label for="input" class="control-label">Country</label><i class="bar"></i>
-			</div>
 
-			<div class="form-group col-md-3 col-sm-6">
-				@Html.EditorFor(m => m.Fax, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Fax" } })
-				<label for="input" class="control-label">Fax</label><i class="bar"></i>
-			</div>*@
 						<div class="form-group col-md-3 col-sm-6">
-							@Html.EditorFor(m => m.Postalcode, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PostalCode" } })
+							@Html.EditorFor(m => m.Postalcode, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter PostalCode", @onblur="getLocationUsingPostalCode(this.value,this)" } })
 							<label for="input" class="control-label">Postal Code*</label><i class="bar"></i>
 							<div class="error" id=""></div>
 						</div>
+						//Hidden elements
+								//city
+								<div class="form-group col-sm-12 display-none">
+									<input class="form-control sign-city" id="" name="City" placeholder="No.00, Street" type="text" value="">
+								</div>
+								//state
+								<div class="form-group col-sm-12 display-none">
+									<input class="form-control sign-state" id="" name="State" placeholder="No.00, Street" type="text" value="">
+								</div>
+								//country
+								<div class="form-group col-sm-12 display-none">
+									<input class="form-control sign-country" id="" name="Country" placeholder="No.00, Street" type="text" value="">
+								</div>
 						
 								@*<div class="form-group col-md-3 col-sm-6">
 				<p class="label-head mb-10">PAN Certificate</p>
