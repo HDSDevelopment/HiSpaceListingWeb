@@ -135,11 +135,14 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiListingUpdateListingByListingId = "UpdateListingByListingId/";
 		public string ApiListingDeleteListing = "DeleteListing/";
 		public string ApiListingGetPropertyList = "GetPropertyList/";
+		public string ApiListingGetPropertyListCommercialAndCoworking = "GetPropertyListCommercialAndCoworking/";
 		public string ApiListingGetPropertyListByUserID = "GetPropertyListByUserID/";
 		public string ApiListingGetPropertyDetailByListingID = "GetPropertyDetailByListingID/";
 		public string ApiLisitingGetAllPropertyListCommercialAndCoworking = "GetAllPropertyListCommercialAndCoworking/";
 		public string ApiLisitingGetAllOperatorsList = "GetAllOperatorList/";
+		public string ApiLisitingGetOperatorList = "GetOperatorList/";
 		public string ApiLisitingGetAllPeopleList = "GetAllPeopleList/";
+		public string ApiLisitingGetPeopleList = "GetPeopleList/";
 		//details
 		public string ApiLisitingGetPropertyAndLinkedReProfessionalListByUserID = "GetPropertyAndLinkedReProfessionalListByUserID/";
 		public string ApiLisitingGetPropertyListByUserIDAndListingID = "GetPropertyListByUserIDAndListingID/";
@@ -229,6 +232,15 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiCommonGetFacilityMasterList = "GetFacilityMasterList";
 		public string ApiCommonGetAllPropertySearchByUserID = "GetAllPropertySearchByUserID";
 		public string ApiCommonGetAllReProfessionalSearchByUserID = "GetAllReProfessionalSearchByUserID";
+		//operator filter list
+		public string ApiCommonGetOperatorListForOperatorFilter = "GetOperatorListForOperatorFilter";
+		public string ApiCommonGetLocationListForOperatorFilter = "GetLocationListForOperatorFilter";
+		//property filter list
+		public string ApiCommonGetLocationListForPropertyFilter = "GetLocationListForPropertyFilter";
+		//people filter list
+		public string ApiCommonGetLocationListForPeopleFilter = "GetLocationListForPeopleFilter";
+		public string ApiCommonGetPeopleListForPeopleFilter = "GetPeopleListForPeopleFilter";
+		
 
 		#endregion Common Controller
 
@@ -254,7 +266,48 @@ namespace HiSpaceListingWeb.Utilities
 		#endregion API Methods
 
 		#region DropDown Methods
-
+		//drop down for the property filter start
+		public static List<ListingType> GetListingTypePropertyFilter()
+		{
+			List<ListingType> types = new List<ListingType>();
+			types.Add(new ListingType() { ListingTypeId = 1, ListingTypeName = "All" });
+			types.Add(new ListingType() { ListingTypeId = 2, ListingTypeName = "Commercial" });
+			types.Add(new ListingType() { ListingTypeId = 3, ListingTypeName = "Co-Working" });
+			return types;
+		}
+		public static List<CommercialCategory> GetCommercialCategoryPropertyFilter()
+		{
+			List<CommercialCategory> types = new List<CommercialCategory>();
+			types.Add(new CommercialCategory() { CommercialCategoryId = 1, CommercialCategoryName = "All" });
+			types.Add(new CommercialCategory() { CommercialCategoryId = 2, CommercialCategoryName = "Retail" });
+			types.Add(new CommercialCategory() { CommercialCategoryId = 3, CommercialCategoryName = "Industry" });
+			types.Add(new CommercialCategory() { CommercialCategoryId = 4, CommercialCategoryName = "Warehouse" });
+			return types;
+		}
+		public static List<CoworkingCategory> GetCoworkingCategoryPropertyFilter()
+		{
+			List<CoworkingCategory> types = new List<CoworkingCategory>();
+			types.Add(new CoworkingCategory() { CoworkingCategoryId = 1, CoworkingCategoryName = "All" });
+			types.Add(new CoworkingCategory() { CoworkingCategoryId = 2, CoworkingCategoryName = "Office" });
+			types.Add(new CoworkingCategory() { CoworkingCategoryId = 3, CoworkingCategoryName = "Cafe" });
+			return types;
+		}
+		//drop down for the property filter end
+		//dropdown for the people list start
+		public static List<ProfessionalCategory> GetProfessionalCategoryPeopleFilter()
+		{
+			List<ProfessionalCategory> types = new List<ProfessionalCategory>();
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 1, ProfessionalCategoryName = "All", ProfessionalCategoryDisplay = "All" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 2, ProfessionalCategoryName = "PropertyDeveloper", ProfessionalCategoryDisplay = "Property Developer" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 3, ProfessionalCategoryName = "Leasing", ProfessionalCategoryDisplay = "Leasing" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 4, ProfessionalCategoryName = "InteriorDesigner", ProfessionalCategoryDisplay = "Interior Designer" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 5, ProfessionalCategoryName = "CoworkingArchitecture", ProfessionalCategoryDisplay = "Co-working Architecture" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 6, ProfessionalCategoryName = "Investor", ProfessionalCategoryDisplay = "Investor" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 7, ProfessionalCategoryName = "PropertyOwner", ProfessionalCategoryDisplay = "Property Owner" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 8, ProfessionalCategoryName = "PropertyOperator", ProfessionalCategoryDisplay = "Property Operator" });
+			return types;
+		}
+		//dropdown for the people list end
 		public static List<ListingType> GetListingType()
 		{
 			List<ListingType> types = new List<ListingType>();
@@ -479,7 +532,145 @@ namespace HiSpaceListingWeb.Utilities
 			}
 			return user;
 		}
+		//Operator filter dropdown start
+		//Get Operators list for the operator filter search
+		public static List<OperatorFilterOperatorList> GetOperatorsListForFilter(string Location)
+		{
+			//if(Location == "All")
+			//{
+			//	Location = "";
+			//}
+			List<OperatorFilterOperatorList> user = new List<OperatorFilterOperatorList>();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetOperatorListForOperatorFilter+ "/" + Location.ToString());
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<OperatorFilterOperatorList>>();
+					readTask.Wait();
+					user.Add(new OperatorFilterOperatorList()
+					{
+						UserId = 1,CompanyName = "All"
+					});
+					foreach (var item in readTask.Result.ToList())
+						if(item.PropertyCount > 0)
+							user.Add(new OperatorFilterOperatorList() { UserId = item.UserId, CompanyName = item.CompanyName });
+				}
 
+			}
+			return user;
+		}
+		//Get people list for the people filter search
+		public static List<PeopleFilterPeopleList> GetPeopleListForFilter(string Location)
+		{
+			//if(Location == "All")
+			//{
+			//	Location = "";
+			//}
+			List<PeopleFilterPeopleList> user = new List<PeopleFilterPeopleList>();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetPeopleListForPeopleFilter + "/" + Location.ToString());
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PeopleFilterPeopleList>>();
+					readTask.Wait();
+					user.Add(new PeopleFilterPeopleList()
+					{
+						ListingId = 1,
+						RE_FullName = "All"
+					});
+					foreach (var item in readTask.Result.ToList())
+						if (item.ProjectCount > 0)
+							user.Add(new PeopleFilterPeopleList() { ListingId = item.ListingId, RE_FullName = item.RE_FullName });
+				}
+
+			}
+			return user;
+		}
+		//Get Location list for the operator filter search
+		public static List<LocationFilterOperatorList> GetLocationListForOpFilter()
+		{
+			List<LocationFilterOperatorList> user = new List<LocationFilterOperatorList>();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetLocationListForOperatorFilter);
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<LocationFilterOperatorList>>();
+					readTask.Wait();
+					user.Add(new LocationFilterOperatorList()
+					{
+						OperatorLocation = "All"
+					});
+					foreach (var item in readTask.Result.ToList())
+						user.Add(new LocationFilterOperatorList() { OperatorLocation = item.OperatorLocation });
+				}
+
+			}
+			return user;
+		}
+		//Operator filter dropdown end
+
+		//Get Location list for the property filter search
+		public static List<LocationFilterPropertyList> GetLocationListForPrFilter()
+		{
+			List<LocationFilterPropertyList> Location = new List<LocationFilterPropertyList>();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetLocationListForPeopleFilter);
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<LocationFilterPropertyList>>();
+					readTask.Wait();
+					Location.Add(new LocationFilterPropertyList()
+					{
+						PropertyLocation = "All"
+					});
+					foreach (var item in readTask.Result.ToList())
+						Location.Add(new LocationFilterPropertyList() { PropertyLocation = item.PropertyLocation });
+				}
+
+			}
+			return Location;
+		}
+		//Get Location list for the People filter search
+		public static List<LocationFilterPropertyList> GetLocationListForPeFilter()
+		{
+			List<LocationFilterPropertyList> Location = new List<LocationFilterPropertyList>();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetLocationListForPeopleFilter);
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<LocationFilterPropertyList>>();
+					readTask.Wait();
+					Location.Add(new LocationFilterPropertyList()
+					{
+						PropertyLocation = "All"
+					});
+					foreach (var item in readTask.Result.ToList())
+						Location.Add(new LocationFilterPropertyList() { PropertyLocation = item.PropertyLocation });
+				}
+
+			}
+			return Location;
+		}
 		//operator list for the RE-professional project table
 
 		public static List<Facility> GetFacilityMasterList()

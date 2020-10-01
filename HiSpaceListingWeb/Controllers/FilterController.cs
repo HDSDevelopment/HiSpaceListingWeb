@@ -84,6 +84,28 @@ namespace HiSpaceListingWeb.Controllers
 			}
 			return View("FilterList", vModel);
 		}
+		public ActionResult PropertyFilterCriteria(PropertySearchCriteria propertySearchCriteria)
+		{
+			SetSessionVariables();
+			List<PropertyDetailResponse> vModel = new List<PropertyDetailResponse>();
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiListingGetPropertyListCommercialAndCoworking, propertySearchCriteria);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+			}
+			//return Json(vModel);
+			return PartialView("_PropertyFilterListPartialView", vModel);
+		}
 		public ActionResult PropertyListByAll()
 		{
 			SetSessionVariables();
@@ -261,6 +283,7 @@ namespace HiSpaceListingWeb.Controllers
 			}
 			//return Json(vModel);
 			return PartialView("_OperatorFilterListPartialView", vModel);
+
 		}
 		public ActionResult OperatorListByUserId(string User)
 		{
@@ -271,6 +294,28 @@ namespace HiSpaceListingWeb.Controllers
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiFilterControllerName);
 				var responseTask = client.GetAsync(Common.Instance.ApiFilterGetOperatorByUserId + "/" + User.ToString());
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PropertyOperatorResponse>>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+
+			}
+			//return Json(vModel);
+			return PartialView("_OperatorFilterListPartialView", vModel);
+		}
+		public ActionResult OperatorFilterCriteria(OperatorSearchCriteria operatorSearchCriteria)
+		{
+			SetSessionVariables();
+			List<PropertyOperatorResponse> vModel = new List<PropertyOperatorResponse>();
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiLisitingGetOperatorList, operatorSearchCriteria);
 				responseTask.Wait();
 				var result = responseTask.Result;
 				if (result.IsSuccessStatusCode)
@@ -306,6 +351,28 @@ namespace HiSpaceListingWeb.Controllers
 			//return Json(vModel);
 			return PartialView("_ProfessionalFilterListPartialView", vModel);
 		}
+		public ActionResult PeopleFilterCriteria(PeopleSearchCriteria peopleSearchCriteria)
+		{
+			SetSessionVariables();
+			List<PropertyPeopleResponse> vModel = new List<PropertyPeopleResponse>();
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiLisitingGetPeopleList, peopleSearchCriteria);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+			}
+			//return Json(vModel);
+			return PartialView("_ProfessionalFilterListPartialView", vModel);
+		}
 		public ActionResult PeopleListByListingId(string ListingId)
 		{
 			SetSessionVariables();
@@ -331,6 +398,19 @@ namespace HiSpaceListingWeb.Controllers
 		public ActionResult PropertyOperatorPeopleAndFilterMenu()
 		{
 			SetSessionVariables();
+			//Operator dropdowns
+			ViewBag.ListOfOperators = Common.GetOperatorsListForFilter("All");
+			ViewBag.ListOfOperatorsLocation = Common.GetLocationListForOpFilter();
+			//property dropdown
+			ViewBag.ListOfListingType = Common.GetListingTypePropertyFilter();
+			ViewBag.ListOfCommercialType = Common.GetCommercialCategoryPropertyFilter();
+			ViewBag.ListOfCoworkingType = Common.GetCoworkingCategoryPropertyFilter();
+			ViewBag.ListOfPropertyLocation = Common.GetLocationListForPrFilter();
+			//people dropdown
+			ViewBag.ListOfProfessionalCategory = Common.GetProfessionalCategoryPeopleFilter();
+			ViewBag.ListOfPeopleLocation = Common.GetLocationListForPrFilter();
+			ViewBag.ListOfPeople = Common.GetPeopleListForFilter("All");
+
 			PropertyOperatorPeopleAndFilterMenuViewModel vModel = new PropertyOperatorPeopleAndFilterMenuViewModel();
 			//filter list
 			using (var client = new HttpClient())
@@ -426,6 +506,69 @@ namespace HiSpaceListingWeb.Controllers
 			}
 
 			return View("FilterList", vModel);
+		}
+
+		//dropdown by operator list
+		public ActionResult GetOperatorsListForFilter(string Location)
+		{
+			//if(Location == "All")
+			//{
+			//	Location = "";
+			//}
+			List<OperatorFilterOperatorList> user = new List<OperatorFilterOperatorList>();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetOperatorListForOperatorFilter + "/" + Location);
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<OperatorFilterOperatorList>>();
+					readTask.Wait();
+					user.Add(new OperatorFilterOperatorList()
+					{
+						UserId = 1,
+						CompanyName = "All"
+					});
+					foreach (var item in readTask.Result.ToList())
+						if(item.PropertyCount > 0)
+							user.Add(new OperatorFilterOperatorList() { UserId = item.UserId, CompanyName = item.CompanyName });
+				}
+
+			}
+			return Json(user);;
+		}
+		//dropdown by people list
+		public ActionResult GetPeopleListForFilter(string Location)
+		{
+			//if(Location == "All")
+			//{
+			//	Location = "";
+			//}
+			List<PeopleFilterPeopleList> user = new List<PeopleFilterPeopleList>();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetPeopleListForPeopleFilter + "/" + Location.ToString());
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PeopleFilterPeopleList>>();
+					readTask.Wait();
+					user.Add(new PeopleFilterPeopleList()
+					{
+						ListingId = 1,
+						RE_FullName = "All"
+					});
+					foreach (var item in readTask.Result.ToList())
+						if (item.ProjectCount > 0)
+							user.Add(new PeopleFilterPeopleList() { ListingId = item.ListingId, RE_FullName = item.RE_FullName });
+				}
+
+			}
+			return Json(user); 
 		}
 
 		public void SetSessionVariables()

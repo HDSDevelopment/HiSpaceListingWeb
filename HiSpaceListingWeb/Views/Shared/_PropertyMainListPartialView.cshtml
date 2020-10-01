@@ -4,9 +4,82 @@
 @using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @model HiSpaceListingWeb.ViewModel.PropertyOperatorPeopleAndFilterMenuViewModel
-
+<div class="row filter-row property-fstyle">
+	<div class="col-sm-3 filter-select">
+		@*<select class="form-control basic-select dd-filter property_select">
+			 <option selected value="tab-01">Property/Space</option>
+			 <option value="tab-02">Owner/Operator</option>
+			 <option value="tab-03">RE Professionals/People</option>
+		</select>*@
+	</div>
+<div class="col-sm-9 align-self-center property-fstyle__form">
+				<form class="form-row md-form" enctype="multipart/form-data" id="property-form" method="post">	
+					
+					<div class="col-sm-9">
+						<div class="row">
+							<div class="form-group col-sm-4">
+								<select class="form-control basic-select" id="Pr_Filter_For" name="CMCW_PropertyFor">
+									<option value="All">All</option>
+									<option value="Rental">Rental</option>
+									<option value="Sale">Sale</option>
+								</select>
+								<label for="select" class="control-label">Search For</label><i class="bar"></i>
+							</div>
+							<div class="form-group col-sm-4 ListType-Main">
+								<select class="form-control basic-select ListingType" id="pr_Filter_ListingType" name="ListingType" 
+										asp-items="@(new SelectList(ViewBag.ListOfListingType, "ListingTypeName", "ListingTypeName"))"></select>
+								<label for="select" class="control-label">Listing Type</label><i class="bar"></i>
+							</div>
+							<div class="form-group col-sm-4 CommercialCategory-Main display-none">
+								<select class="form-control basic-select CommercialType" id="pr_Filter_CommercialCategory" name="CommercialType" 
+										asp-items="@(new SelectList(ViewBag.ListOfCommercialType, "CommercialCategoryName", "CommercialCategoryName"))"></select>
+								<label for="select" class="control-label">Commercial Category</label><i class="bar"></i>
+							</div>
+							<div class="form-group col-sm-4 CoworkingCategory-Main display-none">
+								<select class="form-control basic-select CoworkingType" id="pr_Filter_CoworkingCategory" name="CoworkingType" 
+										asp-items="@(new SelectList(ViewBag.ListOfCoworkingType, "CoworkingCategoryName", "CoworkingCategoryName"))"></select>
+								<label for="select" class="control-label">Coworking Category</label><i class="bar"></i>
+							</div>
+							<div class="form-group col-sm-4 PropertyLocation-Main">
+								<select class="form-control basic-select Locality" id="pr_Filter_PropertyLocation" name="Locality" 
+										asp-items="@(new SelectList(ViewBag.ListOfPropertyLocation, "PropertyLocation", "PropertyLocation"))"></select>
+								<label for="select" class="control-label">City</label><i class="bar"></i>
+							</div>
+							<div class="col-sm-8">
+							  <div class="row">
+								  <span class="mb-3 price-lable">Price Range</span>
+								<div class="col-sm-12">
+								  <div id="slider-range"></div>
+								</div>
+							  </div>
+							  <div class="row slider-labels">
+								<div class="col-sm-6 caption">
+								  <strong>Min:</strong> <span id="slider-range-value1"></span>
+								</div>
+								<div class="col-sm-6 text-right caption">
+								  <strong>Max:</strong> <span id="slider-range-value2"></span>
+								</div>
+							  </div>
+							  <div class="row">
+								<div class="col-sm-12">
+									<input type="hidden" name="min-value" value="">
+									<input type="hidden" name="max-value" value="">
+									<input type="hidden" name="PriceMin" value="">
+									<input type="hidden" name="PriceMax" value="">
+								</div>
+							  </div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-sm-3">
+						<button type="button" id="property-form-submit" class="btn btn-primary btn-block"><i class="fas fa-search-location"></i>Search</button>
+					</div>
+				</form>
+			</div>
+	</div>
 <section class="">
-	<div class="container">
+	<div class="">
 		<div class="row">
 			<div class="col-lg-3 mb-5 mb-lg-0">
 				<div class="sidebar">
@@ -177,3 +250,5 @@
 		</div>
 	</div>
 </section>
+
+

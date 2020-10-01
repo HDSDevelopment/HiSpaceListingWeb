@@ -4,9 +4,44 @@
 @using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @model HiSpaceListingWeb.ViewModel.PropertyOperatorPeopleAndFilterMenuViewModel
-
+<div class="row filter-row people-fstyle">
+	<div class="col-sm-3 filter-select">
+		@*<select class="form-control basic-select dd-filter people_select">
+		 <option value="tab-01">Property/Space</option>
+		 <option value="tab-02">Owner/Operator</option>
+		 <option selected value="tab-03">RE Professionals/People</option>
+	</select>*@
+	</div>
+			<div class="col-sm-9 align-self-center people-fstyle__form">
+				<form class="form-row md-form" enctype="multipart/form-data" id="people-form" method="post">	
+					<div class="col-sm-9">
+						<div class="row">
+							<div class="form-group col-sm-4">
+						<select class="form-control basic-select PeopleRole" id="Pe_Filter_Role" name="Role" 
+								asp-items="@(new SelectList(ViewBag.ListOfProfessionalCategory, "ProfessionalCategoryName", "ProfessionalCategoryDisplay"))"></select>
+						<label for="select" class="control-label">Role</label><i class="bar"></i>
+					</div>
+					<div class="form-group col-sm-4 PeopleLocation-Main">
+								<select class="form-control basic-select PeopleLocation" id="pe_Filter_PeopleLocation" name="Locality" 
+										asp-items="@(new SelectList(ViewBag.ListOfPeopleLocation, "PropertyLocation", "PropertyLocation"))"></select>
+								<label for="select" class="control-label">City</label><i class="bar"></i>
+							</div>
+					<div class="form-group col-sm-4 PeopleName-Main">
+						<select class="form-control basic-select PeopleName" id="Pe_Filter_People" name="RE_FullName" 
+								asp-items="@(new SelectList(ViewBag.ListOfPeople, "RE_FullName", "RE_FullName"))"></select>
+						<label for="select" class="control-label">People Name</label><i class="bar"></i>
+					</div>
+						</div>
+					</div>
+					
+					<div class="col-sm-3">
+						<button type="button" id="people-form-submit" class="btn btn-info btn-block"><i class="fas fa-search-location"></i>Search</button>
+					</div>
+				</form>
+			</div>
+	</div>
 <section class="">
-	<div class="container">
+	<div class="">
 		<div class="row">
 			<div class="col-lg-3 mb-5 mb-lg-0">
 				<div class="sidebar">
@@ -146,4 +181,5 @@
 		</div>*@
 			</div>
 	</div>
+		</div>
 </section>

@@ -5,8 +5,40 @@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @model HiSpaceListingWeb.ViewModel.PropertyOperatorPeopleAndFilterMenuViewModel
 
+<div class="row filter-row operator-fstyle">
+	<div class="col-sm-3 filter-select">
+		@*<select class="form-control basic-select dd-filter operator_select">
+		 <option value="tab-01">Property/Space</option>
+		 <option selected value="tab-02">Owner/Operator</option>
+		 <option value="tab-03">RE Professionals/People</option>
+	</select>*@
+	</div>
+			<div class="col-sm-9 align-self-center operator-fstyle__form">
+				<form class="form-row md-form" enctype="multipart/form-data" id="operator-form" method="post">	
+					<div class="col-sm-9">
+						<div class="row">
+							<div class="form-group col-sm-6">
+						<select class="form-control basic-select OperatorLocation" id="Op_Filter_CityName" name="CityName" 
+								asp-items="@(new SelectList(ViewBag.ListOfOperatorsLocation, "OperatorLocation", "OperatorLocation"))"></select>
+						<label for="select" class="control-label">City</label><i class="bar"></i>
+					</div>
+					<div class="form-group col-sm-6 OperatorName-Main">
+						<select class="form-control basic-select OperatorName" id="Op_Filter_OperatorName" name="OperatorName" 
+								asp-items="@(new SelectList(ViewBag.ListOfOperators, "CompanyName", "CompanyName"))"></select>
+						<label for="select" class="control-label">Operator/Owner</label><i class="bar"></i>
+					</div>
+						</div>
+					</div>
+					
+					
+					<div class="col-sm-3">
+						<button type="button" id="operator-form-submit" class="btn btn-sec btn-block"><i class="fas fa-search-location"></i>Search</button>
+					</div>
+				</form>
+			</div>
+	</div>
 <section class="">
-	<div class="container">
+	<div class="">
 		<div class="row">
 			<div class="col-lg-3 mb-5 mb-lg-0">
 				<div class="sidebar">
