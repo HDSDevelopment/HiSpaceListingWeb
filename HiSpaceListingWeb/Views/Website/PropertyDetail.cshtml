@@ -290,7 +290,7 @@
 															@Html.Raw("Not Specified");
 														}
 													</li>
-													<li class="col-sm-6"><b>Current Occupancy:</b> @Model.Listing.CurrentOccupancy</li>
+													<li class="col-sm-6"><b>Available slots/units:</b> @Model.Listing.CurrentOccupancy</li>
 												}
 												else if (Model.Listing.CMCW_PropertyFor == "Sale")
 												{
@@ -307,6 +307,11 @@
 											<ul class="property-list list-unstyled row mb-3">
 												<li class="col-sm-6"><b>Phone:</b> @Model.Listing.Phone</li>
 												<li class="col-sm-6"><b>Email:</b> @Model.Listing.Email</li>
+												<li class="col-sm-6"><b>Address:</b> @Model.Listing.street_number @Model.Listing.route</li>
+												<li class="col-sm-6"><b>City:</b> @Model.Listing.locality</li>
+												<li class="col-sm-6"><b>State:</b> @Model.Listing.administrative_area_level_1</li>
+												<li class="col-sm-6"><b>Country:</b> @Model.Listing.country</li>
+												<li class="col-sm-6"><b>Postal Code:</b> @Model.Listing.postal_code</li>
 											</ul>
 										</div>
 									}
@@ -421,7 +426,7 @@
 																@Html.Raw("Not Specified");
 															}
 														</li>
-														<li class="col-sm-6"><b>Current Occupancy:</b> @Model.Listing.CurrentOccupancy</li>
+														<li class="col-sm-6"><b>Available seats:</b> @Model.Listing.CurrentOccupancy</li>
 													}
 												}
 												else if (Model.Listing.CMCW_PropertyFor == "Sale")
@@ -438,6 +443,12 @@
 											<ul class="property-list list-unstyled row mb-3">
 												<li class="col-sm-6"><b>Phone:</b> @Model.Listing.Phone</li>
 												<li class="col-sm-6"><b>Email:</b> @Model.Listing.Email</li>
+												<li class="col-sm-6"><b>Address:</b> @Model.Listing.street_number @Model.Listing.route</li>
+												<li class="col-sm-6"><b>City:</b> @Model.Listing.locality</li>
+												<li class="col-sm-6"><b>State:</b> @Model.Listing.administrative_area_level_1</li>
+												<li class="col-sm-6"><b>Country:</b> @Model.Listing.country</li>
+												<li class="col-sm-6"><b>Postal Code:</b> @Model.Listing.postal_code</li>
+
 											</ul>
 										</div>
 									}
@@ -474,6 +485,11 @@
 											<ul class="property-list list-unstyled row mb-3">
 												<li class="col-sm-6"><b>Phone:</b> @Model.Listing.Phone</li>
 												<li class="col-sm-6"><b>Email:</b> @Model.Listing.Email</li>
+												<li class="col-sm-6"><b>Address:</b> @Model.Listing.street_number @Model.Listing.route</li>
+												<li class="col-sm-6"><b>City:</b> @Model.Listing.locality</li>
+												<li class="col-sm-6"><b>State:</b> @Model.Listing.administrative_area_level_1</li>
+												<li class="col-sm-6"><b>Country:</b> @Model.Listing.country</li>
+												<li class="col-sm-6"><b>Postal Code:</b> @Model.Listing.postal_code</li>
 											</ul>
 										</div>
 									}
@@ -624,7 +640,7 @@
 															<div class="row re-project">
 																<div class="col-sm-4">
 																	<div class="re-project__name">@item.ProjectName</div>
-																	<div class="re-project__image">
+																	<div class="re-project__image project-image__detail">
 																		<a href="@Url.Content(item.ImageUrl)" target="_blank">
 																			<img class="img-fluid" alt="name" src="@Url.Content(item.ImageUrl)" />
 																		</a>

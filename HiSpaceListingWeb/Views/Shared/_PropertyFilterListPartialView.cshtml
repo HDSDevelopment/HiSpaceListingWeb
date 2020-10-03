@@ -6,7 +6,7 @@
 }
 
 
-@if (Model != null || Model.Count() != 0)
+@if (Model != null && Model.Count() != 0)
 {
 	<div class="result-count">Property Filter Count : <span>@Model.Count()</span></div>
 	<div class="paginate">
@@ -103,7 +103,7 @@
 									<div class="property-details__desc">
 										@if (item.SpaceListing.Description == null)
 										{
-											@Html.Raw("I truly believe Augustine’s words are true and if you look at history you know it is true.There are many people in.");
+											@Html.Raw("Commercial property refers to real estate property that is used for business purposes and other purposes related to commercial activity.");
 										}
 										else
 										{
@@ -141,11 +141,11 @@
 											<span class="property-span__head">Type: </span>
 											@if (item.SpaceListing.ListingType == "Commercial")
 											{
-												<span class="property-span__type badge-pry">@item.SpaceListing.ListingType</span>
+												<span class="property-span__type badge-pry">@item.SpaceListing.ListingType - @item.SpaceListing.CommercialType</span> 
 											}
 											else if (item.SpaceListing.ListingType == "Co-Working")
 											{
-												<span class="property-span__type badge-sec">@item.SpaceListing.ListingType</span>
+												<span class="property-span__type badge-sec">@item.SpaceListing.ListingType - @item.SpaceListing.CoworkingType</span>
 
 											}
 											else if (item.SpaceListing.ListingType == "RE-Professional")
@@ -220,32 +220,45 @@
 										</div>
 										<div class="property-details__total">
 
-											@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
+											@if (item.SpaceListing.ListingType == "Commercial" && item.SpaceListing.CMCW_PropertyFor == "Rental")
 											{
-												@*<span class="property-span__tot">
-													<i class="fas fa-circle fa-xs"></i>Total: @if (item.SpaceListing.TotalSeats != null)@item.SpaceListing.TotalSeats
+												<span class="property-span__occ">
+													<i class="fas fa-chart-pie fa-xs"></i>Available slots/units: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
 													else
 														@Html.Raw("Not Available")
 												</span>
-												<span class="property-span__head"> | </span>*@
-												@if (item.SpaceListing.CMCW_PropertyFor == "Rental")
-												{
-
-													<span class="property-span__occ">
-														<i class="fas fa-chart-pie fa-xs"></i>Occupied: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
-														else
-															@Html.Raw("Not Available")
-													</span>
-												}
 											}
-											else
+											else if (item.SpaceListing.ListingType == "Co-Working" && item.SpaceListing.CMCW_PropertyFor == "Rental")
 											{
-
+												<span class="property-span__occ">
+													<i class="fas fa-chart-pie fa-xs"></i>Available seats: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
+													else
+														@Html.Raw("Not Available")
+												</span>
 											}
 										</div>
 									</div>
+									@*Linked re-professional inside the property*@
 
+									@if (item.LinkedREProf != null)
+									{
+										<div class="property-details__linkedRe">
+										<div class="property-details__linkedRe-count">
+											No.of Professionals involved in this property: <span>@item.LinkedREProfCount</span>
+										</div>
+										<div class="row">
+											@foreach(var linkedProfessional in item.LinkedREProf)
+											{
+												<div class="col-sm-6 property-details__linkedRe-details">
+													<div>Professional Name: <span>@linkedProfessional.REFirstName - @linkedProfessional.RELastName</span></div>
+													<div>Role: <span>@linkedProfessional.ProjectRole</span></div>
+												</div>
+											}
+										</div>
+											</div>
+									}
 								</div>
+								
 								<div class="property-btn">
 									@if (ViewBag.UserId != null)
 									{
@@ -283,5 +296,18 @@
 }
 else
 {
-	<div>No List Available</div>
+	<div class="no-result">
+		<div class="no-result__head">
+			Property/Space 
+		</div>
+		<div class="no-result__search">
+			Please select any/other filter options <span class="bg-pry"><i class="fas fa-search-location"></i>Search</span> to get the data
+		</div>
+		<div class="no-result__image">
+			<span class="icon fab flaticon-building"></span>
+		</div>
+		<div>
+			No List Available
+		</div>
+	</div>
 }

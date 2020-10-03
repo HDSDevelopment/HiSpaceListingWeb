@@ -3,7 +3,7 @@
 *@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @model IEnumerable<HiSpaceListingService.ViewModel.PropertyOperatorResponse>
-@if (Model != null || Model.Count() != 0)
+@if (Model != null && Model.Count() != 0)
 {
 
 	var i = 0;
@@ -21,7 +21,7 @@
 			{
 				@if (item.TotalCommercial != 0 || item.TotalCoWorking != 0 || item.TotalREProfessional != 0)
 				{
-					<div class=" property-col-list mt-4">
+					<div class="property-col-list operator-col-list">
 						<div class="row no-gutters">
 							<div class="col-lg-3 col-md-3 oper-image">
 
@@ -198,5 +198,18 @@
 }
 else
 {
-	<div>Test the value is null</div>
+	<div class="no-result">
+		<div class="no-result__head">
+			Operator/Owner 
+		</div>
+		<div class="no-result__search">
+			Please select any/other filter options <span class="bg-sec"><i class="fas fa-search-location"></i>Search</span> to get the data
+		</div>
+		<div class="no-result__image">
+			<span class="icon fab flaticon-building-3"></span>
+		</div>
+		<div>
+			No List Available
+		</div>
+	</div>
 }

@@ -6,10 +6,19 @@
 }
 
 
-@if (Model.PropertyDetail != null || Model.PropertyDetail.Count() != 0)
+@if (Model.PropertyDetail != null && Model.PropertyDetail.Count() != 0)
 {
 	<div class="result-count">Property Filter Count : <span>@Model.PropertyDetail.Count()</span></div>
-	@foreach (var item in Model.PropertyDetail)
+	<div class="paginate">
+		<div class="pager">
+			<div class="firstPage pager-icon">&laquo;</div>
+			<div class="previousPage pager-icon">&lsaquo;</div>
+			<div class="pageNumbers custom-scrollbar"></div>
+			<div class="lastPage pager-icon">&raquo;</div>
+			<div class="nextPage pager-icon">&rsaquo;</div>
+		</div>
+		<div class="page-items">
+			@foreach (var item in Model.PropertyDetail)
 	{
 		<div class="property-item property-col-list mt-4">
 				<div class="row no-gutters">
@@ -19,12 +28,12 @@
 							{
 								@foreach (var image in item.ListingImagesList.Take(1))
 								{
-									<img class="img-fluid" src="@image.ImageUrl" alt="">
+									<img class="img-fluid image-list" src="@image.ImageUrl" alt="">
 								}
 							}
 							else
 							{
-								<img class="img-fluid" src="~/images/property/list/01.jpg" alt="">
+								<img class="img-fluid image-list" src="~/images/property/list/01.jpg" alt="">
 							}
 							<div class="property-lable">
 								@if (item.SpaceListing.ListingType == "Commercial")
@@ -217,36 +226,37 @@
 								</div>
 								<div class="property-details__total">
 
-									@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
-									{
-										@*<span class="property-span__tot">
-												<i class="fas fa-circle fa-xs"></i>Total: @if (item.SpaceListing.TotalSeats != null)@item.SpaceListing.TotalSeats
-												else
-													@Html.Raw("Not Available")
-											</span>
-											<span class="property-span__head"> | </span>*@
-										@if (item.SpaceListing.CMCW_PropertyFor == "Rental")
-										{
-
-											<span class="property-span__occ">
-												<i class="fas fa-chart-pie fa-xs"></i>Occupied: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
-												else
-													@Html.Raw("Not Available")
-											</span>
-										}
-									}
-									else
-									{
-
-									}
-								</div>
+											@if (item.SpaceListing.ListingType == "Commercial" && item.SpaceListing.CMCW_PropertyFor == "Rental")
+											{
+												<span class="property-span__occ">
+													<i class="fas fa-chart-pie fa-xs"></i>Available slots/units: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
+													else
+														@Html.Raw("Not Available")
+												</span>
+											}
+											else if (item.SpaceListing.ListingType == "Co-Working" && item.SpaceListing.CMCW_PropertyFor == "Rental")
+											{
+												<span class="property-span__occ">
+													<i class="fas fa-chart-pie fa-xs"></i>Available seats: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
+													else
+														@Html.Raw("Not Available")
+												</span>
+											}
+										</div>
 							</div>
 
 						</div>
 						<div class="property-btn">
-							<a class="property-link btn btn-primary btn-block" href="@Url.Action("PropertyDetail", "Website", new { ListingID = item.SpaceListing.ListingId })">See Details</a>
-							@*<a class="property-link btn btn-primary btn-block" href="#">See Details</a>*@
-						</div>
+									@if (ViewBag.UserId != null)
+									{
+										<a class="property-link btn btn-primary btn-block" href="@Url.Action("PropertyDetail", "Website", new { ListingID = item.SpaceListing.ListingId })">See Details</a>
+									}
+									else
+									{
+										<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }">See Details</a>
+									}
+
+								</div>
 						@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
 						{
 							@if (item.AvailableHealthCheck != 0 || item.AvailableGreenBuildingCheck != 0)
@@ -260,6 +270,15 @@
 				</div>
 			</div>
 	}
+		</div>
+		<div class="pager">
+			<div class="firstPage pager-icon">&laquo;</div>
+			<div class="previousPage pager-icon">&lsaquo;</div>
+			<div class="pageNumbers custom-scrollbar"></div>
+			<div class="nextPage pager-icon">&rsaquo;</div>
+			<div class="lastPage pager-icon">&raquo;</div>
+		</div>
+	</div>
 
 <div class="repro-item">
 	<div class="result-count">Linked Real Estate Professionals : <span>@Model.LinkedREProfCount</span></div>
@@ -272,7 +291,7 @@
 					@foreach (var repro in Model.LinkedREPRofessionals)
 					{
 						<div class="owl-item">
-							<div class="people-operator__list">
+							<div class="people-operator__list people-operator__listImage">
 								@if (repro.ImageUrl != null)
 								{
 									<img class="oper-img" src="@repro.ImageUrl" data-holder-rendered="true">
@@ -301,5 +320,18 @@
 }
 else
 {
-	<div>Test the value is null</div>
+	<div class="no-result">
+		<div class="no-result__head">
+			Property/Space 
+		</div>
+		<div class="no-result__search">
+			Please select any/other filter options <span class="bg-pry"><i class="fas fa-search-location"></i>Search</span> to get the data
+		</div>
+		<div class="no-result__image">
+			<span class="icon fab flaticon-building"></span>
+		</div>
+		<div>
+			No List Available
+		</div>
+	</div>
 }

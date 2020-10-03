@@ -42,7 +42,11 @@
 										}
 									</div>
 									<div class="lister-detail">
-										<div><i class="fas fa-globe"></i><b>Website: </b> <span>@Model.PropertyList.SpaceUser.Website</span></div>
+										@if(Model.PropertyList.SpaceUser.Website != null)
+										{
+											<div><i class="fas fa-globe"></i><b>Website: </b> <span>@Model.PropertyList.SpaceUser.Website</span></div>
+										}
+										
 										<div><i class="fas fa-mobile-alt"></i><b>Phone: </b><span>@Model.PropertyList.SpaceUser.Phone</span></div>
 										<div><i class="fas fa-city"></i><b>Total List </b><span>(@Model.PropertyList.PropertyCount)</span></div>
 									</div>

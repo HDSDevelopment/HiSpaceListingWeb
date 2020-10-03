@@ -34,7 +34,7 @@
 								<div class="property-details__header text-capitalize">@item.Listing.RE_FirstName<span> - </span> @item.Listing.RE_LastName</div>
 							</div>
 							<div class="property-details__role col-sm-6 align-self-center">
-								<div>Operator Name: <span class="property-details__role-name">@item.Operator.CompanyName</span></div>
+								<div class="mb-1">Operator Name: <span class="property-details__role-name">@item.Operator.CompanyName</span></div>
 								@if (item.Operator.Website != null)
 								{
 									<div>Website: <a href="@item.Operator.Website" target="_blank">@item.Operator.Website</a></div>
@@ -131,6 +131,8 @@
 			</div>
 		</div>
 
+		
+
 		<div class="mb-4">
 			<div class="result-count mb-2 mt-2" id="opCount">Linked operators with us</div>
 			@if (item.LinkedOpr != null)
@@ -143,7 +145,7 @@
 								@foreach (var oper in item.LinkedOpr)
 								{
 								<div class="owl-item">
-									<div class="people-operator__list">
+									<div class="people-operator__list operator__listImage">
 										@if (oper.Doc_CompanyLogo != null)
 										{
 											<img class="oper-img" src="@oper.Doc_CompanyLogo" data-holder-rendered="true">
@@ -170,6 +172,75 @@
 				</div>
 			}
 		</div>
+
+		<div class="enquiry-form d-block">
+								<div class="">
+									<h3 class="text-center">Enquiry</h3>
+								</div>
+								@using (Html.BeginForm("UserEnquiry", "Website", FormMethod.Post, new { @class = "form-row p-3 md-form", enctype = "multipart/form-data", onSubmit = "enquiryFormValidate(event)", id = "enquiryForm" }))
+								{
+									<div class="display-none">
+										<div class="form-group">
+											<input type="text" id="ListingId" name="ListingId" value="@item.Listing.ListingId">
+											<label for="input" class="control-label">Listing id</label><i class="bar"></i>
+
+										</div>
+									</div>
+									<div class="display-none">
+										<div class="form-group">
+											<input type="text" id="Listing_UserId" name="Listing_UserId" value="@item.Listing.UserId">
+											<label for="input" class="control-label">Listing UserId</label><i class="bar"></i>
+										</div>
+									</div>
+									<div class="display-none">
+										<div class="form-group">
+											<input type="text" id="Sender_UserId" name="Sender_UserId" value="@ViewBag.UserId">
+											<label for="input" class="control-label">Sender UserId</label><i class="bar"></i>
+										</div>
+									</div>
+									<div class="display-none">
+										<div class="form-group">
+											<input type="text" id="To_Email" name="To_Email" value="@item.Operator.Email">
+											<label for="input" class="control-label">To Email</label><i class="bar"></i>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<input type="text" id="Sender_Name" name="Sender_Name" placeholder="Name" />
+											<label for="input" class="control-label">Name*</label><i class="bar"></i>
+											<div class="error" id=""></div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<input type="text" id="Sender_Phone" name="Sender_Phone" placeholder="9999999999" />
+											<label for="input" class="control-label">Phone*</label><i class="bar"></i>
+											<div class="error" id=""></div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<input type="email" id="Sender_Email" name="Sender_Email" placeholder="abc@gmail.com" />
+											<label for="input" class="control-label">Email*</label><i class="bar"></i>
+											<div class="error" id=""></div>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<textarea type="text" id="Sender_Message" name="Sender_Message" rows="2" placeholder="Enter your message here..."></textarea>
+											<label for="input" class="control-label">Message*</label><i class="bar"></i>
+											<div class="error" id=""></div>
+										</div>
+									</div>
+									<div class="col-md-12 d-flex justify-content-center mb-3">
+										@*<a class="btn btn-primary btn-sm">Enquiry Now</a>*@
+										<button type="submit" class="btn btn-primary">Enquiry Now</button>
+									</div>
+
+									@*</form>*@
+								}
+							</div>
 
 	}
 </div>

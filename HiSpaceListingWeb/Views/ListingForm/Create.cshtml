@@ -370,7 +370,7 @@
 													<div class="form-group">
 														<div class='input-group date' id='BuildYearDiv'>
 															@*<input type='text' class="form-control" placeholder="YYYY/MM/DD"/>*@
-															@Html.TextBoxFor(m => m.BuildYear, new { @class = "form-control", placeholder = "DD/MM/YYYY", @type = "text" })
+															@Html.TextBoxFor(m => m.BuildYear, new { @class = "form-control", placeholder = "DD-MM-YYYY", @type = "text" })
 															<label for="input" class="control-label">Build Year</label><i class="bar"></i>
 															<span class="input-group-addon">
 																<span class="far fa-calendar-alt"></span>
@@ -383,7 +383,7 @@
 													<div class="form-group">
 														<div class='input-group date' id='RecentInnovationDiv'>
 															@*<input type='text' class="form-control" placeholder="YYYY/MM/DD"/>*@
-															@Html.TextBoxFor(m => m.RecentInnovation, new { @class = "form-control", placeholder = "DD/MM/YYYY", @type = "text" })
+															@Html.TextBoxFor(m => m.RecentInnovation, new { @class = "form-control", placeholder = "DD-MM-YYYY", @type = "text" })
 															<label for="input" class="control-label">Recent Renovation</label><i class="bar"></i>
 															<span class="input-group-addon">
 																<span class="far fa-calendar-alt"></span>
@@ -396,7 +396,7 @@
 													<div class="form-group">
 														@*<input type="number" id="CurrentOccupancy" class="" placeholder="00">*@
 														@Html.EditorFor(m => m.CurrentOccupancy, new { htmlAttributes = new { @class = "form-control", placeholder = "00", @type = "number" } })
-														<label for="CurrentOccupancy" class="control-label">Current Occupancy %</label>
+														<label for="CurrentOccupancy" class="control-label">Available slots/units/seats</label>
 														<i class="bar"></i>
 													</div>
 												</div>

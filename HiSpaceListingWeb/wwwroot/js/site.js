@@ -73,7 +73,7 @@ document.onkeypress = stopRKey;
 $('#BuildYear, #RecentInnovation, #BuildYearDiv, #RecentInnovationDiv').datetimepicker({
 	//viewMode: 'years',
 	//format: 'LT'
-	format: 'DD-MMM-YYYY',
+	format: 'DD-MM-YYYY',
 	//debug: true,
 });
 function userCheck(check) {

@@ -55,7 +55,8 @@
 	<script src="~/js/customSlider.js"></script>
 	<script src="~/js/CustomFilters.js"></script>
 	<script>
-		$(document).on('change', '.dd-filter:visible', function () {    			
+		$(document).on('change', '.dd-filter:visible', function () {    
+			$(".filter-main__type:visible").append("<div class='loader_new-sub'></div>");
 			var value_selected = $(".dd-filter:visible option:selected").val();
 			//console.log(value_selected)
 			$('#myTab li').find('a[href="#' + value_selected + '"]').trigger('click');
@@ -82,7 +83,7 @@
 					+ '</select>');
 				$('.dd-filter').select2();
 			}
-			
+			removeLoader();
 		})
 	</script>
 }
