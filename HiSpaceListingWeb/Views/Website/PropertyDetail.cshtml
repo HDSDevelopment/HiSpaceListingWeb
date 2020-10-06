@@ -1686,6 +1686,47 @@
 
 							<div id="map"></div>
 						</div>
+						@*Linked re-professionals details*@
+						@if (Model.LinkedREProf.Any())
+						{
+<div class="repro-item">
+	<div class="result-count">Linked Real Estate Professionals : <span>@Model.LinkedREProfCount</span></div>
+	<div class="owl-carousel owl-theme owl-loaded carousel-People">
+		<div class="people-operator">
+			<div class="people-operator__head m--tb-15">Linked Real Estate Professionals with us</div>
+			<div class="owl-stage-outer">
+				<div class="owl-stage">
+
+					@foreach (var repro in Model.LinkedREProf)
+					{
+						<div class="owl-item">
+							<div class="people-operator__list people-operator__listImage">
+								@if (repro.ImageUrl != null)
+								{
+									<img class="oper-img" src="@repro.ImageUrl" data-holder-rendered="true">
+								}
+								else
+								{
+									<img class="oper-img" src="~/images/operatorPlaceholder.png" data-holder-rendered="true">
+
+								}
+
+							<div>@repro.REFirstName @repro.RELastName</div>
+								<div class="opertor-details__list"><i class="fas fa-building"></i> @repro.ProjectName</div>
+								<div class="opertor-details__list"><i class="fas fa-user-tie"></i> @repro.ProjectRole</div>
+							<div class="property-btn property-btn__small">
+								<a class="property-link btn btn-sec btn-block"  href="@Url.Action("PeopleDetailListByListingId", "Detail", new { ListingId = repro.ReProfessional_ListingId })">Know More</a>
+							</div>
+							</div>
+						</div>
+					}
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+	}
 					</div>
 				</div>
 			</div>
@@ -1710,6 +1751,7 @@
 	<script defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGZoZkDdeXNlOPbKUG1KIXvBY5cUgQQgk&callback=initMapLatLon">
 	</script>
+<script src="~/js/CustomFilters.js"></script>
 	@*<script defer
 				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-i-AiLbdowFFJ0pw9GxhdAnEWYdzGgis&callback=initMapLatLon">
 		</script>*@

@@ -165,7 +165,30 @@ namespace HiSpaceListingWeb.Controllers
 		//		return RedirectToAction("Index", "Website");
 		//	}
 
-		//}
+		//} 
+
+
+		//Listing delete
+		[HttpGet]
+		public ActionResult DeleteListingByListingId(int ListingId)
+		{
+			SetSessionVariables();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				//HTTP GET
+				var responseTask = client.GetAsync(Common.Instance.ApiListingDeleteListing + ListingId);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var rs = result.Content.ReadAsAsync<bool>().Result;
+					var sr = rs;
+				}
+			}
+			return RedirectToAction("ListingTable", "Listing", new { UserID = GetSessionObject().UserId, UserType = GetSessionObject().UserType });
+		}
 
 		public ActionResult ListingTable(int UserID, int UserType)
 		{

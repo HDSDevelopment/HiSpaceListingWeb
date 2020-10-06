@@ -65,14 +65,15 @@
 					<div class="col-12">
 						<div class="d-block d-md-flex align-items-center text-center">
 							<div class="mr-3 d-inline-block">
-								<a href="tel:1-800-555-1234"><i class="fa fa-phone mr-2 fa fa-flip-horizontal"></i>+91 98403 52595 </a>
+								<a class="mr-3" href="tel:1-800-555-1234"><i class="fa fa-phone mr-2 fa fa-flip-horizontal"></i>+91 98403 52595 </a>
+								<a href = "mailto: support@highbrowdiligence.com"><i class="fas fa-envelope mr-2 fa fa-flip-horizontal"></i>support@highbrowdiligence.com</a>
 							</div>
 							<div class="mr-auto d-inline-block">
 							</div>
 							<div class="dropdown d-inline-block pl-2 pl-md-0">
 								<a class="dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
 							</div>
-							<div class="social d-inline-block">
+							@*<div class="social d-inline-block">
 								<ul class="list-unstyled">
 									<li><a href="#"> <i class="fab fa-facebook-f"></i> </a></li>
 									<li><a href="#"> <i class="fab fa-twitter"></i> </a></li>
@@ -80,7 +81,7 @@
 									<li><a href="#"> <i class="fab fa-pinterest"></i> </a></li>
 									<li><a href="#"> <i class="fab fa-instagram"></i> </a></li>
 								</ul>
-							</div>
+							</div>*@
 							<div class="login d-inline-block">
 								@if (ViewBag.UserId != null && ViewBag.UserId >= 0)
 								{
@@ -118,7 +119,7 @@
 						<li class="nav-item  active">
 							<a class="nav-link" href="@Url.Action( "Index","Website")" id="navbarDropdown">Home</a>
 						</li>
-						@*<li class="nav-item">
+						<li class="nav-item">
 							<a class="nav-link" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">Property</a>
 						</li>
 						<li class="nav-item">
@@ -126,9 +127,9 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">RE-Professionals</a>
-						</li>*@
+						</li>
 
-						<li class="nav-item dropdown">
+						@*<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								HiSpace List <i class="fas fa-chevron-down fa-xs"></i>
 							</a>
@@ -137,7 +138,7 @@
 								<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Operator</a></li>
 								<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">RE-Professionals</a></li>
 							</ul>
-						</li>
+						</li>*@
 						@*<li class="nav-item dropdown ">
 								<a class="nav-link" href="@Url.Action( "About","Website")">About</a>
 							</li>*@

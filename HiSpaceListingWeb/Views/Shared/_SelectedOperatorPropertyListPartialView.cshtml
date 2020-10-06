@@ -19,7 +19,7 @@
 		</div>
 		<div class="page-items">
 			@foreach (var item in Model.PropertyDetail)
-	{
+			{
 		<div class="property-item property-col-list mt-4">
 				<div class="row no-gutters">
 					<div class="col-lg-4 col-md-5 prop-image">
@@ -84,7 +84,7 @@
 					<div class="col-lg-8 col-md-7 prop-details">
 						<div class="property-details">
 							<div class="property-details__head">
-								@if(item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
+								@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
 								{
 
 								<div class="property-details__header">@item.SpaceListing.Name</div>
@@ -114,7 +114,7 @@
 								else
 								{
 									@Html.Raw(@item.SpaceListing.Description);
-									
+
 								}
 							</div>
 							<div class="property-details__section">
@@ -253,7 +253,7 @@
 									}
 									else
 									{
-										<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }">See Details</a>
+										<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView", "User")" href="javascript:function() { return false; }">See Details</a>
 									}
 
 								</div>
@@ -269,7 +269,7 @@
 
 				</div>
 			</div>
-	}
+			}
 		</div>
 		<div class="pager">
 			<div class="firstPage pager-icon">&laquo;</div>
@@ -280,6 +280,8 @@
 		</div>
 	</div>
 
+@if (Model.LinkedREPRofessionals.Any())
+						{
 <div class="repro-item">
 	<div class="result-count">Linked Real Estate Professionals : <span>@Model.LinkedREProfCount</span></div>
 	<div class="owl-carousel owl-theme owl-loaded carousel-People">
@@ -317,6 +319,8 @@
 		</div>
 	</div>
 </div>
+	}
+
 }
 else
 {

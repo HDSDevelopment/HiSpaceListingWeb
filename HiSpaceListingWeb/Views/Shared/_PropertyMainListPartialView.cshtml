@@ -45,7 +45,7 @@
 										asp-items="@(new SelectList(ViewBag.ListOfPropertyLocation, "PropertyLocation", "PropertyLocation"))"></select>
 								<label for="select" class="control-label">City</label><i class="bar"></i>
 							</div>
-							<div class="col-sm-8">
+							<div class="col-sm-8 slider-labels__main">
 							  <div class="row">
 								  <span class="mb-3 price-lable">Price Range</span>
 								<div class="col-sm-12">
@@ -68,6 +68,30 @@
 									<input type="hidden" name="PriceMax" value="">
 								</div>
 							  </div>
+							</div>
+							<div class="col-sm-12">
+								<div class="d-flex">
+										<div class="checkbox-group gb-checkbox">
+											<div class="checkbox-items">
+												<div class="checkbox">
+													<label>
+														<input type="checkbox" id="pr_Filter_healthCheck" />
+														<i class="helper"></i><span class="gb-checkbox__label">Health Check <i class="fas fa-temperature-low btn-icon text-sec"></i> <span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="About Building Health: Air Quality, Temperature, Humidity, Co2, PM2.5, Moisture">?</span></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="checkbox-group gb-checkbox">
+											<div class="checkbox-items">
+												<div class="checkbox">
+													<label>
+														<input type="checkbox" id="pr_Filter_greenBuilding" />
+														<i class="helper"></i><span class="gb-checkbox__label">Green Building Check <i class="fas fa-tree btn-icon text-sec"></i> <span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Green Building Data: Site & Facility Management, Health & Comfort, Water Efficiency, Energy Efficiency">?</span></span>
+													</label>
+												</div>
+											</div>
+										</div>
+								</div>
 							</div>
 						</div>
 					</div>

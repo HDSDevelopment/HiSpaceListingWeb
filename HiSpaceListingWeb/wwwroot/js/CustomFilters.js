@@ -8,6 +8,7 @@ $(document).ready(function () {
 });
 var filterPropertyResult = $('#filterPropertyResult');
 var detailPropertyResult = $('#detailPropertyResult');
+
 //property filter form
 $('#property-form-submit').on('click', function (e) {
 	$("#filterPropertyResult").append("<div class='loader_new-sub'></div>");
@@ -51,11 +52,32 @@ $('#property-form-submit').on('click', function (e) {
 		formData.append("Locality", "");
 	}
 
+	//Health check
+	if ($('#pr_Filter_healthCheck').prop("checked") == true) {
+		formData.append("IsPerformGBC", true);
+	} else {
+		formData.append("IsPerformGBC", "");
+	}
+	//green building check
+	if ($('#pr_Filter_greenBuilding').prop("checked") == true) {
+		formData.append("IsPerformHealthCheck", true);
+	} else {
+		formData.append("IsPerformHealthCheck", "");
+	}
+	//console.log($('#pr_Filter_healthCheck').prop("checked"))
+	//console.log($('#pr_Filter_greenBuilding').prop("checked"))
+
+
+
 	var Pr_PriceMin =  document.getElementsByName('PriceMin').value;
 	formData.append("PriceMin", Pr_PriceMin);
 
 	var Pr_PriceMax = document.getElementsByName('PriceMax').value;
 	formData.append("PriceMax", Pr_PriceMax);
+
+	//for (var pair of formData.entries()) {
+ //   console.log(pair[0]+ ' - ' +pair[1]); 
+	//}
 
 	$.ajax({
 		type: "POST",

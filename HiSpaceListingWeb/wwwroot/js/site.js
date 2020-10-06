@@ -70,6 +70,12 @@ function stopRKey(evt) {
 }
 document.onkeypress = stopRKey;
 
+//model close reload event
+//$('#modal-container__image').on('hidden.bs.modal', function () {
+//  alert('hidden event fired!');
+//});
+
+
 $('#BuildYear, #RecentInnovation, #BuildYearDiv, #RecentInnovationDiv').datetimepicker({
 	//viewMode: 'years',
 	//format: 'LT'
@@ -102,6 +108,11 @@ function userLevelListCheck(check) {
 		return confirm("Are your sure want to activate the space/professional?");
 	}
 }
+//Listing delete
+function deleteListing() {
+	return confirm("Are your sure want to delete the property/people?\nIt also delete all related items like \n(Images, Amenities, Facilities, Available Hours, Projects, Health Check and Green Building Check)");
+}
+
 //Admin level listing check
 function adminLevelListCheck(check) {
 	if (check == 0) {
@@ -200,7 +211,7 @@ function getLocationUsingPostalCode(postal, obj) {
 
 
 $(document).ready(function () {
-	
+
 	PaginationCall();
 	// Initialize Editor
 	$(document).on('click', '.page-nav', function () {
@@ -1525,7 +1536,7 @@ function deleteImage(obj, imageId) {
 
 			},
 			error: function (response) {
-				alert("server not ready please try afterwards");
+				//alert("server not ready please try afterwards");
 			}
 		});
 	}
@@ -1593,7 +1604,7 @@ function deleteImage(obj, imageId) {
 					//console.log($('.propertyDropdown').html());
 				},
 				error: function (response) {
-					alert("server not ready please try afterwards");
+					//alert("server not ready please try afterwards");
 				}
 			});
 			$(this).closest('.operator-main-div').siblings('.property-main-div').removeClass('event-none__property');
@@ -1759,7 +1770,6 @@ function deleteRowProject(obj) {
 	$(obj).closest('.project-upload__row').remove();
 	removeLoader();
 };
-
 //project upload section end
 function AddProjectForm(obj) {
 	var listingId = $(obj).attr('data-listingid');

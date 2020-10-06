@@ -628,7 +628,7 @@ namespace HiSpaceListingWeb.Utilities
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetLocationListForPeopleFilter);
+				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetLocationListForPropertyFilter);
 				responseTask.Wait();
 				var result = responseTask.Result;
 				if (result.IsSuccessStatusCode)
