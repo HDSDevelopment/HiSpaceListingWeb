@@ -196,29 +196,6 @@ function loginValidate(e) {
 	})
 }
 
-//Login validation
-function loginValidate(e) {
-	let formData = { "id": "login form"};
-	$(`#${formData.id} .error`).html(``);
-
-	let rules = [
-		{
-			"id": "Email", "validation": ["emptyRegx"]},
-		{ "id": "Password", "validation": ["emptyRegx"]},
-	];
-
-	validate(formData, rules);
-
-	$(`#${formData.id} .error`).each(function (i) {
-		if ($(this).is(':empty')) {
-		}
-		else {
-			e.preventDefault();
-			return;
-		}
-	})
-}
-
 //forgot password validation
 function forgotValidate(e) {
 	//e.preventDefault();

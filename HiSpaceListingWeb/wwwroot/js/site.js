@@ -890,7 +890,7 @@ $(function () {
 
 	//model open for the forgot password section
 	$('body').on('click', '.modal-link__forgot', function (e) {
-		//console.log('test');
+		console.log('test');
 		e.preventDefault();
 
 		$("#modal-container__forgot").remove();
