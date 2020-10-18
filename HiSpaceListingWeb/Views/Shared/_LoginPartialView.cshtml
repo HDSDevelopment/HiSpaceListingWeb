@@ -31,7 +31,7 @@
 						<label for="input" class="control-label">Password*</label><i class="bar"></i>
 						<div class="error" id="error_Password"></div>
 					</div>
-					<div class="col-md-12 col-sm-12">
+					@*<div class="col-md-12 col-sm-12">
 						<div class="radio-group">
 							<div class="form-radio radio-items radio-item__caption">
 								<div class="radio">
@@ -52,14 +52,21 @@
 								</div>
 							</div>
 						</div>
+					</div>*@
+					//hidden element in login TYPE
+					<div class="display-none">
+						<div class="form-group">
+							<input type="text" name="UserType" value="1">
+						</div>
+					</div>
+					<div class="col-sm-12 mb-4">
+						<a class="modal-link__forgot" data-targeturl="@Url.Action("ForgotPartialView","User")" href="javascript:function() { return false; }" data-dismiss="modal"><span class="">Forgot password?</span></a>
 					</div>
 					<div class="col-sm-6">
 						<button type="submit" class="btn btn-primary btn-block">Login</button>
 					</div>
 					<div class="col-sm-6 align-self-center">
-						<ul class="list-unstyled d-flex mb-1 mt-sm-0 mt-3">
-							<li class="mr-1"><a class="modal-link__signup hover-signup" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }" data-dismiss="modal"><b>New Lister? Click here to <span class="text-sec">Signup</span></b></a></li>
-						</ul>
+						<a class="modal-link__signup btn btn-sec btn-block" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }" data-dismiss="modal"><span class="">Signup</span></a>
 					</div>
 
 					@*@section Scripts{

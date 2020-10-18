@@ -44,6 +44,15 @@
 									@*<div class="property-details__desc">
 
 									</div>*@
+									@if (ViewBag.UserId != null && ViewBag.UserId != -1)
+									{
+										ViewBag.BlurClass = "";
+									}
+									else
+									{
+										ViewBag.BlurClass = "list-blur";
+									}
+									<div class="@ViewBag.BlurClass">
 									<div class="property-details__section">
 										<div class="property-details__section-l">
 											<div>
@@ -136,8 +145,6 @@
 
 
 									</div>
-
-
 									<div class="property-details__footer">
 
 										<div class="property-details__address">
@@ -157,15 +164,20 @@
 											{
 												<div class="property-details__address">
 													<i class="fas fa-globe fa-xs"></i>
-													<a href="@item.Operator.Website" target="_blank">@item.Operator.Website</a>
+													@*<a href="@item.Operator.Website"  target="_blank">*@@item.Operator.Website@*</a>*@
 												</div>
 											}
 										</div>
 									</div>
-
+									<div class="list-blur__background">
+											<div class="list-blur__btn">
+												<a class="property-link btn btn-outline-info modal-link__login obs-center" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }">Join to view the detail</a>
+											</div>
+										</div>
+									</div>
 								</div>
 								<div class="property-btn">
-									@if (ViewBag.UserId != null)
+									@if (ViewBag.UserId != null && ViewBag.UserId != -1)
 									{
 										<a class="property-link btn btn-primary btn-block" href="@Url.Action("SelectOperatorPropertyList", "Detail", new { User = item.Operator.UserId })">See Details</a>
 									}

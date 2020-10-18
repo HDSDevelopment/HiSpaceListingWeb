@@ -61,7 +61,14 @@ $(".loader_new-sub").fadeOut("slow");
 	}, 100);
 	
 };
-
+//enter key submit reload stop
+$(document).on('keyup', '#forgot-form:visible', function (event) {
+	if (event.keyCode == 13) { 
+	  //console.log('test')
+	  event.preventDefault();
+	  return false;
+  }
+});
 //Stop Form Submission of Enter Key Press
 function stopRKey(evt) {
 	var evt = (evt) ? evt : ((event) ? event : null);
@@ -153,6 +160,43 @@ function errAlreadySignedUp(email,obj) {
 		},
 		error: function (response) {
 			alert("server not ready please try afterwards");
+		}
+	});
+}
+
+//password recovery 
+function forgotPassword() {
+	$("#modal-container__forgot").append("<div class='loader_new-sub'></div>");
+	$('#forgot-password__message').empty();
+	$.ajax({
+		type: "GET",
+		url: "/User/PasswordRecovery",
+		data: { Email: $('#forgot-email').val() },
+		context: this,
+		//dataType: "html",
+		success: function (response) {
+			console.log(response);
+			if (response == "1") {
+				//console.log($(obj).html());
+				$('#forgot-password__message').append(
+					'<div class="alert alert-success" role="alert">'+
+					  'Your password has been sent to your email account please check!'+
+					'</div>'
+				);
+				removeLoader();
+			}
+			else{
+				$('#forgot-password__message').append(
+					'<div class="alert alert-warning" role="alert">'+
+					  'You are not registered with hispace please check your email account or contact the HiSpace team!'+
+					'</div>'
+				);
+				removeLoader();
+			}
+		},
+		error: function (response) {
+			removeLoader();
+			alert("server not ready please reload the page");
 		}
 	});
 }
@@ -836,6 +880,27 @@ $(function () {
 				'<div id="modalbody" class="modal-dialog modal-content" role="document"' +
 				data + '</div></div>').modal();
 			if ($('#modal-container__signup').length) {
+				
+			} else {
+				//$("body").addClass("overflow-hidden");
+				//$('.signup').css('overflow', 'auto');
+			}
+		});
+	});
+
+	//model open for the forgot password section
+	$('body').on('click', '.modal-link__forgot', function (e) {
+		//console.log('test');
+		e.preventDefault();
+
+		$("#modal-container__forgot").remove();
+
+		$.get($(this).data("targeturl"), function (data) {
+
+			$('<div id="modal-container__forgot" class="modal signup fade modal-try" tabindex="-1" role="dialog" aria-labelledby="forgotModalLabel" aria-hidden="true">' +
+				'<div id="forgotModal" class="modal-dialog modal-content" role="document"' +
+				data + '</div></div>').modal();
+			if ($('#modal-container__forgot').length) {
 				
 			} else {
 				//$("body").addClass("overflow-hidden");

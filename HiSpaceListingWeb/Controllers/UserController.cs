@@ -35,6 +35,11 @@ namespace HiSpaceListingWeb.Controllers
 			SetSessionVariables();
 			return PartialView("_SignupPartialView");
 		}
+		public ActionResult ForgotPartialView()
+		{
+			SetSessionVariables();
+			return PartialView("_ForgotPasswordPartialView");
+		}
 
 		public ActionResult Logout()
 		{
@@ -361,6 +366,34 @@ namespace HiSpaceListingWeb.Controllers
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
 				var responseTask = client.GetAsync(Common.Instance.ApiUserEmailEixsts + Email);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var rs = result.Content.ReadAsAsync<bool>().Result;
+					if (rs == true)
+					{
+						return Content("1");
+					}
+					else
+					{
+						return Content("");
+					}
+				}
+			}
+			return Content("");
+		}
+
+		//password recovery
+		[HttpGet]
+		public ActionResult PasswordRecovery(string Email)
+		{
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiSendPasswordRecoveryEmail + Email);
 				responseTask.Wait();
 
 				var result = responseTask.Result;

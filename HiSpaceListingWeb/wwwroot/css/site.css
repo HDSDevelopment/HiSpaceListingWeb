@@ -1211,6 +1211,13 @@ html, body {
 	#loginModal .modal-header h5, #loginModal .modal-header button {
 		color: #ffffff;
 	}
+#forgotModal .modal-header {
+background: var(--info-color);
+}
+
+	#forgotModal .modal-header h5, #forgotModal .modal-header button {
+		color: #ffffff;
+	}
 
 #signupModal .modal-header {
 	background: var(--sec-color);
@@ -3747,4 +3754,77 @@ padding-left: 22px;
 }
 .gb-checkbox .checkbox-items {
     margin-right: 35px;
+}
+
+.linked-thumb{
+	display: inline-block;
+	    text-align: center;
+    padding: 10px;
+    margin: 5px;
+    background: #bcbcbc;
+}
+.list-blur{
+	color: transparent;
+   text-shadow: 0 0 5px rgba(0,0,0,0.5);
+   position: relative;
+}
+.list-blur__background{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #ffffff91;
+    top: 0;
+	z-index: 5;
+}
+.obs-center{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.list-blur__btn a{
+	color: var(--info-color);
+       text-shadow: none;
+    background: #ffffff;
+    box-shadow: 2px 3px 20px -7px #000;
+}
+.btn-outline-info {
+    color: var(--info-color);
+    border-color: var(--info-color);
+}
+.btn-outline-info:hover {
+    color: #fff;
+    background-color: var(--info-color);
+    border-color: var(--info-color);
+}
+.list-blur__btn a:hover{
+    box-shadow: 2px 3px 20px -7px #000;
+}
+.list-blur__background{
+	display: none;
+}
+.list-blur .list-blur__background{
+	display: block;
+}
+.list-blur .property-span__tot, .list-blur .property-span__occ{
+	color: transparent;
+}
+
+.modal-link__forgot{
+	color: var(--info-color);
+	font-weight: 600;
+    padding: 5px 10px;  
+    border-radius: 15px;
+    font-size: 13px;
+	transition: all .3s;
+}
+.modal-link__forgot:hover {
+	background: var(--info-color);
+	color: #fff;
+	transition: all .3s;
+}
+.self-value{
+	    padding: 0;
+    font-weight: 600;
+    font-size: 12px;
 }

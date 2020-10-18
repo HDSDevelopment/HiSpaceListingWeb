@@ -49,6 +49,15 @@
 											</div>
 										</div>
 									</div>
+									@if (ViewBag.UserId != null && ViewBag.UserId != -1)
+									{
+										ViewBag.BlurClass = "";
+									}
+									else
+									{
+										ViewBag.BlurClass = "list-blur";
+									}
+									<div class="@ViewBag.BlurClass">
 									<div class="people-details__section">
 										<div class="people-projects mb-2">
 											<span class="property-span__head">Total Projects</span>
@@ -165,8 +174,14 @@
 										</div>
 
 									</div>
+									<div class="list-blur__background">
+											<div class="list-blur__btn">
+												<a class="property-link btn btn-outline-info modal-link__login obs-center" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }">Join to view the detail</a>
+											</div>
+										</div>
+									</div>
 									<div class="">
-										@if (ViewBag.UserId != null)
+										@if (ViewBag.UserId != null && ViewBag.UserId != -1)
 										{
 											<a class="property-link btn btn-primary btn-block" href="@Url.Action("PeopleDetailListByListingId", "Detail", new { ListingId = item.Listing.ListingId })">See Details</a>
 										}

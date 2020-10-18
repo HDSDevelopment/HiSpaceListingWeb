@@ -53,6 +53,7 @@
 	<link rel="stylesheet" href="~/css/custom.css" />
 	<link rel="stylesheet" href="~/css/site.css" />
 	<link rel="stylesheet" href="~/css/summernote.css">
+	<link rel="stylesheet" href="~/css/customResponsive.css">
 </head>
 <body>
 	<div class="loader_new"></div>
@@ -63,10 +64,10 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-12">
-						<div class="d-block d-md-flex align-items-center text-center">
+						<div class="d-block d-flex align-items-center text-center rs-topbar">
 							<div class="mr-3 d-inline-block">
-								<a class="mr-3" href="tel:1-800-555-1234"><i class="fa fa-phone mr-2 fa fa-flip-horizontal"></i>+91 98403 52595 </a>
-								<a href = "mailto: support@highbrowdiligence.com"><i class="fas fa-envelope mr-2 fa fa-flip-horizontal"></i>support@highbrowdiligence.com</a>
+								<a class="mr-3" href="tel:1-800-555-1234"><i class="fa fa-phone mr-2 fa fa-flip-horizontal"></i>+91 89390 84450 </a>
+								<a href = "mailto: support@highbrowdiligence.com" class="d-inline"><i class="fas fa-envelope mr-2 fa fa-flip-horizontal d-inline"></i>support@highbrowdiligence.com</a>
 							</div>
 							<div class="mr-auto d-inline-block">
 							</div>
@@ -100,7 +101,7 @@
 								else
 								{
 									<div class="user-alert bg-pry"></div>
-									<a class="modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"> sign in<i class="fa fa-user pl-2"></i></a>
+									<a class="modal-link__login d-inline" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"> sign in<i class="fa fa-user pl-2 d-inline"></i></a>
 								}
 							</div>
 						</div>
@@ -213,6 +214,18 @@
 	</div>
 	<!--=================================
 	  Modal signup -->
+	<!--=================================
+	 Modal forgot -->
+	<!-- The below code is for the modal dialog forgot section-->
+	<div id="modal-container__forgot" class="modal fade" tabindex="-1" role="dialog">
+		<a href="#close" title="Close" class="modal-close-btn">X</a>
+		<div class="modal-content">
+			<div class="modal-body"></div>
+		</div>
+	</div>
+	<!--=================================
+	  Modal forgot -->
+	<!--=================================
 	<!--statring the body section-->
 	@RenderBody()
 	<!--end the body section-->

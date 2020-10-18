@@ -196,24 +196,43 @@ function loginValidate(e) {
 	})
 }
 
-//Contact enquiry validation
-function ContactEnquiryValidate(e) {
-	//e.preventDefault();
-	let formData = { "id": "contact_form" };
+//Login validation
+function loginValidate(e) {
+	let formData = { "id": "login form"};
 	$(`#${formData.id} .error`).html(``);
 
 	let rules = [
 		{
-			"id": "ce_name", "validation": ["emptyRegx"]},
-		{ "id": "ce_email", "validation": ["emptyRegx"]},
-		{ "id": "ce_phone", "validation": ["emptyRegx"]},
-		{ "id": "ce_text", "validation": ["emptyRegx"]},
-		{ "id": "html_element1", "validation": ["googleCapcha"]},
+			"id": "Email", "validation": ["emptyRegx"]},
+		{ "id": "Password", "validation": ["emptyRegx"]},
+	];
+
+	validate(formData, rules);
+
+	$(`#${formData.id} .error`).each(function (i) {
+		if ($(this).is(':empty')) {
+		}
+		else {
+			e.preventDefault();
+			return;
+		}
+	})
+}
+
+//forgot password validation
+function forgotValidate(e) {
+	//e.preventDefault();
+	let formData = { "id": "forgot-form" };
+	$(`#${formData.id} .error`).html(``);
+
+	let rules = [
+		{ "id": "forgot-email", "validation": ["emptyRegx"]},
 	];
 	validate(formData, rules);
 
 	$(`#${formData.id} .error`).each(function (i) {
 		if ($(this).is(':empty')) {
+			forgotPassword();
 		}
 		else {
 			e.preventDefault();

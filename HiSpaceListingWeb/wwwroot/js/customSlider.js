@@ -12,7 +12,7 @@ $(document).ready(function () {
     prefix: '₹'
   });
   noUiSlider.create(rangeSlider, {
-    start: [1000, 500000],
+    start: [0, 500000],
     step: 1000,
     range: {
       'min': [0],

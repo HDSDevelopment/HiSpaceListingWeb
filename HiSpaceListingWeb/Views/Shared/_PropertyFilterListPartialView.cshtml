@@ -111,6 +111,16 @@
 											@Html.Raw(@item.SpaceListing.Description);
 										}
 									</div>
+
+									@if (ViewBag.UserId != null && ViewBag.UserId != -1)
+									{
+										ViewBag.BlurClass = "";
+									}
+									else
+									{
+										ViewBag.BlurClass = "list-blur";
+									}
+									<div class="@ViewBag.BlurClass">
 									<div class="property-details__section">
 										@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
 										{
@@ -135,7 +145,6 @@
 
 										}
 									</div>
-
 									<div class="property-details__section">
 										<div>
 											<span class="property-span__head">Type: </span>
@@ -203,8 +212,6 @@
 
 
 									</div>
-
-
 									<div class="property-details__footer">
 										<div class="property-details__address">
 											<i class="fas fa-map-marker-alt fa-xs"></i>
@@ -225,7 +232,7 @@
 												<span class="property-span__occ">
 													<i class="fas fa-chart-pie fa-xs"></i>Available slots/units: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
 													else
-														@Html.Raw("Not Available")
+														@Html.Raw("Not Specified")
 												</span>
 											}
 											else if (item.SpaceListing.ListingType == "Co-Working" && item.SpaceListing.CMCW_PropertyFor == "Rental")
@@ -233,11 +240,12 @@
 												<span class="property-span__occ">
 													<i class="fas fa-chart-pie fa-xs"></i>Available seats: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
 													else
-														@Html.Raw("Not Available")
+														@Html.Raw("Not Specified")
 												</span>
 											}
 										</div>
 									</div>
+									
 									@*Linked re-professional inside the property*@
 
 									@if (item.LinkedREProf != null)
@@ -246,21 +254,31 @@
 										<div class="property-details__linkedRe-count">
 											No.of Professionals involved in this property: <span>@item.LinkedREProfCount</span>
 										</div>
-										<div class="row">
+										<div class="">
 											@foreach(var linkedProfessional in item.LinkedREProf)
 											{
-												<div class="col-sm-6 property-details__linkedRe-details">
-													<div>Professional Name: <span>@linkedProfessional.REFirstName - @linkedProfessional.RELastName</span></div>
-													<div>Role: <span>@linkedProfessional.ProjectRole</span></div>
+												<div class="property-details__linkedRe-details linked-thumb">
+													<div>
+														<i class="fas fa-user-tie"></i>
+													</div>
+													<div><span>@linkedProfessional.REFirstName - @linkedProfessional.RELastName</span></div>
+													<div>@*Role:*@ <span>@linkedProfessional.ProjectRole</span></div>
 												</div>
 											}
 										</div>
 											</div>
 									}
+
+										<div class="list-blur__background">
+											<div class="list-blur__btn">
+												<a class="property-link btn btn-outline-info modal-link__login obs-center" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }">Join to view the detail</a>
+											</div>
+										</div>
+									</div>
 								</div>
 								
 								<div class="property-btn">
-									@if (ViewBag.UserId != null)
+									@if (ViewBag.UserId != null && ViewBag.UserId != -1)
 									{
 										<a class="property-link btn btn-primary btn-block" href="@Url.Action("PropertyDetail", "Website", new { ListingID = item.SpaceListing.ListingId })">See Details</a>
 									}

@@ -102,6 +102,7 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiSendEnquiryEmail = "SendEnquiryEmail/";
 		public string ApiSendBackgroundCheckEmail = "SendBackgroundCheckEmail/";
 		public string ApiSendContactEnquiryEmail = "SendContactEnquiryEmail/";
+		public string ApiSendPasswordRecoveryEmail = "SendPasswordRecoveryEmail/";
 
 
 

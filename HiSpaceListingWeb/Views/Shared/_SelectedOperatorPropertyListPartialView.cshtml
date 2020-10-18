@@ -231,7 +231,7 @@
 												<span class="property-span__occ">
 													<i class="fas fa-chart-pie fa-xs"></i>Available slots/units: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
 													else
-														@Html.Raw("Not Available")
+														@Html.Raw("Not Specified")
 												</span>
 											}
 											else if (item.SpaceListing.ListingType == "Co-Working" && item.SpaceListing.CMCW_PropertyFor == "Rental")
@@ -239,7 +239,7 @@
 												<span class="property-span__occ">
 													<i class="fas fa-chart-pie fa-xs"></i>Available seats: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
 													else
-														@Html.Raw("Not Available")
+														@Html.Raw("Not Specified")
 												</span>
 											}
 										</div>
