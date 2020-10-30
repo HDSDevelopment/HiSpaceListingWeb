@@ -578,10 +578,10 @@ Peoplecarousel = function () {
                         items: $this.data('xx-items') ? $this.data('xx-items') : 1
                     },
                     480: {
-                        items: $this.data('xs-items') ? $this.data('xs-items') : 1
+                        items: $this.data('xs-items') ? $this.data('xs-items') : 2
                     },
                     768: {
-                        items: $this.data('sm-items') ? $this.data('sm-items') : 2
+                        items: $this.data('sm-items') ? $this.data('sm-items') : 3
                     },
                     980: {
                         items: $this.data('md-items') ? $this.data('md-items') : 3

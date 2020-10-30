@@ -83,6 +83,7 @@ document.onkeypress = stopRKey;
 //});
 
 
+
 $('#BuildYear, #RecentInnovation, #BuildYearDiv, #RecentInnovationDiv').datetimepicker({
 	//viewMode: 'years',
 	//format: 'LT'
@@ -255,7 +256,6 @@ function getLocationUsingPostalCode(postal, obj) {
 
 
 $(document).ready(function () {
-
 	PaginationCall();
 	// Initialize Editor
 	$(document).on('click', '.page-nav', function () {
@@ -2145,7 +2145,7 @@ function addAmenities(obj) {
 		'<div class="error"></div>'+
 		'</div>' +
 		'</div>' +
-		'<div class="col-md-2 col-sm-4 col-6 ">' +
+		'<div class="col-md-2 col-sm-4 ">' +
 		'<div class="form-group">' +
 		'<select class="form-control basic-select am-option amenityType" id="">' +
 		'<option value="Free">Free</option>' +
@@ -2421,7 +2421,7 @@ function addFacilities(obj) {
 		'<label for="input" class="control-label">Facility</label><i class="bar"></i>' +
 		'</div>' +
 		'</div>' +
-		'<div class="col-lg-3 col-md-3 col-sm-4 col-6 ">' +
+		'<div class="col-lg-3 col-md-3 col-sm-4 ">' +
 		'<div class="form-group">' +
 		'<select class="form-control am-option facilityDistance" id="">' +
 		'<option value="0 to .5KM">0 to .5KM</option>' +

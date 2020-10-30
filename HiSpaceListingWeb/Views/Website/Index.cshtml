@@ -107,7 +107,7 @@
 									Manage Your Space
 									<i class="fas fa-angle-double-right"></i>
 								</div>
-								</a>
+							</a>
 						</div>
 						<div class="slide-type">
 							<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">
@@ -118,19 +118,19 @@
 									Find RE-Professionals You Know
 									<i class="fas fa-angle-double-right"></i>
 								</div>
-								</a>
+							</a>
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-7 col-xl-7 order-1 order-md-2">
 						<h1 class="text-white mb-4 display-4 font-weight-bold slide-heading">Welcome to the Commercial Real Estate Community for the Next Generation Industry Evolution</h1>
-						<div class="slide-btn">
-							<div class="property-btn">
-								<a class="property-link btn btn-sec modal-link__signup" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-hands-helping"></i> Join Now</a>
-							</div>
-							<div class="property-btn">
-								<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-sign-in-alt"></i> Login</a>
-							</div>
-						</div>
+						@*<div class="slide-btn">
+								<div class="property-btn">
+									<a class="property-link btn btn-sec modal-link__signup" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-hands-helping"></i> Join Now</a>
+								</div>
+								<div class="property-btn">
+									<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-sign-in-alt"></i> Login</a>
+								</div>
+							</div>*@
 					</div>
 				</div>
 			</div>
@@ -209,7 +209,7 @@
 	<section class="section-card card-2" id="card-2">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-6 order-2 order-md-1">
 					<h2 class="text-info">Manage Your Space</h2>
 					<div>
 						<ul>
@@ -245,14 +245,14 @@
 						</div>
 					}
 				</div>
-				<div class="col-md-6 h-100">
+				<div class="col-md-6 h-100 order-1 order-md-2">
 					<img src="~/images/slider/image-02.jpg" />
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<section class="section-card card-3" id="card-3">
+	<section class="section-card card-3 mb-3 mb-md-0" id="card-3">
 		<div class="container">
 			<div class="row pt-5">
 				<div class="col-md-6 h-100">
@@ -284,10 +284,10 @@
 					}
 					else
 					{
-				<div class="property-btn">
-					<a class="property-link btn btn-primary" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">Click Here</a>
-					@*<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"> Click Here</a>*@
-				</div>
+						<div class="property-btn">
+							<a class="property-link btn btn-primary" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">Click Here</a>
+							@*<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"> Click Here</a>*@
+						</div>
 					}
 				</div>
 			</div>
@@ -296,77 +296,78 @@
 	<!--=================================
 	testimonial -->
 	@*<section class="space-ptb">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="section-title">
-						<h2>Testimonials</h2>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="section-title">
+							<h2>Testimonials</h2>
+						</div>
+						<div class="owl-carousel owl-nav-top-left" data-nav-arrow="true" data-items="1" data-md-items="1" data-sm-items="1" data-xs-items="1" data-xx-items="1" data-space="0">
+							<div class="item">
+								<div class="testimonial-02">
+									<div class="testimonial-content">
+										<p><i class="fas fa-quote-right quotes"></i>Oliver always had a smile and was so quick to answer and get the job done.  I'll definitely suggest you to anyone we know who is selling or wanting to purchase a home. He is the best!</p>
+									</div>
+									<div class="testimonial-author">
+										<div class="testimonial-avatar avatar avatar-lg mr-3">
+											<img class="img-fluid rounded-circle" src="images/avatar/01.jpg" alt="">
+										</div>
+										<div class="testimonial-name">
+											<h6 class="text-primary mb-1">Michael Bean</h6>
+											<span>Hamilton Rd. Willoughby</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="item">
+								<div class="testimonial-02">
+									<div class="testimonial-content">
+										<p><i class="fas fa-quote-right quotes"></i>Jennifer & Dave were both instructive and very valuable in making my decision. I would Surly recommend them to anyone looking for a hassle free and efficient real estate experience.</p>
+									</div>
+									<div class="testimonial-author">
+										<div class="testimonial-avatar avatar avatar-lg mr-3">
+											<img class="img-fluid rounded-circle" src="images/avatar/02.jpg" alt="">
+										</div>
+										<div class="testimonial-name">
+											<h6 class="text-primary mb-1">Isabelle</h6>
+											<span>West Division Street</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="owl-carousel owl-nav-top-left" data-nav-arrow="true" data-items="1" data-md-items="1" data-sm-items="1" data-xs-items="1" data-xx-items="1" data-space="0">
-						<div class="item">
-							<div class="testimonial-02">
-								<div class="testimonial-content">
-									<p><i class="fas fa-quote-right quotes"></i>Oliver always had a smile and was so quick to answer and get the job done.  I'll definitely suggest you to anyone we know who is selling or wanting to purchase a home. He is the best!</p>
-								</div>
-								<div class="testimonial-author">
-									<div class="testimonial-avatar avatar avatar-lg mr-3">
-										<img class="img-fluid rounded-circle" src="images/avatar/01.jpg" alt="">
+					<div class="col-lg-6 mt-5 mt-lg-0">
+						<div class="owl-carousel owl-nav-center" data-nav-dots="true" data-items="1" data-md-items="1" data-sm-items="1" data-xs-items="1" data-xx-items="1" data-space="0">
+							<div class="item">
+								<div class="testimonial-02 testimonial-02-small">
+									<div class="testimonial-content">
+										<p><i class="fas fa-quote-right quotes"></i>Oliver always had a smile and was so quick to answer and get the job done.  I'll definitely suggest you to anyone we know who is selling or wanting to purchase a home. He is the best!</p>
 									</div>
-									<div class="testimonial-name">
-										<h6 class="text-primary mb-1">Michael Bean</h6>
-										<span>Hamilton Rd. Willoughby</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="testimonial-02">
-								<div class="testimonial-content">
-									<p><i class="fas fa-quote-right quotes"></i>Jennifer & Dave were both instructive and very valuable in making my decision. I would Surly recommend them to anyone looking for a hassle free and efficient real estate experience.</p>
-								</div>
-								<div class="testimonial-author">
-									<div class="testimonial-avatar avatar avatar-lg mr-3">
-										<img class="img-fluid rounded-circle" src="images/avatar/02.jpg" alt="">
-									</div>
-									<div class="testimonial-name">
-										<h6 class="text-primary mb-1">Isabelle</h6>
-										<span>West Division Street</span>
+									<div class="testimonial-author">
+										<div class="testimonial-avatar avatar avatar-lg mr-3">
+											<img class="img-fluid rounded-circle" src="images/avatar/01.jpg" alt="">
+										</div>
+										<div class="testimonial-name">
+											<h6 class="text-primary">Mikah Hargrove</h6>
+											<span>Hamilton Rd. Willoughby</span>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 mt-5 mt-lg-0">
-					<div class="owl-carousel owl-nav-center" data-nav-dots="true" data-items="1" data-md-items="1" data-sm-items="1" data-xs-items="1" data-xx-items="1" data-space="0">
-						<div class="item">
-							<div class="testimonial-02 testimonial-02-small">
-								<div class="testimonial-content">
-									<p><i class="fas fa-quote-right quotes"></i>Oliver always had a smile and was so quick to answer and get the job done.  I'll definitely suggest you to anyone we know who is selling or wanting to purchase a home. He is the best!</p>
-								</div>
-								<div class="testimonial-author">
-									<div class="testimonial-avatar avatar avatar-lg mr-3">
-										<img class="img-fluid rounded-circle" src="images/avatar/01.jpg" alt="">
+							<div class="item">
+								<div class="testimonial-02 testimonial-02-small">
+									<div class="testimonial-content">
+										<p><i class="fas fa-quote-right quotes"></i>Jennifer & Dave were both instructive and very valuable in making my decision. I would Surly recommend them to anyone looking for a hassle free and efficient real estate experience.</p>
 									</div>
-									<div class="testimonial-name">
-										<h6 class="text-primary">Mikah Hargrove</h6>
-										<span>Hamilton Rd. Willoughby</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="testimonial-02 testimonial-02-small">
-								<div class="testimonial-content">
-									<p><i class="fas fa-quote-right quotes"></i>Jennifer & Dave were both instructive and very valuable in making my decision. I would Surly recommend them to anyone looking for a hassle free and efficient real estate experience.</p>
-								</div>
-								<div class="testimonial-author">
-									<div class="testimonial-avatar avatar avatar-lg mr-3">
-										<img class="img-fluid rounded-circle" src="images/avatar/02.jpg" alt="">
-									</div>
-									<div class="testimonial-name">
-										<h6 class="text-primary">Joana williams</h6>
-										<span>Piper Drive Zion</span>
+									<div class="testimonial-author">
+										<div class="testimonial-avatar avatar avatar-lg mr-3">
+											<img class="img-fluid rounded-circle" src="images/avatar/02.jpg" alt="">
+										</div>
+										<div class="testimonial-name">
+											<h6 class="text-primary">Joana williams</h6>
+											<span>Piper Drive Zion</span>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -374,8 +375,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>*@
+		</section>*@
 	<!--=================================
 	testimonial -->
 </div>
