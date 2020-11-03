@@ -83,7 +83,6 @@ document.onkeypress = stopRKey;
 //});
 
 
-
 $('#BuildYear, #RecentInnovation, #BuildYearDiv, #RecentInnovationDiv').datetimepicker({
 	//viewMode: 'years',
 	//format: 'LT'
@@ -256,6 +255,7 @@ function getLocationUsingPostalCode(postal, obj) {
 
 
 $(document).ready(function () {
+	
 	PaginationCall();
 	// Initialize Editor
 	$(document).on('click', '.page-nav', function () {

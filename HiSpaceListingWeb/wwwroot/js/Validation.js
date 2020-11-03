@@ -94,6 +94,24 @@
 //	}
 //}
 
+//if (navigator.userAgent.indexOf("MSIE") == 1) {
+//	alert("Please use IE");
+//} else {
+//	alert("Please use Chrome");
+//}
+//if (navigator.appName != "Microsoft Internet Explorer")
+//{
+//    alert("Please use IE");
+//}
+//var ua = window.navigator.userAgent;
+//var isIE = /MSIE|Trident|Edge\//.test(ua);
+
+//if (isIE) {
+//	//IE specific code goes here
+//	console.log('test')
+//} else {
+//	console.log('a')
+//}
 
 
 var regx = {
@@ -113,12 +131,13 @@ var regx = {
 	"postRegx": { "rule": /^[1-9][0-9]{5}$/, "error": "Invalid Postal No." },
 	//"postRegx": { "rule": /^\d{6}$/, "error": "Invalid Postal No." },
 	"numberRegx": { "rule": /^[+-]?\d+(\.\d+)?$/, "error": "Invalid No." },
-	"googleCapcha": {"rule": /([^\s])/, "error": "You can't leave Captcha Code empty" }
+	"googleCapcha": { "rule": /([^\s])/, "error": "You can't leave Captcha Code empty" }
 }
 function validate(formData, rules) {
 	console.log(formData);
 	$.each(rules, function (i, n) {
 		var input = $(`#${formData.id} #${n.id}`);
+		//var input = $("#"+formData.id+ "#"+n.id);
 		console.log(input)
 		console.log(input.prop("tagName"))
 		if (input.prop("tagName") == "textarea") {
@@ -145,7 +164,7 @@ function validate(formData, rules) {
 			var value = input.val();
 			//console.log(value);
 		}
-		
+
 		$.each(n.validation, function (j, k) {
 			//if (regx[k]["rule"] == "checkboxRegx") {
 			if (n.validation[0] == "checkboxRegx") {
@@ -175,13 +194,14 @@ function validate(formData, rules) {
 
 //Login validation
 function loginValidate(e) {
-	let formData = { "id": "login form"};
+	let formData = { "id": "login form" };
 	$(`#${formData.id} .error`).html(``);
 
 	let rules = [
 		{
-			"id": "Email", "validation": ["emptyRegx"]},
-		{ "id": "Password", "validation": ["emptyRegx"]},
+			"id": "Email", "validation": ["emptyRegx"]
+		},
+		{ "id": "Password", "validation": ["emptyRegx"] },
 	];
 
 	validate(formData, rules);
@@ -203,7 +223,7 @@ function forgotValidate(e) {
 	$(`#${formData.id} .error`).html(``);
 
 	let rules = [
-		{ "id": "forgot-email", "validation": ["emptyRegx"]},
+		{ "id": "forgot-email", "validation": ["emptyRegx"] },
 	];
 	validate(formData, rules);
 
@@ -224,10 +244,10 @@ function enquiryFormValidate(e) {
 	let formData = { "id": "enquiryForm" };
 	$(`#${formData.id} .error`).html(``);
 
-	let rules = [{ "id": "Sender_Name", "validation": ["emptyRegx"]},
-		{ "id": "Sender_Phone", "validation": ["emptyRegx"] },
-		{ "id": "Sender_Email", "validation": ["emptyRegx"] },
-		{ "id": "Sender_Message", "validation": ["emptyRegx"] },
+	let rules = [{ "id": "Sender_Name", "validation": ["emptyRegx"] },
+	{ "id": "Sender_Phone", "validation": ["emptyRegx"] },
+	{ "id": "Sender_Email", "validation": ["emptyRegx"] },
+	{ "id": "Sender_Message", "validation": ["emptyRegx"] },
 	];
 
 	validate(formData, rules);
@@ -249,39 +269,39 @@ function enquiryFormValidate(e) {
 
 //Signup validation
 function signupValidate(e) {
-	
+
 	let formData = { "id": "signup form" };
 	$(`#${formData.id} .error`).html(``);
 	let rules;
 
 	if ($('#sign-Address').is(':visible')) {
 		rules = [
-		{ "id": "sign-CompanyName", "validation": ["emptyRegx"] },
-		{ "id": "sign-Phone", "validation": ["emptyRegx", "phoneRegx"] },
-		{"id": "sign-Email", "validation": ["emptyRegx"] },
-		{ "id": "sign-Password", "validation": ["emptyRegx", "passwordRegx"] },
-		{ "id": "sign-Address", "validation": ["emptyRegx"] },
-		{ "id": "sign-Postalcode", "validation": ["emptyRegx", "postRegx"] },
-		{ "id": "TermsAndConditions", "validation": ["checkboxRegx"] },
+			{ "id": "sign-CompanyName", "validation": ["emptyRegx"] },
+			{ "id": "sign-Phone", "validation": ["emptyRegx", "phoneRegx"] },
+			{ "id": "sign-Email", "validation": ["emptyRegx"] },
+			{ "id": "sign-Password", "validation": ["emptyRegx", "passwordRegx"] },
+			{ "id": "sign-Address", "validation": ["emptyRegx"] },
+			{ "id": "sign-Postalcode", "validation": ["emptyRegx", "postRegx"] },
+			{ "id": "TermsAndConditions", "validation": ["checkboxRegx"] },
 		];
 	} else {
 		rules = [
-		{ "id": "sign-CompanyName", "validation": ["emptyRegx"] },
-		{ "id": "sign-Phone", "validation": ["emptyRegx", "phoneRegx"] },
-		{"id": "sign-Email", "validation": ["emptyRegx"] },
-		{ "id": "sign-Password", "validation": ["emptyRegx", "passwordRegx"] },
-		{ "id": "TermsAndConditions", "validation": ["checkboxRegx"] },
+			{ "id": "sign-CompanyName", "validation": ["emptyRegx"] },
+			{ "id": "sign-Phone", "validation": ["emptyRegx", "phoneRegx"] },
+			{ "id": "sign-Email", "validation": ["emptyRegx"] },
+			{ "id": "sign-Password", "validation": ["emptyRegx", "passwordRegx"] },
+			{ "id": "TermsAndConditions", "validation": ["checkboxRegx"] },
 		];
 	}
 
-	
+
 	//console.log(rules)
 	var User_Website = "sign-Website";
 	if ($(`#${User_Website}`).val() && $(`#${User_Website}`).val() != "") {
 		rules.push({ "id": "sign-Website", "validation": ["websiteRegx"] });
 	}
 	validate(formData, rules);
-	
+
 	$(`#${formData.id} .error`).each(function (i) {
 		if ($(this).is(':empty')) {
 		}
@@ -312,10 +332,11 @@ function EditUserValidate(e) {
 	//e.preventDefault();
 	if ($(`#${User_Website}`).val() && $(`#${User_Website}`).val() != "") {
 		rules.push({
-			"id": "Website", "validation": ["websiteRegx"] });
+			"id": "Website", "validation": ["websiteRegx"]
+		});
 	}
 	validate(formData, rules);
-	
+
 	$(`#${formData.id} .error`).each(function (i) {
 		if ($(this).is(':empty')) {
 
@@ -379,7 +400,7 @@ function basicInformationValidate(e) {
 	if ($(`#${User_Postalcode}`).val() && $(`#${User_Postalcode}`).val() != "") {
 		rules.push({ "id": "User_Postalcode", "validation": ["postRegx"] });
 	}
-	
+
 	validate(formData, rules);
 	$(`#${formData.id} .error`).each(function (i) {
 

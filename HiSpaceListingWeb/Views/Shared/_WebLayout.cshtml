@@ -55,9 +55,11 @@
 	<link rel="stylesheet" href="~/css/site.css" />
 	<link rel="stylesheet" href="~/css/summernote.css">
 	<link rel="stylesheet" href="~/css/customResponsive.css">
+	
 </head>
 <body>
 	<div class="loader_new"></div>
+	<div id="disclaimer"></div>
 	<!--=================================
 	header -->
 	<header class="header">
@@ -341,7 +343,16 @@
 	<script src="~/js/magnific-popup/jquery.magnific-popup.min.js"></script>
 	<script src="~/js/rater.js"></script>
 	@*<script src="~/js/jquery.validate.min.js"></script>*@
-
+	<script>
+		if (/MSIE (\d+\.\d+);/.test(navigator.userAgent) || navigator.userAgent.indexOf("Trident/") > -1) {
+			alert("Welcome!\nBrowser won't support. Please use the latest version or chrome for good result.")
+			// Do stuff with Internet-Exploders ... :)
+			const htmlStr = '<div class="alert alert-warning alert-dismissible fade show m-0 p-4 text-center" role="alert"><strong> Welcome!</strong> For the better result please use the latest browsers or chrome browser<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+			document.getElementById('disclaimer').innerHTML += htmlStr;
+		} else {
+			
+		}
+	</script>
 	<!-- Template Scripts (Do not remove)-->
 	<script src="~/js/custom.js"></script>
 	@*<script src="~/js/customMap.js"></script>*@
