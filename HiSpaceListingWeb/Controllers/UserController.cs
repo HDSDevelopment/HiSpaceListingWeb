@@ -86,9 +86,8 @@ namespace HiSpaceListingWeb.Controllers
 				{
 					AssignSessionVariables(_user);
 					SetSessionVariables();
-					return RedirectToAction("ListingTable", "Listing", new { UserID = _user.UserId, UserType = _user.UserType });
-					//			return RedirectToAction("ListingTable", new RouteValueDictionary(
-					//new { controller = "Listing", action = "ListingTable", UserID = _user.UserId }));
+					//return RedirectToAction("ListingTable", "Listing", new { UserID = _user.UserId, UserType = _user.UserType });
+					return RedirectToAction("PropertyOperatorPeopleAndFilterMenu", "Filter", new { ListShowType = 1 });
 				}
 				//admin check
 				else if (_user != null && _user.UserId == 0 && _user.Email == user.Email && _user.Password == user.Password && _user.UserType == 0)

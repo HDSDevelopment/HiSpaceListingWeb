@@ -121,7 +121,7 @@ var regx = {
 	//"emailRegx": { "rule": /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, "error": "Invalid Email" },
 	"emailRegx": { "rule": /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)$/, "error": "Invalid Email" },
 	//"passwordRegx": { "rule": /^[A-Za-z]\w{5,26}$/, "error": "Minimum password length is minmum 6" },
-	"passwordRegx": { "rule": /[0-9a-zA-Z]{6,}/, "error": "Minimum password length is minmum 6" },
+	"passwordRegx": { "rule": /[0-9a-zA-Z\d$@$!%*?&.]{6,}/, "error": "Minimum password length is minmum 6" },
 	"checkboxRegx": { "rule": /true/, "error": "cannot be unchecked" },
 	//"selectRegx": { "rule": /PleaseSelect/, "error": "cannot be unselect" },
 	//"gstRegx": { "rule": /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/, "error": "Invalid GST" },

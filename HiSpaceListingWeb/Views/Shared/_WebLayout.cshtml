@@ -8,6 +8,10 @@
 }
 @{
 	Layout = null;
+	//var test = ViewContext.RouteData.Values["Action"];
+	//var testd = Context.Request.QueryString.Value;
+	//var teste = Context.Request.Query["ListShowType"].ToString();
+	//var testc = ViewContext.RouteData.Values["Controller"];
 
 }
 
@@ -89,22 +93,22 @@
 							<div class="login d-inline-block">
 								@if (ViewBag.UserId != null && ViewBag.UserId >= 0)
 								{
-									<div class="user-alert bg-sec"></div>
-									<ul class="nav navbar-nav">
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												@ViewBag.UserCompanyName <i class="fa fa-user pl-2"></i>
-											</a>
-											<ul class="dropdown-menu">
-												<li><a class="dropdown-item" href="@Url.Action( "Logout","User")">Sign out</a></li>
-											</ul>
-										</li>
-									</ul>
+								<div class="user-alert bg-sec"></div>
+								<ul class="nav navbar-nav">
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											@ViewBag.UserCompanyName <i class="fa fa-user pl-2"></i>
+										</a>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="@Url.Action( "Logout","User")">Sign out</a></li>
+										</ul>
+									</li>
+								</ul>
 								}
 								else
 								{
-									<div class="user-alert bg-pry"></div>
-									<a class="modal-link__login d-inline" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"> sign in<i class="fa fa-user pl-2 d-inline"></i></a>
+								<div class="user-alert bg-pry"></div>
+								<a class="modal-link__login d-inline" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"> sign in<i class="fa fa-user pl-2 d-inline"></i></a>
 								}
 							</div>
 						</div>
@@ -120,38 +124,38 @@
 				</a>
 				<div class="navbar-collapse collapse justify-content-center">
 					<ul class="nav navbar-nav">
-						<li class="nav-item  active">
+						<li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString()) == "Index" ? "active" : "" )">
 							<a class="nav-link" href="@Url.Action( "Index","Website")" id="navbarDropdown">Home</a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item @(((Context.Request.Query["ListShowType"].ToString()) == "1") || ((ViewContext.RouteData.Values["Action"].ToString()) == "PropertyDetail") ? "active" : "" )">
 							<a class="nav-link" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">Property</a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item @(((Context.Request.Query["ListShowType"].ToString()) == "2") || ((ViewContext.RouteData.Values["Action"].ToString()) == "SelectOperatorPropertyList") ? "active" : "" )">
 							<a class="nav-link" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Operator</a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item @(((Context.Request.Query["ListShowType"].ToString()) == "3") || ((ViewContext.RouteData.Values["Action"].ToString()) == "PeopleDetailListByListingId") ? "active" : "" )">
 							<a class="nav-link" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">RE-Professionals</a>
 						</li>
 
 						@*<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									HiSpace List <i class="fas fa-chevron-down fa-xs"></i>
-								</a>
-								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">Property</a></li>
-									<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Operator</a></li>
-									<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">RE-Professionals</a></li>
-								</ul>
-							</li>*@
+			<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				HiSpace List <i class="fas fa-chevron-down fa-xs"></i>
+			</a>
+			<ul class="dropdown-menu">
+				<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">Property</a></li>
+				<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Operator</a></li>
+				<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">RE-Professionals</a></li>
+			</ul>
+		</li>*@
 						@*<li class="nav-item dropdown ">
-								<a class="nav-link" href="@Url.Action( "About","Website")">About</a>
-							</li>*@
-						<li class="nav-item  ">
+			<a class="nav-link" href="@Url.Action( "About","Website")">About</a>
+		</li>*@
+						<li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString()) == "Contact" ? "active" : "" )">
 							<a class="nav-link" href="@Url.Action( "Contact","Website")" id="navbarDropdown">Contact</a>
 						</li>
 						@if (ViewBag.UserId != null && ViewBag.UserId == 0 && ViewBag.UserType == 0)
 						{
-							<li class="nav-item dropdown">
+							<li class="nav-item dropdown @((ViewContext.RouteData.Values["Controller"].ToString()) == "Admin" ? "active" : "" )">
 								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									Dashboard <i class="fas fa-chevron-down fa-xs"></i>
 								</a>
@@ -162,28 +166,29 @@
 						}
 						else if (ViewBag.UserId != null && ViewBag.UserId > 0 && ViewBag.UserType == 1)
 						{
-							<li class="nav-item dropdown bg-sec">
-								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Dashboard <i class="fas fa-chevron-down fa-xs"></i>
-								</a>
-								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})">My Details/Listing</a></li>
-									<li><a class="dropdown-item" href="@Url.Action( "LinkedPeople","Listing",new { UserID = ViewBag.UserId})">Linked People/Professional</a></li>
-									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "User"})">Recived Enquiries</a></li>
-									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "My"})">My Enquiries</a></li>
-								</ul>
-							</li>
+							
+						<li class="nav-item dropdown @(((ViewContext.RouteData.Values["Controller"].ToString()) == "Listing") || ((ViewContext.RouteData.Values["Controller"].ToString()) == "ListingForm") ? "active" : "" )">
+							<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Dashboard <i class="fas fa-chevron-down fa-xs"></i>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})">My Details/Listing</a></li>
+								<li><a class="dropdown-item" href="@Url.Action( "LinkedPeople","Listing",new { UserID = ViewBag.UserId})">Linked People/Professional</a></li>
+								<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "User"})">Recived Enquiries</a></li>
+								<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "My"})">My Enquiries</a></li>
+							</ul>
+						</li>
 						}
 						else if (ViewBag.UserId != null && ViewBag.UserId > 0 && ViewBag.UserType == 2)
 						{
-							<li class="nav-item dropdown bg-sec">
-								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Dashboard <i class="fas fa-chevron-down fa-xs"></i>
-								</a>
-								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "My"})">My Enquiries</a></li>
-								</ul>
-							</li>
+						<li class="nav-item dropdown @((ViewContext.RouteData.Values["Controller"].ToString()) == "Listing" ? "active" : "" )">
+							<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Dashboard <i class="fas fa-chevron-down fa-xs"></i>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "My"})">My Enquiries</a></li>
+							</ul>
+						</li>
 						}
 					</ul>
 				</div>
@@ -195,14 +200,14 @@
 				}
 				else
 				{
-					<div class="slide-btn align-self-center">
-						<div class="property-btn">
-							<a class="property-link btn btn-sec modal-link__signup" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-hands-helping"></i> Join Now</a>
-						</div>
-						<div class="property-btn">
-							<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-sign-in-alt"></i> Login</a>
-						</div>
+				<div class="slide-btn align-self-center">
+					<div class="property-btn">
+						<a class="property-link btn btn-sec modal-link__signup" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-hands-helping"></i> Join Now</a>
 					</div>
+					<div class="property-btn">
+						<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-sign-in-alt"></i> Login</a>
+					</div>
+				</div>
 				}
 
 			</div>
@@ -350,15 +355,15 @@
 			const htmlStr = '<div class="alert alert-warning alert-dismissible fade show m-0 p-4 text-center" role="alert"><strong> Welcome!</strong> For the better result please use the latest browsers or chrome browser<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 			document.getElementById('disclaimer').innerHTML += htmlStr;
 		} else {
-			
+
 		}
 	</script>
 	<!-- Template Scripts (Do not remove)-->
 	<script src="~/js/custom.js"></script>
 	@*<script src="~/js/customMap.js"></script>*@
-	<script src="~/js/Validation.js"></script>
-	<script src="~/js/site.js"></script>
-	<script src="~/js/summernote.js"></script>
-	@RenderSection("Scripts", required: false)
+							<script src="~/js/Validation.js"></script>
+							<script src="~/js/site.js"></script>
+							<script src="~/js/summernote.js"></script>
+							@RenderSection("Scripts", required: false)
 </body>
 </html>

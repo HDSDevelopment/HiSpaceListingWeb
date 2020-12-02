@@ -180,7 +180,7 @@
 					<img src="~/images/slider/image-01.jpg" />
 				</div>
 				<div class="col-md-6">
-					<h2 class="text-sec">Find Your Space</h2>
+					<h2 class="text-pry">Find Your Space</h2>
 					<div>
 						<ul>
 							<li>
@@ -198,7 +198,7 @@
 						</ul>
 					</div>
 					<div class="property-btn">
-						<a class="property-link btn btn-sec" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">Click Here</a>
+						<a class="property-link btn btn-primary" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">Click Here</a>
 						@*<a class="property-link btn btn-sec modal-link__filter" data-targeturl="@Url.Action("FilterPartialView","Website")" href="javascript:function() { return false; }"> Click Here</a>*@
 					</div>
 				</div>
@@ -210,7 +210,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 order-2 order-md-1">
-					<h2 class="text-info">Manage Your Space</h2>
+					<h2 class="text-sec">Manage Your Space</h2>
 					<div>
 						<ul>
 							<li>
@@ -233,14 +233,14 @@
 					@if (ViewBag.UserId != null)
 					{
 						<div class="property-btn">
-							<a class="property-link btn btn-info" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Click Here</a>
+							<a class="property-link btn btn-sec" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Click Here</a>
 							@*<a class="property-link btn btn-info" href="@Url.Action("ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType })">Click Here</a>*@
 						</div>
 					}
 					else
 					{
 						<div class="property-btn">
-							<a class="property-link btn btn-info" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Click Here</a>
+							<a class="property-link btn btn-sec" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Click Here</a>
 							@*<a class="property-link btn btn-info modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"> Click Here</a>*@
 						</div>
 					}
@@ -259,7 +259,7 @@
 					<img src="~/images/slider/image-03.jpg" />
 				</div>
 				<div class="col-md-6">
-					<h2 class="text-pry">Find RE-Professionals You Know</h2>
+					<h2 class="text-info">Find RE-Professionals You Know</h2>
 					<div>
 						<ul>
 							<li>
@@ -278,14 +278,14 @@
 					@if (ViewBag.UserId != null)
 					{
 						<div class="property-btn">
-							<a class="property-link btn btn-primary" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">Click Here</a>
+							<a class="property-link btn btn-info" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">Click Here</a>
 							@*<a class="property-link btn btn-primary" href="@Url.Action("ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType })">Click Here</a>*@
 						</div>
 					}
 					else
 					{
 						<div class="property-btn">
-							<a class="property-link btn btn-primary" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">Click Here</a>
+							<a class="property-link btn btn-info" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">Click Here</a>
 							@*<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"> Click Here</a>*@
 						</div>
 					}

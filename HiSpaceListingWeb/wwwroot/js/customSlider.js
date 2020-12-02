@@ -2,30 +2,50 @@
 
 // Initialize slider:
 $(document).ready(function () {
+    //custom values for the price
+    var rangeSlider = document.getElementById('slider-range');
+    var maxAmount = 10000;
+    $(document).on('change', '#Pr_Filter_For', function () { 
+       //console.log($(this).val());
+        maxAmount = 20000;
+        rangeSlider.noUiSlider.updateOptions({
+            start: [0, maxAmount],
+            step: 2000,
+            range: {
+                'min': [100],
+                'max': [maxAmount]
+            },
+        });
+   });
+
+    
+//slider function
   $('.noUi-handle').on('click', function() {
     $(this).width(50);
   });
-  var rangeSlider = document.getElementById('slider-range');
+  
   var moneyFormat = wNumb({
     decimals: 0,
-    thousand: ',',
+    //thousand: ',',
     prefix: '₹'
   });
-  noUiSlider.create(rangeSlider, {
-    start: [0, 500000],
-    step: 1000,
-    range: {
-      'min': [0],
-      'max': [1000000]
-    },
-    format: moneyFormat,
-    connect: true
-  });
+
+    noUiSlider.create(rangeSlider, {
+        start: [0, maxAmount],
+        step: 1000,
+        range: {
+            'min': [0],
+            'max': [maxAmount]
+        },
+        format: moneyFormat,
+        connect: true
+    });
   
   // Set visual min and max values and also update value hidden form inputs
-  rangeSlider.noUiSlider.on('update', function(values, handle) {
-    document.getElementById('slider-range-value1').innerHTML = values[0];
-    document.getElementById('slider-range-value2').innerHTML = values[1];
+    rangeSlider.noUiSlider.on('update', function (values, handle) {
+        //console.log(values[0].replace(/(\d)(?=(\d\d)+\d$)/g, "$1,"))
+        document.getElementById('slider-range-value1').innerHTML = values[0].replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
+        document.getElementById('slider-range-value2').innerHTML = values[1].replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
     document.getElementsByName('min-value').value = moneyFormat.from(
       values[0]);
     document.getElementsByName('max-value').value = moneyFormat.from(
@@ -33,7 +53,15 @@ $(document).ready(function () {
 	  document.getElementsByName('PriceMin').value = moneyFormat.from(
       values[0]);
       document.getElementsByName('PriceMax').value = moneyFormat.from(
-        values[1]);
+          values[1]);
+      //document.getElementsByName('min-value').value = 
+      //    values[0];
+      //document.getElementsByName('max-value').value = 
+      //    values[1];
+      //document.getElementsByName('PriceMin').value = 
+      //    values[0];
+      //document.getElementsByName('PriceMax').value = 
+      //    values[1];
       //console.log(document.getElementsByName('PriceMin').value);
       //console.log(document.getElementsByName('PriceMax').value);
   });
@@ -1801,7 +1829,8 @@ $(document).ready(function () {
       }
       // Group numbers in sets of three.
       if (thousand) {
-        inputBase = strReverse(inputBase).match(/.{1,3}/g);
+          inputBase = strReverse(inputBase).match(/.{1,3}/g);
+          //inputBase = strReverse(inputBase).match(/^(\d{1,2})(,\d{2})*(,\d{1,3}){1}(\.\d{1,})?$/g);
         inputBase = strReverse(inputBase.join(strReverse(thousand)));
       }
       // If the number is negative, prefix with negation symbol.

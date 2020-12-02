@@ -2714,27 +2714,27 @@ form.md-form .checkbox.checbox-switch-small {
 	}
 /*first child*/
 .slide-type:first-child .slide-type__image {
-	background: var(--sec-color);
-}
-
-.slide-type:first-child .slide-type_text i {
-	color: var(--sec-color);
-}
-/*2nd child*/
-.slide-type:nth-child(2) .slide-type__image {
-	background: var(--info-color);
-}
-
-.slide-type:nth-child(2) .slide-type_text i {
-	color: var(--info-color);
-}
-/*3rd child*/
-.slide-type:nth-child(3) .slide-type__image {
 	background: var(--pry-color);
 }
 
-.slide-type:nth-child(3) .slide-type_text i {
+.slide-type:first-child .slide-type_text i {
 	color: var(--pry-color);
+}
+/*2nd child*/
+.slide-type:nth-child(2) .slide-type__image {
+	background: var(--sec-color);
+}
+
+.slide-type:nth-child(2) .slide-type_text i {
+	color: var(--sec-color);
+}
+/*3rd child*/
+.slide-type:nth-child(3) .slide-type__image {
+	background: var(--info-color);
+}
+
+.slide-type:nth-child(3) .slide-type_text i {
+	color: var(--info-color);
 }
 
 .slide-btn {

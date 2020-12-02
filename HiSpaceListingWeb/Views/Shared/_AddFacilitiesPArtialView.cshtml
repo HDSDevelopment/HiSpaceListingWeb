@@ -9,7 +9,7 @@
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">*@
 <div class="modal-content">
 	<div class="modal-header border-0">
-		<h5 class="modal-title" id="facilitiesModalLabel"><i class="fas fa-bus"> </i> Facilities </h5>
+		<h5 class="modal-title" id="facilitiesModalLabel"><i class="fas fa-bus"> </i> Near By Places </h5>
 		<button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		</button>
@@ -19,8 +19,8 @@
 			<div class="tab-pane fade show active" id="facilities" role="tabpanel" aria-labelledby="facilities-tab">
 
 				<form class=" mt-4 align-items-center md-form" action="account-profile.html">
-					<h6 class="d-inline-block">Common Facilities </h6>
-					<div class="scroll-action_link" id="f-common">Go to Custom Facilities</div>
+					<h6 class="d-inline-block">Common near by places </h6>
+					<div class="scroll-action_link" id="f-common">Go to custom near by places</div>
 					<div class="facilities-common" id="common-section__f">
 						@foreach (var item in Model)
 						{
@@ -120,8 +120,8 @@
 						}
 
 					</div>
-					<div class="btn btn-sec add-btn d-inline-block" data-listingid="@ViewBag.ListingId" onclick="addFacilities(this)"> <i class="fa fa-plus-circle"></i>Custom Facilities</div>
-					<div class="scroll-action_link" id="f_custom">Go to Common Facilities</div>
+					<div class="btn btn-sec add-btn d-inline-block" data-listingid="@ViewBag.ListingId" onclick="addFacilities(this)"> <i class="fa fa-plus-circle"></i>Custom near by places</div>
+					<div class="scroll-action_link" id="f_custom">Go to common near by places</div>
 					<div class="facilities-upload" id="custom-section__f">
 						@if (Model.Count() == 11)
 						{
@@ -129,7 +129,7 @@
 								<div class=" col-md-3 col-sm-4 ">
 									<div class="form-group">
 										<input type="text" class="form-control facilityName" placeholder="Name">
-										<label for="input" class="control-label">Facility</label><i class="bar"></i>
+										<label for="input" class="control-label">Near by place</label><i class="bar"></i>
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-3 col-sm-4">

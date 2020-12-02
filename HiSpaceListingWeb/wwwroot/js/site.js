@@ -2418,7 +2418,7 @@ function addFacilities(obj) {
 		'<div class=" col-md-3 col-sm-4 ">' +
 		'<div class="form-group">' +
 		'<input type="text" class="form-control facilityName" placeholder="Name">' +
-		'<label for="input" class="control-label">Facility</label><i class="bar"></i>' +
+		'<label for="input" class="control-label">Near by place</label><i class="bar"></i>' +
 		'</div>' +
 		'</div>' +
 		'<div class="col-lg-3 col-md-3 col-sm-4 ">' +

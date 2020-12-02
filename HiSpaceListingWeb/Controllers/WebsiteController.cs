@@ -4,6 +4,7 @@ using HiSpaceListingWeb.Utilities;
 using HiSpaceListingWeb.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace HiSpaceListingWeb.Controllers
 {
 	public class WebsiteController : Controller
 	{
+		private object html;
 
 		public ActionResult Index()
 		{
