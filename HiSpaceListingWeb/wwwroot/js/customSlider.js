@@ -4,17 +4,44 @@
 $(document).ready(function () {
     //custom values for the price
     var rangeSlider = document.getElementById('slider-range');
-    var maxAmount = 10000;
-    $(document).on('change', '#Pr_Filter_For', function () { 
+    var maxAmount = 100000;
+    $(document).on('change', '#Pr_Filter_For, #pr_Filter_hour, #pr_Filter_day, #pr_Filter_month', function () { 
        //console.log($(this).val());
-        maxAmount = 20000;
-        rangeSlider.noUiSlider.updateOptions({
-            start: [0, maxAmount],
-            step: 2000,
-            range: {
-                'min': [100],
-                'max': [maxAmount]
+        var searchFor = $('#Pr_Filter_For').val();
+        var aHour = $('#pr_Filter_hour').prop("checked");
+        var aDay = $('#pr_Filter_day').prop("checked");
+        var aMonth = $('#pr_Filter_month').prop("checked");
+
+        //console.log(searchFor + ", " + aHour + ", " + aDay + ", " +aMonth);
+        if ((searchFor == "All") || (searchFor == "Sale")) {
+            $('.property-available').addClass('display-none');
+        } else if ((searchFor == "Rental")) {
+            $('.property-available').removeClass('display-none');
+		}
+        $.ajax({
+            type: "POST",
+            //url: "/Filter/GetMPrice/"+searchFor+"/"+aHour+"/"+aDay+"/"+aMonth,
+            url: "/Filter/GetMPrice",
+            data: { SearchFor: searchFor, Hour: aHour, Day: aDay, Month: aMonth},
+            dataType: "html",
+            success: function (response) {
+                //console.log(response);
+                maxAmount = parseInt(response);
+                rangeSlider.noUiSlider.updateOptions({
+                    
+                    step: 1000,
+                    range: {
+                        'min': [0],
+                        'max': [maxAmount]
+                    },
+                    start: [0, maxAmount],
+                    connect: true
+                });
+                
             },
+            error: function (response) {
+                console.log('error');
+            }
         });
    });
 
@@ -31,12 +58,13 @@ $(document).ready(function () {
   });
 
     noUiSlider.create(rangeSlider, {
-        start: [0, maxAmount],
+        
         step: 1000,
         range: {
             'min': [0],
             'max': [maxAmount]
         },
+        start: [0, maxAmount],
         format: moneyFormat,
         connect: true
     });

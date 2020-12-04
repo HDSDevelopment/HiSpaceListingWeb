@@ -45,6 +45,40 @@
 										asp-items="@(new SelectList(ViewBag.ListOfPropertyLocation, "PropertyLocation", "PropertyLocation"))"></select>
 								<label for="select" class="control-label">City</label><i class="bar"></i>
 							</div>
+							<div class="col-sm-4 property-available display-none">
+								<div class="d-flex flex-sm-row flex-column">
+									<div class="checkbox-group gb-checkbox available-checkbox">
+										<div class="checkbox-items">
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" id="pr_Filter_hour" />
+													<i class="helper"></i><span class="gb-checkbox__label">Hour</span>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="checkbox-group gb-checkbox available-checkbox">
+										<div class="checkbox-items">
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" id="pr_Filter_day" />
+													<i class="helper"></i><span class="gb-checkbox__label">Day</span>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="checkbox-group gb-checkbox available-checkbox">
+										<div class="checkbox-items">
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" id="pr_Filter_month" />
+													<i class="helper"></i><span class="gb-checkbox__label">Month</span>
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 							<div class="col-sm-8 slider-labels__main">
 							  <div class="row">
 								  <span class="mb-3 price-lable">Price Range</span>

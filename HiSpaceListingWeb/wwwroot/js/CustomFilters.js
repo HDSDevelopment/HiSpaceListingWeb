@@ -9,6 +9,13 @@ $(document).ready(function () {
 var filterPropertyResult = $('#filterPropertyResult');
 var detailPropertyResult = $('#detailPropertyResult');
 
+//get the max price on select and checkbox
+//$('body').on('change', '#Pr_Filter_For', function () {
+//	console.log('test');
+//	console.log($(this).val());
+//});
+
+
 //property filter form
 $('#property-form-submit').on('click', function (e) {
 	$("#filterPropertyResult").append("<div class='loader_new-sub'></div>");

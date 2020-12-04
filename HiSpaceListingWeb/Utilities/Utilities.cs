@@ -261,6 +261,7 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiFilterGetListingByTypeAndLocation = "GetListingByTypeAndLocation";
 		public string ApiFilterGetOperatorByUserId = "GetOperatorByUserId";
 		public string ApiFilterGetPeopleByListingId = "GetPeopleByListingId";
+		public string ApiFilterGetMaxPrice = "GetMaxPrice";
 
 		#endregion Filter Controller
 

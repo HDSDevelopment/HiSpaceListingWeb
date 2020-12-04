@@ -507,6 +507,29 @@ namespace HiSpaceListingWeb.Controllers
 			return Json(user); 
 		}
 
+
+		//Get the max price
+		public ActionResult GetMPrice(string SearchFor, bool Hour, bool Day, bool Month)
+		{
+			decimal? mPrice = 0;
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiFilterControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiFilterGetMaxPrice + "/" + SearchFor + "/" + Hour + "/" + Day + "/" + Month);
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<decimal?>();
+					readTask.Wait();
+					mPrice = readTask.Result;
+
+				}
+
+			}
+			return Content(mPrice.ToString());
+		}
+
 		public void SetSessionVariables()
 		{
 			#region

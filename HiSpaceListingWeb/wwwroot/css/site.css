@@ -4086,3 +4086,12 @@ button#property-form-submit i, button#operator-form-submit i, button#people-form
 .propertydetail{
 	font-size: 13px;
 }
+
+.available-checkbox .checkbox-items {
+	margin-right: 10px;
+}
+
+.available-checkbox .checkbox-items span{
+	margin-top: 3px;
+	display: inline-block;
+}
