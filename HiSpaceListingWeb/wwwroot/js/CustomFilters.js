@@ -27,6 +27,7 @@ $('#property-form-submit').on('click', function (e) {
 	} else {
 		formData.append("CMCW_PropertyFor", "");
 	}
+	
 
 	var Pr_ListingType = $('#pr_Filter_ListingType').val();
 	if (Pr_ListingType == "All") {
@@ -73,7 +74,30 @@ $('#property-form-submit').on('click', function (e) {
 	}
 	//console.log($('#pr_Filter_healthCheck').prop("checked"))
 	//console.log($('#pr_Filter_greenBuilding').prop("checked"))
-
+	//set the value empty
+	if (Pr_For == "All" || Pr_For == "Sale") {
+		$('#pr_Filter_hour').prop('checked', false);
+		$('#pr_Filter_day').prop('checked', false);
+		$('#pr_Filter_month').prop('checked', false);
+	}
+	//hour
+	if ($('#pr_Filter_hour').prop("checked") == true) {
+		formData.append("IsPerformHour", true);
+	} else {
+		formData.append("IsPerformHour", false);
+	}
+	//day
+	if ($('#pr_Filter_day').prop("checked") == true) {
+		formData.append("IsPerformDay", true);
+	} else {
+		formData.append("IsPerformDay", false);
+	}
+	//month
+	if ($('#pr_Filter_month').prop("checked") == true) {
+		formData.append("IsPerformMonth", true);
+	} else {
+		formData.append("IsPerformMonth", false);
+	}
 
 
 	var Pr_PriceMin =  document.getElementsByName('PriceMin').value;
@@ -82,9 +106,9 @@ $('#property-form-submit').on('click', function (e) {
 	var Pr_PriceMax = document.getElementsByName('PriceMax').value;
 	formData.append("PriceMax", Pr_PriceMax);
 
-	//for (var pair of formData.entries()) {
- //   console.log(pair[0]+ ' - ' +pair[1]); 
-	//}
+	for (var pair of formData.entries()) {
+    console.log(pair[0]+ ' - ' +pair[1]); 
+	}
 
 	$.ajax({
 		type: "POST",

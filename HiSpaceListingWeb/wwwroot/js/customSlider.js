@@ -25,7 +25,7 @@ $(document).ready(function () {
             data: { SearchFor: searchFor, Hour: aHour, Day: aDay, Month: aMonth},
             dataType: "html",
             success: function (response) {
-                //console.log(response);
+                console.log(response);
                 maxAmount = parseInt(response);
                 rangeSlider.noUiSlider.updateOptions({
                     
