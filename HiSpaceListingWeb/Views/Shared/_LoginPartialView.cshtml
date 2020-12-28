@@ -1,6 +1,7 @@
 ﻿@*
 	For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
 @model HiSpaceListingModels.User
 <!--=================================
 	 Modal login -->
@@ -19,6 +20,7 @@
 				@*<form class="form-row mt-4 align-items-center" action="account-profile.html">*@
 				@using (Html.BeginForm("Login", "User", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-row md-form", onSubmit = "loginValidate(event)", id = "login-form" }))
 				{
+					<input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
 					<div class="form-group col-sm-12">
 						<input class="form-control" id="Email" name="Email" placeholder="Email Id" type="email" value="">
 						@*@Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email Id" })*@
@@ -32,27 +34,27 @@
 						<div class="error" id="error_Password"></div>
 					</div>
 					@*<div class="col-md-12 col-sm-12">
-						<div class="radio-group">
-							<div class="form-radio radio-items radio-item__caption">
-								<div class="radio">
-									<label>
-										<input type="radio" name="UserType" checked="checked" value="1" />
-										<i class="helper"></i>
-										<span class="radio-caption">HiSpace-User</span>
-										<span class="font-11">(Can List you <span class="font-weight-bold">Property, Space, Real-Estate Profession</span>. As a <span class="font-weight-bold">Owner, Operators, People)</span></span>
-									</label>
-								</div>
-								<div class="radio">
-									<label>
-										<input type="radio" name="UserType" value="2" />
-										<i class="helper"></i>
-										<span class="radio-caption">Guest-User</span>
-										<span class="font-11">(Can Search <span class="font-weight-bold">Property, Space, Real-Estate Professionl</span> and make enquiry, As a <span class="font-weight-bold">Guest)</span></span>
-									</label>
+							<div class="radio-group">
+								<div class="form-radio radio-items radio-item__caption">
+									<div class="radio">
+										<label>
+											<input type="radio" name="UserType" checked="checked" value="1" />
+											<i class="helper"></i>
+											<span class="radio-caption">HiSpace-User</span>
+											<span class="font-11">(Can List you <span class="font-weight-bold">Property, Space, Real-Estate Profession</span>. As a <span class="font-weight-bold">Owner, Operators, People)</span></span>
+										</label>
+									</div>
+									<div class="radio">
+										<label>
+											<input type="radio" name="UserType" value="2" />
+											<i class="helper"></i>
+											<span class="radio-caption">Guest-User</span>
+											<span class="font-11">(Can Search <span class="font-weight-bold">Property, Space, Real-Estate Professionl</span> and make enquiry, As a <span class="font-weight-bold">Guest)</span></span>
+										</label>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>*@
+						</div>*@
 					//hidden element in login TYPE
 					<div class="display-none">
 						<div class="form-group">
@@ -70,8 +72,8 @@
 					</div>
 
 					@*@section Scripts{
-			<partial name="_validationScriptsPartial" />
-			}*@
+						<partial name="_validationScriptsPartial" />
+						}*@
 					@*</form>*@
 				}
 			</div>

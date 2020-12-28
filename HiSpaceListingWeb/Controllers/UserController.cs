@@ -25,9 +25,14 @@ namespace HiSpaceListingWeb.Controllers
 			this.hostEnvironment = hostEnvironment;
 		}
 
-		public ActionResult LoginPartialView()
+		public ActionResult LoginPartialView(string returnUrl)
 		{
 			SetSessionVariables();
+			if(returnUrl == "/Filter/PropertyOperatorPeopleAndFilterMenu")
+			{
+				returnUrl = "/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=1";
+			}
+			ViewBag.returnUrl = returnUrl;
 			return PartialView("_LoginPartialView");
 		}
 		public ActionResult SignupPartialView()
@@ -60,9 +65,10 @@ namespace HiSpaceListingWeb.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Login(User user)
+		public ActionResult Login(User user, string returnUrl)
 		{
-				User _user = null;
+			//string url = HttpContext.Request.Url.AbsoluteUri;
+			User _user = null;
 				if(user.Email == "admin@gmail.com")
 				{
 					user.UserType = 0;
@@ -86,9 +92,13 @@ namespace HiSpaceListingWeb.Controllers
 				{
 					AssignSessionVariables(_user);
 					SetSessionVariables();
-					//return RedirectToAction("ListingTable", "Listing", new { UserID = _user.UserId, UserType = _user.UserType });
+				//return RedirectToAction("ListingTable", "Listing", new { UserID = _user.UserId, UserType = _user.UserType });
+				//return RedirectToAction("PropertyOperatorPeopleAndFilterMenu", "Filter", new { ListShowType = 1 });
+				if (!string.IsNullOrEmpty(returnUrl))
+					return Redirect(returnUrl);
+				else
 					return RedirectToAction("PropertyOperatorPeopleAndFilterMenu", "Filter", new { ListShowType = 1 });
-				}
+			}
 				//admin check
 				else if (_user != null && _user.UserId == 0 && _user.Email == user.Email && _user.Password == user.Password && _user.UserType == 0)
 				{

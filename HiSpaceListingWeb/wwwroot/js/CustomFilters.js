@@ -15,10 +15,22 @@ var detailPropertyResult = $('#detailPropertyResult');
 //	console.log($(this).val());
 //});
 
+//change the price range lable
+$('#Pr_Filter_For').on('change', function () {
+	console.log($(this).val());
+	if ($(this).val() == "All") {
+		$('.slider-labels__main .price-lable').html('Price/Rent Range');
+	} else if ($(this).val() == "Rental") {
+		$('.slider-labels__main .price-lable').html('Rent Range');
+	} else if ($(this).val() == "Sale") {
+		$('.slider-labels__main .price-lable').html('Price Range');
+	}
+});
 
 //property filter form
 $('#property-form-submit').on('click', function (e) {
-	$("#filterPropertyResult").append("<div class='loader_new-sub'></div>");
+	$("#filterPropertyResult").append("<div class='loader_new'></div>");
+	//$("#filterPropertyResult").append("<div class='loader_new-sub'></div>");
 	console.log('property filter click');
 		var formData = new FormData();
 	var Pr_For = $('#Pr_Filter_For').val();
@@ -133,7 +145,7 @@ $('#property-form-submit').on('click', function (e) {
 });
 //Property list all
 function propertyListByAll() {
-	$("#filterPropertyResult").append("<div class='loader_new-sub'></div>");
+	$("#filterPropertyResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "GET",
 		url: "/Filter/PropertyListByAll",
@@ -155,7 +167,7 @@ function propertyListByAll() {
 }
 //Property details List by its userid
 function propertyListByUserId(user) {
-	$("#detailPropertyResult").append("<div class='loader_new-sub'></div>");
+	$("#detailPropertyResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "GET",
 		url: "/Detail/SelectOperatorPropertyListByAll",
@@ -179,7 +191,7 @@ function propertyListByUserId(user) {
 } 
 //Property Location filter
 function propertyListByLocation(location) {
-	$("#filterPropertyResult").append("<div class='loader_new-sub'></div>");
+	$("#filterPropertyResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "GET",
 		url: "/Filter/PropertyListByLocation",
@@ -201,7 +213,7 @@ function propertyListByLocation(location) {
 }
 //Property Type filter
 function propertyListByType(type) {
-	$("#filterPropertyResult").append("<div class='loader_new-sub'></div>");
+	$("#filterPropertyResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "GET",
 		url: "/Filter/PropertyListByType",
@@ -223,7 +235,7 @@ function propertyListByType(type) {
 }
 //Property User filter
 function propertyListByUser(user) {
-	$("#filterPropertyResult").append("<div class='loader_new-sub'></div>");
+	$("#filterPropertyResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "GET",
 		url: "/Filter/PropertyListByUser",
@@ -245,7 +257,7 @@ function propertyListByUser(user) {
 }
 //Property List by its userid
 function propertyListByUserIdAndListingId(user, listingId) {
-	$("#detailPropertyResult").append("<div class='loader_new-sub'></div>");
+	$("#detailPropertyResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "POST",
 		url: "/Detail/SelectOperatorPropertyListByUserIdAndListingId",
@@ -287,7 +299,7 @@ $(document).on('change', '#pr_Filter_ListingType', function (event) {
 var filterOperatorResult = $('#filterOperatorResult');
 //Operator list all
 function operatorListByAll() {
-	$("#filterOperatorResult").append("<div class='loader_new-sub'></div>");
+	$("#filterOperatorResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "GET",
 		url: "/Filter/OperatorListByAll",
@@ -310,7 +322,7 @@ function operatorListByAll() {
 }
 //Operator list by operator
 function operatorListByUser(user) {
-	$("#filterOperatorResult").append("<div class='loader_new-sub'></div>");
+	$("#filterOperatorResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "GET",
 		url: "/Filter/OperatorListByUserId",
@@ -362,7 +374,7 @@ $(document).on('change', '.OperatorLocation', function (event) {
 });
 //operator filter form
 $('#operator-form-submit').on('click', function (e) {
-	$("#filterOperatorResult").append("<div class='loader_new-sub'></div>");
+	$("#filterOperatorResult").append("<div class='loader_new'></div>");
 		var formData = new FormData();
 	var OpCity = $('#Op_Filter_CityName').val();
 	if (OpCity != "All") {
@@ -434,7 +446,7 @@ $(document).on('change', '.PeopleLocation', function (event) {
 //people list
 //people filter form
 $('#people-form-submit').on('click', function (e) {
-	$("#filterProfessionalResult").append("<div class='loader_new-sub'></div>");
+	$("#filterProfessionalResult").append("<div class='loader_new'></div>");
 		var formData = new FormData();
 	var Pe_Role = $('#Pe_Filter_Role').val();
 	if (Pe_Role != "All") {
@@ -489,7 +501,7 @@ $('#people-form-submit').on('click', function (e) {
 var filterProfessionalResult = $('#filterProfessionalResult');
 //People list all
 function peopleListByAll() {
-	$("#filterProfessionalResult").append("<div class='loader_new-sub'></div>");
+	$("#filterProfessionalResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "GET",
 		url: "/Filter/PeopleListByAll",
@@ -513,7 +525,7 @@ function peopleListByAll() {
 
 //People list by ListingId
 function peopleListByUser(listingId) {
-	$("#filterProfessionalResult").append("<div class='loader_new-sub'></div>");
+	$("#filterProfessionalResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "GET",
 		url: "/Filter/PeopleListByListingId",

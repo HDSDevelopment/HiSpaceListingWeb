@@ -27,12 +27,12 @@
 
 								@if (item.Operator.Doc_CompanyLogo != null)
 								{
-									<img class="oper-img" src="~/images/Upload/user/1/documents/_Logo.png"
+									<img class="oper-img" src="@item.Operator.Doc_CompanyLogo"
 										 data-holder-rendered="true">
 								}
 								else
 								{
-									<img class="oper-img oper-img_placeholder" src="~/images/operatorPlaceholder.png"
+									<img class="oper-img oper-img_placeholder" src="~/images/sample_png.png"
 										 data-holder-rendered="true">
 								}
 							</div>
@@ -173,7 +173,7 @@
 									</div>
 									<div class="list-blur__background">
 											<div class="list-blur__btn">
-												<a class="property-link btn btn-outline-info modal-link__login obs-center" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }">Join to view the detail</a>
+												<a class="property-link btn btn-outline-info modal-link__login obs-center" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/SelectOperatorPropertyList?User="+@item.Operator.UserId+""})" href="javascript:function() { return false; }">Join to view the detail</a>
 											</div>
 										</div>
 									</div>
@@ -185,7 +185,7 @@
 									}
 									else
 									{
-										<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }">See Details</a>
+										<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/SelectOperatorPropertyList?User="+@item.Operator.UserId+""})" href="javascript:function() { return false; }">See Details</a>
 									}
 								</div>
 								<div class="tooltip-wrapper list-data__check" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eco-Friendly Spaces click to see details"><i class="fas fa-check"></i></div>

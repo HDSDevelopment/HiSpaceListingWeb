@@ -2833,6 +2833,11 @@ form.md-form .checkbox.checbox-switch-small {
 	z-index: 1;
 	box-shadow: 6px 6px 16px -2px #676767;
 	/*overflow: hidden;*/
+	min-height: 180px;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .oper-img {
@@ -4094,4 +4099,9 @@ button#property-form-submit i, button#operator-form-submit i, button#people-form
 .available-checkbox .checkbox-items span{
 	margin-top: 3px;
 	display: inline-block;
+}
+
+.slide-btn .property-btn i.fa-plus {
+	font-size: 12px;
+	padding: 5px;
 }

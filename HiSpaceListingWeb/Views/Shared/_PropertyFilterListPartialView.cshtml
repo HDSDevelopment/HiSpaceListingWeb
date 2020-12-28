@@ -36,7 +36,7 @@
 									}
 									else
 									{
-										<img class="img-fluid image-list" src="~/images/property/Noimage.jpg" alt="">
+										<img class="img-fluid image-list" src="~/images/property/no-image.png" alt="">
 									}
 									<div class="property-lable">
 										@if (item.SpaceListing.ListingType == "Commercial")
@@ -271,7 +271,7 @@
 
 										<div class="list-blur__background">
 											<div class="list-blur__btn">
-												<a class="property-link btn btn-outline-info modal-link__login obs-center" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }">Join to view the detail</a>
+												<a class="property-link btn btn-outline-info modal-link__login obs-center" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Website/PropertyDetail?ListingID="+@item.SpaceListing.ListingId+""})" href="javascript:function() { return false; }">Join to view the detail</a>
 											</div>
 										</div>
 									</div>
@@ -284,7 +284,7 @@
 									}
 									else
 									{
-										<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }">See Details</a>
+										<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Website/PropertyDetail?ListingID="+@item.SpaceListing.ListingId+""})" href="javascript:function() { return false; }">See Details</a>
 									}
 
 								</div>
