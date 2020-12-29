@@ -9,162 +9,165 @@
 }
 
 @*test*@
-	<div class="listingtable nav-padding">
-		<div class="bg-light mb-4">
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-						<ol class="breadcrumb mb-0">
-							<li class="breadcrumb-item"><a href="@Url.Action( "Index","Website")"> <i class="fas fa-home"></i> </a></li>
+<div class="listingtable nav-padding">
+	<div class="bg-light mb-4">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<ol class="breadcrumb mb-0">
+						<li class="breadcrumb-item"><a href="@Url.Action( "Index","Website")"> <i class="fas fa-home"></i> </a></li>
 
 
-							@if (ViewBag.UserId != null && ViewBag.UserId > 0)
-							{
-								<li class="breadcrumb-item"> <i class="fas fa-chevron-right"></i> <span>Dashboard</span></li>
-								<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>User Details/Listing</span></li>
-							}
-							@if (ViewBag.UserId != null && ViewBag.UserId == 0)
-							{
-								<li class="breadcrumb-item"><a href="@Url.Action( "AdminLister","Admin")"> <i class="fas fa-chevron-right"></i> <span>HiSpace-User List</span></a></li>
-								<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Edit</span></li>
-							}
-						</ol>
-					</div>
+						@if (ViewBag.UserId != null && ViewBag.UserType == 1)
+						{
+							<li class="breadcrumb-item"> <i class="fas fa-chevron-right"></i> <span>Dashboard</span></li>
+							<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Profile Setting/Listing</span></li>
+						}
+						else if (ViewBag.UserId != null && ViewBag.UserType == 2)
+						{
+							<li class="breadcrumb-item"> <i class="fas fa-chevron-right"></i> <span>Profile and Activities</span></li>
+							<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Profile Setting</span></li>
+						}
+						else if (ViewBag.UserId != null && ViewBag.UserType == 0)
+						{
+							<li class="breadcrumb-item"><a href="@Url.Action( "AdminLister","Admin")"> <i class="fas fa-chevron-right"></i> <span>HiSpace-User List</span></a></li>
+							<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Edit</span></li>
+						}
+					</ol>
 				</div>
 			</div>
 		</div>
-		<section>
-			<div class="container p-0">
-				<div class="row no-gutters">
-					<div class="widget accordion-sec col-md-12 mb-2">
-						@if (ViewBag.UserId != null && ViewBag.UserId > 0)
+	</div>
+	<section>
+		<div class="container p-0">
+			<div class="row no-gutters">
+				<div class="widget accordion-sec col-md-12 mb-2">
+					@if (ViewBag.UserId != null && ViewBag.UserType == 1)
+					{
+						@if (Model.User.UserState == "Basic")
 						{
-							@if (Model.User.UserState == "Basic")															
-							{
-								<div class="status-message">
-									<i class="fas fa-user-check text-sec"></i>
-									<p>Welcome! Please add your property ( Commercial, Co-Working ), People ( Real Estate Professional ) below.</p>
-								</div>
-							}
-							else if (Model.User.UserState == "Advance")
-							{
-								<div class="status-message">
-									<i class="fas fa-user-check text-sec"></i>
-									<p>Welcome! Please add your property ( Commercial, Co-Working ), People ( Real Estate Professional ) below.</p>
-								</div>
-							}
-
-							<div class="widget-title widget-collapse m-2">
-								<a class="ml-auto" data-toggle="collapse" href="#property-lister" role="button" aria-expanded="false" aria-controls="property-lister"><h6>Basic Information</h6> <i class="fas fa-chevron-down"></i> </a>
+							<div class="status-message">
+								<i class="fas fa-user-check text-sec"></i>
+								<p>Welcome! Please add your property ( Commercial, Co-Working ), People ( Real Estate Professional ) below.</p>
 							</div>
 						}
-						@if (ViewBag.UserId != null && ViewBag.UserId == 0)
+						else if (Model.User.UserState == "Advance")
 						{
-							<div class="section-title d-flex align-items-center m--tb-15">
-								<h2>Edit HiSpace-User</h2>
+							<div class="status-message">
+								<i class="fas fa-user-check text-sec"></i>
+								<p>Welcome! Please add your property ( Commercial, Co-Working ), People ( Real Estate Professional ) below.</p>
 							</div>
-							ViewBag.card = "card hi-card";
-							ViewBag.cardbody = "card-body";
-							ViewBag.cardbodyShow = "show";
-							
 						}
 
-						<div class="collapse @ViewBag.cardbodyShow @ViewBag.card mx-2" id="property-lister">
-							<div class="accordion-sec__detail @ViewBag.cardbody">
+						<div class="widget-title widget-collapse m-2">
+							<a class="ml-auto" data-toggle="collapse" href="#property-lister" role="button" aria-expanded="false" aria-controls="property-lister"><h6>Basic Information</h6> <i class="fas fa-chevron-down"></i> </a>
+						</div>
 
-								@*<form class="form-row align-items-center md-form p-3" action="account-profile.html">*@
-								@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @class = "form-row md-form p-3", enctype = "multipart/form-data", onSubmit = "EditUserValidate(event)", id = "editUserData" }))
-								{
-									@Html.AntiForgeryToken()
-									@Html.HiddenFor(m => m.User.UserId)
-									@Html.HiddenFor(m => m.User.UserType)
-									@Html.HiddenFor(m => m.User.UserState)
-									@Html.HiddenFor(m => m.User.Status)
-									@Html.HiddenFor(m => m.User.Doc_CompanyLogo)
-									@Html.HiddenFor(m => m.User.Doc_RCCopy)
-									@Html.HiddenFor(m => m.User.Password)
-									@Html.HiddenFor(m => m.User.City)
-									@Html.HiddenFor(m => m.User.State)
-									@Html.HiddenFor(m => m.User.Country)
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="text" class="form-control" placeholder="Company Name">*@
-										@Html.EditorFor(m => m.User.CompanyName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name", id = "CompanyName" } })
-										<label for="input" class="control-label">HiSpace-User Name*</label><i class="bar"></i>
+					}
+					@if (ViewBag.UserId != null && ViewBag.UserType == 0)
+					{
+						<div class="section-title d-flex align-items-center m--tb-15">
+							<h2>Edit HiSpace-User</h2>
+						</div>
+						ViewBag.card = "card hi-card";
+						ViewBag.cardbody = "card-body";
+						ViewBag.cardbodyShow = "show";
+
+					}
+					else if (ViewBag.UserId != null && ViewBag.UserType == 2)
+					{
+						ViewBag.cardbodyShow = "show";
+					}
+					<div>
+						<p>Test bar</p>
+						<div id="pBar"></div>
+						<div id="pBar1"></div>
+					</div>
+					<div class="collapse @ViewBag.cardbodyShow @ViewBag.card mx-2" id="property-lister">
+						<div class="accordion-sec__detail @ViewBag.cardbody">
+
+							@*<form class="form-row align-items-center md-form p-3" action="account-profile.html">*@
+							@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @class = "form-row md-form p-3", enctype = "multipart/form-data", onSubmit = "EditUserValidate(event)", id = "editUserData" }))
+							{
+								@Html.AntiForgeryToken()
+								@Html.HiddenFor(m => m.User.UserId)
+								@Html.HiddenFor(m => m.User.UserType)
+								@Html.HiddenFor(m => m.User.UserState)
+								@Html.HiddenFor(m => m.User.Status)
+								@Html.HiddenFor(m => m.User.Doc_CompanyLogo)
+								@Html.HiddenFor(m => m.User.Doc_RCCopy)
+								@Html.HiddenFor(m => m.User.Password)
+								@Html.HiddenFor(m => m.User.City)
+								@Html.HiddenFor(m => m.User.State)
+								@Html.HiddenFor(m => m.User.LastLoginDateTime)
+								@Html.HiddenFor(m => m.User.CreatedDateTime)
+								@Html.HiddenFor(m => m.User.LoginCount)
+								@Html.HiddenFor(m => m.User.Country)
+								<div class="form-group col-md-3 col-sm-6">
+									@*<input type="text" class="form-control" placeholder="Company Name">*@
+									@Html.EditorFor(m => m.User.CompanyName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name", id = "CompanyName" } })
+									<label for="input" class="control-label">HiSpace-User Name*</label><i class="bar"></i>
+									<div class="error" id=""></div>
+								</div>
+								<div class="form-group col-md-3 col-sm-6">
+									@*<input type="text" class="form-control" placeholder="Phone">*@
+									@Html.EditorFor(m => m.User.Phone, new { htmlAttributes = new { @type = "number", @class = "form-control", placeholder = "Enter Phone", id = "Phone" } })
+									<label for="input" class="control-label">Phone*</label><i class="bar"></i>
+									<div class="error" id=""></div>
+								</div>
+								<div class="form-group col-md-3 col-sm-6">
+									@*<input type="email" class="form-control" placeholder="abc@gmail.com">*@
+									@Html.EditorFor(m => m.User.Email, new { htmlAttributes = new { @type = "email", @class = "form-control event-none", placeholder = "Enter Email", id = "Email" } })
+									<label for="input" class="control-label">Email*</label><i class="bar"></i>
+									<div class="error" id=""></div>
+								</div>
+								@*<div class="form-group col-md-3 col-sm-6">
+						@Html.EditorFor(m => m.User.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Password" } })
+						<label for="input" class="control-label">Password*</label><i class="bar"></i>
+					</div>*@
+								<div class="form-group col-md-3 col-sm-6">
+									@*<input type="text" class="form-control" placeholder="www.abc.com">*@
+									@Html.EditorFor(m => m.User.Website, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Website", id = "Website" } })
+									<label for="input" class="control-label">Web Address</label><i class="bar"></i>
+									<div class="error" id=""></div>
+								</div>
+								<div class="form-group col-md-3 col-sm-6">
+									@*<input type="text" class="form-control" placeholder="No.00, street">*@
+									@Html.EditorFor(m => m.User.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Address", id = "Address" } })
+									<label for="input" class="control-label">Complete Address*</label><i class="bar"></i>
+									@if (Model.User.Address == null)
+									{
+										<div class="error" id="">Enter Complete Address</div>
+									}
+									else
+									{
 										<div class="error" id=""></div>
-									</div>
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="text" class="form-control" placeholder="Phone">*@
-										@Html.EditorFor(m => m.User.Phone, new { htmlAttributes = new { @type = "number", @class = "form-control", placeholder = "Enter Phone", id = "Phone" } })
-										<label for="input" class="control-label">Phone*</label><i class="bar"></i>
+									}
+								</div>
+								<div class="form-group col-md-3 col-sm-6">
+									@*<input type="number" class="form-control" placeholder="postal code">*@
+									@Html.EditorFor(m => m.User.Postalcode, new { htmlAttributes = new { @type = "number", @class = "form-control", placeholder = "Enter PostalCode", id = "Postalcode" } })
+									<label for="input" class="control-label">Postal Code*</label><i class="bar"></i>
+									@if (Model.User.Postalcode == null)
+									{
+										<div class="error" id="">Enter Postal Code</div>
+									}
+									else
+									{
 										<div class="error" id=""></div>
-									</div>
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="email" class="form-control" placeholder="abc@gmail.com">*@
-										@Html.EditorFor(m => m.User.Email, new { htmlAttributes = new { @type = "email", @class = "form-control event-none", placeholder = "Enter Email", id = "Email" } })
-										<label for="input" class="control-label">Email*</label><i class="bar"></i>
-										<div class="error" id=""></div>
-									</div>
-									@*<div class="form-group col-md-3 col-sm-6">
-				@Html.EditorFor(m => m.User.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Password" } })
-				<label for="input" class="control-label">Password*</label><i class="bar"></i>
-			</div>*@
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="text" class="form-control" placeholder="www.abc.com">*@
-										@Html.EditorFor(m => m.User.Website, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Website", id = "Website" } })
-										<label for="input" class="control-label">Web Address</label><i class="bar"></i>
-										<div class="error" id=""></div>
-									</div>
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="text" class="form-control" placeholder="No.00, street">*@
-										@Html.EditorFor(m => m.User.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Address", id = "Address" } })
-										<label for="input" class="control-label">Complete Address*</label><i class="bar"></i>
-										@if (Model.User.Address == null)
-										{
-											<div class="error" id="">Enter Complete Address</div>
-										}
-										else
-										{
-											<div class="error" id=""></div>
-										}
-									</div>
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="number" class="form-control" placeholder="postal code">*@
-										@Html.EditorFor(m => m.User.Postalcode, new { htmlAttributes = new { @type = "number", @class = "form-control", placeholder = "Enter PostalCode", id = "Postalcode" } })
-										<label for="input" class="control-label">Postal Code*</label><i class="bar"></i>
-										@if (Model.User.Postalcode == null)
-										{
-											<div class="error" id="">Enter Postal Code</div>
-										}
-										else
-										{
-											<div class="error" id=""></div>
-										}
-									</div>
-									@*<div class="col-sm-12">
-				<div>
-					Please fill the document proof with any one of your id.
-				</div>
-			</div>*@
-									<div class="form-group col-md-3 col-sm-6">
-										<div class="">
-											<select class="form-control basic-select" id="ProofName" name="User.ProofName" asp-for="@Model.User.ProofName"
-													asp-items="@(new SelectList(ViewBag.ListOfGetUserDocumentProofList, "UserDocumentProofName", "UserDocumentProofDisplay"))"></select>
-											<label for="input" class="control-label">Document (Optional)</label><i class="bar"></i>
-											@if (Model.User.ProofName == null || Model.User.ProofName == "PleaseSelect")
-											{
-												<div class="error" id="">Document not updated</div>
-											}
-											else
-											{
-												<div class="error" id=""></div>
-											}
-										</div>
-									</div>
-									<div class="form-group col-md-3 col-sm-6">
-										@*<input type="number" class="form-control" placeholder="postal code">*@
-										@Html.EditorFor(m => m.User.ProofNumber, new { htmlAttributes = new { @type = "text", @class = "form-control", placeholder = "Enter Document Id", id = "ProofNumber" } })
-										<label for="input" class="control-label">Document ID (Optional)<span class="id-format"></span></label><i class="bar"></i>
-										@if (Model.User.ProofNumber == null)
+									}
+								</div>
+								@*<div class="col-sm-12">
+						<div>
+							Please fill the document proof with any one of your id.
+						</div>
+					</div>*@
+								<div class="form-group col-md-3 col-sm-6">
+									<div class="">
+										<select class="form-control basic-select" id="ProofName" name="User.ProofName" asp-for="@Model.User.ProofName"
+												asp-items="@(new SelectList(ViewBag.ListOfGetUserDocumentProofList, "UserDocumentProofName", "UserDocumentProofDisplay"))"></select>
+										<label for="input" class="control-label">Document (Optional)</label><i class="bar"></i>
+										@if (Model.User.ProofName == null || Model.User.ProofName == "PleaseSelect")
 										{
 											<div class="error" id="">Document not updated</div>
 										}
@@ -173,152 +176,166 @@
 											<div class="error" id=""></div>
 										}
 									</div>
-
-									<div class="col-sm-12 row">
-										<div class="form-group col-md-2 col-sm-6">
-											@*<input type="file" class="form-control" accept="image/*">*@
-											@*@Html.EditorFor(m => m.User.Doc_RCCopy, new { htmlAttributes = new { @class = "form-control", type = "file", accept = "image/*" } })
-					<label for="input" class="control-label">Upload Registration</label><i class="bar"></i>*@
-											<p class="label-head mb-10">Document Copy (Optional)</p>
-											@if (Model.User.Doc_RCCopy != null)
-											{
-
-												<div class="gallery">
-													@Html.EditorFor(m => m.RCCopy, new { accept = "image/*", @class = "form-control-file" })
-													<a href="@Url.Content(Model.User.Doc_RCCopy)" class="view1"><img src="@Url.Content(Model.User.Doc_RCCopy)" class="img-fluid" alt="RCCopy"></a>
-													<p><a href="@Url.Content(Model.User.Doc_RCCopy)" target="_blank">RCCopy</a></p>
-												</div>
-											}
-											else
-											{
-												@Html.EditorFor(m => m.RCCopy, new { accept = "image/*", @class = "form-control-file" })
-												<p class="font-15 text-danger">Document Copy Not Uploaded!</p>
-											}
-										</div>
-										<div class="form-group col-md-2 col-sm-6">
-											@*<input type="file" class="form-control" accept="image/*">*@
-											@*@Html.EditorFor(m => m.User.Doc_CompanyLogo, new { htmlAttributes = new { @class = "form-control", type = "file", accept = "image/*" } })
-					<label for="input" class="control-label">Company Logo</label><i class="bar"></i>*@
-											<p class="label-head mb-10">Logo (Optional)</p>
-											@if (Model.User.Doc_CompanyLogo != null)
-											{
-
-												<div class="gallery">
-													@Html.EditorFor(m => m.Logo, new { accept = "image/*", @class = "form-control-file" })
-													<a href="@Url.Content(Model.User.Doc_CompanyLogo)" class="view1"><img src="@Url.Content(Model.User.Doc_CompanyLogo)" class="img-fluid" alt="Logo"></a>
-													<p><a href="@Url.Content(Model.User.Doc_CompanyLogo)" target="_blank">Logo</a></p>
-												</div>
-											}
-											else
-											{
-												@Html.EditorFor(m => m.Logo, new { accept = "image/*", @class = "form-control-file" })
-												<p class="font-15 text-danger">Logo Not Uploaded!</p>
-											}
-										</div>
-									</div>
-									<div class="col-md-12 col-sm-12">
-										<div class="checkbox m-0">
-											<label>
-															 
-												@Html.CheckBoxFor(m => m.User.TermsAndConditions, new { id = "TermsAndConditions" })
-												<i class="helper"></i><span onclick="newWindow('@Url.Action( "Contact","Website")')">Terms and Conditions*</span>
-												<span class="error d-inline-block w-100" id=""></span>
-											</label>
-										</div>
-									</div>
-									@if (ViewBag.UserId != null && ViewBag.UserId == 0)
+								</div>
+								<div class="form-group col-md-3 col-sm-6">
+									@*<input type="number" class="form-control" placeholder="postal code">*@
+									@Html.EditorFor(m => m.User.ProofNumber, new { htmlAttributes = new { @type = "text", @class = "form-control", placeholder = "Enter Document Id", id = "ProofNumber" } })
+									<label for="input" class="control-label">Document ID (Optional)<span class="id-format"></span></label><i class="bar"></i>
+									@if (Model.User.ProofNumber == null)
 									{
-										<div class="col-sm-6 mt-3">
-											<a href="@Url.Action( "AdminLister","Admin")" class="btn btn-primary tab-back-btn">Back</a>
-										</div>
-										<div class="col-sm-6 mt-3 text-right">
-											<button type="submit" class="btn btn-sec">Submit</button>
-										</div>
+										<div class="error" id="">Document not updated</div>
 									}
 									else
 									{
+										<div class="error" id=""></div>
+									}
+								</div>
+
+								<div class="col-sm-12 row">
+									<div class="form-group col-md-2 col-sm-6">
+										@*<input type="file" class="form-control" accept="image/*">*@
+										@*@Html.EditorFor(m => m.User.Doc_RCCopy, new { htmlAttributes = new { @class = "form-control", type = "file", accept = "image/*" } })
+							<label for="input" class="control-label">Upload Registration</label><i class="bar"></i>*@
+										<p class="label-head mb-10">Document Copy (Optional)</p>
+										@if (Model.User.Doc_RCCopy != null)
+										{
+
+											<div class="gallery">
+												@Html.EditorFor(m => m.RCCopy, new { accept = "image/*", @class = "form-control-file" })
+												<a href="@Url.Content(Model.User.Doc_RCCopy)" class="view1"><img src="@Url.Content(Model.User.Doc_RCCopy)" class="img-fluid" alt="RCCopy"></a>
+												<p><a href="@Url.Content(Model.User.Doc_RCCopy)" target="_blank">RCCopy</a></p>
+											</div>
+										}
+										else
+										{
+											@Html.EditorFor(m => m.RCCopy, new { accept = "image/*", @class = "form-control-file" })
+											<p class="font-15 text-danger">Document Copy Not Uploaded!</p>
+										}
+									</div>
+									<div class="form-group col-md-2 col-sm-6">
+										@*<input type="file" class="form-control" accept="image/*">*@
+										@*@Html.EditorFor(m => m.User.Doc_CompanyLogo, new { htmlAttributes = new { @class = "form-control", type = "file", accept = "image/*" } })
+							<label for="input" class="control-label">Company Logo</label><i class="bar"></i>*@
+										<p class="label-head mb-10">Logo (Optional)</p>
+										@if (Model.User.Doc_CompanyLogo != null)
+										{
+
+											<div class="gallery">
+												@Html.EditorFor(m => m.Logo, new { accept = "image/*", @class = "form-control-file" })
+												<a href="@Url.Content(Model.User.Doc_CompanyLogo)" class="view1"><img src="@Url.Content(Model.User.Doc_CompanyLogo)" class="img-fluid" alt="Logo"></a>
+												<p><a href="@Url.Content(Model.User.Doc_CompanyLogo)" target="_blank">Logo</a></p>
+											</div>
+										}
+										else
+										{
+											@Html.EditorFor(m => m.Logo, new { accept = "image/*", @class = "form-control-file" })
+											<p class="font-15 text-danger">Logo Not Uploaded!</p>
+										}
+									</div>
+								</div>
+								<div class="col-md-12 col-sm-12">
+									<div class="checkbox m-0">
+										<label>
+
+											@Html.CheckBoxFor(m => m.User.TermsAndConditions, new { id = "TermsAndConditions" })
+											<i class="helper"></i><span onclick="newWindow('@Url.Action( "Contact","Website")')">Terms and Conditions*</span>
+											<span class="error d-inline-block w-100" id=""></span>
+										</label>
+									</div>
+								</div>
+								@if (ViewBag.UserId != null && ViewBag.UserId == 0)
+								{
+									<div class="col-sm-6 mt-3">
+										<a href="@Url.Action( "AdminLister","Admin")" class="btn btn-primary tab-back-btn">Back</a>
+									</div>
+									<div class="col-sm-6 mt-3 text-right">
+										<button type="submit" class="btn btn-sec">Submit</button>
+									</div>
+								}
+								else
+								{
 
 									<div class="col-sm-6 mt-3">
 										<button type="submit" class="btn btn-sec">Submit</button>
 									</div>
-									}
-									@*</form>*@
 								}
-							</div>
+								@*</form>*@
+							}
 						</div>
 					</div>
-					@if (ViewBag.UserId != null && ViewBag.UserId > 0)
-					{
-						<div class="col-md-12">
-							<div class="m-2">
-								<span class="font-weight-bold">Note: </span>
-								Please fill the all details in Basic Information to become the <span class="text-pry font-weight-bold">HiSpace verified user</span>
-							</div>
-						</div>
-					}
-
 				</div>
-			</div>
-		</section>
-		@if (ViewBag.UserId != null && ViewBag.UserId > 0)
-		{
-			<section class="">
-				<div class="container p-0">
-					<div class="row no-gutters">
-						<div class="col-md-12">
-							<div class="section-title d-flex align-items-center m--tb-15">
-								<h2 class="mx-sm-0 mx-2 text-break">HiSpace-User Property/Space/Professional Listing</h2>
-							</div>
-							<div class="listing-note">
-								<span class="note-head note-add">Please Note</span>
-								<p>After added the new Property/RE-Professional</p>
-								<p>
-									Please add your
-									<span class="note-head"> <i class="fas fa-business-time btn-icon text-pry"></i> Business Hours </span> <span class="spliter"> | </span>
-									<span class="note-head"> <i class="fas fa-image btn-icon text-try"></i> Images </span><span class="note-sm"> ( Space or Re Project ) </span>
-								<p>
-									Addons like <span class="note-head"> <i class="fas fa-wifi btn-icon text-primary"></i> Amenities</span> and
-									<span class="note-head"> <i class="fas fa-bus btn-icon text-sec"></i> Near By Places</span> <span class="note-sm"> ( for space ) </span><span class="spliter"> - </span>
-									<span class="note-head"> <i class="fas fa-city btn-icon text-info"></i> Re Projects</span><span class="note-sm"> ( for RE Professionals ) </span>
-								</p>
-								<p>
-									Be Green, Save Green Fill the Eco-Friendly Environment
-									<span class="note-head"> <i class="fas fa-temperature-low btn-icon text-sec"></i> Internal Health Check </span> <span class="spliter"> | </span>
-									<span class="note-head"> <i class="fas fa-tree btn-icon text-info"></i> Operation and Maintenance Checklist </span>
-								</p>
-							</div>
-							<div class="card hi-card">
-								<div class="card-body">
-									<div class="datatable-wrapper table-responsive">
-										<a href="@Url.Action("Create", "ListingForm")">
-											<div id="show_add_view" class="add-new tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to add listing">
-												<i class="fa fa-plus-circle"></i> List
-											</div>
-										</a>
+				@if (ViewBag.UserId != null && ViewBag.UserId > 0)
+				{
+					<div class="col-md-12">
+						<div class="m-2">
+							<span class="font-weight-bold">Note: </span>
+							Please fill the all details in Basic Information to become the <span class="text-pry font-weight-bold">HiSpace verified user</span>
+						</div>
+					</div>
+				}
 
-										<table id="listingTable" class="display display compact table table-striped mdtable">
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Type</th>
-													<th>For</th>
-													@*<th>Phone</th>*@
-													<th>City</th>
-													@*<th>Current occ.</th>*@
-													<th><i class="fas fa-business-time"></i> Hours</th>
-													<th><i class="fas fa-images"></i> Images</th>
-													<th><i class="fab fa-gratipay"></i> Addons</th>
-													<th>Status</th>
-													<th>Verification</th>
-													<th><i class="fas fa-leaf"></i> Eco-Friendly</th>
-													<th>Action</th>
-												</tr>
-											</thead>
-											<tbody>
-												@foreach (var item in Model.ListingList)
-												{
-													//checking the status
-													@*@if (item.Listings.Status == true)
+			</div>
+		</div>
+	</section>
+	@if (ViewBag.UserId != null && ViewBag.UserType == 1)
+	{
+		<section class="">
+			<div class="container p-0">
+				<div class="row no-gutters">
+					<div class="col-md-12">
+						<div class="section-title d-flex align-items-center m--tb-15">
+							<h2 class="mx-sm-0 mx-2 text-break">HiSpace-User Property/Space/Professional Listing</h2>
+						</div>
+						<div class="listing-note">
+							<span class="note-head note-add">Please Note</span>
+							<p>After added the new Property/RE-Professional</p>
+							<p>
+								Please add your
+								<span class="note-head"> <i class="fas fa-business-time btn-icon text-pry"></i> Business Hours </span> <span class="spliter"> | </span>
+								<span class="note-head"> <i class="fas fa-image btn-icon text-try"></i> Images </span><span class="note-sm"> ( Space or Re Project ) </span>
+							<p>
+								Addons like <span class="note-head"> <i class="fas fa-wifi btn-icon text-primary"></i> Amenities</span> and
+								<span class="note-head"> <i class="fas fa-bus btn-icon text-sec"></i> Near By Places</span> <span class="note-sm"> ( for space ) </span><span class="spliter"> - </span>
+								<span class="note-head"> <i class="fas fa-city btn-icon text-info"></i> Re Projects</span><span class="note-sm"> ( for RE Professionals ) </span>
+							</p>
+							<p>
+								Be Green, Save Green Fill the Eco-Friendly Environment
+								<span class="note-head"> <i class="fas fa-temperature-low btn-icon text-sec"></i> Internal Health Check </span> <span class="spliter"> | </span>
+								<span class="note-head"> <i class="fas fa-tree btn-icon text-info"></i> Operation and Maintenance Checklist </span>
+							</p>
+						</div>
+						<div class="card hi-card">
+							<div class="card-body">
+								<div class="datatable-wrapper table-responsive">
+									<a href="@Url.Action("Create", "ListingForm")">
+										<div id="show_add_view" class="add-new tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to add listing">
+											<i class="fa fa-plus-circle"></i> List
+										</div>
+									</a>
+
+									<table id="listingTable" class="display display compact table table-striped mdtable">
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>Type</th>
+												<th>For</th>
+												@*<th>Phone</th>*@
+												<th>City</th>
+												@*<th>Current occ.</th>*@
+												<th><i class="fas fa-business-time"></i> Hours</th>
+												<th><i class="fas fa-images"></i> Images</th>
+												<th><i class="fab fa-gratipay"></i> Addons</th>
+												<th>Status</th>
+												<th>Verification</th>
+												<th><i class="fas fa-leaf"></i> Eco-Friendly</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach (var item in Model.ListingList)
+											{
+												//checking the status
+												@*@if (item.Listings.Status == true)
 													{
 														ViewBag.ListStatus = @Html.Raw("<i class='fas fa-check text-success'></i>");
 													}
@@ -326,121 +343,121 @@
 													{
 														ViewBag.ListStatus = @Html.Raw("<i class='fas fa-times text-danger'></i>");
 													}*@
-													//Verification
-													@if (item.Listings.AdminStatus.ToString() == "True")
-													{
-														ViewBag.Verification = @Html.Raw("<span class='text-success'>Verified</span>");
-													}
-													else
-													{
-														ViewBag.Verification = @Html.Raw("<span class='text-danger'>Not Verified</span>");
-													}
-													//checking the type and addons
-													@if (item.Listings.ListingType == "Commercial")
-													{
-														ViewBag.TypeClass = "text-pry";
-														ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-												"<span span class='modal-link__amenities' data-targeturl=\'" + @Url.Action("AddAmenities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
-													"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the aminities'>" +
-														"<i class='fas fa-wifi btn-icon text-primary'></i>" +
-													"</a>" +
-													"<span class='tooltip-wrapper status-alert status-alert__amenities' data-toggle='tooltip' data-placement='top' title='' data-original-title='Amenities Count'>" +
-																				  @item.TotalAmenities +
-																				  "</span>" +
-												"</span>" +
-									"<span span class='modal-link__facilities' data-targeturl=\'" + @Url.Action("AddFacilities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
-										"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the near by places'>" +
-											"<i class='fas fa-bus btn-icon text-sec'></i>" +
-										"</a>" +
-										 "<span class='tooltip-wrapper status-alert status-alert__facilities' data-toggle='tooltip' data-placement='top' title='' data-original-title='Near by places Count'>" +
-																				  @item.TotalFacilities +
-																				  "</span>" +
-									"</span>" +
-									"</div>");
-														ViewBag.Eco = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-												"<span span class='modal-link__healthCheck' data-targeturl=\'" + @Url.Action("AddHealthCheck", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
-													"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Property Internal Health Check'>" +
-														"<i class='fas fa-temperature-low btn-icon text-sec'></i>" +
-													"</a>" +
-													 "<span class='tooltip-wrapper status-alert__hc' data-toggle='tooltip' data-placement='top' title='' data-original-title='Health check completed' status-check="+@item.TotalHealthCheck+">" +
-												"<i class='fas fa-smile'></i>" +
-																				  "</span>" +
-												"</span>" +
-									"<span span class='modal-link__greenBuildingData' data-targeturl=\'" + @Url.Action("AddGreenBuildingData", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
-										"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Buildings Operation and Maintenance Checklist'>" +
-											"<i class='fas fa-tree btn-icon text-info'></i>" +
-										"</a>" +
-										"<span class='tooltip-wrapper status-alert__gbc' data-toggle='tooltip' data-placement='top' title='' data-original-title='Green Building check completed' status-check=" + @item.TotalGreenBuildingCheck + ">" +
-												"<i class='fas fa-bell'></i>" +
-																				  "</span>" +
-									"</span>" +
-									"</div>");
-													}
-													else if (item.Listings.ListingType == "Co-Working")
-													{
-														ViewBag.TypeClass = "text-sec";
-														ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-																			  "<span class='modal-link__amenities' data-targeturl=\'" + @Url.Action("AddAmenities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
-																				  "<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the aminities'>" +
-																					  "<i class='fas fa-wifi btn-icon text-primary'></i>" +
-																				  "</a>" +
-																				  "<span class='tooltip-wrapper status-alert status-alert__amenities' data-toggle='tooltip' data-placement='top' title='' data-original-title='Amenities Count'>" +
-																				  @item.TotalAmenities +
-																				  "</span>" +
-												"</span>" +
+												//Verification
+												@if (item.Listings.AdminStatus.ToString() == "True")
+												{
+													ViewBag.Verification = @Html.Raw("<span class='text-success'>Verified</span>");
+												}
+												else
+												{
+													ViewBag.Verification = @Html.Raw("<span class='text-danger'>Not Verified</span>");
+												}
+												//checking the type and addons
+												@if (item.Listings.ListingType == "Commercial")
+												{
+													ViewBag.TypeClass = "text-pry";
+													ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
+											"<span span class='modal-link__amenities' data-targeturl=\'" + @Url.Action("AddAmenities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
+												"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the aminities'>" +
+													"<i class='fas fa-wifi btn-icon text-primary'></i>" +
+												"</a>" +
+												"<span class='tooltip-wrapper status-alert status-alert__amenities' data-toggle='tooltip' data-placement='top' title='' data-original-title='Amenities Count'>" +
+																			  @item.TotalAmenities +
 																			  "</span>" +
-																  "<span class='modal-link__facilities' data-targeturl=\'" + @Url.Action("AddFacilities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
-																	  "<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the near by places'>" +
-																		  "<i class='fas fa-bus btn-icon text-sec'></i>" +
-																	  "</a>" +
-																	  "<span class='tooltip-wrapper status-alert status-alert__facilities' data-toggle='tooltip' data-placement='top' title='' data-original-title='Near by places Count'>" +
-																				  @item.TotalFacilities +
-																				  "</span>" +
-																  "</span>" +
-															  "</div>");
-														ViewBag.Eco = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-												"<span span class='modal-link__healthCheck' data-targeturl=\'" + @Url.Action("AddHealthCheck", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
-													"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Property Internal Health Check'>" +
-														"<i class='fas fa-temperature-low btn-icon text-sec'></i>" +
-													"</a>" +
-													 "<span class='tooltip-wrapper status-alert__hc' data-toggle='tooltip' data-placement='top' title='' data-original-title='Health check completed' status-check=" + @item.TotalHealthCheck + ">" +
-												"<i class='fas fa-smile'></i>" +
-																				  "</span>" +
-												"</span>" +
-									"<span span class='modal-link__greenBuildingData' data-targeturl=\'" + @Url.Action("AddGreenBuildingData", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
-										"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Buildings Operation and Maintenance Checklist'>" +
-											"<i class='fas fa-tree btn-icon text-info'></i>" +
-										"</a>" +
-										"<span class='tooltip-wrapper status-alert__gbc' data-toggle='tooltip' data-placement='top' title='' data-original-title='Green Building check completed' status-check=" + @item.TotalGreenBuildingCheck + ">" +
-												"<i class='fas fa-bell'></i>" +
-																				  "</span>" +
-									"</span>" +
-									"</div>");
-													}
-													else if (item.Listings.ListingType == "RE-Professional")
-													{
-														ViewBag.TypeClass = "text-info";
-														ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-																			  "<span class='modal-link__project' data-targeturl=\'" + @Url.Action("AddProject", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
-																				  "<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the RE project'>" +
-																					  "<i class='fas fa-city btn-icon text-info'></i>"+
-																				  "</a>"+
-																				  "<span class='tooltip-wrapper status-alert status-alert__projects' data-toggle='tooltip' data-placement='top' title='' data-original-title='Project Count'>" +
-																				  @item.TotalProjects+
-																				  "</span>" +
+											"</span>" +
+								"<span span class='modal-link__facilities' data-targeturl=\'" + @Url.Action("AddFacilities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
+									"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the near by places'>" +
+										"<i class='fas fa-bus btn-icon text-sec'></i>" +
+									"</a>" +
+									 "<span class='tooltip-wrapper status-alert status-alert__facilities' data-toggle='tooltip' data-placement='top' title='' data-original-title='Near by places Count'>" +
+																			  @item.TotalFacilities +
+																			  "</span>" +
+								"</span>" +
+								"</div>");
+													ViewBag.Eco = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
+											"<span span class='modal-link__healthCheck' data-targeturl=\'" + @Url.Action("AddHealthCheck", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
+												"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Property Internal Health Check'>" +
+													"<i class='fas fa-temperature-low btn-icon text-sec'></i>" +
+												"</a>" +
+												 "<span class='tooltip-wrapper status-alert__hc' data-toggle='tooltip' data-placement='top' title='' data-original-title='Health check completed' status-check=" + @item.TotalHealthCheck + ">" +
+											"<i class='fas fa-smile'></i>" +
+																			  "</span>" +
+											"</span>" +
+								"<span span class='modal-link__greenBuildingData' data-targeturl=\'" + @Url.Action("AddGreenBuildingData", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
+									"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Buildings Operation and Maintenance Checklist'>" +
+										"<i class='fas fa-tree btn-icon text-info'></i>" +
+									"</a>" +
+									"<span class='tooltip-wrapper status-alert__gbc' data-toggle='tooltip' data-placement='top' title='' data-original-title='Green Building check completed' status-check=" + @item.TotalGreenBuildingCheck + ">" +
+											"<i class='fas fa-bell'></i>" +
+																			  "</span>" +
+								"</span>" +
+								"</div>");
+												}
+												else if (item.Listings.ListingType == "Co-Working")
+												{
+													ViewBag.TypeClass = "text-sec";
+													ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
+																		  "<span class='modal-link__amenities' data-targeturl=\'" + @Url.Action("AddAmenities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
+																			  "<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the aminities'>" +
+																				  "<i class='fas fa-wifi btn-icon text-primary'></i>" +
+																			  "</a>" +
+																			  "<span class='tooltip-wrapper status-alert status-alert__amenities' data-toggle='tooltip' data-placement='top' title='' data-original-title='Amenities Count'>" +
+																			  @item.TotalAmenities +
+																			  "</span>" +
+											"</span>" +
+																		  "</span>" +
+															  "<span class='modal-link__facilities' data-targeturl=\'" + @Url.Action("AddFacilities", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
+																  "<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the near by places'>" +
+																	  "<i class='fas fa-bus btn-icon text-sec'></i>" +
+																  "</a>" +
+																  "<span class='tooltip-wrapper status-alert status-alert__facilities' data-toggle='tooltip' data-placement='top' title='' data-original-title='Near by places Count'>" +
+																			  @item.TotalFacilities +
+																			  "</span>" +
+															  "</span>" +
+														  "</div>");
+													ViewBag.Eco = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
+											"<span span class='modal-link__healthCheck' data-targeturl=\'" + @Url.Action("AddHealthCheck", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
+												"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Property Internal Health Check'>" +
+													"<i class='fas fa-temperature-low btn-icon text-sec'></i>" +
+												"</a>" +
+												 "<span class='tooltip-wrapper status-alert__hc' data-toggle='tooltip' data-placement='top' title='' data-original-title='Health check completed' status-check=" + @item.TotalHealthCheck + ">" +
+											"<i class='fas fa-smile'></i>" +
+																			  "</span>" +
+											"</span>" +
+								"<span span class='modal-link__greenBuildingData' data-targeturl=\'" + @Url.Action("AddGreenBuildingData", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
+									"<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Buildings Operation and Maintenance Checklist'>" +
+										"<i class='fas fa-tree btn-icon text-info'></i>" +
+									"</a>" +
+									"<span class='tooltip-wrapper status-alert__gbc' data-toggle='tooltip' data-placement='top' title='' data-original-title='Green Building check completed' status-check=" + @item.TotalGreenBuildingCheck + ">" +
+											"<i class='fas fa-bell'></i>" +
+																			  "</span>" +
+								"</span>" +
+								"</div>");
+												}
+												else if (item.Listings.ListingType == "RE-Professional")
+												{
+													ViewBag.TypeClass = "text-info";
+													ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
+																		  "<span class='modal-link__project' data-targeturl=\'" + @Url.Action("AddProject", "Addons", new { id = item.Listings.ListingId }) + "\' data-dismiss='modal'>" +
+																			  "<a href='javascript:function() { return false; }' class='tooltip-wrapper' data-toggle='tooltip' data-placement='top' title='' data-original-title='Click to list the RE project'>" +
+																				  "<i class='fas fa-city btn-icon text-info'></i>" +
+																			  "</a>" +
+																			  "<span class='tooltip-wrapper status-alert status-alert__projects' data-toggle='tooltip' data-placement='top' title='' data-original-title='Project Count'>" +
+																			  @item.TotalProjects +
+																			  "</span>" +
 
-												   "</span>" +
-								   "</div>");
-														ViewBag.Eco = @Html.Raw("---");
-													}
-													if ((item.Listings.RE_FirstName == null && item.Listings.RE_LastName == null) && item.Listings.ListingType == "RE-Professional")
-													{
-														ViewBag.BlinkClass = "blink-bg";
-													}
-													else
-													{
-														ViewBag.BlinkClass = "";
-													}
+											   "</span>" +
+							   "</div>");
+													ViewBag.Eco = @Html.Raw("---");
+												}
+												if ((item.Listings.RE_FirstName == null && item.Listings.RE_LastName == null) && item.Listings.ListingType == "RE-Professional")
+												{
+													ViewBag.BlinkClass = "blink-bg";
+												}
+												else
+												{
+													ViewBag.BlinkClass = "";
+												}
 												<tr class="@ViewBag.BlinkClass">
 													<td>
 														@if (item.Listings.ListingType == "Commercial" || item.Listings.ListingType == "Co-Working")
@@ -453,7 +470,7 @@
 															{
 																@section Scripts {
 																	<script>
-																		
+
 																	</script>
 																}
 															}
@@ -474,48 +491,48 @@
 														}
 														else if (item.Listings.ListingType == "RE-Professional")
 														{
-													<span class="">---</span>
+															<span class="">---</span>
 														}
 
 													</td>
 													@*<td>
-														@Html.DisplayFor(modelItem => item.Listings.Phone)
-													</td>*@
+															@Html.DisplayFor(modelItem => item.Listings.Phone)
+														</td>*@
 													<td>
 														@Html.DisplayFor(modelItem => item.Listings.locality)
 													</td>
 													@*<td>
-			@Html.DisplayFor(modelItem => item.Listings.CurrentOccupancy)
-		</td>*@
-												<td class="p-0 text-center">
-													@if (item.Listings.CMCW_PropertyFor == "Rental" || item.Listings.ListingType == "RE-Professional")
-													{
-													<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
-														<span class="modal-link__hours" data-targeturl="@Url.Action("AddHours", "Addons", new { id = item.Listings.ListingId })" data-dismiss="modal">
-															<a href="javascript:function() { return false; }" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to list the working hours">
-																<i class="fas fa-business-time btn-icon text-pry"></i>
-															</a>
-															@if (item.TotalWorkingHours != 0)
-															{
-																<span class="tooltip-wrapper status-alert status-alert__hours" data-toggle="tooltip" data-placement="top" title="" data-original-title="Available hours inside">
-																	<i class="fas fa-thumbs-up"></i>
+															@Html.DisplayFor(modelItem => item.Listings.CurrentOccupancy)
+														</td>*@
+													<td class="p-0 text-center">
+														@if (item.Listings.CMCW_PropertyFor == "Rental" || item.Listings.ListingType == "RE-Professional")
+														{
+															<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
+																<span class="modal-link__hours" data-targeturl="@Url.Action("AddHours", "Addons", new { id = item.Listings.ListingId })" data-dismiss="modal">
+																	<a href="javascript:function() { return false; }" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to list the working hours">
+																		<i class="fas fa-business-time btn-icon text-pry"></i>
+																	</a>
+																	@if (item.TotalWorkingHours != 0)
+																	{
+																		<span class="tooltip-wrapper status-alert status-alert__hours" data-toggle="tooltip" data-placement="top" title="" data-original-title="Available hours inside">
+																			<i class="fas fa-thumbs-up"></i>
+																		</span>
+																	}
+																	else
+																	{
+																		<span class="tooltip-wrapper status-alert status-alert__empty" data-toggle="tooltip" data-placement="top" title="" data-original-title="Please add the available hours details">
+																			<i class="fas fa-thumbs-down"></i>
+																		</span>
+																	}
 																</span>
-															}
-															else
-															{
-																<span class="tooltip-wrapper status-alert status-alert__empty" data-toggle="tooltip" data-placement="top" title="" data-original-title="Please add the available hours details">
-																	<i class="fas fa-thumbs-down"></i>
-																</span>
-															}
-														</span>
-													</div>
-													}
-													else if (item.Listings.CMCW_PropertyFor == "Sale")
-													{
-														<span class="">---</span>
-													}
-													
-												</td>
+															</div>
+														}
+														else if (item.Listings.CMCW_PropertyFor == "Sale")
+														{
+															<span class="">---</span>
+														}
+
+													</td>
 													<td class="p-0">
 														<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
 															<span class="modal-link__image" data-targeturl="@Url.Action("AddImage", "Addons", new { id = item.Listings.ListingId })" data-dismiss="modal">
@@ -543,28 +560,28 @@
 														@ViewBag.TypeAddons
 													</td>
 													@*<td>
-														<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
-															@ViewBag.ListStatus
-														</div>
-													</td>*@
+															<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
+																@ViewBag.ListStatus
+															</div>
+														</td>*@
 													<td class="p-0">
 														@if (@item.Listings.Status.ToString() == "True")
 														{
-														<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
-															<a onclick="return userLevelListCheck(0);" href="@Url.Action("UserLevelListCheck", "Listing", new { ListingId = item.Listings.ListingId, Status = false })" class="tooltip-wrapper text-sec" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to unactivate the space/professional">
-																<i class="fas btn-icon fa-check-circle text-sec"></i> Active
-															</a>
-														</div>
+															<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
+																<a onclick="return userLevelListCheck(0);" href="@Url.Action("UserLevelListCheck", "Listing", new { ListingId = item.Listings.ListingId, Status = false })" class="tooltip-wrapper text-sec" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to unactivate the space/professional">
+																	<i class="fas btn-icon fa-check-circle text-sec"></i> Active
+																</a>
+															</div>
 														}
 														else
-														{													
-														<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
-															<a onclick="return userLevelListCheck(1);" href="@Url.Action("UserLevelListCheck", "Listing", new { ListingId = item.Listings.ListingId, Status = true })" class="tooltip-wrapper text-pry" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to activate the space/professional">
-																
-																<i class="fas btn-icon fa-times-circle text-pry"></i> Block
-															</a>
-														</div>
-													
+														{
+															<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
+																<a onclick="return userLevelListCheck(1);" href="@Url.Action("UserLevelListCheck", "Listing", new { ListingId = item.Listings.ListingId, Status = true })" class="tooltip-wrapper text-pry" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to activate the space/professional">
+
+																	<i class="fas btn-icon fa-times-circle text-pry"></i> Block
+																</a>
+															</div>
+
 														}
 													</td>
 													<td>
@@ -578,8 +595,8 @@
 													<td class="p-0">
 														<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
 															@*<a href="/" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="View">
-					<i class="fas fa-eye btn-icon text-info"></i>
-				</a>*@
+																	<i class="fas fa-eye btn-icon text-info"></i>
+																</a>*@
 															<a href="@Url.Action("Edit", "ListingForm", new { ListingID = item.Listings.ListingId})" class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit or View">
 																<i class="fas fa-edit btn-icon text-warning"></i>
 															</a>
@@ -589,12 +606,12 @@
 														</div>
 													</td>
 												</tr>
-												}
-											</tbody>
-										</table>
-									</div>
+											}
+										</tbody>
+									</table>
 								</div>
-								@*@if (Model.User.UserState == "Incomplete")
+							</div>
+							@*@if (Model.User.UserState == "Incomplete")
 								{
 									<div class="table-disabled"> Fill the Information to enable listing</div>
 								}
@@ -606,7 +623,7 @@
 								{
 
 								}*@
-							<div class="re-prof__nodata hi-alert__pry listing-note display-none"> 
+							<div class="re-prof__nodata hi-alert__pry listing-note display-none">
 								<div>
 									Step 1: Please fill the RE-Professional details by click <span class="note-head"> <i class="fas fa-edit btn-icon text-pry"></i></span>
 								</div>
@@ -616,15 +633,15 @@
 								<div>
 									Step 3: Now Your <span class="note-head"> <i class="fas fa-plus-circle btn-icon text-pry"></i></span> Listing will enable You can add Properies/Space/RE-professionals/Projects.
 								</div>
-								 
+
 							</div>
 						</div>
 					</div>
 				</div>
-				</div>
-			</section>
-		}
-		</div>
+			</div>
+		</section>
+	}
+</div>
 
 <!--=================================
 	 Modal login -->
@@ -654,7 +671,6 @@
 </div>
 <!--=================================
   Modal login -->
-
 <!-- The below code is for the modal dialog Image section-->
 <div id="modal-container__image" class="modal fade" tabindex="-1" role="dialog">
 	<a href="#close" title="Close" class="modal-close-btn">X</a>
@@ -694,3 +710,41 @@
 		<div class="modal-body"></div>
 	</div>
 </div>
+
+
+@*progressbar*@
+@section Scripts {
+	<script src="~/js/progressbar.js"></script>
+	<script>
+		//var bar = new ProgressBar.Line(pBar, {
+		//	strokeWidth: 4,
+		//	//easing: 'easeInOut',
+		//	//duration: 1400,
+		//	color: '#2ecc71',
+		//	trailColor: '#eee',
+		//	trailWidth: 4,
+		//	svgStyle: { width: '100%', height: '100%' },
+		//	text: {
+		//		style: {
+		//			// Text color.
+		//			// Default: same as stroke color (options.color)
+		//			color: '#999',
+		//			position: 'absolute',
+		//			right: '0',
+		//			top: '30px',
+		//			padding: 0,
+		//			margin: 0,
+		//			transform: null
+		//		},
+		//		autoStyleContainer: false
+		//	},
+		//	//from: { color: '#FFEA82' },
+		//	//to: { color: '#ED6A5A' },
+		//	step: (state, bar) => {
+		//		bar.setText(Math.round(bar.value() * 100) + ' %');
+		//	}
+		//});
+
+		//bar.animate(0.62);  // Number from 0.0 to 1.0
+	</script>
+}

@@ -127,6 +127,35 @@ namespace HiSpaceListingWeb.Controllers
 					model.CurrentOccupancy = null;
 				}
 
+				//set the userType
+				if (GetSessionObject().UserType == 2)
+				{
+					using (var client = new HttpClient())
+					{
+						client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
+						//HTTP GET
+						var responseTask = client.GetAsync(Common.Instance.ApiUserTypeUpdate + GetSessionObject().UserId + "/" + 1);
+						responseTask.Wait();
+
+						var result = responseTask.Result;
+						if (result.IsSuccessStatusCode)
+						{
+							var rs = result.Content.ReadAsAsync<bool>().Result;
+							var sr = rs;
+							//assign the values
+							User _user = new User();
+							_user.Email = GetSessionObject().Email;
+							_user.UserId = GetSessionObject().UserId;
+							_user.UserType = 1;
+							_user.CompanyName = GetSessionObject().CompanyName;
+							_user.UserState = GetSessionObject().UserState;
+
+							AssignSessionVariables(_user);
+							SetSessionVariables();
+						}
+					}
+				}
+				
 				using (var client = new HttpClient())
 				{
 					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
@@ -181,7 +210,7 @@ namespace HiSpaceListingWeb.Controllers
 			Listing listing = null;
 			//if (model != null)
 			//{
-				model.CreatedDateTime = DateTime.Now;
+				//model.CreatedDateTime = DateTime.Now;
 				model.ModifyDateTime = DateTime.Now;
 				model.ModifyBy = model.ModifyBy;
 				model.UserId = model.UserId;
@@ -305,6 +334,26 @@ namespace HiSpaceListingWeb.Controllers
 			ViewBag.UserType = HttpContext.Session.GetInt32(Common.SessionUserType);
 			ViewBag.UserCompanyName = HttpContext.Session.GetString(Common.SessionUserCompanyName);
 			#endregion
+		}
+
+		public void AssignSessionVariables(User _user)
+		{
+			HttpContext.Session.SetObjectAsJson("_user", _user);
+			HttpContext.Session.SetString(Common.SessionUserEmail, _user.Email);
+			int? UserType = _user.UserType;
+			var _UserType = UserType.Value;
+			HttpContext.Session.SetInt32(Common.SessionUserType, _UserType);
+			HttpContext.Session.SetInt32(Common.SessionUserId, _user.UserId);
+			HttpContext.Session.SetString(Common.SessionUserCompanyName, _user.CompanyName);
+			if (_user.UserState == null)
+			{
+				_user.UserState = "Admin";
+				HttpContext.Session.SetString(Common.SessionUserStatus, _user.UserState);
+			}
+			else
+			{
+				HttpContext.Session.SetString(Common.SessionUserStatus, _user.UserState);
+			}
 		}
 
 		public User GetSessionObject()

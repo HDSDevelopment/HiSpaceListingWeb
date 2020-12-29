@@ -94,11 +94,11 @@ namespace HiSpaceListingWeb.Controllers
 					SetSessionVariables();
 				//return RedirectToAction("ListingTable", "Listing", new { UserID = _user.UserId, UserType = _user.UserType });
 				//return RedirectToAction("PropertyOperatorPeopleAndFilterMenu", "Filter", new { ListShowType = 1 });
-				if (!string.IsNullOrEmpty(returnUrl))
-					return Redirect(returnUrl);
-				else
-					return RedirectToAction("PropertyOperatorPeopleAndFilterMenu", "Filter", new { ListShowType = 1 });
-			}
+					if (!string.IsNullOrEmpty(returnUrl))
+						return Redirect(returnUrl);
+					else
+						return RedirectToAction("PropertyOperatorPeopleAndFilterMenu", "Filter", new { ListShowType = 1 });
+				}
 				//admin check
 				else if (_user != null && _user.UserId == 0 && _user.Email == user.Email && _user.Password == user.Password && _user.UserType == 0)
 				{
@@ -111,7 +111,11 @@ namespace HiSpaceListingWeb.Controllers
 				{
 					AssignSessionVariables(_user);
 					SetSessionVariables();
-					return RedirectToAction("Index", "Website");
+				//return RedirectToAction("Index", "Website");
+					if (!string.IsNullOrEmpty(returnUrl))
+						return Redirect(returnUrl);
+					else
+						return RedirectToAction("PropertyOperatorPeopleAndFilterMenu", "Filter", new { ListShowType = 1 });
 				}
 				else
 				{
@@ -133,11 +137,11 @@ namespace HiSpaceListingWeb.Controllers
 				}
 				else if(model.UserType == 2)
 				{
-					model.UserState = "Guest";
+					model.UserState = "Basic";
 				}
 				else if(model.UserType == null)
 				{
-					model.UserType = 1;
+					model.UserType = 2;
 					model.UserState = "Basic";
 				}
 				model.Status = true;
@@ -347,6 +351,8 @@ namespace HiSpaceListingWeb.Controllers
 				}
 			}
 			model.User.Status = true;
+			model.User.ModidyDateTime = DateTime.Now;
+			model.User.ModifyBy = model.User.UserId;
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);

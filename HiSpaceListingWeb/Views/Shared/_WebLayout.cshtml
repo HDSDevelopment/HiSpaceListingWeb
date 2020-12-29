@@ -108,7 +108,7 @@
 								else
 								{
 									<div class="user-alert bg-pry"></div>
-									<a class="modal-link__login d-inline" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"> sign in<i class="fa fa-user pl-2 d-inline"></i></a>
+									<a class="modal-link__login d-inline" data-targeturl="@Url.Action("LoginPartialView","User", new { returnUrl = Context.Request.Path})" href="javascript:function() { return false; }"> sign in<i class="fa fa-user pl-2 d-inline"></i></a>
 								}
 							</div>
 						</div>
@@ -172,10 +172,10 @@
 									Dashboard <i class="fas fa-chevron-down fa-xs"></i>
 								</a>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})">My Details/Listing</a></li>
+									<li><a class="dropdown-item" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})">Profile Setting/Listing</a></li>
 									<li><a class="dropdown-item" href="@Url.Action( "LinkedPeople","Listing",new { UserID = ViewBag.UserId})">Linked People/Professional</a></li>
 									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "User"})">Received Enquiries</a></li>
-									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "My"})">Enquiries Made</a></li>
+									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "My"})">Made Enquiries</a></li>
 								</ul>
 							</li>
 						}
@@ -183,10 +183,11 @@
 						{
 							<li class="nav-item dropdown @((ViewContext.RouteData.Values["Controller"].ToString()) == "Listing" ? "active" : "" )">
 								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Dashboard <i class="fas fa-chevron-down fa-xs"></i>
+									Profile and Activities <i class="fas fa-chevron-down fa-xs"></i>
 								</a>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "My"})">Enquiries Made</a></li>
+									<li><a class="dropdown-item" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})">Profile Setting</a></li>
+									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "My"})">Made Enquiries</a></li>
 								</ul>
 							</li>
 						}
@@ -195,13 +196,25 @@
 				@*<div class="add-listing d-none d-sm-block">
 			<a class="btn btn-primary btn-md" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId})"> <i class="fa fa-plus-circle"></i>Add listing </a>
 		</div>*@
-				@if (ViewBag.UserId != null && ViewBag.UserId >= 0)
+				@if (ViewBag.UserId != null && ViewBag.UserType == 2)
+				{
+					<div class="slide-btn align-self-center">
+						<div class="property-btn">
+							<a class="property-link btn btn-primary" href="@Url.Action("Create", "ListingForm")"><i class="fas fa-plus"></i>Add List</a>
+						</div>
+					</div>
+				}
+				else if (ViewBag.UserId != null && ViewBag.UserType == 1)
 				{
 					<div class="slide-btn align-self-center">
 						<div class="property-btn">
 							<a class="property-link btn btn-primary" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})"><i class="fas fa-plus"></i>Add List</a>
 						</div>
 					</div>
+				}
+				else if (ViewBag.UserId != null && ViewBag.UserType == 0)
+				{
+
 				}
 				else
 				{
@@ -352,6 +365,7 @@
 	@*<script src="~/js/jarallax/jarallax-video.min.js"></script>*@
 	<script src="~/js/magnific-popup/jquery.magnific-popup.min.js"></script>
 	<script src="~/js/rater.js"></script>
+	
 	@*<script src="~/js/jquery.validate.min.js"></script>*@
 	<script>
 		if (/MSIE (\d+\.\d+);/.test(navigator.userAgent) || navigator.userAgent.indexOf("Trident/") > -1) {

@@ -181,7 +181,7 @@
 									}
 									else
 									{
-										<li><a href="javascript:void(0);" onclick="propertyListByType('@item.PropertyType');">@item.PropertyType<span class="ml-auto">(@item.PropertyTypeInUseCount)</span></a></li>
+										<li><a href="javascript:void(0);" onclick="propertyListByType('@item.PropertyType');">@item.PropertyType@*<span class="ml-auto">(@item.PropertyTypeInUseCount)</span>*@</a></li>
 									}
 								}
 							</ul>
@@ -212,7 +212,7 @@
 								{
 									if (item.PropertyListerInUseCount > 0)
 									{
-										<li><a href="javascript:void(0);" onclick="propertyListByUser('@item.UserId');">@item.CompanyName<span class="ml-auto">(@item.PropertyListerInUseCount)</span></a></li>
+										<li><a href="javascript:void(0);" onclick="propertyListByUser('@item.UserId');">@item.CompanyName@*<span class="ml-auto">(@item.PropertyListerInUseCount)</span>*@</a></li>
 									}
 								}
 							</ul>

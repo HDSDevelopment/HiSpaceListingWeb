@@ -103,7 +103,8 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiSendBackgroundCheckEmail = "SendBackgroundCheckEmail/";
 		public string ApiSendContactEnquiryEmail = "SendContactEnquiryEmail/";
 		public string ApiSendPasswordRecoveryEmail = "SendPasswordRecoveryEmail/";
-
+		//user type update
+		public string ApiUserTypeUpdate = "UserTypeUpdate/";
 
 
 		#endregion User Controller
@@ -155,7 +156,10 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiAdminLevelListApprove = "AdminLevelListApprove/";
 		//Get Enquiry list
 		public string ApiGetEnquiryListByUserIdAndUserType = "GetEnquiryListByUserIdAndUserType/";
-		
+		//latest list
+		public string ApiGetLatestPropertiesCommercialAndCoworking = "GetLatestPropertiesCommercialAndCoworking/";
+		public string ApiGetLatestOperatorList = "GetLatestOperatorList/";
+		public string ApiGetLatestPeopleList = "GetLatestPeopleList/";
 
 
 
@@ -241,7 +245,8 @@ namespace HiSpaceListingWeb.Utilities
 		//people filter list
 		public string ApiCommonGetLocationListForPeopleFilter = "GetLocationListForPeopleFilter";
 		public string ApiCommonGetPeopleListForPeopleFilter = "GetPeopleListForPeopleFilter";
-		
+		//Location based on count
+		public string ApiCommonGetPropertyLocationWithMinimumCountSearch = "GetPropertyLocationWithMinimumCountSearch";
 
 		#endregion Common Controller
 
