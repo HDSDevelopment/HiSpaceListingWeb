@@ -42,8 +42,46 @@
 		<div class="container p-0">
 			<div class="row no-gutters">
 				<div class="widget accordion-sec col-md-12 mb-2">
+					@*progress bar*@
+					@if (ViewBag.UserId != null && ViewBag.UserType > 0)
+					{
+						<div class="row p-bar mb-3">
+							@if (ViewBag.UserType == 1 || ViewBag.UserType == 2)
+							{
+								<div class="col-6">
+									<div class="row">
+										<div class="col-3 text-right pr-0">
+											<img src="~/images/icons/profile.png" alt="profile-icon">
+										</div>
+										<div class="col-9 align-self-center">
+											<span>Profile Complition</span>
+											<div id="pBar" p-value="@Model.PercentageCompleted"></div>
+										</div>
+									</div>
+								</div>
+							}
+							@if (ViewBag.UserType == 1)
+							{
+								<div class="col-6">
+									<div class="row">
+										<div class="col-3 text-right pr-0">
+											<img src="~/images/icons/building.png" alt="profile-icon">
+										</div>
+										<div class="col-9 align-self-center">
+											<span>Overall List Complition</span>
+											<div id="pBar1"></div>
+										</div>
+									</div>
+								</div>
+							}
+
+						</div>
+					}
+
 					@if (ViewBag.UserId != null && ViewBag.UserType == 1)
 					{
+
+
 						@if (Model.User.UserState == "Basic")
 						{
 							<div class="status-message">
@@ -59,11 +97,17 @@
 							</div>
 						}
 
-						<div class="widget-title widget-collapse m-2">
-							<a class="ml-auto" data-toggle="collapse" href="#property-lister" role="button" aria-expanded="false" aria-controls="property-lister"><h6>Basic Information</h6> <i class="fas fa-chevron-down"></i> </a>
-						</div>
+
 
 					}
+
+					@if (ViewBag.UserType == 1 || ViewBag.UserType == 2)
+					{
+						<div class="widget-title widget-collapse">
+							<a class="ml-auto" data-toggle="collapse" href="#property-lister" role="button" aria-expanded="false" aria-controls="property-lister"><h6>Profile Information</h6> <i class="fas fa-chevron-down"></i> </a>
+						</div>
+					}
+
 					@if (ViewBag.UserId != null && ViewBag.UserType == 0)
 					{
 						<div class="section-title d-flex align-items-center m--tb-15">
@@ -78,12 +122,8 @@
 					{
 						ViewBag.cardbodyShow = "show";
 					}
-					<div>
-						<p>Test bar</p>
-						<div id="pBar"></div>
-						<div id="pBar1"></div>
-					</div>
-					<div class="collapse @ViewBag.cardbodyShow @ViewBag.card mx-2" id="property-lister">
+
+					<div class="collapse @ViewBag.cardbodyShow @ViewBag.card" id="property-lister">
 						<div class="accordion-sec__detail @ViewBag.cardbody">
 
 							@*<form class="form-row align-items-center md-form p-3" action="account-profile.html">*@
@@ -450,6 +490,8 @@
 							   "</div>");
 													ViewBag.Eco = @Html.Raw("---");
 												}
+
+
 												if ((item.Listings.RE_FirstName == null && item.Listings.RE_LastName == null) && item.Listings.ListingType == "RE-Professional")
 												{
 													ViewBag.BlinkClass = "blink-bg";
@@ -458,6 +500,8 @@
 												{
 													ViewBag.BlinkClass = "";
 												}
+
+
 												<tr class="@ViewBag.BlinkClass">
 													<td>
 														@if (item.Listings.ListingType == "Commercial" || item.Listings.ListingType == "Co-Working")
@@ -468,11 +512,7 @@
 														{
 															if (item.Listings.RE_FirstName == null && item.Listings.RE_LastName == null)
 															{
-																@section Scripts {
-																	<script>
-
-																	</script>
-																}
+	
 															}
 															else
 															{
@@ -716,6 +756,63 @@
 @section Scripts {
 	<script src="~/js/progressbar.js"></script>
 	<script>
+		$(document).ready(function () {
+
+			var bar = new ProgressBar.Line(pBar, {
+				strokeWidth: 5,
+				easing: 'easeInOut',
+				duration: 1400,
+				color: '#2ecc71',
+				trailColor: '#eee',
+				trailWidth: 5,
+				svgStyle: { width: '100%', height: '100%' },
+				text: {
+					style: {
+						// Text color.
+						// Default: same as stroke color (options.color)
+						transform: null
+					},
+					autoStyleContainer: false
+				},
+				from: { color: '#2ecc71' },
+				to: { color: '#ED6A5A' },
+				step: (state, bar) => {
+					bar.setText(Math.round(bar.value() * 100) + ' %');
+				}
+			});
+			var profileProgress = $('#pBar').attr('p-value') / 100;
+			//console.log(profileProgress)
+			bar.animate(profileProgress);  // Number from 0.0 to 1.0
+
+
+
+
+
+			var bar1 = new ProgressBar.Line(pBar1, {
+				strokeWidth: 5,
+				easing: 'easeInOut',
+				duration: 1400,
+				color: '#2196f3',
+				trailColor: '#eee',
+				trailWidth: 5,
+				svgStyle: { width: '100%', height: '100%' },
+				text: {
+					style: {
+						// Text color.
+						// Default: same as stroke color (options.color)
+						transform: null
+					},
+					autoStyleContainer: false
+				},
+				from: { color: '#2196f3' },
+				to: { color: '#ED6A5A' },
+				step: (state, bar) => {
+					bar.setText(Math.round(bar.value() * 100) + ' %');
+				}
+			});
+
+			bar1.animate(0.82);  // Number from 0.0 to 1.0
+		});
 		//var bar = new ProgressBar.Line(pBar, {
 		//	strokeWidth: 4,
 		//	//easing: 'easeInOut',

@@ -208,10 +208,11 @@ namespace HiSpaceListingWeb.Controllers
 					var result = responseTask.Result;
 					if (result.IsSuccessStatusCode)
 					{
-						var readTask = result.Content.ReadAsAsync<User>();
+						var readTask = result.Content.ReadAsAsync<BasicInfoCompletionResponse>();
 						readTask.Wait();
 						//user = readTask.Result;
-						vModel.User = readTask.Result;
+						vModel.User = readTask.Result.User;
+						vModel.PercentageCompleted = readTask.Result.PercentageCompleted;
 					}
 				}
 

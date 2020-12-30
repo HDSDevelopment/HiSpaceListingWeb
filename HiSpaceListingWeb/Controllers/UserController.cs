@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using HiSpaceListingModels;
+using HiSpaceListingService.ViewModel;
 using HiSpaceListingWeb.Utilities;
 using HiSpaceListingWeb.ViewModel;
 using Microsoft.AspNetCore.Hosting;
@@ -94,7 +95,7 @@ namespace HiSpaceListingWeb.Controllers
 					SetSessionVariables();
 				//return RedirectToAction("ListingTable", "Listing", new { UserID = _user.UserId, UserType = _user.UserType });
 				//return RedirectToAction("PropertyOperatorPeopleAndFilterMenu", "Filter", new { ListShowType = 1 });
-					if (!string.IsNullOrEmpty(returnUrl))
+					if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "/")
 						return Redirect(returnUrl);
 					else
 						return RedirectToAction("PropertyOperatorPeopleAndFilterMenu", "Filter", new { ListShowType = 1 });
@@ -112,7 +113,7 @@ namespace HiSpaceListingWeb.Controllers
 					AssignSessionVariables(_user);
 					SetSessionVariables();
 				//return RedirectToAction("Index", "Website");
-					if (!string.IsNullOrEmpty(returnUrl))
+					if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "/")
 						return Redirect(returnUrl);
 					else
 						return RedirectToAction("PropertyOperatorPeopleAndFilterMenu", "Filter", new { ListShowType = 1 });

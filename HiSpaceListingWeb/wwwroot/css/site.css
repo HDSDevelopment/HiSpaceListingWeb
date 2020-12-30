@@ -4110,3 +4110,11 @@ button#property-form-submit i, button#operator-form-submit i, button#people-form
 	width: 400px;
 	height: 25px;
 }*/
+.p-bar img {
+	-webkit-filter: drop-shadow(5px 5px 5px #222);
+	filter: drop-shadow(5px 5px 5px #222);
+}
+.progressbar-text {
+	font-weight: 800;
+	color: #655656;
+}
