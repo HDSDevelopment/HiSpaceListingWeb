@@ -4129,3 +4129,92 @@ button#property-form-submit i, button#operator-form-submit i, button#people-form
 		font-size: 12px;
 		font-weight: 500;
 	}
+
+/*bookmark section*/
+.fav-btn {
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	background: #fff;
+	border-radius: 50%;
+	padding: 7px 6px 4px 5px;
+	border: 2px solid #888;
+}
+
+@keyframes favme-anime {
+	0% {
+		opacity: 1;
+		font-size: 1rem;
+		-webkit-text-stroke-color: transparent;
+	}
+
+	25% {
+		opacity: 0.6;
+		color: #FFF;
+		font-size: 0.8rem;
+		-webkit-text-stroke-width: 1px;
+		-webkit-text-stroke-color: #DC3232;
+	}
+
+	75% {
+		opacity: 0.6;
+		color: #FFF;
+		font-size: 1.42875rem;
+		-webkit-text-stroke-width: 1px;
+		-webkit-text-stroke-color: #DC3232;
+	}
+
+	100% {
+		opacity: 1;
+		font-size: 1.25rem;
+		-webkit-text-stroke-color: transparent;
+	}
+}
+
+@keyframes favme-hover {
+	from {
+		font-size: 1.42875rem;
+	}
+
+	80% {
+		font-size: 1.25rem;
+	}
+}
+
+.favme {
+	display: block;
+	font-size: 1.25rem;
+	width: auto;
+	height: auto;
+	cursor: pointer;
+	box-shadow: none;
+	transition: all 0.2s ease;
+	color: #888888;
+	margin: 0;
+}
+.fav-btn.active {
+	border: 2px solid #dc3232;
+}
+.favme.active {
+	color: #DC3232;
+}
+
+	.favme:hover {
+		animation: favme-hover 0.3s infinite alternate;
+	}
+
+	.favme.is_animating {
+		animation: favme-anime 0.3s;
+	}
+.fav-section {
+	position: absolute;
+	bottom: 5px;
+	z-index: 1;
+	right: 5px;
+}
+.disabled-pointer {
+	pointer-events: none;
+	cursor: no-drop;
+	filter: blur(2px);
+}

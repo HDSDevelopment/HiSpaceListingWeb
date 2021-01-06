@@ -162,7 +162,9 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiGetLatestPeopleList = "GetLatestPeopleList/";
 		//get list percentage and complete percentage
 		public string ApiGetListingsWithCompletionPercentByUserId = "GetListingsWithCompletionPercentByUserId/";
-
+		//bookmarks
+		public string ApiAddUserListing = "AddUserListing/";
+		public string ApiDeleteUserListing = "DeleteUserListing/";
 
 
 
@@ -314,6 +316,8 @@ namespace HiSpaceListingWeb.Utilities
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 6, ProfessionalCategoryName = "Investor", ProfessionalCategoryDisplay = "Investor" });
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 7, ProfessionalCategoryName = "PropertyOwner", ProfessionalCategoryDisplay = "Property Owner" });
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 8, ProfessionalCategoryName = "PropertyOperator", ProfessionalCategoryDisplay = "Property Operator" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 9, ProfessionalCategoryName = "ServiceProvider", ProfessionalCategoryDisplay = "Service Provider" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 10, ProfessionalCategoryName = "MaterialSupplier", ProfessionalCategoryDisplay = "Material Supplier" });
 			return types;
 		}
 		//dropdown for the people list end
@@ -360,6 +364,8 @@ namespace HiSpaceListingWeb.Utilities
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 5, ProfessionalCategoryName = "Investor", ProfessionalCategoryDisplay = "Investor" });
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 6, ProfessionalCategoryName = "PropertyOwner", ProfessionalCategoryDisplay = "Property Owner" });
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 7, ProfessionalCategoryName = "PropertyOperator", ProfessionalCategoryDisplay = "Property Operator" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 9, ProfessionalCategoryName = "ServiceProvider", ProfessionalCategoryDisplay = "Service Provider" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 10, ProfessionalCategoryName = "MaterialSupplier", ProfessionalCategoryDisplay = "Material Supplier" });
 			return types;
 		}
 

@@ -299,6 +299,52 @@ namespace HiSpaceListingWeb.Controllers
 			return RedirectToAction("AdminPropertyList", "Admin", new { UserID = UserId, UserType = UserType});
 		}
 
+		public ActionResult FavAddUserListing(UserListing userListing)
+		{
+			SetSessionVariables();
+			UserListing vModel = new UserListing();
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiAddUserListing, userListing);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<UserListing>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+			}
+			return Json(vModel);
+			//return PartialView("_PropertyFilterListPartialView", vModel);
+		}
+
+		public ActionResult FavDeleteUserListing(UserListing userListing)
+		{
+			SetSessionVariables();
+			UserListing vModel = new UserListing();
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiDeleteUserListing, userListing);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<UserListing>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+			}
+			return Json(vModel);
+			//return PartialView("_PropertyFilterListPartialView", vModel);
+		}
+
 		public void SetSessionVariables()
 		{
 			#region

@@ -1757,7 +1757,9 @@ function addProject(obj) {
 					'<option value="CoworkingArchitecture">Co-working Architecture</option>'+
 					'<option value="Investor">Investor</option>'+
 					'<option value="PropertyOwner">Property Owner</option>'+
-					'<option value="PropertyOperator">Property Operator</option>'+
+		'<option value="PropertyOperator">Property Operator</option>' +
+		'<option value="ServiceProvider">Service Provider</option>'+
+		'<option value="MaterialSupplier">Material Supplier</option>'+
 				'</select>'+
 				'<label for="input" class="control-label">RE Professional Role</label><i class="bar"></i>'+
 			'</div>'+
@@ -3209,4 +3211,93 @@ $(document).ready(function () {
 		pId.animate(pValue);
 	};
 	
+});
+
+
+//bookmark section
+// Favorite Button - Heart
+$('.favme').click(function () {
+	$(this).toggleClass('active');
+	$(this).closest('.fav-btn').toggleClass('active');
+	if ($(this).hasClass('active')) {
+		//$(this).closest('.row').append("<div class='loader_new-sub'></div>");
+		$(this).addClass('list-fav');
+		$(this).removeClass('list-unfav');
+
+		var formData = new FormData();
+		var fav_userid = $(this).attr('v-userid');
+		formData.append("UserId", fav_userid);
+		var fav_listingid = $(this).attr('v-listingid');
+		formData.append("ListingId", fav_listingid);
+
+		for (var pair of formData.entries()) {
+			console.log(pair[0] + ' - ' + pair[1]);
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "/Listing/FavAddUserListing",
+			data: formData,
+			context: this,
+			dataType: "html",
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				var responseObj = jQuery.parseJSON(response);
+				console.log(response);
+				console.log(responseObj);
+				console.log(responseObj.id);
+				$(this).attr('v-favid', responseObj.id);
+				//removeLoader();
+			},
+			error: function (response) {
+				//removeLoader();
+				alert("server not ready please try afterwards");
+			}
+		});
+
+	} else {
+		$(this).addClass('list-unfav');
+		$(this).removeClass('list-fav');
+
+		var formData = new FormData();
+		var fav_userid = $(this).attr('v-userid');
+		formData.append("UserId", fav_userid);
+		var fav_listingid = $(this).attr('v-listingid');
+		formData.append("ListingId", fav_listingid);
+		var fav_id = $(this).attr('v-favid');
+		formData.append("Id", fav_id);
+
+		for (var pair of formData.entries()) {
+			console.log(pair[0] + ' - ' + pair[1]);
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "/Listing/FavDeleteUserListing",
+			data: formData,
+			context: this,
+			dataType: "html",
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				$(this).attr('v-favid', '');
+				//removeLoader();
+			},
+			error: function (response) {
+				//removeLoader();
+				alert("server not ready please try afterwards");
+			}
+		});
+	}
+});
+
+/* when a user clicks, toggle the 'is-animating' class */
+$(".favme").on('click touchstart', function () {
+	$(this).toggleClass('is_animating');
+});
+
+/*when the animation is over, remove the class*/
+$(".favme").on('animationend', function () {
+	$(this).toggleClass('is_animating');
 });

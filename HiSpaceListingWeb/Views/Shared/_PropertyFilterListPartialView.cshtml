@@ -61,7 +61,21 @@
 										<div class="property-agent-info">
 											<a class="property-agent-name" href="#">@item.SpaceUser.CompanyName</a>
 											<span class="d-block">HiSpace-User Name</span>
-
+										</div>
+									</div>
+									@if (ViewBag.UserId != null && ViewBag.UserId != -1)
+									{
+										ViewBag.DisabledPointer = "";
+									}
+									else
+									{
+										ViewBag.DisabledPointer = "disabled-pointer";
+									}
+									<div class="fav-section @ViewBag.DisabledPointer">
+										<div class="flexbox">
+											<div class="fav-btn">
+												<span href="" class="favme dashicons dashicons-heart list-unfav" v-userid="@ViewBag.UserId" v-listingid="@item.SpaceListing.ListingId" v-favid=""></span>
+											</div>
 										</div>
 									</div>
 									@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
@@ -80,8 +94,8 @@
 									}
 
 									@*<div class="property-agent-popup">
-										<a href="#"><i class="fas fa-camera"></i> 03</a>
-									</div>*@
+			<a href="#"><i class="fas fa-camera"></i> 03</a>
+		</div>*@
 								</div>
 							</div>
 							<div class="col-lg-8 col-md-7 prop-details">
