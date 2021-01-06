@@ -4,6 +4,57 @@
 @using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @model HiSpaceListingWeb.ViewModel.PropertyOperatorPeopleAndFilterMenuViewModel
+@*serach history*@
+<div class="row">
+	<div class="col-12 search-history">
+		<div class="form-row sh-data">
+			<div class="col-11 sh-form_main">
+				<ul>
+					<li>
+						<span>Search For</span>
+						<div class="Pr_Filter_For">All</div>
+					</li>
+					<li>
+						<span>Listing Type</span>
+						<div class="pr_Filter_ListingType">Commercial</div>
+					</li>
+					<li>
+						<span>Commercial Category</span>
+						<div class="pr_Filter_CommercialCategory">Rental</div>
+					</li>
+					<li>
+						<span>City</span>
+						<div class="pr_Filter_PropertyLocation">Chennai</div>
+					</li>
+					<li>
+						<span>Hour</span>
+						<div class="pr_Filter_hour">True</div>
+					</li>
+					<li>
+						<span>Day</span>
+						<div class="pr_Filter_day">True</div>
+					</li>
+					<li>
+						<span>Month</span>
+						<div class="pr_Filter_month">True</div>
+					</li>
+					<li>
+						<span>Min:</span>
+						<div class="slider-range-value1">1000</div>
+					</li>
+					<li>
+						<span>Max:</span>
+						<div class="slider-range-value2">5000</div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-1">
+				<button type="button" class="btn btn-primary btn-block property-form-submit"><i class="fas fa-search-location"></i>Search</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="row filter-row property-fstyle">
 	<div class="col-sm-3 filter-select">
 		@*<select class="form-control basic-select dd-filter property_select">
@@ -15,7 +66,7 @@
 <div class="col-sm-9 align-self-center property-fstyle__form">
 				<form class="form-row md-form" enctype="multipart/form-data" id="property-form" method="post">	
 					
-					<div class="col-sm-9">
+					<div class="col-sm-9"> 
 						<div class="row">
 							<div class="form-group col-sm-4">
 								<select class="form-control basic-select" id="Pr_Filter_For" name="CMCW_PropertyFor">

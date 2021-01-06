@@ -4,168 +4,172 @@
 	Layout = "~/Views/Shared/_WebLayout.cshtml";
 	@using Microsoft.AspNetCore.Http
 	@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@model HiSpaceListingWeb.ViewModel.UserMasterViewModel
+	@model HiSpaceListingWeb.ViewModel.UserMasterViewModel
 }
 
 
 <div class="listingtable admin-property__listing nav-padding">
-		<div class="bg-light mb-4">
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-						<ol class="breadcrumb mb-0">
-							<li class="breadcrumb-item"><a href="@Url.Action( "Index","Website")"> <i class="fas fa-home"></i> </a></li>
-								<li class="breadcrumb-item"> <i class="fas fa-chevron-right"></i> <span>Dashboard</span></li>
-								<li class="breadcrumb-item"> <i class="fas fa-chevron-right"></i> <a href="@Url.Action("AdminLister", "Admin")"><span>User Details/Listing</span></a></li>
-								<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Property/Space/Professional Listing</span></li>
-							
-						</ol>
-					</div>
+	<div class="bg-light mb-4">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<ol class="breadcrumb mb-0">
+						<li class="breadcrumb-item"><a href="@Url.Action( "Index","Website")"> <i class="fas fa-home"></i> </a></li>
+						<li class="breadcrumb-item"> <i class="fas fa-chevron-right"></i> <span>Dashboard</span></li>
+						<li class="breadcrumb-item"> <i class="fas fa-chevron-right"></i> <a href="@Url.Action("AdminLister", "Admin")"><span>User Details/Listing</span></a></li>
+						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span>Property/Space/Professional Listing</span></li>
+
+					</ol>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		@if (@Model.ListingList.Count() > 0)
-		{
-			<section class="">
-				<div class="container p-0">
-					<div class="row no-gutters">
-						<div class="col-md-12">
-							<div class="section-title d-flex align-items-center m--tb-15">
-								<h2>HiSpace-User Property/Space/Professional Listing</h2>
-							</div>
-							<div class="card hi-card">
-								<div class="card-body">
-									<div class="datatable-wrapper table-responsive">
+	@if (@Model.ListingList.ListingsWithCompletionPercent.Count() > 0)
+	{
+		<section class="">
+			<div class="container p-0">
+				<div class="row no-gutters">
+					<div class="col-md-12">
+						<div class="section-title d-flex align-items-center m--tb-15">
+							<h2>HiSpace-User Property/Space/Professional Listing</h2>
+						</div>
+						<div class="card hi-card">
+							<div class="card-body">
+								<div class="datatable-wrapper table-responsive">
 
-										<table id="listingTable" class="display display compact table table-striped mdtable">
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Type</th>
-													<th>For</th>
-													<th>City</th>
-													<th><i class="fas fa-business-time"></i> Hours</th>
-													<th><i class="fas fa-images"></i> Images</th>
-													<th><i class="fab fa-gratipay"></i> Addons</th>
-													<th>User Status</th>
-													<th>Verification</th>
-													<th><i class="fas fa-leaf"></i> Eco-Friendly</th>
-													<th>Action</th>
-												</tr>
-											</thead>
-											<tbody>
-												@foreach (var item in Model.ListingList)
+									<table id="listingTable" class="display display compact table table-striped mdtable">
+										<thead>
+											<tr>
+												<th>List Progress</th>
+												<th>Name</th>
+												<th>Type</th>
+												<th>For</th>
+												<th>City</th>
+												<th><i class="fas fa-business-time"></i> Hours</th>
+												<th><i class="fas fa-images"></i> Images</th>
+												<th><i class="fab fa-gratipay"></i> Addons</th>
+												<th>User Status</th>
+												<th>Verification</th>
+												<th><i class="fas fa-leaf"></i> Eco-Friendly</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach (var item in Model.ListingList.ListingsWithCompletionPercent)
+											{
+
+												//Verification
+												@if (item.Listings.Status.ToString() == "True")
 												{
-
-													//Verification
-													@if (item.Listings.Status.ToString() == "True")
-													{
-														ViewBag.UserStatus = @Html.Raw("<span class='text-success font-weight-bold'>Active</span>");
-													}
-													else
-													{
-														ViewBag.UserStatus = @Html.Raw("<span class='text-danger font-weight-bold'>In Active</span>");
-													}
-													//checking the type and addons
-													@if (item.Listings.ListingType == "Commercial")
-													{
-														ViewBag.TypeClass = "text-pry";
-														ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-												"<span>" +
-													"<a href='javascript:function() { return false; }'>" +
-														"<i class='fas fa-wifi btn-icon text-primary'></i>" +
-													"</a>" +
-													"<span class='status-alert status-alert__amenities'>" +
-																				  @item.TotalAmenities +
-																				  "</span>" +
-												"</span>" +
-									"<span >" +
-										"<a href='javascript:function() { return false; }'>" +
-											"<i class='fas fa-bus btn-icon text-sec'></i>" +
-										"</a>" +
-										 "<span class='status-alert status-alert__facilities'>" +
-																				  @item.TotalFacilities +
-																				  "</span>" +
-									"</span>" +
-									"</div>");
-														ViewBag.Eco = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-												"<span>" +
-													"<a href='javascript:function() { return false; }' >" +
-														"<i class='fas fa-temperature-low btn-icon text-sec'></i>" +
-													"</a>" +
-													 "<span class='status-alert__hc' status-check="+@item.TotalHealthCheck+">" +
-												"<i class='fas fa-smile'></i>" +
-																				  "</span>" +
-												"</span>" +
-									"<span>" +
-										"<a href='javascript:function() { return false; }'>" +
-											"<i class='fas fa-tree btn-icon text-info'></i>" +
-										"</a>" +
-										"<span class='status-alert__gbc' status-check=" + @item.TotalGreenBuildingCheck + ">" +
-												"<i class='fas fa-bell'></i>" +
-																				  "</span>" +
-									"</span>" +
-									"</div>");
-													}
-													else if (item.Listings.ListingType == "Co-Working")
-													{
-														ViewBag.TypeClass = "text-sec";
-														ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-																			  "<span>" +
-																				  "<a href='javascript:function() { return false; }' >" +
-																					  "<i class='fas fa-wifi btn-icon text-primary'></i>" +
-																				  "</a>" +
-																				  "<span class='status-alert status-alert__amenities'>" +
-																				  @item.TotalAmenities +
-																				  "</span>" +
-												"</span>" +
+													ViewBag.UserStatus = @Html.Raw("<span class='text-success font-weight-bold'>Active</span>");
+												}
+												else
+												{
+													ViewBag.UserStatus = @Html.Raw("<span class='text-danger font-weight-bold'>In Active</span>");
+												}
+												//checking the type and addons
+												@if (item.Listings.ListingType == "Commercial")
+												{
+													ViewBag.TypeClass = "text-pry";
+													ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
+											"<span>" +
+												"<a href='javascript:function() { return false; }'>" +
+													"<i class='fas fa-wifi btn-icon text-primary'></i>" +
+												"</a>" +
+												"<span class='status-alert status-alert__amenities'>" +
+																			  @item.TotalAmenities +
 																			  "</span>" +
-																  "<span>" +
-																	  "<a href='javascript:function() { return false; }' >" +
-																		  "<i class='fas fa-bus btn-icon text-sec'></i>" +
-																	  "</a>" +
-																	  "<span class='status-alert status-alert__facilities' >" +
-																				  @item.TotalFacilities +
-																				  "</span>" +
-																  "</span>" +
-															  "</div>");
-														ViewBag.Eco = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-												"<span>" +
-													"<a href='javascript:function() { return false; }'>" +
-														"<i class='fas fa-temperature-low btn-icon text-sec'></i>" +
-													"</a>" +
-													 "<span class='status-alert__hc' status-check=" + @item.TotalHealthCheck + ">" +
-												"<i class='fas fa-smile'></i>" +
-																				  "</span>" +
-												"</span>" +
-									"<span>" +
-										"<a href='javascript:function() { return false; }'>" +
-											"<i class='fas fa-tree btn-icon text-info'></i>" +
-										"</a>" +
-										"<span class='status-alert__gbc' status-check=" + @item.TotalGreenBuildingCheck + ">" +
-												"<i class='fas fa-bell'></i>" +
-																				  "</span>" +
-									"</span>" +
-									"</div>");
-													}
-													else if (item.Listings.ListingType == "RE-Professional")
-													{
-														ViewBag.TypeClass = "text-info";
-														ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
-																			  "<span>" +
-																				  "<a href='javascript:function() { return false; }' >" +
-																					  "<i class='fas fa-city btn-icon text-info'></i>"+
-																				  "</a>"+
-																				  "<span class='status-alert status-alert__projects' >" +
-																				  @item.TotalProjects+
-																				  "</span>" +
+											"</span>" +
+								"<span >" +
+									"<a href='javascript:function() { return false; }'>" +
+										"<i class='fas fa-bus btn-icon text-sec'></i>" +
+									"</a>" +
+									 "<span class='status-alert status-alert__facilities'>" +
+																			  @item.TotalFacilities +
+																			  "</span>" +
+								"</span>" +
+								"</div>");
+													ViewBag.Eco = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
+											"<span>" +
+												"<a href='javascript:function() { return false; }' >" +
+													"<i class='fas fa-temperature-low btn-icon text-sec'></i>" +
+												"</a>" +
+												 "<span class='status-alert__hc' status-check=" + @item.TotalHealthCheck + ">" +
+											"<i class='fas fa-smile'></i>" +
+																			  "</span>" +
+											"</span>" +
+								"<span>" +
+									"<a href='javascript:function() { return false; }'>" +
+										"<i class='fas fa-tree btn-icon text-info'></i>" +
+									"</a>" +
+									"<span class='status-alert__gbc' status-check=" + @item.TotalGreenBuildingCheck + ">" +
+											"<i class='fas fa-bell'></i>" +
+																			  "</span>" +
+								"</span>" +
+								"</div>");
+												}
+												else if (item.Listings.ListingType == "Co-Working")
+												{
+													ViewBag.TypeClass = "text-sec";
+													ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
+																		  "<span>" +
+																			  "<a href='javascript:function() { return false; }' >" +
+																				  "<i class='fas fa-wifi btn-icon text-primary'></i>" +
+																			  "</a>" +
+																			  "<span class='status-alert status-alert__amenities'>" +
+																			  @item.TotalAmenities +
+																			  "</span>" +
+											"</span>" +
+																		  "</span>" +
+															  "<span>" +
+																  "<a href='javascript:function() { return false; }' >" +
+																	  "<i class='fas fa-bus btn-icon text-sec'></i>" +
+																  "</a>" +
+																  "<span class='status-alert status-alert__facilities' >" +
+																			  @item.TotalFacilities +
+																			  "</span>" +
+															  "</span>" +
+														  "</div>");
+													ViewBag.Eco = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
+											"<span>" +
+												"<a href='javascript:function() { return false; }'>" +
+													"<i class='fas fa-temperature-low btn-icon text-sec'></i>" +
+												"</a>" +
+												 "<span class='status-alert__hc' status-check=" + @item.TotalHealthCheck + ">" +
+											"<i class='fas fa-smile'></i>" +
+																			  "</span>" +
+											"</span>" +
+								"<span>" +
+									"<a href='javascript:function() { return false; }'>" +
+										"<i class='fas fa-tree btn-icon text-info'></i>" +
+									"</a>" +
+									"<span class='status-alert__gbc' status-check=" + @item.TotalGreenBuildingCheck + ">" +
+											"<i class='fas fa-bell'></i>" +
+																			  "</span>" +
+								"</span>" +
+								"</div>");
+												}
+												else if (item.Listings.ListingType == "RE-Professional")
+												{
+													ViewBag.TypeClass = "text-info";
+													ViewBag.TypeAddons = @Html.Raw("<div class='ml-auto d-flex align-items-center text-center md-crud-menu'>" +
+																		  "<span>" +
+																			  "<a href='javascript:function() { return false; }' >" +
+																				  "<i class='fas fa-city btn-icon text-info'></i>" +
+																			  "</a>" +
+																			  "<span class='status-alert status-alert__projects' >" +
+																			  @item.TotalProjects +
+																			  "</span>" +
 
-												   "</span>" +
-								   "</div>");
-														ViewBag.Eco = @Html.Raw("---");
-													}
+											   "</span>" +
+							   "</div>");
+													ViewBag.Eco = @Html.Raw("---");
+												}
 												<tr>
+													<td>
+														<div class="pg-bar" id="test@(item.Listings.ListingId)" pd-bar-val="@item.PercentCompleted"></div>
+													</td>
 													<td>
 														@if (item.Listings.ListingType == "Commercial" || item.Listings.ListingType == "Co-Working")
 														{
@@ -177,7 +181,7 @@
 															{
 																@section Scripts {
 																	<script>
-																		
+
 																	</script>
 																}
 															}
@@ -198,48 +202,48 @@
 														}
 														else if (item.Listings.ListingType == "RE-Professional")
 														{
-													<span class="">---</span>
+															<span class="">---</span>
 														}
 
 													</td>
 													@*<td>
-														@Html.DisplayFor(modelItem => item.Listings.Phone)
-													</td>*@
+															@Html.DisplayFor(modelItem => item.Listings.Phone)
+														</td>*@
 													<td>
 														@Html.DisplayFor(modelItem => item.Listings.locality)
 													</td>
 													@*<td>
-			@Html.DisplayFor(modelItem => item.Listings.CurrentOccupancy)
-		</td>*@
-												<td class="p-0 text-center">
-													@if (item.Listings.CMCW_PropertyFor == "Rental" || item.Listings.ListingType == "RE-Professional")
-													{
-													<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
-														<span>
-															<a href="javascript:function() { return false; }" >
-																<i class="fas fa-business-time btn-icon text-pry"></i>
-															</a>
-															@if (item.TotalWorkingHours != 0)
-															{
-																<span class="status-alert status-alert__hours">
-																	<i class="fas fa-thumbs-up"></i>
+															@Html.DisplayFor(modelItem => item.Listings.CurrentOccupancy)
+														</td>*@
+													<td class="p-0 text-center">
+														@if (item.Listings.CMCW_PropertyFor == "Rental" || item.Listings.ListingType == "RE-Professional")
+														{
+															<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
+																<span>
+																	<a href="javascript:function() { return false; }">
+																		<i class="fas fa-business-time btn-icon text-pry"></i>
+																	</a>
+																	@if (item.TotalWorkingHours != 0)
+																	{
+																		<span class="status-alert status-alert__hours">
+																			<i class="fas fa-thumbs-up"></i>
+																		</span>
+																	}
+																	else
+																	{
+																		<span class="status-alert status-alert__empty">
+																			<i class="fas fa-thumbs-down"></i>
+																		</span>
+																	}
 																</span>
-															}
-															else
-															{
-																<span class="status-alert status-alert__empty">
-																	<i class="fas fa-thumbs-down"></i>
-																</span>
-															}
-														</span>
-													</div>
-													}
-													else if (item.Listings.CMCW_PropertyFor == "Sale")
-													{
-														<span class="">---</span>
-													}
-													
-												</td>
+															</div>
+														}
+														else if (item.Listings.CMCW_PropertyFor == "Sale")
+														{
+															<span class="">---</span>
+														}
+
+													</td>
 													<td class="p-0">
 														<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
 															<span>
@@ -267,11 +271,11 @@
 														@ViewBag.TypeAddons
 													</td>
 													@*<td>
-														<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
-															@ViewBag.ListStatus
-														</div>
-													</td>*@
-													
+															<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
+																@ViewBag.ListStatus
+															</div>
+														</td>*@
+
 													<td>
 														<div class="ml-auto d-flex align-items-center text-center md-crud-menu">
 															@ViewBag.UserStatus
@@ -280,21 +284,21 @@
 													<td class="p-0">
 														@if (@item.Listings.AdminStatus.ToString() == "True")
 														{
-														<div class="ml-auto d-flex align-items-center text-center md-crud-menu md-crud-menu__active">
-															<a onclick="return adminLevelListCheck(0);" href="@Url.Action("AdminLevelListCheck", "Listing", new { ListingId = item.Listings.ListingId, Status = false, UserId = item.Listings.UserId, UserType = 1 })" class="tooltip-wrapper text-sec" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to unactivate the space/professional">
-																<i class="fas btn-icon fa-check-circle text-sec"></i> Verified
-															</a>
-														</div>
+															<div class="ml-auto d-flex align-items-center text-center md-crud-menu md-crud-menu__active">
+																<a onclick="return adminLevelListCheck(0);" href="@Url.Action("AdminLevelListCheck", "Listing", new { ListingId = item.Listings.ListingId, Status = false, UserId = item.Listings.UserId, UserType = 1 })" class="tooltip-wrapper text-sec" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to unactivate the space/professional">
+																	<i class="fas btn-icon fa-check-circle text-sec"></i> Verified
+																</a>
+															</div>
 														}
 														else
-														{													
-														<div class="ml-auto d-flex align-items-center text-center md-crud-menu md-crud-menu__active">
-															<a onclick="return adminLevelListCheck(1);" href="@Url.Action("AdminLevelListCheck", "Listing", new { ListingId = item.Listings.ListingId, Status = true, UserId = item.Listings.UserId, UserType = 1})" class="tooltip-wrapper text-pry" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to activate the space/professional">
-																
-																<i class="fas btn-icon fa-times-circle text-pry"></i> Not Verified
-															</a>
-														</div>
-													
+														{
+															<div class="ml-auto d-flex align-items-center text-center md-crud-menu md-crud-menu__active">
+																<a onclick="return adminLevelListCheck(1);" href="@Url.Action("AdminLevelListCheck", "Listing", new { ListingId = item.Listings.ListingId, Status = true, UserId = item.Listings.UserId, UserType = 1})" class="tooltip-wrapper text-pry" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to activate the space/professional">
+
+																	<i class="fas btn-icon fa-times-circle text-pry"></i> Not Verified
+																</a>
+															</div>
+
 														}
 													</td>
 													<td class="p-0 text-center">
@@ -308,15 +312,26 @@
 														</div>
 													</td>
 												</tr>
-												}
-											</tbody>
-										</table>
-									</div>
+											}
+										</tbody>
+									</table>
 								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				
-			</section>
-		}
-		</div>
+			</div>
+		</section>
+	}
+</div>
+
+@*progressbar*@
+@section Scripts {
+	<script src="~/js/progressbar.js"></script>
+	<script>
+		$(document).ready(function () {
+
+		});
+	</script>
+}
+

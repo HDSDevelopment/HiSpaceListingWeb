@@ -92,6 +92,7 @@ namespace HiSpaceListingWeb.Controllers
 			}
 			return PartialView("_SelectedOperatorPropertyListPartialView", vModel);
 		}
+
 		public ActionResult SelectOperatorPropertyListByUserIdAndListingId(string User, string ListingId)
 		{
 			SetSessionVariables();

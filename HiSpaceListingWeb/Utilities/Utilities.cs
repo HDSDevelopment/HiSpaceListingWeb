@@ -160,6 +160,8 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiGetLatestPropertiesCommercialAndCoworking = "GetLatestPropertiesCommercialAndCoworking/";
 		public string ApiGetLatestOperatorList = "GetLatestOperatorList/";
 		public string ApiGetLatestPeopleList = "GetLatestPeopleList/";
+		//get list percentage and complete percentage
+		public string ApiGetListingsWithCompletionPercentByUserId = "GetListingsWithCompletionPercentByUserId/";
 
 
 

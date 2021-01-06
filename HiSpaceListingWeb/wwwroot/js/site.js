@@ -3170,4 +3170,43 @@ if ($('#listingTable').find('tr').hasClass('blink-bg') == true) {
 
 
 
+$(document).ready(function () {
+	$('.pg-bar').each(function (i, obj) {
+		//console.log($(obj).attr('id'));
+	//test
+		progressBar($(obj).attr('id'), $(obj).attr('pd-bar-val'));
+	});
 
+	function progressBar(pId, pValue) {
+		pValue = pValue / 100;
+		//var tempName = pId;
+		console.log(pId);
+		console.log(pValue);
+		pId = new ProgressBar.Line(document.getElementById(pId), {
+			strokeWidth: 5,
+			easing: 'easeInOut',
+			duration: 1400,
+			color: '#2ecc71',
+			trailColor: '#aaa',
+			trailWidth: 5,
+			svgStyle: { width: '100%', height: '100%' },
+			text: {
+				style: {
+					// Text color.
+					// Default: same as stroke color (options.color)
+					color: '#fff',
+					transform: null
+				},
+				autoStyleContainer: true
+			},
+			from: { color: '#2ecc71' },
+			to: { color: '#ED6A5A' },
+			step: (state, bar) => {
+				bar.setText(Math.round(bar.value() * 100) + ' %');
+			}
+		});
+
+		pId.animate(pValue);
+	};
+	
+});

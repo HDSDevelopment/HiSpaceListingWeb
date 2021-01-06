@@ -221,16 +221,17 @@ namespace HiSpaceListingWeb.Controllers
 					//IEnumerable<Listing> listingList = null;
 					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
 					//HTTP GET
-					var responseTask = client.GetAsync(Common.Instance.ApiListingsByUserId + UserID.ToString());
+					var responseTask = client.GetAsync(Common.Instance.ApiGetListingsWithCompletionPercentByUserId + UserID.ToString());
 					responseTask.Wait();
 
 					var result = responseTask.Result;
 					if (result.IsSuccessStatusCode)
 					{
-						var readTask = result.Content.ReadAsAsync<IList<ListingTableResponse>>();
+						var readTask = result.Content.ReadAsAsync<ListingCompletionPercentResponse>();
 						readTask.Wait();
 						//listingList = readTask.Result.ToList();
-						vModel.ListingList = readTask.Result.ToList();
+						vModel.ListingList.OverallPercentCompleted = readTask.Result.OverallPercentCompleted;
+						vModel.ListingList.ListingsWithCompletionPercent = readTask.Result.ListingsWithCompletionPercent;
 					}
 					else
 					{

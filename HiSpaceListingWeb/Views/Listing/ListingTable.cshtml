@@ -51,10 +51,10 @@
 								<div class="col-6">
 									<div class="row">
 										<div class="col-3 text-right pr-0">
-											<img src="~/images/icons/profile.png" alt="profile-icon">
+											<img src="~/images/icons/profile-1.png" alt="profile-icon">
 										</div>
 										<div class="col-9 align-self-center">
-											<span>Profile Complition</span>
+											<span>Profile completion</span>
 											<div id="pBar" p-value="@Model.PercentageCompleted"></div>
 										</div>
 									</div>
@@ -65,11 +65,11 @@
 								<div class="col-6">
 									<div class="row">
 										<div class="col-3 text-right pr-0">
-											<img src="~/images/icons/building.png" alt="profile-icon">
+											<img src="~/images/icons/building-contruct.png" alt="profile-icon">
 										</div>
 										<div class="col-9 align-self-center">
-											<span>Overall List Complition</span>
-											<div id="pBar1"></div>
+											<span>Overall List completion</span>
+											<div id="pBar1" p-value="@Model.ListingList.OverallPercentCompleted"></div>
 										</div>
 									</div>
 								</div>
@@ -356,6 +356,7 @@
 									<table id="listingTable" class="display display compact table table-striped mdtable">
 										<thead>
 											<tr>
+												<th>List Progress</th>
 												<th>Name</th>
 												<th>Type</th>
 												<th>For</th>
@@ -372,7 +373,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											@foreach (var item in Model.ListingList)
+											@foreach (var item in Model.ListingList.ListingsWithCompletionPercent)
 											{
 												//checking the status
 												@*@if (item.Listings.Status == true)
@@ -503,6 +504,9 @@
 
 
 												<tr class="@ViewBag.BlinkClass">
+													<td>
+													<div class="pg-bar" id="test@(item.Listings.ListingId)" pd-bar-val="@item.PercentCompleted"></div>
+														</td>
 													<td>
 														@if (item.Listings.ListingType == "Commercial" || item.Listings.ListingType == "Co-Working")
 														{
@@ -810,8 +814,8 @@
 					bar.setText(Math.round(bar.value() * 100) + ' %');
 				}
 			});
-
-			bar1.animate(0.82);  // Number from 0.0 to 1.0
+			var CompletePropertyProgress = $('#pBar1').attr('p-value') / 100;
+			bar1.animate(CompletePropertyProgress);  // Number from 0.0 to 1.0
 		});
 		//var bar = new ProgressBar.Line(pBar, {
 		//	strokeWidth: 4,

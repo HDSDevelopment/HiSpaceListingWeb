@@ -37,14 +37,16 @@ namespace HiSpaceListingWeb.ViewModel
 		public UserMasterViewModel()
 		{
 			User = new User();
-			ListingList = new List<ListingTableResponse>();
+			//ListingList = new List<ListingTableResponse>();			
+			ListingList = new ListingCompletionPercentResponse();
 			AmenityList = new List<Amenity>();
 			FacilityList = new List<Facility>();
 			WorkingHours = new WorkingHours();
 		}
 
 		public User User { get; set; }
-		public List<ListingTableResponse> ListingList { get; set; }
+		//public List<ListingTableResponse> ListingList { get; set; }
+		public ListingCompletionPercentResponse ListingList { get; set; }
 		public List<Amenity> AmenityList { get; set; }
 		public List<Facility> FacilityList { get; set; }
 		public WorkingHours WorkingHours { get; set; }
