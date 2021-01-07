@@ -4218,3 +4218,27 @@ button#property-form-submit i, button#operator-form-submit i, button#people-form
 	cursor: no-drop;
 	filter: blur(2px);
 }
+.sh-data {
+	background: #ececec;
+}
+.sh-form_main ul {
+	list-style: none;
+	margin: 0;
+}
+.sh-form_main li {
+	display: inline-block;
+	margin-right: 10px;
+	border-right: 1px solid;
+	padding-right: 10px;
+	margin-bottom: 0;
+}
+.sh-form_main li span {
+	font-size: 12px;
+	font-weight: 700;
+}
+.sh-form_main li div {
+	background: #f90;
+	color: #fff;
+	padding: 2px 5px;
+	border-radius: 12px;
+}

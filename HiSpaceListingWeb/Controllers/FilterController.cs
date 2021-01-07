@@ -84,28 +84,7 @@ namespace HiSpaceListingWeb.Controllers
 			}
 			return View("FilterList", vModel);
 		}
-		public ActionResult PropertyFilterCriteria(PropertySearchCriteria propertySearchCriteria)
-		{
-			SetSessionVariables();
-			List<PropertyDetailResponse> vModel = new List<PropertyDetailResponse>();
-
-			using (var client = new HttpClient())
-			{
-				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiListingGetPropertyListCommercialAndCoworking, propertySearchCriteria);
-				responseTask.Wait();
-
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
-				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
-				}
-			}
-			//return Json(vModel);
-			return PartialView("_PropertyFilterListPartialView", vModel);
-		}
+		
 		public ActionResult PropertyListByAll()
 		{
 			SetSessionVariables();
@@ -328,6 +307,64 @@ namespace HiSpaceListingWeb.Controllers
 			//return Json(vModel);
 			return PartialView("_ProfessionalFilterListPartialView", vModel);
 		}
+
+		public ActionResult PropertyFilterCriteria(PropertySearchCriteria propertySearchCriteria)
+		{
+			SetSessionVariables();
+			List<PropertyDetailResponse> vModel = new List<PropertyDetailResponse>();
+			using (var client = new HttpClient())
+			{
+				if (ViewBag.UserId > 0)
+				{
+					PropertyUserSearchCriteria pUserSearchCriteria = new PropertyUserSearchCriteria();
+					pUserSearchCriteria.CMCW_PropertyFor = propertySearchCriteria.CMCW_PropertyFor;
+					pUserSearchCriteria.CommercialType = propertySearchCriteria.CommercialType;
+					pUserSearchCriteria.CoworkingType = propertySearchCriteria.CoworkingType;
+					pUserSearchCriteria.IsPerformDay = propertySearchCriteria.IsPerformDay;
+					pUserSearchCriteria.IsPerformGBC = propertySearchCriteria.IsPerformGBC;
+					pUserSearchCriteria.IsPerformHealthCheck = propertySearchCriteria.IsPerformHealthCheck;
+					pUserSearchCriteria.IsPerformHour = propertySearchCriteria.IsPerformHour;
+					pUserSearchCriteria.IsPerformMonth = propertySearchCriteria.IsPerformMonth;
+					pUserSearchCriteria.ListingType = propertySearchCriteria.ListingType;
+					pUserSearchCriteria.Locality = propertySearchCriteria.Locality;
+					pUserSearchCriteria.PriceMax = propertySearchCriteria.PriceMax;
+					pUserSearchCriteria.PriceMin = propertySearchCriteria.PriceMin;
+					pUserSearchCriteria.UserId = ViewBag.UserId;
+
+					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+					var responseTask = client.PostAsJsonAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavoritesBySearch, pUserSearchCriteria);
+					responseTask.Wait();
+
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
+				
+				}
+				else
+				{
+					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+					var responseTask = client.PostAsJsonAsync(Common.Instance.ApiListingGetPropertyListCommercialAndCoworking, propertySearchCriteria);
+					responseTask.Wait();
+
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
+					}
+				}
+			
+			return PartialView("_PropertyFilterListPartialView", vModel);
+			//return Json(vModel);
+			
+		}
+
 		public ActionResult PropertyOperatorPeopleAndFilterMenu()
 		{
 			SetSessionVariables();
@@ -409,36 +446,78 @@ namespace HiSpaceListingWeb.Controllers
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
 				//HTTP GET
-				//Get Listings
-				var responseTask = client.GetAsync(Common.Instance.ApiGetLatestPropertiesCommercialAndCoworking);
-				responseTask.Wait();
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				
+				if (ViewBag.UserId > 0)
 				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-					readTask.Wait();
-					vModel.Listings = readTask.Result;
+					//Get Listings
+					int UserId = ViewBag.UserId;
+					var responseTask = client.GetAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavoritesByUserId + UserId);
+					responseTask.Wait();
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel.Listings = readTask.Result;
+					}
+					//Get operator
+					responseTask = client.GetAsync(Common.Instance.ApiGetLatestOperatorList);
+					responseTask.Wait();
+					result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyOperatorResponse>>();
+						readTask.Wait();
+						vModel.Operators = readTask.Result;
+					}
+
+					//Get people
+					responseTask = client.GetAsync(Common.Instance.ApiGetLatestPeopleList);
+					responseTask.Wait();
+					result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
+						readTask.Wait();
+						vModel.People = readTask.Result;
+					}
 				}
-				//Get operator
-				responseTask = client.GetAsync(Common.Instance.ApiGetLatestOperatorList);
-				responseTask.Wait();
-				result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				else
 				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyOperatorResponse>>();
-					readTask.Wait();
-					vModel.Operators = readTask.Result;
+					var responseTask = client.GetAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavorites);
+					responseTask.Wait();
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel.Listings = readTask.Result;
+					}
+					//Get operator
+					responseTask = client.GetAsync(Common.Instance.ApiGetLatestOperatorList);
+					responseTask.Wait();
+					result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyOperatorResponse>>();
+						readTask.Wait();
+						vModel.Operators = readTask.Result;
+					}
+
+					//Get people
+					responseTask = client.GetAsync(Common.Instance.ApiGetLatestPeopleList);
+					responseTask.Wait();
+					result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
+						readTask.Wait();
+						vModel.People = readTask.Result;
+					}
 				}
-				//Get people
-				responseTask = client.GetAsync(Common.Instance.ApiGetLatestPeopleList);
-				responseTask.Wait();
-				result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
-				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
-					readTask.Wait();
-					vModel.People = readTask.Result;
-				}
+				
+
+				
 			}
 
 			return View("FilterList", vModel);

@@ -71,10 +71,20 @@
 									{
 										ViewBag.DisabledPointer = "disabled-pointer";
 									}
+									@if (@item.SpaceListing.IsFavorite)
+									{
+										ViewBag.FavActive = "active";
+										ViewBag.FavId = item.SpaceListing.FavoriteId;
+									}
+									else
+									{
+										ViewBag.FavActive = "";
+										ViewBag.FavId = "";
+									}
 									<div class="fav-section @ViewBag.DisabledPointer">
-										<div class="flexbox">
-											<div class="fav-btn">
-												<span href="" class="favme dashicons dashicons-heart list-unfav" v-userid="@ViewBag.UserId" v-listingid="@item.SpaceListing.ListingId" v-favid=""></span>
+										<div class="flexbox tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Bookmark the favorite">
+											<div class="fav-btn @ViewBag.FavActive">
+												<span href="" class="favme dashicons dashicons-heart list-unfav @ViewBag.FavActive" v-userid="@ViewBag.UserId" v-listingid="@item.SpaceListing.ListingId" v-favid="@ViewBag.FavId"></span>
 											</div>
 										</div>
 									</div>

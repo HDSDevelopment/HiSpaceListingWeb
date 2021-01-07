@@ -165,6 +165,10 @@ namespace HiSpaceListingWeb.Utilities
 		//bookmarks
 		public string ApiAddUserListing = "AddUserListing/";
 		public string ApiDeleteUserListing = "DeleteUserListing/";
+		//with favourites
+		public string ApiGetPropertiesCommercialAndCoworkingWithFavorites = "GetPropertiesCommercialAndCoworkingWithFavorites/";
+		public string ApiGetPropertiesCommercialAndCoworkingWithFavoritesByUserId = "GetPropertiesCommercialAndCoworkingWithFavoritesByUserId/";
+		public string ApiGetPropertiesCommercialAndCoworkingWithFavoritesBySearch = "GetPropertiesCommercialAndCoworkingWithFavoritesBySearch/";
 
 
 
