@@ -4198,6 +4198,7 @@ button#property-form-submit i, button#operator-form-submit i, button#people-form
 }
 .favme.active {
 	color: #DC3232;
+	text-shadow: 4px 4px 10px #dc3232;
 }
 
 	.favme:hover {
@@ -4217,6 +4218,12 @@ button#property-form-submit i, button#operator-form-submit i, button#people-form
 	pointer-events: none;
 	cursor: no-drop;
 	filter: blur(2px);
+}
+.fav-section_re {
+	position: absolute;
+	top: -10px;
+	left: -5px;
+	width: 35px;
 }
 .sh-data {
 	background: #ececec;

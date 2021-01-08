@@ -27,6 +27,31 @@
 										<div class="people-details__head col-sm-6">
 											<div class="people-details__head-logo text-uppercase">@item.Listing.RE_FirstName[0]<span></span>@item.Listing.RE_LastName[0]</div>
 											<div class="property-details__header text-capitalize">@item.Listing.RE_FirstName<span> - </span> @item.Listing.RE_LastName</div>
+											@if (ViewBag.UserId != null && ViewBag.UserId != -1)
+											{
+												ViewBag.DisabledPointer = "";
+											}
+											else
+											{
+												ViewBag.DisabledPointer = "disabled-pointer";
+											}
+											@if (item.Listing.IsFavorite)
+											{
+												ViewBag.FavActive = "active";
+												ViewBag.FavId = item.Listing.FavoriteId;
+											}
+											else
+											{
+												ViewBag.FavActive = "";
+												ViewBag.FavId = "";
+											}
+											<div class="fav-section fav-section_re @ViewBag.DisabledPointer">
+												<div class="flexbox tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Bookmark the favorite">
+													<div class="fav-btn @ViewBag.FavActive">
+														<span href="" class="favme dashicons dashicons-heart list-unfav @ViewBag.FavActive" v-userid="@ViewBag.UserId" v-listingid="@item.Listing.ListingId" v-favid="@ViewBag.FavId"></span>
+													</div>
+												</div>
+											</div>
 										</div>
 										<div class="property-details__role col-sm-6 align-self-center">
 											<div class="mb-1">HiSpace-User Name: <span class="property-details__role-name">@item.Operator.CompanyName</span></div>

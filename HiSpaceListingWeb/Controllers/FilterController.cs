@@ -270,17 +270,36 @@ namespace HiSpaceListingWeb.Controllers
 
 			using (var client = new HttpClient())
 			{
-				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiLisitingGetPeopleList, peopleSearchCriteria);
-				responseTask.Wait();
-
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				if (ViewBag.UserId > 0)
 				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
+					int UserId = ViewBag.UserId;
+					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+					var responseTask = client.PostAsJsonAsync(Common.Instance.ApiGetPeopleWithFavoritesBySearch + UserId, peopleSearchCriteria);
+					responseTask.Wait();
+
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
 				}
+				else
+				{
+					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+					var responseTask = client.PostAsJsonAsync(Common.Instance.ApiLisitingGetPeopleList, peopleSearchCriteria);
+					responseTask.Wait();
+
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
+				}
+				
 			}
 			//return Json(vModel);
 			return PartialView("_ProfessionalFilterListPartialView", vModel);
@@ -472,7 +491,7 @@ namespace HiSpaceListingWeb.Controllers
 					}
 
 					//Get people
-					responseTask = client.GetAsync(Common.Instance.ApiGetLatestPeopleList);
+					responseTask = client.GetAsync(Common.Instance.ApiGetPeopleWithFavoritesByUserId + UserId);
 					responseTask.Wait();
 					result = responseTask.Result;
 					if (result.IsSuccessStatusCode)

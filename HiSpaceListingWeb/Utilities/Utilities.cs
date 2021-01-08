@@ -168,7 +168,9 @@ namespace HiSpaceListingWeb.Utilities
 		//with favourites
 		public string ApiGetPropertiesCommercialAndCoworkingWithFavorites = "GetPropertiesCommercialAndCoworkingWithFavorites/";
 		public string ApiGetPropertiesCommercialAndCoworkingWithFavoritesByUserId = "GetPropertiesCommercialAndCoworkingWithFavoritesByUserId/";
+		public string ApiGetPeopleWithFavoritesByUserId = "GetPeopleWithFavoritesByUserId/";
 		public string ApiGetPropertiesCommercialAndCoworkingWithFavoritesBySearch = "GetPropertiesCommercialAndCoworkingWithFavoritesBySearch/";
+		public string ApiGetPeopleWithFavoritesBySearch = "GetPeopleWithFavoritesBySearch/";
 
 
 
