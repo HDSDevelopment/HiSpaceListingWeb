@@ -1,13 +1,196 @@
-﻿@using Microsoft.AspNetCore.Http
+﻿@using Microsoft.AspNetCore.Http;
+@using System.Collections.Generic;
+@using HiSpaceListingWeb.Utilities;
+@using HiSpaceListingService.ViewModel;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @model IEnumerable<HiSpaceListingService.ViewModel.PropertyDetailResponse>
 @{
-	var indianCulture = new System.Globalization.CultureInfo("hi-IN"); 
+	var indianCulture = new System.Globalization.CultureInfo("hi-IN");
 }
 
+<div class="row">
+	
+	<div class="col-12 search-history" id="propertySearchHistory">
+		@{
+			if (HttpContextAccessor.HttpContext.Session != null)
+			{
+				var propertySearchCriteriaList = SessionExtension.GetObjectFromJson<List<PropertySearchCriteria>>(HttpContextAccessor.HttpContext.Session, "propertySearchCriteriaList");
 
+				if (propertySearchCriteriaList != null)
+				{
+					@*int count = propertySearchCriteriaList.Count();
+					<p>@count</p>*@
+					<div class="widget accordion-sec">
+						<div class="widget-title widget-collapse">
+							<a class="ml-auto prop-history" data-toggle="collapse" href="#propertyCollapse" role="button" aria-expanded="true"><h6><i class="fas fa-clock"></i>Property Search History</h6> <i class="fas fa-chevron-down"></i> </a>
+						</div>
+						<div id="propertyCollapse" class="collapse show">
+							@foreach (var list in propertySearchCriteriaList)
+							{
+
+								<div class="form-row sh-data">
+									<div class="col-11 sh-form_main">
+										<ul>
+											<li class="Pr_Filter_id">@list.Id</li>
+											@if (list.CMCW_PropertyFor == null)
+											{
+												<li>
+													<span>Search For</span>
+													<div class="Pr_Filter_For">All</div>
+												</li>
+											}
+											else
+											{
+												<li>
+													<span>Search For</span>
+													<div class="Pr_Filter_For">@list.CMCW_PropertyFor</div>
+												</li>
+											}
+
+											@if (list.ListingType == null)
+											{
+												<li>
+													<span>Listing Type</span>
+													<div class="pr_Filter_ListingType">All</div>
+												</li>
+											}
+											else if (list.ListingType == "Commercial")
+											{
+												<li>
+													<span>Listing Type</span>
+													<div class="pr_Filter_ListingType">@list.ListingType</div>
+												</li>
+												@if (list.CommercialType == null)
+												{
+													<li>
+														<span>Commercial Category</span>
+														<div class="pr_Filter_CommercialCategory">All</div>
+													</li>
+												}
+												else
+												{
+													<li>
+														<span>Commercial Category</span>
+														<div class="pr_Filter_CommercialCategory">@list.CommercialType</div>
+													</li>
+												}
+											}
+											else if (list.ListingType == "Co-Working")
+											{
+												<li>
+													<span>Listing Type</span>
+													<div class="pr_Filter_ListingType">@list.ListingType</div>
+												</li>
+												@if (list.CoworkingType == null)
+												{
+													<li>
+														<span>Coworking Category</span>
+														<div class="pr_Filter_CoworkingCategory">All</div>
+													</li>
+												}
+												else
+												{
+													<li>
+														<span>Coworking Category</span>
+														<div class="pr_Filter_CoworkingCategory">@list.CoworkingType</div>
+													</li>
+												}
+											}
+
+											@if (list.Locality == null)
+											{
+												<li>
+													<span>City</span>
+													<div class="pr_Filter_PropertyLocation">All</div>
+												</li>
+											}
+											else
+											{
+												<li>
+													<span>City</span>
+													<div class="pr_Filter_PropertyLocation">@list.Locality</div>
+												</li>
+											}
+
+											@if ((list.IsPerformHour != null) && (list.IsPerformHour == true))
+											{
+												<li>
+													<span>Hour</span>
+													<div class="pr_Filter_hour">True</div>
+												</li>
+											}
+
+											@if ((list.IsPerformDay != null) && (list.IsPerformDay == true))
+											{
+												<li>
+													<span>Day</span>
+													<div class="pr_Filter_day">True</div>
+												</li>
+											}
+
+											@if ((list.IsPerformMonth != null) && (list.IsPerformMonth == true))
+											{
+												<li>
+													<span>Month</span>
+													<div class="pr_Filter_month">True</div>
+												</li>
+											}
+
+
+
+											<li>
+												<span>Min Price</span>
+												<div class="slider-range-value1">@list.PriceMin</div>
+											</li>
+											<li>
+												<span>Max Price</span>
+												<div class="slider-range-value2">@list.PriceMax</div>
+											</li>
+											@if ((list.IsPerformHealthCheck != null) && (list.IsPerformHealthCheck == true))
+											{
+												<li>
+													<span>Health Check</span>
+													<div class="pr_Filter_healthCheck">@list.IsPerformHealthCheck</div>
+												</li>
+											}
+											@if ((list.IsPerformGBC != null) && (list.IsPerformGBC == true))
+											{
+												<li>
+													<span>Green Building Check</span>
+													<div class="pr_Filter_greenBuilding">@list.IsPerformGBC</div>
+												</li>
+											}
+											</ul>
+									</div>
+									<div class="col-1">
+										<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
+											<a class="property-search-submit" href="javascript:void(0)" onclick="propertySearchFunction(this);">
+												<i class="fas fa-search-location btn-icon text-primary"></i>
+											</a>
+											@if (propertySearchCriteriaList.Count() > 1) { 
+												<a class="property-search-submit" href="javascript:void(0)" onclick="propertySearchHistoryRemove(this, @list.Id);">
+													<i class="fas fa-trash-alt btn-icon text-danger"></i>
+												</a>
+												}
+										</div>
+										@*<button type="button" class="btn btn-primary btn-block property-search-submit" onclick="propertySearchFunction(this);"><i class="fas fa-search-location"></i>Search</button>*@
+									</div>
+								</div>
+							}
+						</div>
+					</div>
+				}
+
+			}
+
+
+		}
+
+	</div>
+</div>
 @if (Model != null && Model.Count() != 0)
 {
+
 	<div class="result-count">Property Filter Count : <span>@Model.Count()</span></div>
 	<div class="paginate">
 		<div class="pager">
@@ -104,8 +287,8 @@
 									}
 
 									@*<div class="property-agent-popup">
-			<a href="#"><i class="fas fa-camera"></i> 03</a>
-		</div>*@
+											<a href="#"><i class="fas fa-camera"></i> 03</a>
+										</div>*@
 								</div>
 							</div>
 							<div class="col-lg-8 col-md-7 prop-details">
@@ -145,153 +328,153 @@
 										ViewBag.BlurClass = "list-blur";
 									}
 									<div class="@ViewBag.BlurClass">
-									<div class="property-details__section">
-										@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
-										{
-											@if (item.SpaceListing.CMCW_PropertyFor == "Rental")
-											{
-												<div class="property-span__head">Property for <span class="badge-info__underline">Rent</span></div>
-												<div class="d-block">
-													<span class="property-span__head text-sec">Min Price:</span>
-													<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.PriceMin) </span> -
-													<span class="property-span__head text-info">Max Price:</span>
-													<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.PriceMax)</span>
-												</div>
-											}
-											else if (item.SpaceListing.CMCW_PropertyFor == "Sale")
-											{
-												<div class="property-span__head">Property for <span class="badge-sec__underline">Sale</span></div>
-												<div class="d-block">
-													<span class="property-span__head text-sec">Approximate Price:</span>
-													<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.CMCW_AproximatePrice) </span> -
-												</div>
-											}
-
-										}
-									</div>
-									<div class="property-details__section">
-										<div>
-											<span class="property-span__head">Type: </span>
-											@if (item.SpaceListing.ListingType == "Commercial")
-											{
-												<span class="property-span__type badge-pry">@item.SpaceListing.ListingType - @item.SpaceListing.CommercialType</span> 
-											}
-											else if (item.SpaceListing.ListingType == "Co-Working")
-											{
-												<span class="property-span__type badge-sec">@item.SpaceListing.ListingType - @item.SpaceListing.CoworkingType</span>
-
-											}
-											else if (item.SpaceListing.ListingType == "RE-Professional")
-											{
-												<span class="property-span__type badge-info">@item.SpaceListing.ListingType</span>
-
-											}
-										</div>
-										<div>
+										<div class="property-details__section">
 											@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
 											{
 												@if (item.SpaceListing.CMCW_PropertyFor == "Rental")
 												{
-													<span class="property-span__head">Rent: </span>
-													<span class="property-span__rent">
-														@if ((item.SpaceListing.RentalHour == true) && (item.SpaceListing.RentalDay == true) && (item.SpaceListing.RentalMonth == true))
-														{
-															@Html.Raw("Hour | Day | Month");
-														}
-														else if ((item.SpaceListing.RentalHour == true) && (item.SpaceListing.RentalDay == true))
-														{
-															@Html.Raw("Hour | Day");
-														}
-														else if ((item.SpaceListing.RentalHour == true) && (item.SpaceListing.RentalMonth == true))
-														{
-															@Html.Raw("Hour | Month");
-														}
-														else if ((item.SpaceListing.RentalMonth == true) && (item.SpaceListing.RentalDay == true))
-														{
-															@Html.Raw("Day | Month");
-														}
-														else if ((item.SpaceListing.RentalMonth == true))
-														{
-															@Html.Raw("Month");
-														}
-														else if ((item.SpaceListing.RentalDay == true))
-														{
-															@Html.Raw("Day");
-														}
-														else if ((item.SpaceListing.RentalHour == true))
-														{
-															@Html.Raw("Hour");
-														}
-														else
-														{
-															@Html.Raw("Not Specified");
-														}
-													</span>
+													<div class="property-span__head">Property for <span class="badge-info__underline">Rent</span></div>
+													<div class="d-block">
+														<span class="property-span__head text-sec">Min Price:</span>
+														<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.PriceMin) </span> -
+														<span class="property-span__head text-info">Max Price:</span>
+														<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.PriceMax)</span>
+													</div>
+												}
+												else if (item.SpaceListing.CMCW_PropertyFor == "Sale")
+												{
+													<div class="property-span__head">Property for <span class="badge-sec__underline">Sale</span></div>
+													<div class="d-block">
+														<span class="property-span__head text-sec">Approximate Price:</span>
+														<span>&#8377;@string.Format(indianCulture, "{0:N}", @item.SpaceListing.CMCW_AproximatePrice) </span> -
+													</div>
 												}
 
-
-											}
-
-										</div>
-
-
-									</div>
-									<div class="property-details__footer">
-										<div class="property-details__address">
-											<i class="fas fa-map-marker-alt fa-xs"></i>
-											@if (item.SpaceListing.street_number != null)
-											{
-												@Html.Raw(@item.SpaceListing.street_number + ",");
-											}
-											@if (item.SpaceListing.route != null)
-											{
-												@Html.Raw(@item.SpaceListing.route + ",");
-											}
-											<span class="property-span__head">@item.SpaceListing.locality</span>, @item.SpaceListing.administrative_area_level_1. <span class="property-span__head">@item.SpaceListing.postal_code</span>
-										</div>
-										<div class="property-details__total">
-
-											@if (item.SpaceListing.ListingType == "Commercial" && item.SpaceListing.CMCW_PropertyFor == "Rental")
-											{
-												<span class="property-span__occ">
-													<i class="fas fa-chart-pie fa-xs"></i>Available slots/units: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
-													else
-														@Html.Raw("Not Specified")
-												</span>
-											}
-											else if (item.SpaceListing.ListingType == "Co-Working" && item.SpaceListing.CMCW_PropertyFor == "Rental")
-											{
-												<span class="property-span__occ">
-													<i class="fas fa-chart-pie fa-xs"></i>Available seats: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
-													else
-														@Html.Raw("Not Specified")
-												</span>
 											}
 										</div>
-									</div>
-									
-									@*Linked re-professional inside the property*@
+										<div class="property-details__section">
+											<div>
+												<span class="property-span__head">Type: </span>
+												@if (item.SpaceListing.ListingType == "Commercial")
+												{
+													<span class="property-span__type badge-pry">@item.SpaceListing.ListingType - @item.SpaceListing.CommercialType</span>
+												}
+												else if (item.SpaceListing.ListingType == "Co-Working")
+												{
+													<span class="property-span__type badge-sec">@item.SpaceListing.ListingType - @item.SpaceListing.CoworkingType</span>
 
-									@if (item.LinkedREProf != null)
-									{
-										<div class="property-details__linkedRe">
-										<div class="property-details__linkedRe-count">
-											No.of Professionals involved in this property: <span>@item.LinkedREProfCount</span>
-										</div>
-										<div class="">
-											@foreach(var linkedProfessional in item.LinkedREProf)
-											{
-												<div class="property-details__linkedRe-details linked-thumb">
-													<div>
-														<i class="fas fa-user-tie"></i>
-													</div>
-													<div><span>@linkedProfessional.REFirstName - @linkedProfessional.RELastName</span></div>
-													<div>@*Role:*@ <span>@linkedProfessional.ProjectRole</span></div>
-												</div>
-											}
-										</div>
+												}
+												else if (item.SpaceListing.ListingType == "RE-Professional")
+												{
+													<span class="property-span__type badge-info">@item.SpaceListing.ListingType</span>
+
+												}
 											</div>
-									}
+											<div>
+												@if (item.SpaceListing.ListingType == "Commercial" || item.SpaceListing.ListingType == "Co-Working")
+												{
+													@if (item.SpaceListing.CMCW_PropertyFor == "Rental")
+													{
+														<span class="property-span__head">Rent: </span>
+														<span class="property-span__rent">
+															@if ((item.SpaceListing.RentalHour == true) && (item.SpaceListing.RentalDay == true) && (item.SpaceListing.RentalMonth == true))
+															{
+																@Html.Raw("Hour | Day | Month");
+															}
+															else if ((item.SpaceListing.RentalHour == true) && (item.SpaceListing.RentalDay == true))
+															{
+																@Html.Raw("Hour | Day");
+															}
+															else if ((item.SpaceListing.RentalHour == true) && (item.SpaceListing.RentalMonth == true))
+															{
+																@Html.Raw("Hour | Month");
+															}
+															else if ((item.SpaceListing.RentalMonth == true) && (item.SpaceListing.RentalDay == true))
+															{
+																@Html.Raw("Day | Month");
+															}
+															else if ((item.SpaceListing.RentalMonth == true))
+															{
+																@Html.Raw("Month");
+															}
+															else if ((item.SpaceListing.RentalDay == true))
+															{
+																@Html.Raw("Day");
+															}
+															else if ((item.SpaceListing.RentalHour == true))
+															{
+																@Html.Raw("Hour");
+															}
+															else
+															{
+																@Html.Raw("Not Specified");
+															}
+														</span>
+													}
+
+
+												}
+
+											</div>
+
+
+										</div>
+										<div class="property-details__footer">
+											<div class="property-details__address">
+												<i class="fas fa-map-marker-alt fa-xs"></i>
+												@if (item.SpaceListing.street_number != null)
+												{
+													@Html.Raw(@item.SpaceListing.street_number + ",");
+												}
+												@if (item.SpaceListing.route != null)
+												{
+													@Html.Raw(@item.SpaceListing.route + ",");
+												}
+												<span class="property-span__head">@item.SpaceListing.locality</span>, @item.SpaceListing.administrative_area_level_1. <span class="property-span__head">@item.SpaceListing.postal_code</span>
+											</div>
+											<div class="property-details__total">
+
+												@if (item.SpaceListing.ListingType == "Commercial" && item.SpaceListing.CMCW_PropertyFor == "Rental")
+												{
+													<span class="property-span__occ">
+														<i class="fas fa-chart-pie fa-xs"></i>Available slots/units: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
+														else
+															@Html.Raw("Not Specified")
+													</span>
+												}
+												else if (item.SpaceListing.ListingType == "Co-Working" && item.SpaceListing.CMCW_PropertyFor == "Rental")
+												{
+													<span class="property-span__occ">
+														<i class="fas fa-chart-pie fa-xs"></i>Available seats: @if (item.SpaceListing.CurrentOccupancy != null)@item.SpaceListing.CurrentOccupancy
+														else
+															@Html.Raw("Not Specified")
+													</span>
+												}
+											</div>
+										</div>
+
+										@*Linked re-professional inside the property*@
+
+										@if (item.LinkedREProf != null)
+										{
+											<div class="property-details__linkedRe">
+												<div class="property-details__linkedRe-count">
+													No.of Professionals involved in this property: <span>@item.LinkedREProfCount</span>
+												</div>
+												<div class="">
+													@foreach (var linkedProfessional in item.LinkedREProf)
+													{
+														<div class="property-details__linkedRe-details linked-thumb">
+															<div>
+																<i class="fas fa-user-tie"></i>
+															</div>
+															<div><span>@linkedProfessional.REFirstName - @linkedProfessional.RELastName</span></div>
+															<div>@*Role:*@ <span>@linkedProfessional.ProjectRole</span></div>
+														</div>
+													}
+												</div>
+											</div>
+										}
 
 										<div class="list-blur__background">
 											<div class="list-blur__btn">
@@ -300,7 +483,7 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="property-btn">
 									@if (ViewBag.UserId != null && ViewBag.UserId != -1)
 									{
@@ -340,7 +523,7 @@ else
 {
 	<div class="no-result">
 		<div class="no-result__head">
-			Property/Space 
+			Property/Space
 		</div>
 		<div class="no-result__search">
 			Please select any/other filter options <span class="bg-pry"><i class="fas fa-search-location"></i>Search</span> to get the data

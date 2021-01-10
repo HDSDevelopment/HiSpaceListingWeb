@@ -68,6 +68,7 @@
 					+ '<option value="tab-03">RE Professionals/People</option>'
 					+ '</select>');
 				$('.dd-filter').select2();
+				$("#propertySearchHistory").appendTo("#propertySearchHistoryMove");
 			} else if (value_selected == "tab-02") {
 				$('.filter-select').append('<select class="form-control basic-select dd-filter operator_select">'
 					+ '<option value="tab-01">Property/Space</option>'
@@ -75,12 +76,14 @@
 					+ '<option value="tab-03">RE Professionals/People</option>'
 					+ '</select>');
 				$('.dd-filter').select2();
+				$("#operatorSearchHistory").prependTo("#operatorSearchHistoryMove");
 			} else if (value_selected == "tab-03") {
 				$('.filter-select').append('<select class="form-control basic-select dd-filter people_select">'
 					+ '<option value="tab-01">Property/Space</option>'
 					+ '<option value="tab-02">Owner/Operator</option>'
 					+ '<option selected value="tab-03">RE Professionals/People</option>'
 					+ '</select>');
+				$("#peopleSearchHistory").prependTo("#peopleSearchHistoryMove");
 				$('.dd-filter').select2();
 			}
 			removeLoader();

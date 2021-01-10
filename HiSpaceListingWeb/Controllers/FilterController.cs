@@ -83,8 +83,7 @@ namespace HiSpaceListingWeb.Controllers
 				}
 			}
 			return View("FilterList", vModel);
-		}
-		
+		}		
 		public ActionResult PropertyListByAll()
 		{
 			SetSessionVariables();
@@ -129,7 +128,6 @@ namespace HiSpaceListingWeb.Controllers
 			//return Json(vModel);
 			return PartialView("_PropertyFilterListPartialView", vModel);
 		}
-
 		public ActionResult PropertyListByType(string Type)
 		{
 			SetSessionVariables();
@@ -151,7 +149,6 @@ namespace HiSpaceListingWeb.Controllers
 			}
 			return PartialView("_PropertyFilterListPartialView", vModel);
 		}
-
 		public ActionResult PropertyListByUser(string User)
 		{
 			SetSessionVariables();
@@ -172,6 +169,132 @@ namespace HiSpaceListingWeb.Controllers
 				}
 			}
 			return PartialView("_PropertyFilterListPartialView", vModel);
+		}
+		public ActionResult PropertyFilterCriteria(PropertySearchCriteria propertySearchCriteria)
+		{
+			SetSessionVariables();
+			List<PropertyDetailResponse> vModel = new List<PropertyDetailResponse>();
+			using (var client = new HttpClient())
+			{
+				if (ViewBag.UserId > 0)
+				{
+					List<PropertySearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<PropertySearchCriteria>>(HttpContext.Session, "propertySearchCriteriaList");
+
+					int id = 1;
+
+					if (searchCriteriaList != null)
+						id = searchCriteriaList.Max(n => n.Id) + 1;
+					else
+						searchCriteriaList = new List<PropertySearchCriteria>();
+
+					propertySearchCriteria.Id = id;
+					searchCriteriaList.Add(propertySearchCriteria);
+
+					SessionExtension.SetObjectAsJson<List<PropertySearchCriteria>>(HttpContext.Session, "propertySearchCriteriaList", searchCriteriaList);
+
+					PropertyUserSearchCriteria pUserSearchCriteria = new PropertyUserSearchCriteria();
+					pUserSearchCriteria.CMCW_PropertyFor = propertySearchCriteria.CMCW_PropertyFor;
+					pUserSearchCriteria.CommercialType = propertySearchCriteria.CommercialType;
+					pUserSearchCriteria.CoworkingType = propertySearchCriteria.CoworkingType;
+					pUserSearchCriteria.IsPerformDay = propertySearchCriteria.IsPerformDay;
+					pUserSearchCriteria.IsPerformGBC = propertySearchCriteria.IsPerformGBC;
+					pUserSearchCriteria.IsPerformHealthCheck = propertySearchCriteria.IsPerformHealthCheck;
+					pUserSearchCriteria.IsPerformHour = propertySearchCriteria.IsPerformHour;
+					pUserSearchCriteria.IsPerformMonth = propertySearchCriteria.IsPerformMonth;
+					pUserSearchCriteria.ListingType = propertySearchCriteria.ListingType;
+					pUserSearchCriteria.Locality = propertySearchCriteria.Locality;
+					pUserSearchCriteria.PriceMax = propertySearchCriteria.PriceMax;
+					pUserSearchCriteria.PriceMin = propertySearchCriteria.PriceMin;
+					pUserSearchCriteria.UserId = ViewBag.UserId;
+
+					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+					var responseTask = client.PostAsJsonAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavoritesBySearch, pUserSearchCriteria);
+					responseTask.Wait();
+
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
+
+				}
+				else
+				{
+					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+					var responseTask = client.PostAsJsonAsync(Common.Instance.ApiListingGetPropertyListCommercialAndCoworking, propertySearchCriteria);
+					responseTask.Wait();
+
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
+				}
+			}
+
+			return PartialView("_PropertyFilterListPartialView", vModel);
+			//return Json(vModel);
+
+		}
+		public ActionResult PropertyFilterCriteriaHistory(PropertySearchCriteria propertySearchCriteria)
+		{
+			SetSessionVariables();
+			List<PropertyDetailResponse> vModel = new List<PropertyDetailResponse>();
+			List<PropertySearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<PropertySearchCriteria>>(HttpContext.Session, "propertySearchCriteriaList");
+
+			PropertyUserSearchCriteria pUserSearchCriteria = new PropertyUserSearchCriteria();
+			pUserSearchCriteria.CMCW_PropertyFor = propertySearchCriteria.CMCW_PropertyFor;
+			pUserSearchCriteria.CommercialType = propertySearchCriteria.CommercialType;
+			pUserSearchCriteria.CoworkingType = propertySearchCriteria.CoworkingType;
+			pUserSearchCriteria.IsPerformDay = propertySearchCriteria.IsPerformDay;
+			pUserSearchCriteria.IsPerformGBC = propertySearchCriteria.IsPerformGBC;
+			pUserSearchCriteria.IsPerformHealthCheck = propertySearchCriteria.IsPerformHealthCheck;
+			pUserSearchCriteria.IsPerformHour = propertySearchCriteria.IsPerformHour;
+			pUserSearchCriteria.IsPerformMonth = propertySearchCriteria.IsPerformMonth;
+			pUserSearchCriteria.ListingType = propertySearchCriteria.ListingType;
+			pUserSearchCriteria.Locality = propertySearchCriteria.Locality;
+			pUserSearchCriteria.PriceMax = propertySearchCriteria.PriceMax;
+			pUserSearchCriteria.PriceMin = propertySearchCriteria.PriceMin;
+			pUserSearchCriteria.UserId = ViewBag.UserId;
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavoritesBySearch, pUserSearchCriteria);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+			}
+
+			return PartialView("_PropertyFilterListPartialView", vModel);
+			//return Json(vModel);
+
+		}
+		public ActionResult DeletePropertySearchCriteria(int id)
+		{
+			string keyName = "propertySearchCriteriaList";
+			List<PropertySearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<PropertySearchCriteria>>(HttpContext.Session, keyName);
+
+			if (searchCriteriaList != null)
+			{
+				PropertySearchCriteria criteria = searchCriteriaList.FirstOrDefault(n => n.Id == id);
+				searchCriteriaList.Remove(criteria);
+				SessionExtension.SetObjectAsJson<List<PropertySearchCriteria>>(HttpContext.Session, keyName, searchCriteriaList);
+
+				return Ok(searchCriteriaList);
+			}
+			else
+				return NotFound();
 		}
 
 		public ActionResult OperatorListByAll()
@@ -223,6 +346,43 @@ namespace HiSpaceListingWeb.Controllers
 		{
 			SetSessionVariables();
 			List<PropertyOperatorResponse> vModel = new List<PropertyOperatorResponse>();
+			if (ViewBag.UserId > 0)
+			{
+				List<OperatorSearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<OperatorSearchCriteria>>(HttpContext.Session, "operatorSearchCriteriaList");
+				int id = 1;
+
+				if (searchCriteriaList != null)
+					id = searchCriteriaList.Max(n => n.Id) + 1;
+				else
+					searchCriteriaList = new List<OperatorSearchCriteria>();
+
+				operatorSearchCriteria.Id = id;
+				searchCriteriaList.Add(operatorSearchCriteria);
+
+				SessionExtension.SetObjectAsJson<List<OperatorSearchCriteria>>(HttpContext.Session, "operatorSearchCriteriaList", searchCriteriaList);
+			}
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiLisitingGetOperatorList, operatorSearchCriteria);
+				responseTask.Wait();
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PropertyOperatorResponse>>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+
+			}
+			//return Json(vModel);
+			return PartialView("_OperatorFilterListPartialView", vModel);
+		}
+		public ActionResult OperatorFilterCriteriaHistory(OperatorSearchCriteria operatorSearchCriteria)
+		{
+			SetSessionVariables();
+			List<PropertyOperatorResponse> vModel = new List<PropertyOperatorResponse>();
+			List<OperatorSearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<OperatorSearchCriteria>>(HttpContext.Session, "operatorSearchCriteriaList");
 
 			using (var client = new HttpClient())
 			{
@@ -241,6 +401,23 @@ namespace HiSpaceListingWeb.Controllers
 			//return Json(vModel);
 			return PartialView("_OperatorFilterListPartialView", vModel);
 		}
+		public ActionResult DeleteOperatorSearchCriteria(int id)
+		{
+			string keyName = "operatorSearchCriteriaList";
+			List<OperatorSearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<OperatorSearchCriteria>>(HttpContext.Session, keyName);
+
+			if (searchCriteriaList != null)
+			{
+				OperatorSearchCriteria criteria = searchCriteriaList.FirstOrDefault(n => n.Id == id);
+				searchCriteriaList.Remove(criteria);
+				SessionExtension.SetObjectAsJson<List<OperatorSearchCriteria>>(HttpContext.Session, keyName, searchCriteriaList);
+
+				return Ok(searchCriteriaList);
+			}
+			else
+				return NotFound();
+		}
+
 		public ActionResult PeopleListByAll()
 		{
 			SetSessionVariables();
@@ -272,6 +449,20 @@ namespace HiSpaceListingWeb.Controllers
 			{
 				if (ViewBag.UserId > 0)
 				{
+					List<PeopleSearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<PeopleSearchCriteria>>(HttpContext.Session, "peopleSearchCriteriaList");
+
+					int id = 1;
+
+					if (searchCriteriaList != null)
+						id = searchCriteriaList.Max(n => n.Id) + 1;
+					else
+						searchCriteriaList = new List<PeopleSearchCriteria>();
+
+					peopleSearchCriteria.Id = id;
+					searchCriteriaList.Add(peopleSearchCriteria);
+
+					SessionExtension.SetObjectAsJson<List<PeopleSearchCriteria>>(HttpContext.Session, "peopleSearchCriteriaList", searchCriteriaList);
+
 					int UserId = ViewBag.UserId;
 					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
 					var responseTask = client.PostAsJsonAsync(Common.Instance.ApiGetPeopleWithFavoritesBySearch + UserId, peopleSearchCriteria);
@@ -304,6 +495,48 @@ namespace HiSpaceListingWeb.Controllers
 			//return Json(vModel);
 			return PartialView("_ProfessionalFilterListPartialView", vModel);
 		}
+		public ActionResult PeopleFilterCriteriaHistory(PeopleSearchCriteria peopleSearchCriteria)
+		{
+			SetSessionVariables();
+			List<PropertyPeopleResponse> vModel = new List<PropertyPeopleResponse>();
+			List<PeopleSearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<PeopleSearchCriteria>>(HttpContext.Session, "peopleSearchCriteriaList");
+			using (var client = new HttpClient())
+			{
+
+				int UserId = ViewBag.UserId;
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiGetPeopleWithFavoritesBySearch + UserId, peopleSearchCriteria);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+
+
+			}
+			//return Json(vModel);
+			return PartialView("_ProfessionalFilterListPartialView", vModel);
+		}
+		public ActionResult DeletePeopleSearchCriteria(int id)
+		{
+			string keyName = "peopleSearchCriteriaList";
+			List<PeopleSearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<PeopleSearchCriteria>>(HttpContext.Session, keyName);
+
+			if (searchCriteriaList != null)
+			{
+				PeopleSearchCriteria criteria = searchCriteriaList.FirstOrDefault(n => n.Id == id);
+				searchCriteriaList.Remove(criteria);
+				SessionExtension.SetObjectAsJson<List<PeopleSearchCriteria>>(HttpContext.Session, keyName, searchCriteriaList);
+
+				return Ok(searchCriteriaList);
+			}
+			else
+				return NotFound();
+		}
 		public ActionResult PeopleListByListingId(string ListingId)
 		{
 			SetSessionVariables();
@@ -327,65 +560,10 @@ namespace HiSpaceListingWeb.Controllers
 			return PartialView("_ProfessionalFilterListPartialView", vModel);
 		}
 
-		public ActionResult PropertyFilterCriteria(PropertySearchCriteria propertySearchCriteria)
-		{
-			SetSessionVariables();
-			List<PropertyDetailResponse> vModel = new List<PropertyDetailResponse>();
-			using (var client = new HttpClient())
-			{
-				if (ViewBag.UserId > 0)
-				{
-					PropertyUserSearchCriteria pUserSearchCriteria = new PropertyUserSearchCriteria();
-					pUserSearchCriteria.CMCW_PropertyFor = propertySearchCriteria.CMCW_PropertyFor;
-					pUserSearchCriteria.CommercialType = propertySearchCriteria.CommercialType;
-					pUserSearchCriteria.CoworkingType = propertySearchCriteria.CoworkingType;
-					pUserSearchCriteria.IsPerformDay = propertySearchCriteria.IsPerformDay;
-					pUserSearchCriteria.IsPerformGBC = propertySearchCriteria.IsPerformGBC;
-					pUserSearchCriteria.IsPerformHealthCheck = propertySearchCriteria.IsPerformHealthCheck;
-					pUserSearchCriteria.IsPerformHour = propertySearchCriteria.IsPerformHour;
-					pUserSearchCriteria.IsPerformMonth = propertySearchCriteria.IsPerformMonth;
-					pUserSearchCriteria.ListingType = propertySearchCriteria.ListingType;
-					pUserSearchCriteria.Locality = propertySearchCriteria.Locality;
-					pUserSearchCriteria.PriceMax = propertySearchCriteria.PriceMax;
-					pUserSearchCriteria.PriceMin = propertySearchCriteria.PriceMin;
-					pUserSearchCriteria.UserId = ViewBag.UserId;
-
-					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-					var responseTask = client.PostAsJsonAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavoritesBySearch, pUserSearchCriteria);
-					responseTask.Wait();
-
-					var result = responseTask.Result;
-					if (result.IsSuccessStatusCode)
-					{
-						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-						readTask.Wait();
-						vModel = readTask.Result;
-					}
-				
-				}
-				else
-				{
-					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-					var responseTask = client.PostAsJsonAsync(Common.Instance.ApiListingGetPropertyListCommercialAndCoworking, propertySearchCriteria);
-					responseTask.Wait();
-
-					var result = responseTask.Result;
-					if (result.IsSuccessStatusCode)
-					{
-						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-						readTask.Wait();
-						vModel = readTask.Result;
-					}
-					}
-				}
-			
-			return PartialView("_PropertyFilterListPartialView", vModel);
-			//return Json(vModel);
-			
-		}
-
 		public ActionResult PropertyOperatorPeopleAndFilterMenu()
 		{
+			
+
 			SetSessionVariables();
 			//Operator dropdowns
 			ViewBag.ListOfOperators = Common.GetOperatorsListForFilter("All");
@@ -468,6 +646,8 @@ namespace HiSpaceListingWeb.Controllers
 				
 				if (ViewBag.UserId > 0)
 				{
+					PropertySearchCriteria propertySearchCriteria = SessionExtension.GetObjectFromJson<PropertySearchCriteria>(HttpContext.Session, "propertySearchCriteria");
+
 					//Get Listings
 					int UserId = ViewBag.UserId;
 					var responseTask = client.GetAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavoritesByUserId + UserId);
@@ -541,6 +721,28 @@ namespace HiSpaceListingWeb.Controllers
 
 			return View("FilterList", vModel);
 		}
+		public ActionResult FillterFavorites(int User)
+		{
+			SetSessionVariables();
+			List<PropertyDetailResponse> vModel = new List<PropertyDetailResponse>();
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiFilterControllerName);
+				var responseTask = client.GetAsync(Common.Instance.ApiFilterGetFavoritesByUser + "/" + User);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+			}
+			//return Json(vModel);
+			return View(vModel);
+		}
 
 		//dropdown by operator list
 		public ActionResult GetOperatorsListForFilter(string Location)
@@ -604,8 +806,6 @@ namespace HiSpaceListingWeb.Controllers
 			}
 			return Json(user); 
 		}
-
-
 		//Get the max price
 		public ActionResult GetMPrice(string SearchFor, bool Hour, bool Day, bool Month)
 		{

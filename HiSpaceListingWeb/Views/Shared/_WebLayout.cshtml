@@ -178,6 +178,7 @@
 									<li><a class="dropdown-item" href="@Url.Action( "LinkedPeople","Listing",new { UserID = ViewBag.UserId})">Linked People/Professional</a></li>
 									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "User"})">Received Enquiries</a></li>
 									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "My"})">Made Enquiries</a></li>
+									<li><a class="dropdown-item" href="@Url.Action( "FillterFavorites","Filter",new { User = ViewBag.UserId})">Favorites</a></li>
 								</ul>
 							</li>
 						}

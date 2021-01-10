@@ -3,12 +3,13 @@
 	$('#opCount span').html(opCount);
 };
 $(document).ready(function () {
-	
+	$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
+	$("#operatorSearchHistory").prependTo("#operatorSearchHistoryMove");
+	$("#peopleSearchHistory").prependTo("#peopleSearchHistoryMove");
 	operatorFilterCount();
 });
 var filterPropertyResult = $('#filterPropertyResult');
 var detailPropertyResult = $('#detailPropertyResult');
-
 //get the max price on select and checkbox
 //$('body').on('change', '#Pr_Filter_For', function () {
 //	console.log('test');
@@ -31,7 +32,7 @@ $('#Pr_Filter_For').on('change', function () {
 $('#property-form-submit').on('click', function (e) {
 	$("#filterPropertyResult").append("<div class='loader_new'></div>");
 	//$("#filterPropertyResult").append("<div class='loader_new-sub'></div>");
-	console.log('property filter click');
+	//console.log('property filter click');
 		var formData = new FormData();
 	var Pr_For = $('#Pr_Filter_For').val();
 	if (Pr_For != "All") {
@@ -133,6 +134,8 @@ $('#property-form-submit').on('click', function (e) {
 			//console.log(response);
 			filterPropertyResult.html('');
 			filterPropertyResult.html(response);
+			$("#propertySearchHistoryMove").empty();
+			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
 			operatorFilterCount();
 			PaginationCall();
 			removeLoader();
@@ -143,6 +146,147 @@ $('#property-form-submit').on('click', function (e) {
 		}
 	});
 });
+
+//property history search
+function propertySearchFunction(obj) {
+	$("#filterPropertyResult").append("<div class='loader_new'></div>");
+	var activeRow = $(obj).closest('.sh-data');
+	console.log('property filter click');
+	var formData = new FormData();
+	var Pr_For = $(activeRow).find('.Pr_Filter_For').html();
+	if (Pr_For != "All") {
+		formData.append("CMCW_PropertyFor", Pr_For);
+	} else {
+		formData.append("CMCW_PropertyFor", "");
+	}
+
+
+	var Pr_ListingType = $(activeRow).find('.pr_Filter_ListingType').html();
+	if (Pr_ListingType == "All") {
+		formData.append("ListingType", "");
+		formData.append("CommercialType", "");
+		formData.append("CoworkingType", "");
+	} else if (Pr_ListingType == "Commercial") {
+		formData.append("ListingType", Pr_ListingType);
+		var Pr_CommercialCategory = $(activeRow).find('.pr_Filter_CommercialCategory').html();
+		if (Pr_CommercialCategory != "All") {
+			formData.append("CommercialType", Pr_CommercialCategory);
+		} else {
+			formData.append("CommercialType", "");
+		}
+	}
+	else if (Pr_ListingType == "Co-Working") {
+		formData.append("ListingType", Pr_ListingType);
+		var Pr_CoworkingCategory = $(activeRow).find('.pr_Filter_CoworkingCategory').html();
+		if (Pr_CoworkingCategory != "All") {
+			formData.append("CoworkingType", Pr_CoworkingCategory);
+		} else {
+			formData.append("CoworkingType", "");
+		}
+	}
+
+	var Pr_Location = $(activeRow).find('.pr_Filter_PropertyLocation').html();
+	if (Pr_Location != "All") {
+		formData.append("Locality", Pr_Location);
+	} else {
+		formData.append("Locality", "");
+	}
+
+	//Health check
+	if ($(activeRow).find('.pr_Filter_healthCheck').html() == "True") {
+		formData.append("IsPerformGBC", true);
+	} else {
+		formData.append("IsPerformGBC", "");
+	}
+	//green building check
+	if ($(activeRow).find('.pr_Filter_greenBuilding').html() == "True") {
+		formData.append("IsPerformHealthCheck", true);
+	} else {
+		formData.append("IsPerformHealthCheck", "");
+	}
+	//console.log($('#pr_Filter_healthCheck').prop("checked"))
+	//console.log($('#pr_Filter_greenBuilding').prop("checked"))
+	//set the value empty
+	//if (Pr_For == "All" || Pr_For == "Sale") {
+	//	$('#pr_Filter_hour').prop('checked', false);
+	//	$('#pr_Filter_day').prop('checked', false);
+	//	$('#pr_Filter_month').prop('checked', false);
+	//}
+	//hour
+	if ($(activeRow).find('.pr_Filter_hour').html() == "True") {
+		formData.append("IsPerformHour", true);
+	} else {
+		formData.append("IsPerformHour", false);
+	}
+	//day
+	if ($(activeRow).find('.pr_Filter_day').html() == "True") {
+		formData.append("IsPerformDay", true);
+	} else {
+		formData.append("IsPerformDay", false);
+	}
+	//month
+	if ($(activeRow).find('.pr_Filter_month').html() == "True") {
+		formData.append("IsPerformMonth", true);
+	} else {
+		formData.append("IsPerformMonth", false);
+	}
+
+
+	var Pr_PriceMin = $(activeRow).find('.slider-range-value1').html();
+	formData.append("PriceMin", Pr_PriceMin);
+
+	var Pr_PriceMax = $(activeRow).find('.slider-range-value2').html();
+	formData.append("PriceMax", Pr_PriceMax);
+
+	for (var pair of formData.entries()) {
+		console.log(pair[0] + ' - ' + pair[1]);
+	}
+	$.ajax({
+		type: "POST",
+		url: "/Filter/PropertyFilterCriteriaHistory",
+		data: formData,
+		dataType: "html",
+		processData: false,
+		contentType: false,
+		success: function (response) {
+			//console.log(response);
+			filterPropertyResult.html('');
+			filterPropertyResult.html(response);
+			$("#propertySearchHistoryMove").empty();
+			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
+			operatorFilterCount();
+			PaginationCall();
+			removeLoader();
+		},
+		error: function (response) {
+			removeLoader();
+			alert("server not ready please try afterwards");
+		}
+	});
+}
+//property history delete
+function propertySearchHistoryRemove(obj, id) {
+	//id = $(obj).closest('.sh-data').find('.Pr_Filter_id').html();
+	$("#detailPropertyResult").append("<div class='loader_new'></div>");
+	$.ajax({
+		type: "GET",
+		url: "/Filter/DeletePropertySearchCriteria",
+		data: { id: id },
+		dataType: "html",
+		success: function (response) {
+			console.log(response);
+			console.log($(obj).html());
+			$(obj).closest('.sh-data').remove();
+			removeLoader();
+		},
+		error: function (response) {
+			removeLoader();
+			alert("server not ready please try afterwards");
+			//console.log(response);
+		}
+	});
+}
+
 //Property list all
 function propertyListByAll() {
 	$("#filterPropertyResult").append("<div class='loader_new'></div>");
@@ -155,6 +299,8 @@ function propertyListByAll() {
 			//console.log(response);
 			filterPropertyResult.html('');
 			filterPropertyResult.html(response);
+			$("#propertySearchHistoryMove").empty();
+			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
 			PaginationCall();
 			removeLoader();
 		},
@@ -201,6 +347,8 @@ function propertyListByLocation(location) {
 			//console.log(response);
 			filterPropertyResult.html('');
 			filterPropertyResult.html(response);
+			$("#propertySearchHistoryMove").empty();
+			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
 			PaginationCall();
 			removeLoader();
 		},
@@ -223,6 +371,8 @@ function propertyListByType(type) {
 			//console.log(response);
 			filterPropertyResult.html('');
 			filterPropertyResult.html(response);
+			$("#propertySearchHistoryMove").empty();
+			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
 			PaginationCall();
 			removeLoader();
 		},
@@ -245,6 +395,8 @@ function propertyListByUser(user) {
 			//console.log(response);
 			filterPropertyResult.html('');
 			filterPropertyResult.html(response);
+			$("#propertySearchHistoryMove").empty();
+			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
 			PaginationCall();
 			removeLoader();
 		},
@@ -309,6 +461,8 @@ function operatorListByAll() {
 			//console.log(response);
 			filterOperatorResult.html('');
 			filterOperatorResult.html(response);
+			$("#operatorSearchHistoryMove").empty();
+			$("#operatorSearchHistory").prependTo("#operatorSearchHistoryMove");
 			operatorFilterCount();
 			PaginationCall();
 			removeLoader();
@@ -332,6 +486,8 @@ function operatorListByUser(user) {
 			//console.log(response);
 			filterOperatorResult.html('');
 			filterOperatorResult.html(response);
+			$("#operatorSearchHistoryMove").empty();
+			$("#operatorSearchHistory").prependTo("#operatorSearchHistoryMove");
 			operatorFilterCount();
 			PaginationCall();
 			removeLoader();
@@ -400,6 +556,8 @@ $('#operator-form-submit').on('click', function (e) {
 			//console.log(response);
 			filterOperatorResult.html('');
 			filterOperatorResult.html(response);
+			$("#operatorSearchHistoryMove").empty();
+			$("#operatorSearchHistory").prependTo("#operatorSearchHistoryMove");
 			operatorFilterCount();
 			PaginationCall();
 			removeLoader();
@@ -410,7 +568,74 @@ $('#operator-form-submit').on('click', function (e) {
 		}
 	});
 });
+//operator search history
+function operatorSearchFunction(obj) {
+	$("#filterOperatorResult").append("<div class='loader_new'></div>");
+	var formData = new FormData();
+	var activeRow = $(obj).closest('.sh-data');
 
+	var OpCity = $(activeRow).find('.Op_Filter_CityName').html();
+	if (OpCity != "All") {
+		formData.append("CityName", OpCity);
+	} else {
+		formData.append("CityName", "");
+	}
+	var OpOperator = $(activeRow).find('.Op_Filter_OperatorName').html();
+	if (OpOperator != "All") {
+		formData.append("OperatorName", OpOperator);
+	} else {
+		formData.append("OperatorName", "");
+	}
+
+	for (var pair of formData.entries()) {
+		console.log(pair[0] + ' - ' + pair[1]);
+	}
+
+	$.ajax({
+		type: "POST",
+		url: "/Filter/OperatorFilterCriteriaHistory",
+		data: formData,
+		dataType: "html",
+		processData: false,
+		contentType: false,
+		success: function (response) {
+			//console.log(response);
+			filterOperatorResult.html('');
+			filterOperatorResult.html(response);
+			$("#operatorSearchHistoryMove").empty();
+			$("#operatorSearchHistory").prependTo("#operatorSearchHistoryMove");
+			operatorFilterCount();
+			PaginationCall();
+			removeLoader();
+		},
+		error: function (response) {
+			removeLoader();
+			alert("server not ready please try afterwards");
+		}
+	});
+}
+//operator history delete
+function operatorSearchHistoryRemove(obj, id) {
+	//id = $(obj).closest('.sh-data').find('.Pr_Filter_id').html();
+	$("#detailPropertyResult").append("<div class='loader_new'></div>");
+	$.ajax({
+		type: "GET",
+		url: "/Filter/DeleteOperatorSearchCriteria",
+		data: { id: id },
+		dataType: "html",
+		success: function (response) {
+			console.log(response);
+			console.log($(obj).html());
+			$(obj).closest('.sh-data').remove();
+			removeLoader();
+		},
+		error: function (response) {
+			removeLoader();
+			alert("server not ready please try afterwards");
+			//console.log(response);
+		}
+	});
+}
 
 //people list by filter form
 $(document).on('change', '.PeopleLocation', function (event) {
@@ -473,9 +698,9 @@ $('#people-form-submit').on('click', function (e) {
 		formData.append("FirstName", "");
 		formData.append("LastName", "");
 	}
-	//for (var pair of formData.entries()) {
- //   console.log(pair[0]+ ' - ' +pair[1]); 
-	//}
+	for (var pair of formData.entries()) {
+    console.log(pair[0]+ ' - ' +pair[1]); 
+	}
 	$.ajax({
 		type: "POST",
 		url: "/Filter/PeopleFilterCriteria",
@@ -487,6 +712,8 @@ $('#people-form-submit').on('click', function (e) {
 			//console.log(response);
 			filterProfessionalResult.html('');
 			filterProfessionalResult.html(response);
+			$("#peopleSearchHistoryMove").empty();
+			$("#peopleSearchHistory").prependTo("#peopleSearchHistoryMove");
 			Peoplecarousel();
 			PaginationCall();
 			removeLoader();
@@ -511,6 +738,8 @@ function peopleListByAll() {
 			//console.log(response);
 			filterProfessionalResult.html('');
 			filterProfessionalResult.html(response);
+			$("#peopleSearchHistoryMove").empty();
+			$("#peopleSearchHistory").prependTo("#peopleSearchHistoryMove");
 			Peoplecarousel();
 			PaginationCall();
 			removeLoader();
@@ -535,6 +764,8 @@ function peopleListByUser(listingId) {
 			//console.log(response);
 			filterProfessionalResult.html('');
 			filterProfessionalResult.html(response);
+			$("#peopleSearchHistoryMove").empty();
+			$("#peopleSearchHistory").prependTo("#peopleSearchHistoryMove");
 			Peoplecarousel();
 			PaginationCall();
 			removeLoader();
@@ -542,6 +773,87 @@ function peopleListByUser(listingId) {
 		error: function (response) {
 			removeLoader();
 			alert("server not ready please try afterwards");
+		}
+	});
+}
+//people search history
+function peopleSearchFunction(obj) {
+	$("#filterProfessionalResult").append("<div class='loader_new'></div>");
+	var formData = new FormData();
+	var activeRow = $(obj).closest('.sh-data');
+
+	var Pe_Role = $(activeRow).find('.Pe_Filter_Role').html();
+	if (Pe_Role != "All") {
+		formData.append("Role", Pe_Role);
+	} else {
+		formData.append("Role", "");
+	}
+
+	var Pe_Location = $(activeRow).find('.pe_Filter_PeopleLocation').html();
+	if (Pe_Location != "All") {
+		formData.append("Locality", Pe_Location);
+	} else {
+		formData.append("Locality", "");
+	}
+	var Pe_Fname = $(activeRow).find('.Pe_Filter_PeopleFname').html();
+	if (Pe_Fname != "All") {
+		formData.append("FirstName", Pe_Fname);
+	} else {
+		formData.append("FirstName", "");
+	}
+	var Pe_Lname = $(activeRow).find('.Pe_Filter_PeopleLname').html();
+	if (Pe_Lname != "All") {
+		formData.append("LastName", Pe_Lname);
+	} else {
+		formData.append("LastName", "");
+	}
+
+	for (var pair of formData.entries()) {
+		console.log(pair[0] + ' - ' + pair[1]);
+	}
+
+	$.ajax({
+		type: "POST",
+		url: "/Filter/PeopleFilterCriteriaHistory",
+		data: formData,
+		dataType: "html",
+		processData: false,
+		contentType: false,
+		success: function (response) {
+			//console.log(response);
+			filterProfessionalResult.html('');
+			filterProfessionalResult.html(response);
+			$("#peopleSearchHistoryMove").empty();
+			$("#peopleSearchHistory").prependTo("#peopleSearchHistoryMove");
+			Peoplecarousel();
+			PaginationCall();
+			removeLoader();
+		},
+		error: function (response) {
+			removeLoader();
+			alert("server not ready please try afterwards");
+		}
+	});
+}
+//people history delete
+function peopleSearchHistoryRemove(obj, id) {
+	//id = $(obj).closest('.sh-data').find('.Pr_Filter_id').html();
+	$("#detailPropertyResult").append("<div class='loader_new'></div>");
+	$.ajax({
+		type: "GET",
+		url: "/Filter/DeletePeopleSearchCriteria",
+		data: { id: id },
+		dataType: "html",
+		success: function (response) {
+			console.log(response);
+			console.log($(obj).html());
+			$(obj).closest('.sh-data').remove();
+			removeLoader();
+		},
+		error: function (response) {
+			removeLoader();
+			alert("server not ready please try afterwards");
+			//console.log(response);
 		}
 	});
 }
@@ -593,6 +905,8 @@ if (listShowType == 1) {
 		 +'<option selected value="tab-03">RE Professionals/People</option>'
 	+'</select>');
 }
+
+
 
 
 //professional sliders section

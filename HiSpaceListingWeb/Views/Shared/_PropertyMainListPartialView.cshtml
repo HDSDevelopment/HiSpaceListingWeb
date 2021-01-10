@@ -1,58 +1,19 @@
 ﻿@*
 	For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http;
+@using System.Collections.Generic;
+@using HiSpaceListingWeb.Utilities;
+@using HiSpaceListingService.ViewModel;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @model HiSpaceListingWeb.ViewModel.PropertyOperatorPeopleAndFilterMenuViewModel
 @*serach history*@
-<div class="row">
-	<div class="col-12 search-history">
-		<div class="form-row sh-data">
-			<div class="col-11 sh-form_main">
-				<ul>
-					<li>
-						<span>Search For</span>
-						<div class="Pr_Filter_For">All</div>
-					</li>
-					<li>
-						<span>Listing Type</span>
-						<div class="pr_Filter_ListingType">Commercial</div>
-					</li>
-					<li>
-						<span>Commercial Category</span>
-						<div class="pr_Filter_CommercialCategory">Rental</div>
-					</li>
-					<li>
-						<span>City</span>
-						<div class="pr_Filter_PropertyLocation">Chennai</div>
-					</li>
-					<li>
-						<span>Hour</span>
-						<div class="pr_Filter_hour">True</div>
-					</li>
-					<li>
-						<span>Day</span>
-						<div class="pr_Filter_day">True</div>
-					</li>
-					<li>
-						<span>Month</span>
-						<div class="pr_Filter_month">True</div>
-					</li>
-					<li>
-						<span>Min:</span>
-						<div class="slider-range-value1">1000</div>
-					</li>
-					<li>
-						<span>Max:</span>
-						<div class="slider-range-value2">5000</div>
-					</li>
-				</ul>
-			</div>
-			<div class="col-1">
-				<button type="button" class="btn btn-primary btn-block property-form-submit"><i class="fas fa-search-location"></i>Search</button>
-			</div>
-		</div>
-	</div>
+@{ 
+
+}
+
+<div class="row" id="propertySearchHistoryMove">
+
 </div>
 
 <div class="row filter-row property-fstyle">

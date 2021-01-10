@@ -50,8 +50,9 @@ namespace HiSpaceListingWeb.Controllers
 		public ActionResult Logout()
 		{
 			User session = null;
+			PropertySearchCriteria property = null;
 			HttpContext.Session.SetObjectAsJson("_user", session);
-			HttpContext.Session.SetObjectAsJson("_user", session);
+			HttpContext.Session.SetObjectAsJson("propertySearchCriteriaList", property);
 			HttpContext.Session.SetString(Common.SessionUserEmail, "");
 			HttpContext.Session.SetInt32(Common.SessionUserType, -1);
 			HttpContext.Session.SetInt32(Common.SessionUserId, -1);
