@@ -3216,7 +3216,9 @@ $(document).ready(function () {
 
 //bookmark section
 // Favorite Button - Heart
-$('.favme').click(function () {
+$('body').on('click', '.favme', function () {
+//$('.favme').click(function () {
+	console.log('test');
 	$(this).toggleClass('active');
 	$(this).closest('.fav-btn').toggleClass('active');
 	if ($(this).hasClass('active')) {
