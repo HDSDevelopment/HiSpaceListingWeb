@@ -409,7 +409,7 @@ function investorCreateValidate(e) {
 
 	$(`#${formData.id} .error`).each(function (i) {
 		if ($(this).is(':empty')) {
-			$(".investor").append("<div class='loader_new'></div>");
+			$("body").append("<div class='loader_new'></div>");
 		}
 		else {
 			e.preventDefault();

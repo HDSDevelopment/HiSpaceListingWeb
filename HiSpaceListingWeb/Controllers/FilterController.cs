@@ -183,7 +183,10 @@ namespace HiSpaceListingWeb.Controllers
 					int id = 1;
 
 					if (searchCriteriaList != null)
-						id = searchCriteriaList.Max(n => n.Id) + 1;
+					{
+						if(searchCriteriaList.Count > 0)
+							id = searchCriteriaList.Max(n => n.Id) + 1;
+					}
 					else
 						searchCriteriaList = new List<PropertySearchCriteria>();
 
@@ -352,7 +355,10 @@ namespace HiSpaceListingWeb.Controllers
 				int id = 1;
 
 				if (searchCriteriaList != null)
-					id = searchCriteriaList.Max(n => n.Id) + 1;
+				{
+					if(searchCriteriaList.Count > 0)
+						id = searchCriteriaList.Max(n => n.Id) + 1;
+				}
 				else
 					searchCriteriaList = new List<OperatorSearchCriteria>();
 
@@ -454,7 +460,10 @@ namespace HiSpaceListingWeb.Controllers
 					int id = 1;
 
 					if (searchCriteriaList != null)
-						id = searchCriteriaList.Max(n => n.Id) + 1;
+					{
+						if(searchCriteriaList.Count > 0)
+							id = searchCriteriaList.Max(n => n.Id) + 1;
+					}
 					else
 						searchCriteriaList = new List<PeopleSearchCriteria>();
 
