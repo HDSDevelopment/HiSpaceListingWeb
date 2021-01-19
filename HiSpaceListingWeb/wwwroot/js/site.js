@@ -1760,6 +1760,7 @@ function addProject(obj) {
 		'<option value="PropertyOperator">Property Operator</option>' +
 		'<option value="ServiceProvider">Service Provider</option>'+
 		'<option value="MaterialSupplier">Material Supplier</option>'+
+		'<option value="LegalConsultant">Legal Consultant</option>'+
 				'</select>'+
 				'<label for="input" class="control-label">RE Professional Role</label><i class="bar"></i>'+
 			'</div>'+

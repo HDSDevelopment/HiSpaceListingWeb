@@ -1,0 +1,378 @@
+﻿@model HiSpaceListingModels.Investor
+@{
+	ViewData["Title"] = "Investor";
+	Layout = "~/Views/Shared/_WebLayout.cshtml";
+	@using Microsoft.AspNetCore.Http
+}
+@{
+	var investor = "";
+	if (TempData.ContainsKey("InvestorResult"))
+	{
+		investor = TempData["InvestorResult"] as string;
+	}
+}
+
+<!-- Modal -->
+<div class="modal message fade" id="investorSuccess" tabindex="-1" role="dialog" aria-labelledby="investorSuccessModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+
+		<div class="modal-content">
+			<div class="modal-header border-0 bg-sec">
+				<h5 class="modal-title" id="investorSuccessModalLabel">Welcome To HiSpace </h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				@if (investor == "Success")
+				{
+					<p class="text-sec font-weight-bold">Your Investor Details Sent Successfull</p>
+				}
+				else
+				{
+					<p class="text-pry font-weight-bold">Your Investor Details was failed!</p>
+					<p>Please try again later</p>
+				}
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="investor nav-padding">
+	<div class="bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<ol class="breadcrumb mb-0">
+						<li class="breadcrumb-item"><a href="@Url.Action("Index", "Website")"> <i class="fas fa-home"></i> </a></li>
+
+						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span> Investor </span></li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<section class="space-ptb">
+		<div class="container uix-t-c">
+			<div class="row">
+				<div class="col-12">
+					<div class="section-title">
+						<h2>Investor</h2>
+						<p>
+							We help investors to maximize return with our experience in handling real estate projects, with our strength in analytics and with our ability to run different scenarios before taking key decisions.
+
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+
+					<div class="uix-tabs uix-tabs--rotation row" data-rotation="true" data-rotation-display="3" data-rotation-radius="130" data-rotation-wrapper-angle="90">
+						<div class="col-sm-4">
+							<div class="uix-tabs__nav">
+								<ul>
+									<li class="active tabs-show1">
+										<a href="javascript:void(0);">
+											ACQUISITIONS
+										</a>
+									</li>
+									<li class="tabs-show2">
+										<a href="javascript:void(0);">
+											ASSET MANAGEMENT
+										</a>
+									</li>
+									<li class="tabs-show3">
+										<a href="javascript:void(0);">
+											EXIT MANAGEMENT
+										</a>
+									</li>
+								</ul>
+							</div><!-- /.uix-tabs__nav -->
+						</div>
+						<br><br><br><br>
+						<div class="col-sm-8">
+							<div class="uix-tabs__content active tabs-content1">
+								<p class="m-0">
+									<b>Identifying Properties:</b> Finding best properties to match investors requirements considering:
+								</p>
+								<div class="ml-4 mb-3">
+									<div class="d-flex align-items-center">
+										<i class="fas fa-circle"></i> <span>Property Type (office, retail etc.,)</span>
+									</div>
+									<div class="d-flex align-items-center">
+										<i class="fas fa-circle"></i><span>Location (city, sub-urban / mid-town, downtown)</span>
+									</div>
+									<div class="d-flex align-items-center">
+										<i class="fas fa-circle"></i><span>Return Requirements (core, core +, value add & opportunistic)</span>
+									</div>
+								</div>
+								<p>
+									<b>Acquisition Analysis:</b> Analyzing the asset completely to fix the purchase price to get the investor’s desired returns
+								</p>
+								<p>
+									<b>Acquisition Process:</b> Helping investors in bidding process, due diligence process and make sure the best possible chance to acquire the asset
+								</p>
+							</div>
+							<div class="uix-tabs__content tabs-content2">
+								<p class="m-0"><b>Leasing:</b></p>
+								<div class="ml-4 mb-3">
+									<div class="d-flex align-items-center">
+										<i class="fas fa-circle"></i> <span>Finding right tenants for the properties based on asset type, class and requirements. Also, credit checking the tenants before leasing to avoid economic losses</span>
+									</div>
+									<div class="d-flex align-items-center">
+										<i class="fas fa-circle"></i><span>
+											Proactive in leasing to maintain stability in cash flows and always looks for opportunities or ways to improve investors returns with our best leasing capabilities
+										</span>
+									</div>
+								</div>
+								<p>
+									<b>Maintenance:</b> Forecasting possible major capital expenses and creating escrows to avoid financial burdens. Also minimize operating expenses in all possible ways with better maintenance and planning
+								</p>
+								<p>
+									<b>Development:</b> Analyzing the scope of development/renovation and coordinating with builders and other parties to complete the project within the budget and timeline
+								</p>
+								<p class="m-0"><b>Reporting:</b></p>
+								<div class="ml-4 mb-3">
+									<div class="d-flex align-items-center">
+										<i class="fas fa-circle"></i> <span>Periodical Status Reporting (Monthly, Quarterly and Annually or at investor’s demand)</span>
+									</div>
+									<div class="d-flex align-items-center">
+										<i class="fas fa-circle"></i><span>Business plans</span>
+									</div>
+									<div class="d-flex align-items-center">
+										<i class="fas fa-circle"></i><span>Scenario Analysis & Memos (Net effective rent memos, financing memos, etc.,)</span>
+									</div>
+								</div>
+							</div>
+							<div class="uix-tabs__content tabs-content3">
+								<p>
+									<b>Exit Timing:</b> Monitoring the market continuously and look for the best time to sell the asset to get maximum profit. Our in-depth exit analysis gives clear picture on whether to hold the asset or sell it.
+
+								</p>
+								<p>
+									<b>Exit Process:</b> We also support the investor in smooth exit process (preparing Teaser, Information Memorandum, Letter Of Indent (LOIs), Sale and Purchase Agreements (SPAs), etc.,)
+								</p>
+							</div>
+						</div>
+					</div>
+					<!-- .uix-tabs end -->
+
+				</div>
+
+				<div class="col-md-12">
+					<div class="section-title d-flex align-items-center m--tb-15">
+						<h2>Investor Form</h2>
+					</div>
+					<div class="card hi-card">
+						<div class="card-body">
+							@*<form class="form-row align-items-center md-form p-3" action="account-profile.html">*@
+							@using (Html.BeginForm("Create", "Investor", FormMethod.Post, new { @class = "md-form p-3 mb-form__investor", enctype = "multipart/form-data", onSubmit = "investorCreateValidate(event)", id = "investorCreate" }))
+							{
+								@Html.AntiForgeryToken()
+								<p class="row">Personal Details:</p>
+								<div class="row">
+
+									<div class="form-group col-md-3 col-sm-6">
+										@Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter First Name" } })
+										<label for="input" class="control-label">First Name*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
+									<div class="form-group col-md-3 col-sm-6">
+										@Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Last Name" } })
+										<label for="input" class="control-label">Last Name*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
+									<div class="form-group col-md-3 col-sm-6">
+										@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Email", @type = "email" } })
+										<label for="input" class="control-label">Contact Email*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
+									<div class="form-group col-md-3 col-sm-6">
+										@Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Phone" } })
+										<label for="input" class="control-label">Phone*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
+								</div>
+
+								<p class="row">Investment Details:</p>
+								<div class="row">
+									<div class="form-group col-md-3 col-sm-6">
+										<select class="form-control basic-select" id="InvestmentType" name="InvestmentType">
+											<option value="">--Select Type--</option>
+											<option value="Acquisition">Acquisition</option>
+											<option value="Leasing and Maintenance">Leasing/Maintenance</option>
+											<option value="selling">selling</option>
+										</select>
+										<label for="select" class="control-label">Investment Type*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
+									<div class="form-group col-md-3 col-sm-6">
+										<select class="form-control basic-select" id="PropertyType" name="PropertyType">
+											<option value="">--Select Type--</option>
+											<option value="Office">Office</option>
+											<option value="Retail">Retail</option>
+											<option value="Industrial and Warehouse">Industrial/Warehouse</option>
+											<option value="Coworking">Coworking</option>
+											<option value="Land">Land</option>
+										</select>
+										<label for="select" class="control-label">Property Type*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-md-3 col-sm-6">
+										<select class="form-control basic-select" id="Currency" name="Currency">
+											<option value="">--Select Type--</option>
+											<option value="INR">INR</option>
+											<option value="AED">AED</option>
+											<option value="USD">USD</option>
+										</select>
+										<label for="select" class="control-label">Currency*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
+
+									<div class="col-md-3 col-sm-6">
+										<div class="form-group">
+											@Html.EditorFor(m => m.MinRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
+											<label for="input" class="control-label">Investment Range (Min)*</label>
+											<i class="bar"></i>
+											<div class="error" id=""></div>
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-6">
+										<div class="form-group">
+											@Html.EditorFor(m => m.MaxRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
+											<label for="input" class="control-label">Investment Range (Max)*</label>
+											<i class="bar"></i>
+											<div class="error" id=""></div>
+										</div>
+									</div>
+									<div class="form-group col-md-3 col-sm-6">
+										<select class="form-control basic-select" id="During" name="During">
+											<option value="">--Select Type--</option>
+											<option value="Immediate">Immediate</option>
+											<option value="1 Month">In 1 Month</option>
+											<option value="6 Months">In 6 Months</option>
+										</select>
+										<label for="select" class="control-label">Looking to invest during*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
+								</div>
+
+								<p class="row">Investor's Preferred Location</p>
+								<div class="row">
+									<div class="form-group col-md-3 col-sm-6">
+										<select name="Country" class="form-control basic-select countries order-alpha include-BD-IN-KE-NP-LK-AE" id="countryId">
+											<option value="">--Select Country--</option>
+										</select>
+										<label for="select" class="control-label">Country*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
+
+									<div class="form-group col-md-3 col-sm-6">
+										<select name="State" class="form-control basic-select states order-alpha" id="stateId">
+											<option value="">--Select State--</option>
+										</select>
+										<label for="select" class="control-label">State*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
+
+									<div class="form-group col-md-3 col-sm-6">
+										<select name="District" class="form-control basic-select cities order-alpha" id="cityId">
+											<option value="">--Select City--</option>
+										</select>
+										<label for="select" class="control-label">District/City*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
+									@*<div class="form-group col-md-3 col-sm-6">
+			<select class="form-control basic-select" id="Country" name="Country">
+				<option value="Country 1">Country 1</option>
+				<option value="Country 2">Country 2</option>
+			</select>
+			<label for="select" class="control-label">Country*</label><i class="bar"></i>
+			<div class="error" id=""></div>
+		</div>
+
+		<div class="form-group col-md-3 col-sm-6">
+			<select class="form-control basic-select" id="State" name="State">
+				<option value="State 1">State 1</option>
+				<option value="State 2">State 2</option>
+			</select>
+			<label for="select" class="control-label">State*</label><i class="bar"></i>
+			<div class="error" id=""></div>
+		</div>
+
+		<div class="form-group col-md-3 col-sm-6">
+			<select class="form-control basic-select" id="District" name="District">
+				<option value="District 1">District 1</option>
+				<option value="District 2">District 2</option>
+			</select>
+			<label for="select" class="control-label">District/City*</label><i class="bar"></i>
+			<div class="error" id=""></div>
+		</div>*@
+
+									<div class="form-group col-md-3 col-sm-6">
+										@Html.EditorFor(m => m.Neighborhood, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Nearest Area" } })
+										<label for="input" class="control-label">Neighborhood*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
+								</div>
+
+								<p class="row">Any Other Comments</p>
+								<div class="row">
+									<div class="form-group col-md-12 col-sm-12">
+										@Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = "Enter your Comments", @rows = 5 })
+										<label for="input" class="control-label">Comments*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
+								</div>
+
+								
+
+								<div class="row">
+									<div class="col-sm-12 mt-3 text-center">
+										<button type="submit" class="btn btn-sec">Submit</button>
+									</div>
+								</div>
+								@*</form>*@
+							}
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- .row end -->
+
+
+		</div>
+		<!-- .container end -->
+	</section>
+</div>
+
+@section Scripts {
+	@*<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+		async defer></script>*@
+	<script src="~/js/circle-tab.js"></script>
+	@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>*@
+	<script src="//geodata.solutions/includes/countrystatecity.js"></script>
+	<script>
+		var investor = '@TempData["InvestorResult"]';
+		//console.log(investor)
+		if (investor != "") {
+			$(document).ready(function () {
+				$('#investorSuccess').modal('show');
+			});
+		}
+			// google - recapcha
+					//	var html_element1;
+					//	 var onloadCallback = function() {
+					//		  html_element1 = grecaptcha.render('html_element1', {
+				 //         'sitekey' : '6Lf2bMoZAAAAANA1p_3VsOmb4uONQOJBb3byh9Im'
+				 //       });
+					//};
+						//end
+	</script>
+}

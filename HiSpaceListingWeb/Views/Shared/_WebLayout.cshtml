@@ -140,20 +140,23 @@
 						</li>
 
 						@*<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						HiSpace List <i class="fas fa-chevron-down fa-xs"></i>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">Property</a></li>
-						<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Operator</a></li>
-						<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">RE-Professionals</a></li>
-					</ul>
-				</li>*@
+			<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				HiSpace List <i class="fas fa-chevron-down fa-xs"></i>
+			</a>
+			<ul class="dropdown-menu">
+				<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">Property</a></li>
+				<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Operator</a></li>
+				<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">RE-Professionals</a></li>
+			</ul>
+		</li>*@
 						@*<li class="nav-item dropdown ">
-					<a class="nav-link" href="@Url.Action( "About","Website")">About</a>
-				</li>*@
+			<a class="nav-link" href="@Url.Action( "About","Website")">About</a>
+		</li>*@
 						<li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString()) == "Contact" ? "active" : "" )">
 							<a class="nav-link" href="@Url.Action( "Contact","Website")" id="navbarDropdown">Contact</a>
+						</li>
+						<li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString()) == "CreateInvestor" ? "active" : "" )">
+							<a class="nav-link" href="@Url.Action( "CreateInvestor","Investor")" id="navbarDropdown">Investor</a>
 						</li>
 						@if (ViewBag.UserId != null && ViewBag.UserId == 0 && ViewBag.UserType == 0)
 						{

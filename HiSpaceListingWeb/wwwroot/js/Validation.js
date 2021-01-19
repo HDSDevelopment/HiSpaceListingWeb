@@ -382,6 +382,42 @@ function adminAddUserValidate(e) {
 	})
 }
 
+//validation for investor form
+function investorCreateValidate(e) {
+	let formData = { "id": "investorCreate" };
+	$(`#${formData.id} .error`).html(``);
+	let rules = [
+		{ "id": "FirstName", "validation": ["emptyRegx"] },
+		{ "id": "LastName", "validation": ["emptyRegx"] },
+		{ "id": "Phone", "validation": ["emptyRegx", "phoneRegx"] },
+		{ "id": "Email", "validation": ["emptyRegx"] },
+		{ "id": "InvestmentType", "validation": ["emptyRegx"] },
+		{ "id": "PropertyType", "validation": ["emptyRegx"] },
+		{ "id": "Currency", "validation": ["emptyRegx"] },
+		{
+			"id": "MinRange", "validation": ["emptyRegx", "numberRegx"] },
+		{
+			"id": "MaxRange", "validation": ["emptyRegx", "numberRegx"] },
+		{ "id": "During", "validation": ["emptyRegx"] },
+		{ "id": "countryId", "validation": ["emptyRegx"] },
+		{ "id": "stateId", "validation": ["emptyRegx"] },
+		{ "id": "cityId", "validation": ["emptyRegx"] },
+		{ "id": "Neighborhood", "validation": ["emptyRegx"] },
+		{ "id": "Comment", "validation": ["emptyRegx"] },
+	];
+	validate(formData, rules);
+
+	$(`#${formData.id} .error`).each(function (i) {
+		if ($(this).is(':empty')) {
+			$(".investor").append("<div class='loader_new'></div>");
+		}
+		else {
+			e.preventDefault();
+			return;
+		}
+	})
+}
+
 //Basic information validation on user
 function basicInformationValidate(e) {
 	let formData = { "id": "property-lister form" };

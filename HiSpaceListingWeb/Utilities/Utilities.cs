@@ -74,6 +74,23 @@ namespace HiSpaceListingWeb.Utilities
 
 		#region API Methods
 
+		#region Investor Controller
+
+		public string ApiInvestorControllerName
+		{
+			get
+			{
+				return ApiAddress + "Investor/";
+			}
+		}
+
+		public string ApiInvestorAddInvestor = "AddInvestor/";
+		//Email
+		public string ApiSendInvestorSuccess = "SendInvestorSuccess/";
+		public string ApiSendInvestorDetails = "SendInvestorDetails/";
+
+		#endregion Investor Controller
+
 		#region User Controller
 
 		public string ApiUserControllerName
@@ -327,6 +344,7 @@ namespace HiSpaceListingWeb.Utilities
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 8, ProfessionalCategoryName = "PropertyOperator", ProfessionalCategoryDisplay = "Property Operator" });
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 9, ProfessionalCategoryName = "ServiceProvider", ProfessionalCategoryDisplay = "Service Provider" });
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 10, ProfessionalCategoryName = "MaterialSupplier", ProfessionalCategoryDisplay = "Material Supplier" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 11, ProfessionalCategoryName = "LegalConsultant", ProfessionalCategoryDisplay = "Legal Consultant" });
 			return types;
 		}
 		//dropdown for the people list end
@@ -375,6 +393,7 @@ namespace HiSpaceListingWeb.Utilities
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 7, ProfessionalCategoryName = "PropertyOperator", ProfessionalCategoryDisplay = "Property Operator" });
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 9, ProfessionalCategoryName = "ServiceProvider", ProfessionalCategoryDisplay = "Service Provider" });
 			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 10, ProfessionalCategoryName = "MaterialSupplier", ProfessionalCategoryDisplay = "Material Supplier" });
+			types.Add(new ProfessionalCategory() { ProfessionalCategoryId = 11, ProfessionalCategoryName = "LegalConsultant", ProfessionalCategoryDisplay = "Legal Consultant" });
 			return types;
 		}
 
