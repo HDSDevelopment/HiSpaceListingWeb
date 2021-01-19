@@ -193,6 +193,8 @@ namespace HiSpaceListingWeb.Controllers
 					propertySearchCriteria.Id = id;
 					searchCriteriaList.Add(propertySearchCriteria);
 
+					searchCriteriaList = searchCriteriaList.OrderByDescending(n => n.Id).ToList();
+
 					SessionExtension.SetObjectAsJson<List<PropertySearchCriteria>>(HttpContext.Session, "propertySearchCriteriaList", searchCriteriaList);
 
 					PropertyUserSearchCriteria pUserSearchCriteria = new PropertyUserSearchCriteria();
@@ -365,6 +367,8 @@ namespace HiSpaceListingWeb.Controllers
 				operatorSearchCriteria.Id = id;
 				searchCriteriaList.Add(operatorSearchCriteria);
 
+				searchCriteriaList = searchCriteriaList.OrderByDescending(n => n.Id).ToList();
+
 				SessionExtension.SetObjectAsJson<List<OperatorSearchCriteria>>(HttpContext.Session, "operatorSearchCriteriaList", searchCriteriaList);
 			}
 			using (var client = new HttpClient())
@@ -469,6 +473,8 @@ namespace HiSpaceListingWeb.Controllers
 
 					peopleSearchCriteria.Id = id;
 					searchCriteriaList.Add(peopleSearchCriteria);
+
+					searchCriteriaList = searchCriteriaList.OrderByDescending(n => n.Id).ToList();
 
 					SessionExtension.SetObjectAsJson<List<PeopleSearchCriteria>>(HttpContext.Session, "peopleSearchCriteriaList", searchCriteriaList);
 
