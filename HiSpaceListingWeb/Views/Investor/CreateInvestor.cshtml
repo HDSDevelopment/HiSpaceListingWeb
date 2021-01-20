@@ -54,7 +54,10 @@
 		</div>
 	</div>
 
-	<section class="space-ptb">
+	<section class="pt-3">
+		<div class="property-btn investor-btn">
+			<button class="property-link btn btn-sec">Click to register </button>
+		</div>
 		<div class="container uix-t-c">
 			<div class="row">
 				<div class="col-12">
@@ -162,14 +165,14 @@
 
 				</div>
 
-				<div class="col-md-12">
+				<div class="col-md-12 investor-div">
 					<div class="section-title d-flex align-items-center m--tb-15">
 						<h2>Investor Form</h2>
 					</div>
 					<div class="card hi-card">
 						<div class="card-body">
 							@*<form class="form-row align-items-center md-form p-3" action="account-profile.html">*@
-							@using (Html.BeginForm("Create", "Investor", FormMethod.Post, new { @class = "md-form p-3 mb-form__investor", enctype = "multipart/form-data", onSubmit = "investorCreateValidate(event)", id = "investorCreate" }))
+							@using (Html.BeginForm("Create", "Investor", FormMethod.Post, new { @class = "md-form p-3 mb-form__investor", enctype = "multipart/form-data", id = "investorCreate", onSubmit = "investorCreateValidate(event)" }))
 							{
 								@Html.AntiForgeryToken()
 								<p class="row">Personal Details:</p>
@@ -234,7 +237,7 @@
 										<div class="error" id=""></div>
 									</div>
 
-									<div class="col-md-3 col-sm-6">
+									@*<div class="col-md-3 col-sm-6">
 										<div class="form-group">
 											@Html.EditorFor(m => m.MinRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
 											<label for="input" class="control-label">Investment Range (Min)*</label>
@@ -249,7 +252,31 @@
 											<i class="bar"></i>
 											<div class="error" id=""></div>
 										</div>
+									</div>*@
+									<div class="col-md-6 col-12 slider-labels__main">
+										<div class="row">
+											<span class="mb-3 price-lable">Amount Range</span>
+											<div class="col-sm-12">
+												<div id="slider-range__investor"></div>
+											</div>
+										</div>
+										<div class="row slider-labels">
+											<div class="col-6 caption">
+												<strong>Min:</strong> <span id="investor-value1"></span>
+											</div>
+											<div class="col-6 text-right caption">
+												<strong>Max:</strong> <span id="investor-value2"></span>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12">
+												@Html.HiddenFor(m => m.MinRange)
+												@Html.HiddenFor(m => m.MaxRange)
+											</div>
+										</div>
 									</div>
+
+
 									<div class="form-group col-md-3 col-sm-6">
 										<select class="form-control basic-select" id="During" name="During">
 											<option value="">--Select Type--</option>
@@ -288,31 +315,31 @@
 										<div class="error" id=""></div>
 									</div>
 									@*<div class="form-group col-md-3 col-sm-6">
-			<select class="form-control basic-select" id="Country" name="Country">
-				<option value="Country 1">Country 1</option>
-				<option value="Country 2">Country 2</option>
-			</select>
-			<label for="select" class="control-label">Country*</label><i class="bar"></i>
-			<div class="error" id=""></div>
-		</div>
+										<select class="form-control basic-select" id="Country" name="Country">
+											<option value="Country 1">Country 1</option>
+											<option value="Country 2">Country 2</option>
+										</select>
+										<label for="select" class="control-label">Country*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
 
-		<div class="form-group col-md-3 col-sm-6">
-			<select class="form-control basic-select" id="State" name="State">
-				<option value="State 1">State 1</option>
-				<option value="State 2">State 2</option>
-			</select>
-			<label for="select" class="control-label">State*</label><i class="bar"></i>
-			<div class="error" id=""></div>
-		</div>
+									<div class="form-group col-md-3 col-sm-6">
+										<select class="form-control basic-select" id="State" name="State">
+											<option value="State 1">State 1</option>
+											<option value="State 2">State 2</option>
+										</select>
+										<label for="select" class="control-label">State*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>
 
-		<div class="form-group col-md-3 col-sm-6">
-			<select class="form-control basic-select" id="District" name="District">
-				<option value="District 1">District 1</option>
-				<option value="District 2">District 2</option>
-			</select>
-			<label for="select" class="control-label">District/City*</label><i class="bar"></i>
-			<div class="error" id=""></div>
-		</div>*@
+									<div class="form-group col-md-3 col-sm-6">
+										<select class="form-control basic-select" id="District" name="District">
+											<option value="District 1">District 1</option>
+											<option value="District 2">District 2</option>
+										</select>
+										<label for="select" class="control-label">District/City*</label><i class="bar"></i>
+										<div class="error" id=""></div>
+									</div>*@
 
 									<div class="form-group col-md-3 col-sm-6">
 										@Html.EditorFor(m => m.Neighborhood, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Nearest Area" } })
@@ -329,8 +356,6 @@
 										<div class="error" id=""></div>
 									</div>
 								</div>
-
-								
 
 								<div class="row">
 									<div class="col-sm-12 mt-3 text-center">
@@ -356,6 +381,7 @@
 	@*<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
 		async defer></script>*@
 	<script src="~/js/circle-tab.js"></script>
+	<script src="~/js/customInvestorSlider.js"></script>
 	@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>*@
 	<script src="//geodata.solutions/includes/countrystatecity.js"></script>
 	<script>
@@ -374,5 +400,13 @@
 				 //       });
 					//};
 						//end
+		//range slider
+
+		$(".investor-btn button").click(function () {
+			$('html,body').animate({
+				scrollTop: $(".investor-div").offset().top - 100
+			},
+				'slow');
+		});
 	</script>
 }

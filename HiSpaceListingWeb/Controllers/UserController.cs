@@ -327,7 +327,11 @@ namespace HiSpaceListingWeb.Controllers
 				DuplicateName = "_RCCopy" + extension;
 
 				string filePath = Path.Combine(serverUploadsFolder, DuplicateName);
-				model.RCCopy.CopyTo(new FileStream(filePath, FileMode.Create));
+				using (FileStream fs = new FileStream(filePath, FileMode.Create))
+				{
+					model.RCCopy.CopyTo(fs);
+				}
+				//model.RCCopy.CopyTo(new FileStream(filePath, FileMode.Create));
 				model.User.Doc_RCCopy = "\\" + UploadRootPath_removeRoot + uploadsFolder + DuplicateName;
 			}
 			//Logo image uploader
@@ -338,7 +342,11 @@ namespace HiSpaceListingWeb.Controllers
 				DuplicateName = "_Logo" + extension;
 
 				string filePath = Path.Combine(serverUploadsFolder, DuplicateName);
-				model.Logo.CopyTo(new FileStream(filePath, FileMode.Create));
+				using (FileStream fs = new FileStream(filePath, FileMode.Create))
+				{
+					model.Logo.CopyTo(fs);
+				}
+				//model.Logo.CopyTo(new FileStream(filePath, FileMode.Create));
 				model.User.Doc_CompanyLogo = "\\" + UploadRootPath_removeRoot + uploadsFolder + DuplicateName;
 			}
 			if(model.User.UserState != "Advance")

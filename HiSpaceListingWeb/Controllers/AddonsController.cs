@@ -470,15 +470,15 @@ namespace HiSpaceListingWeb.Controllers
 		{
 			ListingImages model = new ListingImages();
 			SetSessionVariables();
+			model.ListingId = listingImageViewModel.ListingId;
+			model.ListingImagesId = listingImageViewModel.ListingImagesId;
+			model.Name = listingImageViewModel.Name;
+			model.Status = listingImageViewModel.Status;
+			model.ModifyBy = GetSessionObject().UserId;
+			model.ModifyDateTime = DateTime.Now;
 			if (listingImageViewModel.ListingImagesId == 0)
 			{
 				model.CreatedDateTime = DateTime.Now;
-				model.ListingId = listingImageViewModel.ListingId;
-				model.ListingImagesId = listingImageViewModel.ListingImagesId;
-				model.Name = listingImageViewModel.Name;
-				model.Status = listingImageViewModel.Status;
-				model.ModifyBy = GetSessionObject().UserId;
-				model.ModifyDateTime = DateTime.Now;
 				using(var client = new HttpClient())
 				{
 					client.BaseAddress = new Uri(Common.Instance.ApiAddonsControllerName);
@@ -512,7 +512,12 @@ namespace HiSpaceListingWeb.Controllers
 							DuplicateName = model.ListingImagesId + extension;
 
 							string filePath = Path.Combine(serverUploadsFolder, DuplicateName);
-							listingImageViewModel.File_Image.CopyTo(new FileStream(filePath, FileMode.Create));
+							using (FileStream fs = new FileStream(filePath, FileMode.Create))
+							{
+								listingImageViewModel.File_Image.CopyTo(fs);
+							}
+								//listingImageViewModel.File_Image.CopyTo(new FileStream(filePath, FileMode.Create));
+
 							listingImageViewModel.ImageUrl = "\\" + UploadRootPath_removeRoot + uploadsFolder + "\\"+DuplicateName;
 						}
 						ListingImages model2 = new ListingImages();
@@ -547,13 +552,6 @@ namespace HiSpaceListingWeb.Controllers
 			}
 			else if(listingImageViewModel.ListingImagesId != 0)
 			{
-				model.ListingId = listingImageViewModel.ListingId;
-				model.ListingImagesId = listingImageViewModel.ListingImagesId;
-				model.Name = listingImageViewModel.Name;
-				model.Status = listingImageViewModel.Status;
-				model.ModifyBy = GetSessionObject().UserId;
-				model.ModifyDateTime = DateTime.Now;
-
 				//upload image action
 				string DuplicateName = "";
 				string OriginalName = "";
@@ -574,7 +572,12 @@ namespace HiSpaceListingWeb.Controllers
 					DuplicateName = model.ListingImagesId + extension;
 
 					string filePath = Path.Combine(serverUploadsFolder, DuplicateName);
-					listingImageViewModel.File_Image.CopyTo(new FileStream(filePath, FileMode.Create));
+					using (FileStream fs = new FileStream(filePath, FileMode.Create))
+					{
+						listingImageViewModel.File_Image.CopyTo(fs);
+					}
+					//listingImageViewModel.File_Image.CopyTo(new FileStream(filePath, FileMode.Create));
+					
 					listingImageViewModel.ImageUrl = "\\" + UploadRootPath_removeRoot + uploadsFolder + "\\" + DuplicateName;
 				}
 				model.ImageUrl = listingImageViewModel.ImageUrl;
@@ -741,7 +744,11 @@ namespace HiSpaceListingWeb.Controllers
 							DuplicateName = model.REProfessionalMasterId + extension;
 
 							string filePath = Path.Combine(serverUploadsFolder, DuplicateName);
-							rEProfessionalMasterViewModel.File_Image.CopyTo(new FileStream(filePath, FileMode.Create));
+							using (FileStream fs = new FileStream(filePath, FileMode.Create))
+							{
+								rEProfessionalMasterViewModel.File_Image.CopyTo(fs);
+							}
+							//rEProfessionalMasterViewModel.File_Image.CopyTo(new FileStream(filePath, FileMode.Create));
 							rEProfessionalMasterViewModel.ImageUrl = "\\" + UploadRootPath_removeRoot + uploadsFolder + "\\" + DuplicateName;
 						}
 						//document uploader
@@ -752,7 +759,11 @@ namespace HiSpaceListingWeb.Controllers
 							DuplicateName = model.REProfessionalMasterId+"_doc" + extension;
 
 							string filePath = Path.Combine(serverUploadsFolder, DuplicateName);
-							rEProfessionalMasterViewModel.File_Document.CopyTo(new FileStream(filePath, FileMode.Create));
+							using (FileStream fs = new FileStream(filePath, FileMode.Create))
+							{
+								rEProfessionalMasterViewModel.File_Document.CopyTo(fs);
+							}
+							//rEProfessionalMasterViewModel.File_Document.CopyTo(new FileStream(filePath, FileMode.Create));
 							rEProfessionalMasterViewModel.DocumentUrl = "\\" + UploadRootPath_removeRoot + uploadsFolder + "\\" + DuplicateName;
 						}
 						REProfessionalMaster model2 = new REProfessionalMaster();
@@ -825,7 +836,11 @@ namespace HiSpaceListingWeb.Controllers
 					DuplicateName = model.REProfessionalMasterId + extension;
 
 					string filePath = Path.Combine(serverUploadsFolder, DuplicateName);
-					rEProfessionalMasterViewModel.File_Image.CopyTo(new FileStream(filePath, FileMode.Create));
+					using (FileStream fs = new FileStream(filePath, FileMode.Create))
+					{
+						rEProfessionalMasterViewModel.File_Image.CopyTo(fs);
+					}
+					//rEProfessionalMasterViewModel.File_Image.CopyTo(new FileStream(filePath, FileMode.Create));
 					rEProfessionalMasterViewModel.ImageUrl = "\\" + UploadRootPath_removeRoot + uploadsFolder + "\\" + DuplicateName;
 				}
 				//document uploader
@@ -836,7 +851,11 @@ namespace HiSpaceListingWeb.Controllers
 					DuplicateName = model.REProfessionalMasterId + "_doc" + extension;
 
 					string filePath = Path.Combine(serverUploadsFolder, DuplicateName);
-					rEProfessionalMasterViewModel.File_Document.CopyTo(new FileStream(filePath, FileMode.Create));
+					using (FileStream fs = new FileStream(filePath, FileMode.Create))
+					{
+						rEProfessionalMasterViewModel.File_Document.CopyTo(fs);
+					}
+					//rEProfessionalMasterViewModel.File_Document.CopyTo(new FileStream(filePath, FileMode.Create));
 					rEProfessionalMasterViewModel.DocumentUrl = "\\" + UploadRootPath_removeRoot + uploadsFolder + "\\" + DuplicateName;
 				}
 				model.ImageUrl = rEProfessionalMasterViewModel.ImageUrl;

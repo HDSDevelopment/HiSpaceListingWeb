@@ -4505,3 +4505,11 @@ button#property-form-submit i, button#operator-form-submit i, button#people-form
 	transform: translate(60px, 85px) !important;
 	transition-delay: 0s;
 }
+
+.investor .noUi-background {
+	background: #c1c1c1;
+}
+.investor-btn {
+	text-align: right;
+	margin-right: 5%;
+}

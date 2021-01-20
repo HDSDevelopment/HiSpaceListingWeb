@@ -91,6 +91,14 @@ namespace HiSpaceListingWeb.Controllers
 
 			using (var client = new HttpClient())
 			{
+				if (ViewBag.UserId > 0)
+				{
+
+				}
+				else
+				{
+
+				}
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
 				var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllPropertyListCommercialAndCoworking);
 				responseTask.Wait();
@@ -245,6 +253,7 @@ namespace HiSpaceListingWeb.Controllers
 			//return Json(vModel);
 
 		}
+
 		public ActionResult PropertyFilterCriteriaHistory(PropertySearchCriteria propertySearchCriteria)
 		{
 			SetSessionVariables();
@@ -309,6 +318,7 @@ namespace HiSpaceListingWeb.Controllers
 
 			using (var client = new HttpClient())
 			{
+				
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
 				var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllOperatorsList);
 				responseTask.Wait();

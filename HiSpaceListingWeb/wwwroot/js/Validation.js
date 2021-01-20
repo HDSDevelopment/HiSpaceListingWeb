@@ -394,10 +394,10 @@ function investorCreateValidate(e) {
 		{ "id": "InvestmentType", "validation": ["emptyRegx"] },
 		{ "id": "PropertyType", "validation": ["emptyRegx"] },
 		{ "id": "Currency", "validation": ["emptyRegx"] },
-		{
-			"id": "MinRange", "validation": ["emptyRegx", "numberRegx"] },
-		{
-			"id": "MaxRange", "validation": ["emptyRegx", "numberRegx"] },
+		//{
+		//	"id": "MinRange", "validation": ["emptyRegx", "numberRegx"] },
+		//{
+		//	"id": "MaxRange", "validation": ["emptyRegx", "numberRegx"] },
 		{ "id": "During", "validation": ["emptyRegx"] },
 		{ "id": "countryId", "validation": ["emptyRegx"] },
 		{ "id": "stateId", "validation": ["emptyRegx"] },
@@ -407,9 +407,13 @@ function investorCreateValidate(e) {
 	];
 	validate(formData, rules);
 
+	var appended = false;
 	$(`#${formData.id} .error`).each(function (i) {
 		if ($(this).is(':empty')) {
-			$("body").append("<div class='loader_new'></div>");
+			if (!appended) {
+				$("body").append("<div class='loader_new'></div>");
+				appended = true;
+			}
 		}
 		else {
 			e.preventDefault();

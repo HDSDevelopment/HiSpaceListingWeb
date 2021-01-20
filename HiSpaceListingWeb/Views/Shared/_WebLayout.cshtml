@@ -152,12 +152,13 @@
 						@*<li class="nav-item dropdown ">
 			<a class="nav-link" href="@Url.Action( "About","Website")">About</a>
 		</li>*@
+						<li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString()) == "CreateInvestor" ? "active" : "" )">
+	<a class="nav-link" href="@Url.Action( "CreateInvestor","Investor")" id="navbarDropdown">Investor</a>
+</li>
 						<li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString()) == "Contact" ? "active" : "" )">
 							<a class="nav-link" href="@Url.Action( "Contact","Website")" id="navbarDropdown">Contact</a>
 						</li>
-						<li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString()) == "CreateInvestor" ? "active" : "" )">
-							<a class="nav-link" href="@Url.Action( "CreateInvestor","Investor")" id="navbarDropdown">Investor</a>
-						</li>
+						
 						@if (ViewBag.UserId != null && ViewBag.UserId == 0 && ViewBag.UserType == 0)
 						{
 							<li class="nav-item dropdown @((ViewContext.RouteData.Values["Controller"].ToString()) == "Admin" ? "active" : "" )">
@@ -172,7 +173,7 @@
 						else if (ViewBag.UserId != null && ViewBag.UserId > 0 && ViewBag.UserType == 1)
 						{
 
-							<li class="nav-item dropdown @(((ViewContext.RouteData.Values["Controller"].ToString()) == "Listing") || ((ViewContext.RouteData.Values["Controller"].ToString()) == "ListingForm") ? "active" : "" )">
+							<li class="nav-item dropdown @(((ViewContext.RouteData.Values["Controller"].ToString()) == "Listing") || ((ViewContext.RouteData.Values["Controller"].ToString()) == "ListingForm") || ((ViewContext.RouteData.Values["Action"].ToString()) == "FillterFavorites") ? "active" : "" )">
 								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									Dashboard <i class="fas fa-chevron-down fa-xs"></i>
 								</a>
