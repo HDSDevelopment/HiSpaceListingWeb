@@ -91,25 +91,36 @@ namespace HiSpaceListingWeb.Controllers
 
 			using (var client = new HttpClient())
 			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
 				if (ViewBag.UserId > 0)
 				{
+					int userId = ViewBag.UserId;
+					var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllPropertyListCommercialAndCoworkingWithFavorites + userId);
+					responseTask.Wait();
 
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
 				}
 				else
 				{
+					var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllPropertyListCommercialAndCoworking);
+					responseTask.Wait();
 
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
 				}
-				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllPropertyListCommercialAndCoworking);
-				responseTask.Wait();
-
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
-				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
-				}
+				
+				
 			}
 			//return Json(vModel);
 			return PartialView("_PropertyFilterListPartialView", vModel);
@@ -122,16 +133,34 @@ namespace HiSpaceListingWeb.Controllers
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiFilterControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByLocation + "/" + Location.ToString());
-				responseTask.Wait();
-
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				if (ViewBag.UserId > 0)
 				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
+					int userId = ViewBag.UserId;
+					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByLocationWithFavorites + "/" + userId + "/" + Location.ToString());
+					responseTask.Wait();
+
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
 				}
+				else
+				{
+					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByLocation + "/" + Location.ToString());
+					responseTask.Wait();
+
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
+				}
+				
 			}
 			//return Json(vModel);
 			return PartialView("_PropertyFilterListPartialView", vModel);
@@ -144,16 +173,33 @@ namespace HiSpaceListingWeb.Controllers
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiFilterControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByType + "/" + Type.ToString());
-				responseTask.Wait();
+				if (ViewBag.UserId > 0) {
+					int userId = ViewBag.UserId;
+					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByTypeWithFavorites + "/" + userId + "/" + Type.ToString());
+					responseTask.Wait();
 
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
-				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
 				}
+				else
+				{
+					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByType + "/" + Type.ToString());
+					responseTask.Wait();
+
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
+				}
+				
 			}
 			return PartialView("_PropertyFilterListPartialView", vModel);
 		}
@@ -165,16 +211,34 @@ namespace HiSpaceListingWeb.Controllers
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiFilterControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByUser + "/" + User.ToString());
-				responseTask.Wait();
-
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				if (ViewBag.UserId > 0)
 				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
+					int LoginUserId = ViewBag.UserId;
+					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByUserWithFavorites + "/" + LoginUserId + "/" + User.ToString());
+					responseTask.Wait();
+
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
 				}
+				else
+				{
+					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByUser + "/" + User.ToString());
+					responseTask.Wait();
+
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
+				}
+				
 			}
 			return PartialView("_PropertyFilterListPartialView", vModel);
 		}
@@ -253,7 +317,6 @@ namespace HiSpaceListingWeb.Controllers
 			//return Json(vModel);
 
 		}
-
 		public ActionResult PropertyFilterCriteriaHistory(PropertySearchCriteria propertySearchCriteria)
 		{
 			SetSessionVariables();

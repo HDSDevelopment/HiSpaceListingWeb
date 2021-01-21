@@ -158,6 +158,7 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiListingGetPropertyListByUserID = "GetPropertyListByUserID/";
 		public string ApiListingGetPropertyDetailByListingID = "GetPropertyDetailByListingID/";
 		public string ApiLisitingGetAllPropertyListCommercialAndCoworking = "GetAllPropertyListCommercialAndCoworking/";
+		public string ApiLisitingGetAllPropertyListCommercialAndCoworkingWithFavorites = "GetAllPropertyListCommercialAndCoworkingWithFavorites/";
 		public string ApiLisitingGetAllOperatorsList = "GetAllOperatorList/";
 		public string ApiLisitingGetOperatorList = "GetOperatorList/";
 		public string ApiLisitingGetAllPeopleList = "GetAllPeopleList/";
@@ -287,8 +288,14 @@ namespace HiSpaceListingWeb.Utilities
 		}
 
 		public string ApiFilterGetListingPropertyByLocation = "GetListingPropertyByLocation";
+		public string ApiFilterGetListingPropertyByLocationWithFavorites = "GetListingPropertyByLocationWithFavorites";
+
 		public string ApiFilterGetListingPropertyByType = "GetListingPropertyByType";
+		public string ApiFilterGetListingPropertyByTypeWithFavorites = "GetListingPropertyByTypeWithFavorites";
+
 		public string ApiFilterGetListingPropertyByUser = "GetListingPropertyByUser";
+		public string ApiFilterGetListingPropertyByUserWithFavorites = "GetListingPropertyByUserWithFavorites";
+
 		public string ApiFilterGetListingPropertyByAll = "GetListingPropertyByAll";
 		public string ApiFilterGetListingByTypeAndLocation = "GetListingByTypeAndLocation";
 		public string ApiFilterGetOperatorByUserId = "GetOperatorByUserId";
