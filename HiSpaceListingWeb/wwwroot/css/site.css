@@ -4513,3 +4513,8 @@ button#property-form-submit i, button#operator-form-submit i, button#people-form
 	text-align: right;
 	margin-right: 5%;
 }
+
+.investor input[type=number]::-webkit-inner-spin-button,
+.investor input[type=number]::-webkit-outer-spin-button {
+	opacity: 1;
+}

@@ -238,62 +238,68 @@
 									</div>
 									@*normal input*@
 									@*<div class="col-md-3 col-sm-6">
-			<div class="form-group">
-				@Html.EditorFor(m => m.MinRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
-				<label for="input" class="control-label">Investment Range (Min)*</label>
-				<i class="bar"></i>
-				<div class="error" id=""></div>
-			</div>
-		</div>
-		<div class="col-md-3 col-sm-6">
-			<div class="form-group">
-				@Html.EditorFor(m => m.MaxRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
-				<label for="input" class="control-label">Investment Range (Max)*</label>
-				<i class="bar"></i>
-				<div class="error" id=""></div>
-			</div>
-		</div>*@
+					<div class="form-group">
+						@Html.EditorFor(m => m.MinRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
+						<label for="input" class="control-label">Investment Range (Min)*</label>
+						<i class="bar"></i>
+						<div class="error" id=""></div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<div class="form-group">
+						@Html.EditorFor(m => m.MaxRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
+						<label for="input" class="control-label">Investment Range (Max)*</label>
+						<i class="bar"></i>
+						<div class="error" id=""></div>
+					</div>
+				</div>*@
 
 									@*slider input*@
 									@*<div class="col-md-6 col-12 slider-labels__main">
-			<div class="row">
-				<span class="mb-3 price-lable">Amount Range</span>
-				<div class="col-sm-12">
-					<div id="slider-range__investor"></div>
-				</div>
-			</div>
-			<div class="row slider-labels">
-				<div class="col-6 caption">
-					<strong>Min:</strong> <span id="investor-value1"></span>
-				</div>
-				<div class="col-6 text-right caption">
-					<strong>Max:</strong> <span id="investor-value2"></span>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12">
-					@Html.HiddenFor(m => m.MinRange)
-					@Html.HiddenFor(m => m.MaxRange)
-				</div>
-			</div>
-		</div>*@
+					<div class="row">
+						<span class="mb-3 price-lable">Amount Range</span>
+						<div class="col-sm-12">
+							<div id="slider-range__investor"></div>
+						</div>
+					</div>
+					<div class="row slider-labels">
+						<div class="col-6 caption">
+							<strong>Min:</strong> <span id="investor-value1"></span>
+						</div>
+						<div class="col-6 text-right caption">
+							<strong>Max:</strong> <span id="investor-value2"></span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							@Html.HiddenFor(m => m.MinRange)
+							@Html.HiddenFor(m => m.MaxRange)
+						</div>
+					</div>
+				</div>*@
 
 									@*drop down inputs*@
 									<div class="col-md-3 col-sm-6">
 										<div class="row">
 											<div class="col-sm-4 pr-0">
 												<div class="form-group">
-													<input class="form-control text-box single-line" id="" placeholder="11" type="number" value="">
+													<input class="form-control text-box single-line" id="Investor-Min" placeholder="11" type="number" value="">
 													<label for="input" class="control-label">Min*</label>
 													<i class="bar"></i>
 													<div class="error" id=""></div>
 												</div>
 											</div>
 											<div class="form-group col-sm-8">
-												<select class="form-control basic-select" id="" name="">
+												<select class="form-control basic-select currency-type currency-type_india">
 													<option value="Thousand">Thousand</option>
 													<option value="Lakh">Lakh</option>
 													<option value="Crore">Crore</option>
+												</select>
+												<select class="form-control basic-select currency-type currency-type_international d-none">
+													<option value="Thousand">Thousand</option>
+													<option value="Million">Million</option>
+													<option value="Billion">Billion</option>
+													<option value="Trillion">Trillion</option>
 												</select>
 												<label for="select" class="control-label">Units*</label><i class="bar"></i>
 												<div class="error" id=""></div>
@@ -301,28 +307,34 @@
 										</div>
 									</div>
 									@*<div class="col-md-3 col-sm-6">
-			<div class="form-group">
-				@Html.EditorFor(m => m.MaxRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
-				<label for="input" class="control-label">Investment Range (Max)*</label>
-				<i class="bar"></i>
-				<div class="error" id=""></div>
-			</div>
-		</div>*@
+					<div class="form-group">
+						@Html.EditorFor(m => m.MaxRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
+						<label for="input" class="control-label">Investment Range (Max)*</label>
+						<i class="bar"></i>
+						<div class="error" id=""></div>
+					</div>
+				</div>*@
 									<div class="col-md-3 col-sm-6">
 										<div class="row">
 											<div class="col-sm-4 pr-0">
 												<div class="form-group">
-													<input class="form-control text-box single-line" id="" placeholder="99" type="number" value="">
+													<input class="form-control text-box single-line" id="Investor-Max" placeholder="99" type="number" value="">
 													<label for="input" class="control-label">Max*</label>
 													<i class="bar"></i>
 													<div class="error" id=""></div>
 												</div>
 											</div>
 											<div class="form-group col-sm-8">
-												<select class="form-control basic-select" id="" name="">
+												<select class="form-control basic-select currency-type currency-type_india">
 													<option value="Thousand">Thousand</option>
 													<option value="Lakh">Lakh</option>
 													<option value="Crore">Crore</option>
+												</select>
+												<select class="form-control basic-select currency-type currency-type_international d-none">
+													<option value="Thousand">Thousand</option>
+													<option value="Million">Million</option>
+													<option value="Billion">Billion</option>
+													<option value="Trillion">Trillion</option>
 												</select>
 												<label for="select" class="control-label">Units*</label><i class="bar"></i>
 												<div class="error" id=""></div>
@@ -376,31 +388,31 @@
 										<div class="error" id=""></div>
 									</div>
 									@*<div class="form-group col-md-3 col-sm-6">
-										<select class="form-control basic-select" id="Country" name="Country">
-											<option value="Country 1">Country 1</option>
-											<option value="Country 2">Country 2</option>
-										</select>
-										<label for="select" class="control-label">Country*</label><i class="bar"></i>
-										<div class="error" id=""></div>
-									</div>
+					<select class="form-control basic-select" id="Country" name="Country">
+						<option value="Country 1">Country 1</option>
+						<option value="Country 2">Country 2</option>
+					</select>
+					<label for="select" class="control-label">Country*</label><i class="bar"></i>
+					<div class="error" id=""></div>
+				</div>
 
-									<div class="form-group col-md-3 col-sm-6">
-										<select class="form-control basic-select" id="State" name="State">
-											<option value="State 1">State 1</option>
-											<option value="State 2">State 2</option>
-										</select>
-										<label for="select" class="control-label">State*</label><i class="bar"></i>
-										<div class="error" id=""></div>
-									</div>
+				<div class="form-group col-md-3 col-sm-6">
+					<select class="form-control basic-select" id="State" name="State">
+						<option value="State 1">State 1</option>
+						<option value="State 2">State 2</option>
+					</select>
+					<label for="select" class="control-label">State*</label><i class="bar"></i>
+					<div class="error" id=""></div>
+				</div>
 
-									<div class="form-group col-md-3 col-sm-6">
-										<select class="form-control basic-select" id="District" name="District">
-											<option value="District 1">District 1</option>
-											<option value="District 2">District 2</option>
-										</select>
-										<label for="select" class="control-label">District/City*</label><i class="bar"></i>
-										<div class="error" id=""></div>
-									</div>*@
+				<div class="form-group col-md-3 col-sm-6">
+					<select class="form-control basic-select" id="District" name="District">
+						<option value="District 1">District 1</option>
+						<option value="District 2">District 2</option>
+					</select>
+					<label for="select" class="control-label">District/City*</label><i class="bar"></i>
+					<div class="error" id=""></div>
+				</div>*@
 
 									<div class="form-group col-md-3 col-sm-6">
 										@Html.EditorFor(m => m.Neighborhood, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Nearest Area" } })
@@ -460,7 +472,7 @@
 				 //         'sitekey' : '6Lf2bMoZAAAAANA1p_3VsOmb4uONQOJBb3byh9Im'
 				 //       });
 					//};
-						//end
+						//end    
 		//range slider
 
 		$(".investor-btn button").click(function () {
@@ -468,6 +480,24 @@
 				scrollTop: $(".investor-div").offset().top - 100
 			},
 				'slow');
+		});
+		$(document).ready(function () {
+			$('.currency-type_international + span').addClass('d-none');
+			$('body').on('change', '#Currency', function () {
+				//console.log($('#Currency').val());
+				var currencyType = $('#Currency').val();
+				if (currencyType == "INR") {
+					$('.currency-type_india + span, .currency-type_india').removeClass('d-none');
+					$('.currency-type_international + span, .currency-type_international').addClass('d-none');
+					$('.currency-type ~ label').html('Indian Units*');
+				} else {
+					$('.currency-type_india + span, .currency-type_india').addClass('d-none');
+					$('.currency-type_international + span, .currency-type_international').removeClass('d-none');
+					$('.currency-type ~ label').html('International Units*');
+				}
+			})
+
+
 		});
 	</script>
 }

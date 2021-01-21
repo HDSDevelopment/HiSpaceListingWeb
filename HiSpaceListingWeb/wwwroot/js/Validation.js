@@ -389,15 +389,15 @@ function investorCreateValidate(e) {
 	let rules = [
 		{ "id": "FirstName", "validation": ["emptyRegx"] },
 		{ "id": "LastName", "validation": ["emptyRegx"] },
-		{ "id": "Phone", "validation": ["emptyRegx", "phoneRegx"] },
+		{ "id": "Phone", "validation": ["emptyRegx"] },
 		{ "id": "Email", "validation": ["emptyRegx"] },
 		{ "id": "InvestmentType", "validation": ["emptyRegx"] },
 		{ "id": "PropertyType", "validation": ["emptyRegx"] },
 		{ "id": "Currency", "validation": ["emptyRegx"] },
-		//{
-		//	"id": "MinRange", "validation": ["emptyRegx", "numberRegx"] },
-		//{
-		//	"id": "MaxRange", "validation": ["emptyRegx", "numberRegx"] },
+		{
+			"id": "Investor-Min", "validation": ["emptyRegx", "numberRegx"] },
+		{
+			"id": "Investor-Max", "validation": ["emptyRegx", "numberRegx"] },
 		{ "id": "During", "validation": ["emptyRegx"] },
 		{ "id": "countryId", "validation": ["emptyRegx"] },
 		{ "id": "stateId", "validation": ["emptyRegx"] },
@@ -407,19 +407,37 @@ function investorCreateValidate(e) {
 	];
 	validate(formData, rules);
 
-	var appended = false;
+	//var appended = false;
+	var validateCount = 0;
+	//validateCount(17)
 	$(`#${formData.id} .error`).each(function (i) {
 		if ($(this).is(':empty')) {
-			if (!appended) {
-				$("body").append("<div class='loader_new'></div>");
-				appended = true;
-			}
+			//if (!appended) {
+			//	$("body").append("<div class='loader_new'></div>");
+			//	appended = true;
+			//}
+			//console.log(i);
+			validateCount++;
 		}
 		else {
 			e.preventDefault();
 			return;
 		}
-	})
+	});
+	console.log(validateCount);
+	if ($('#Investor-Min').val() != "") {
+		//console.log($('#Investor-Min').val());
+		//console.log($('#Investor-Min').closest('.row').find('.currency-type:visible').val());
+		$('#MinRange').val($('#Investor-Min').val() + " " + $('#Investor-Min').closest('.row').find('.currency-type:visible').val());
+		console.log($('#MinRange').val());
+	}
+	if ($('#Investor-Max').val() != "") {
+		$('#MaxRange').val($('#Investor-Max').val() + " " + $('#Investor-Max').closest('.row').find('.currency-type:visible').val());
+		console.log($('#MaxRange').val());
+	}
+	if (validateCount == 17) {
+		$("body").append("<div class='loader_new'></div>");
+	}
 }
 
 //Basic information validation on user
