@@ -161,7 +161,10 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiLisitingGetAllPropertyListCommercialAndCoworkingWithFavorites = "GetAllPropertyListCommercialAndCoworkingWithFavorites/";
 		public string ApiLisitingGetAllOperatorsList = "GetAllOperatorList/";
 		public string ApiLisitingGetOperatorList = "GetOperatorList/";
+
 		public string ApiLisitingGetAllPeopleList = "GetAllPeopleList/";
+		public string ApiLisitingGetAllPeopleListWithFavorites = "GetAllPeopleListWithFavorites/";
+
 		public string ApiLisitingGetPeopleList = "GetPeopleList/";
 		//details
 		public string ApiLisitingGetPropertyAndLinkedReProfessionalListByUserID = "GetPropertyAndLinkedReProfessionalListByUserID/";
@@ -299,7 +302,10 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiFilterGetListingPropertyByAll = "GetListingPropertyByAll";
 		public string ApiFilterGetListingByTypeAndLocation = "GetListingByTypeAndLocation";
 		public string ApiFilterGetOperatorByUserId = "GetOperatorByUserId";
+
 		public string ApiFilterGetPeopleByListingId = "GetPeopleByListingId";
+		public string ApiFilterGetPeopleByListingIdWithFavorites = "GetPeopleByListingIdWithFavorites";
+		
 		public string ApiFilterGetMaxPrice = "GetMaxPrice"; 
 		//filter the fav property
 		public string ApiFilterGetFavoritesByUser = "GetFavoritesByUser"; 

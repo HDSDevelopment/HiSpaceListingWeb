@@ -509,15 +509,32 @@ namespace HiSpaceListingWeb.Controllers
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllPeopleList);
-				responseTask.Wait();
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				if (ViewBag.UserId > 0)
 				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
+					int userId = ViewBag.UserId;
+					var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllPeopleListWithFavorites + userId);
+					responseTask.Wait();
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
 				}
+				else
+				{
+					var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllPeopleList);
+					responseTask.Wait();
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
+				}
+				
 
 			}
 			//return Json(vModel);
@@ -633,15 +650,32 @@ namespace HiSpaceListingWeb.Controllers
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiFilterControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiFilterGetPeopleByListingId + "/" + ListingId.ToString());
-				responseTask.Wait();
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				if (ViewBag.UserId > 0)
 				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
+					int userId = ViewBag.UserId;
+					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetPeopleByListingIdWithFavorites + "/" + userId + "/" + ListingId.ToString());
+					responseTask.Wait();
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
 				}
+				else
+				{
+					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetPeopleByListingId + "/" + ListingId.ToString());
+					responseTask.Wait();
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
+						readTask.Wait();
+						vModel = readTask.Result;
+					}
+				}
+				
 
 			}
 			//return Json(vModel);

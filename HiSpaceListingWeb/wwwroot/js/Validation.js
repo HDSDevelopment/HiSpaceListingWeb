@@ -404,12 +404,13 @@ function investorCreateValidate(e) {
 		{ "id": "cityId", "validation": ["emptyRegx"] },
 		{ "id": "Neighborhood", "validation": ["emptyRegx"] },
 		{ "id": "Comment", "validation": ["emptyRegx"] },
+		{ "id": "investor-terms", "validation": ["checkboxRegx"] },
 	];
 	validate(formData, rules);
 
 	//var appended = false;
 	var validateCount = 0;
-	//validateCount(17)
+	//validateCount(18)
 	$(`#${formData.id} .error`).each(function (i) {
 		if ($(this).is(':empty')) {
 			//if (!appended) {
@@ -424,20 +425,22 @@ function investorCreateValidate(e) {
 			return;
 		}
 	});
-	console.log(validateCount);
+	//console.log(validateCount);
 	if ($('#Investor-Min').val() != "") {
 		//console.log($('#Investor-Min').val());
 		//console.log($('#Investor-Min').closest('.row').find('.currency-type:visible').val());
 		$('#MinRange').val($('#Investor-Min').val() + " " + $('#Investor-Min').closest('.row').find('.currency-type:visible').val());
-		console.log($('#MinRange').val());
+		//console.log($('#MinRange').val());
 	}
 	if ($('#Investor-Max').val() != "") {
 		$('#MaxRange').val($('#Investor-Max').val() + " " + $('#Investor-Max').closest('.row').find('.currency-type:visible').val());
-		console.log($('#MaxRange').val());
+		//console.log($('#MaxRange').val());
 	}
-	if (validateCount == 17) {
+	if (validateCount == 18) {
 		$("body").append("<div class='loader_new'></div>");
 	}
+	if (!$('#investor-terms').is(':checked'))
+		alert("Please agree to proceed further.");
 }
 
 //Basic information validation on user
