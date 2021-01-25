@@ -1046,6 +1046,7 @@ $(function () {
 
 		});
 		setTimeout(function () {
+			//console.log('test');
 			$('.project-upload__row').each(function (e) {
 				//console.log($(this).find('.operatorDropdown').attr('class'));
 				if ($(this).find('.operatorName').hasClass('cantedit') == true) {

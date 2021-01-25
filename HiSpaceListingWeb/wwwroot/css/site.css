@@ -4518,3 +4518,22 @@ button#property-form-submit i, button#operator-form-submit i, button#people-form
 .investor input[type=number]::-webkit-outer-spin-button {
 	opacity: 1;
 }
+
+/*hide the number arrow form inputs*/
+/* Chrome, Safari, Edge, Opera */
+input#Phone::-webkit-outer-spin-button,
+input#Phone::-webkit-inner-spin-button,
+input#ce_phone::-webkit-outer-spin-button,
+input#ce_phone::-webkit-inner-spin-button,
+input#sign-Phone::-webkit-outer-spin-button,
+input#sign-Phone::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input#Phone[type=number],
+input#ce_phone[type=number],
+input#sign-Phone[type=number] {
+	-moz-appearance: textfield;
+}
