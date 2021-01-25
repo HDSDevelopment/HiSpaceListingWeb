@@ -87,40 +87,59 @@
 			<div class="container">
 				<div class="row align-items-center">
 					<div class="col-sm-12 col-md-5 col-xl-5 order-2 order-md-1">
-						<div class="slide-type">
-							<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">
-								<div class="slide-type__image">
-									<span class="icon fab flaticon-apartment-1"></span>
-								</div>
-								<div class="slide-type_text texttype-1">
-									Find Your Space
-									<i class="fas fa-angle-double-right"></i>
-								</div>
-							</a>
+						<div class="CTA-btn">
+							<div class="slide-type">
+								<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">
+									<div class="slide-type__image">
+										<span class="icon fab flaticon-apartment-1"></span>
+									</div>
+									<div class="slide-type_text texttype-1">
+										Find or List Your Space
+										<i class="fas fa-angle-double-right"></i>
+									</div>
+
+								</a>
+							</div>
+							<div class="slide-caption">
+								Find or List your commercial properties or co-working spaces
+							</div>
 						</div>
-						<div class="slide-type">
-							<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">
-								<div class="slide-type__image">
-									<span class="icon fab flaticon-building"></span>
-								</div>
-								<div class="slide-type_text texttype-2">
-									Manage Your Space
-									<i class="fas fa-angle-double-right"></i>
-								</div>
-							</a>
+						<div class="CTA-btn">
+							<div class="slide-type">
+								<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">
+									<div class="slide-type__image">
+										<span class="icon fab flaticon-building"></span>
+									</div>
+									<div class="slide-type_text texttype-2">
+										Find an Owner or Operator
+										<i class="fas fa-angle-double-right"></i>
+									</div>
+								</a>
+							</div>
+							<div class="slide-caption">
+								You own properties or co-working spaces? List yourself
+							</div>
 						</div>
-						<div class="slide-type">
-							<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">
-								<div class="slide-type__image">
-									<span class="icon fab flaticon-agent"></span>
-								</div>
-								<div class="slide-type_text texttype-3">
-									Find RE-Professionals You Know
-									<i class="fas fa-angle-double-right"></i>
-								</div>
-							</a>
+						<div class="CTA-btn">
+							<div class="slide-type">
+								<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">
+									<div class="slide-type__image">
+										<span class="icon fab flaticon-agent"></span>
+									</div>
+									<div class="slide-type_text texttype-3">
+										Find a Business Partner
+										<i class="fas fa-angle-double-right"></i>
+									</div>
+								</a>
+							</div>
+							<div class="slide-caption">
+								Find a business partner to collaborate in your project
+							</div>
+						</div>	
+
+							
+
 						</div>
-					</div>
 					<div class="col-sm-12 col-md-7 col-xl-7 order-1 order-md-2">
 						<h1 class="text-white mb-4 display-4 font-weight-bold slide-heading">Welcome to the Commercial Real Estate Community for the Next Generation Industry Evolution</h1>
 						@*<div class="slide-btn">
@@ -180,7 +199,10 @@
 					<img src="~/images/slider/image-01.jpg" />
 				</div>
 				<div class="col-md-6">
-					<h2 class="text-pry">Find Your Space</h2>
+					<h2 class="text-pry m--0">Find or List Your Space</h2>
+					<div class="head-caption">
+						Find or List your commercial properties or co-working spaces
+					</div>
 					<div>
 						<ul>
 							<li>
@@ -210,7 +232,10 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 order-2 order-md-1">
-					<h2 class="text-sec">Manage Your Space</h2>
+					<h2 class="text-sec m--0">Find an Owner or Operator</h2>
+					<div class="head-caption">
+						You own properties or co-working spaces? List yourself
+					</div>
 					<div>
 						<ul>
 							<li>
@@ -226,8 +251,8 @@
 								We offer you the best real-estate professionals to get involved in your coworking spaces
 							</li>
 							@*<li>
-									Shell Space <span>(Fully Furnished, Semi Furnished..)</span>
-								</li>*@
+					Shell Space <span>(Fully Furnished, Semi Furnished..)</span>
+				</li>*@
 						</ul>
 					</div>
 					@if (ViewBag.UserId != null)
@@ -259,7 +284,10 @@
 					<img src="~/images/slider/image-03.jpg" />
 				</div>
 				<div class="col-md-6">
-					<h2 class="text-info">Find RE-Professionals You Know</h2>
+					<h2 class="text-info m--0">Find a Business Partner</h2>
+					<div class="head-caption">
+						Find a business partner to collaborate in your project
+					</div>
 					<div>
 						<ul>
 							<li>
@@ -271,8 +299,8 @@
 								Do you want to get involved in projects with leading coworking operators ?
 							</li>
 							@*<li>
-									Realestate Professionals <span>(Property Developer, Co-working Architecture, Leasing, Interior Designer, Investor,..)</span>
-								</li>*@
+					Realestate Professionals <span>(Property Developer, Co-working Architecture, Leasing, Interior Designer, Investor,..)</span>
+				</li>*@
 						</ul>
 					</div>
 					@if (ViewBag.UserId != null)

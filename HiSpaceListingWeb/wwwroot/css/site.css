@@ -2712,30 +2712,7 @@ form.md-form .checkbox.checbox-switch-small {
 		padding-left: 20px;
 		text-shadow: 3px 3px 15px #000;
 	}
-/*first child*/
-.slide-type:first-child .slide-type__image {
-	background: var(--pry-color);
-}
 
-.slide-type:first-child .slide-type_text i {
-	color: var(--pry-color);
-}
-/*2nd child*/
-.slide-type:nth-child(2) .slide-type__image {
-	background: var(--sec-color);
-}
-
-.slide-type:nth-child(2) .slide-type_text i {
-	color: var(--sec-color);
-}
-/*3rd child*/
-.slide-type:nth-child(3) .slide-type__image {
-	background: var(--info-color);
-}
-
-.slide-type:nth-child(3) .slide-type_text i {
-	color: var(--info-color);
-}
 
 .slide-btn {
 	display: flex;
@@ -4536,4 +4513,52 @@ input#Phone[type=number],
 input#ce_phone[type=number],
 input#sign-Phone[type=number] {
 	-moz-appearance: textfield;
+}
+
+.CTA-btn .slide-type {
+	margin: 0px;
+}
+.slide-caption {
+	padding-left: 25%;
+	font-size: 13px;
+	color: #444444;
+	font-weight: 500;
+	position: relative;
+	top: -5px;
+}
+.CTA-btn {
+	margin-bottom: 25px;
+}
+
+/*first child*/
+.CTA-btn:first-child .slide-type .slide-type__image {
+	background: var(--pry-color);
+}
+
+	.CTA-btn:first-child .slide-type .slide-type_text i {
+		color: var(--pry-color);
+	}
+/*2nd child*/
+	.CTA-btn:nth-child(2) .slide-type .slide-type__image {
+		background: var(--sec-color);
+	}
+
+	.CTA-btn:nth-child(2) .slide-type .slide-type_text i {
+		color: var(--sec-color);
+	}
+/*3rd child*/
+	.CTA-btn:nth-child(3) .slide-type .slide-type__image {
+		background: var(--info-color);
+	}
+
+	.CTA-btn:nth-child(3) .slide-type .slide-type_text i {
+		color: var(--info-color);
+	}
+
+.head-caption {
+	font-size: 12px;
+	color: #888888;
+	font-weight: 500;
+	margin-bottom: 15px;
+	padding-left: 1px;
 }

@@ -205,15 +205,20 @@ function loginValidate(e) {
 	];
 
 	validate(formData, rules);
-
+	var validateCount = 0;
 	$(`#${formData.id} .error`).each(function (i) {
 		if ($(this).is(':empty')) {
+			validateCount++;
 		}
 		else {
 			e.preventDefault();
 			return;
 		}
 	})
+	console.log(validateCount);
+	if (validateCount == 2) {
+		$("body").append("<div class='loader_new'></div>");
+	}
 }
 
 //forgot password validation
@@ -226,16 +231,20 @@ function forgotValidate(e) {
 		{ "id": "forgot-email", "validation": ["emptyRegx"] },
 	];
 	validate(formData, rules);
-
+	var validateCount = 0;
 	$(`#${formData.id} .error`).each(function (i) {
 		if ($(this).is(':empty')) {
 			forgotPassword();
+			validateCount++;
 		}
 		else {
 			e.preventDefault();
 			return;
 		}
 	})
+	if (validateCount == 2) {
+		$("body").append("<div class='loader_new'></div>");
+	}
 }
 
 //enquiryFormValidate
@@ -301,15 +310,27 @@ function signupValidate(e) {
 		rules.push({ "id": "sign-Website", "validation": ["websiteRegx"] });
 	}
 	validate(formData, rules);
-
+	var validateCount = 0;
 	$(`#${formData.id} .error`).each(function (i) {
 		if ($(this).is(':empty')) {
+			validateCount++;
 		}
 		else {
 			e.preventDefault();
 			return;
 		}
 	})
+	console.log(validateCount);
+	//if ($('#sign-Website').val() != '') {
+	//	if (validateCount == 8) {
+	//		$("body").append("<div class='loader_new'></div>");
+	//	}
+	//} else {
+		if (validateCount == 8) {
+			$("body").append("<div class='loader_new'></div>");
+		}
+	//}
+	
 }
 
 //validation for editing the user data

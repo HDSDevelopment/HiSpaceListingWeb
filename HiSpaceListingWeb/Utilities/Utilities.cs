@@ -590,7 +590,7 @@ namespace HiSpaceListingWeb.Utilities
 		}
 		//Operator filter dropdown start
 		//Get Operators list for the operator filter search
-		public static List<OperatorFilterOperatorList> GetOperatorsListForFilter(string Location)
+		public static async Task<List<OperatorFilterOperatorList>> GetOperatorsListForFilter(string Location)
 		{
 			//if(Location == "All")
 			//{
@@ -600,19 +600,20 @@ namespace HiSpaceListingWeb.Utilities
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetOperatorListForOperatorFilter+ "/" + Location.ToString());
-				responseTask.Wait();
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				var responseTask = await client.GetAsync(Common.Instance.ApiCommonGetOperatorListForOperatorFilter + "/" + Location.ToString());
+
+
+				if (responseTask.IsSuccessStatusCode)
 				{
-					var readTask = result.Content.ReadAsAsync<List<OperatorFilterOperatorList>>();
-					readTask.Wait();
+					var readTask = await responseTask.Content.ReadAsAsync<List<OperatorFilterOperatorList>>();
+
 					user.Add(new OperatorFilterOperatorList()
 					{
-						UserId = 1,CompanyName = "All"
+						UserId = 1,
+						CompanyName = "All"
 					});
-					foreach (var item in readTask.Result.ToList())
-						if(item.PropertyCount > 0)
+					foreach (var item in readTask.ToList())
+						if (item.PropertyCount > 0)
 							user.Add(new OperatorFilterOperatorList() { UserId = item.UserId, CompanyName = item.CompanyName });
 				}
 
@@ -620,7 +621,7 @@ namespace HiSpaceListingWeb.Utilities
 			return user;
 		}
 		//Get people list for the people filter search
-		public static List<PeopleFilterPeopleList> GetPeopleListForFilter(string Location)
+		public static async Task<List<PeopleFilterPeopleList>> GetPeopleListForFilter(string Location)
 		{
 			//if(Location == "All")
 			//{
@@ -630,19 +631,19 @@ namespace HiSpaceListingWeb.Utilities
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetPeopleListForPeopleFilter + "/" + Location.ToString());
-				responseTask.Wait();
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				var responseTask = await client.GetAsync(Common.Instance.ApiCommonGetPeopleListForPeopleFilter + "/" + Location.ToString());
+
+
+				if (responseTask.IsSuccessStatusCode)
 				{
-					var readTask = result.Content.ReadAsAsync<List<PeopleFilterPeopleList>>();
-					readTask.Wait();
+					var readTask = await responseTask.Content.ReadAsAsync<List<PeopleFilterPeopleList>>();
+
 					user.Add(new PeopleFilterPeopleList()
 					{
 						ListingId = 1,
 						RE_FullName = "All"
 					});
-					foreach (var item in readTask.Result.ToList())
+					foreach (var item in readTask.ToList())
 						if (item.ProjectCount > 0)
 							user.Add(new PeopleFilterPeopleList() { ListingId = item.ListingId, RE_FullName = item.RE_FullName });
 				}
@@ -651,24 +652,24 @@ namespace HiSpaceListingWeb.Utilities
 			return user;
 		}
 		//Get Location list for the operator filter search
-		public static List<LocationFilterOperatorList> GetLocationListForOpFilter()
+		public static async Task<List<LocationFilterOperatorList>> GetLocationListForOpFilter()
 		{
 			List<LocationFilterOperatorList> user = new List<LocationFilterOperatorList>();
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetLocationListForOperatorFilter);
-				responseTask.Wait();
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				var responseTask = await client.GetAsync(Common.Instance.ApiCommonGetLocationListForOperatorFilter);
+
+
+				if (responseTask.IsSuccessStatusCode)
 				{
-					var readTask = result.Content.ReadAsAsync<List<LocationFilterOperatorList>>();
-					readTask.Wait();
+					var readTask = await responseTask.Content.ReadAsAsync<List<LocationFilterOperatorList>>();
+
 					user.Add(new LocationFilterOperatorList()
 					{
 						OperatorLocation = "All"
 					});
-					foreach (var item in readTask.Result.ToList())
+					foreach (var item in readTask.ToList())
 						user.Add(new LocationFilterOperatorList() { OperatorLocation = item.OperatorLocation });
 				}
 
@@ -678,24 +679,24 @@ namespace HiSpaceListingWeb.Utilities
 		//Operator filter dropdown end
 
 		//Get Location list for the property filter search
-		public static List<LocationFilterPropertyList> GetLocationListForPrFilter()
+		public static async Task<List<LocationFilterPropertyList>> GetLocationListForPrFilter()
 		{
 			List<LocationFilterPropertyList> Location = new List<LocationFilterPropertyList>();
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiCommonControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiCommonGetLocationListForPropertyFilter);
-				responseTask.Wait();
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				var responseTask = await client.GetAsync(Common.Instance.ApiCommonGetLocationListForPropertyFilter);
+
+
+				if (responseTask.IsSuccessStatusCode)
 				{
-					var readTask = result.Content.ReadAsAsync<List<LocationFilterPropertyList>>();
-					readTask.Wait();
+					var readTask = await responseTask.Content.ReadAsAsync<List<LocationFilterPropertyList>>();
+
 					Location.Add(new LocationFilterPropertyList()
 					{
 						PropertyLocation = "All"
 					});
-					foreach (var item in readTask.Result.ToList())
+					foreach (var item in readTask.ToList())
 						Location.Add(new LocationFilterPropertyList() { PropertyLocation = item.PropertyLocation });
 				}
 
