@@ -202,10 +202,10 @@ function forgotPassword() {
 }
 //pagination 
 function PaginationCall() {
-	$(".paginate").paginga({
-		// use default options
-		itemsPerPage: 5
-	});
+	//$(".paginate").paginga({
+	//	// use default options
+	//	itemsPerPage: 5
+	//});
 };
 //Get the location name using the geolocator
 function getLocationUsingPostalCode(postal, obj) {
@@ -256,11 +256,11 @@ function getLocationUsingPostalCode(postal, obj) {
 
 $(document).ready(function () {
 	
-	PaginationCall();
-	// Initialize Editor
-	$(document).on('click', '.page-nav', function () {
-		PaginationCall();
-	});
+	//PaginationCall();
+	//// Initialize Editor
+	//$(document).on('click', '.page-nav', function () {
+	//	PaginationCall();
+	//});
 	// Initialize Editor
 	$('.textarea-editor').summernote({
 		//height: 200, // set editor height

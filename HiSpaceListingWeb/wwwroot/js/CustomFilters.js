@@ -280,27 +280,32 @@ function propertySearchHistoryRemove(obj, id) {
 			removeLoader();
 		},
 		error: function (response) {
-			removeLoader();
 			alert("server not ready please try afterwards");
+			removeLoader();
 			//console.log(response);
 		}
 	});
 }
 
 //Property list all
-function propertyListByAll() {
+function propertyListByAll(CurrentPage) {
+	//var propertyModel = @Html.Raw(Json.Serialize(Model.Listings));
+	//console.log(propertyModel);
+
 	$("#filterPropertyResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "GET",
 		url: "/Filter/PropertyListByAll",
-		data: {},
+		data: { CurrentPage: CurrentPage},
 		dataType: "html",
 		success: function (response) {
-			//console.log(response);
+			
 			filterPropertyResult.html('');
 			filterPropertyResult.html(response);
 			$("#propertySearchHistoryMove").empty();
 			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
+			console.log($('#page_property_count').html());
+			createPaginationRows($('#page_property_count').html(), CurrentPage);
 			PaginationCall();
 			removeLoader();
 		},
@@ -311,6 +316,26 @@ function propertyListByAll() {
 	});
 	
 }
+
+//pagination list function
+function createPaginationRows(count, CurrentPage) {
+	if (count > 5) {
+		var noOfButtons = count / 5;
+		//console.log(noOfButtons);
+		//console.log(typeof noOfButtons);
+		//console.log(Number.isInteger(noOfButtons));
+		if (!Number.isInteger(noOfButtons)) {
+			var noOfButtons = parseInt(noOfButtons + 1);
+		}
+		console.log(noOfButtons);
+		for (var i = 1; i <= noOfButtons; i++) {
+			//console.log('test' + i);
+			$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_'+i+'" data-page="' + i + '" class="" onclick="propertyListByAll('+i+');">'+i+'</a>');
+		}
+		$('#custom_page_' + CurrentPage).addClass('active');
+	}
+}
+
 //Property details List by its userid
 function propertyListByUserId(user) {
 	$("#detailPropertyResult").append("<div class='loader_new'></div>");

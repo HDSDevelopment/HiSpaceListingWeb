@@ -3,13 +3,14 @@
 @using HiSpaceListingWeb.Utilities;
 @using HiSpaceListingService.ViewModel;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@model IEnumerable<HiSpaceListingService.ViewModel.PropertyDetailResponse>
+@*@model IEnumerable<HiSpaceListingService.ViewModel.PropertyDetailResponse>*@
+@model HiSpaceListingService.ViewModel.PaginationModel<PropertyDetailResponse>
 @{
 	var indianCulture = new System.Globalization.CultureInfo("hi-IN");
 }
 
 <div class="row">
-	
+
 	<div class="col-12 search-history" id="propertySearchHistory">
 		@{
 			if (HttpContextAccessor.HttpContext.Session != null)
@@ -19,7 +20,7 @@
 				if (propertySearchCriteriaList != null)
 				{
 					@*int count = propertySearchCriteriaList.Count();
-					<p>@count</p>*@
+						<p>@count</p>*@
 					<div class="widget accordion-sec">
 						<div class="widget-title widget-collapse">
 							<a class="ml-auto prop-history" data-toggle="collapse" href="#propertyCollapse" role="button" aria-expanded="true"><h6><i class="fas fa-clock"></i>Property Search History</h6> <i class="fas fa-chevron-down"></i> </a>
@@ -160,18 +161,19 @@
 													<div class="pr_Filter_greenBuilding">@list.IsPerformGBC</div>
 												</li>
 											}
-											</ul>
+										</ul>
 									</div>
 									<div class="col-1">
 										<div class="ml-auto d-flex align-items-center text-center md-crud-menu ">
 											<a class="property-search-submit" href="javascript:void(0)" onclick="propertySearchFunction(this);">
 												<i class="fas fa-search-location btn-icon text-primary"></i>
 											</a>
-											@if (propertySearchCriteriaList.Count() > 1) { 
+											@if (propertySearchCriteriaList.Count() > 1)
+											{
 												<a class="property-search-submit" href="javascript:void(0)" onclick="propertySearchHistoryRemove(this, @list.Id);">
 													<i class="fas fa-trash-alt btn-icon text-danger"></i>
 												</a>
-												}
+											}
 										</div>
 										@*<button type="button" class="btn btn-primary btn-block property-search-submit" onclick="propertySearchFunction(this);"><i class="fas fa-search-location"></i>Search</button>*@
 									</div>
@@ -188,20 +190,23 @@
 
 	</div>
 </div>
-@if (Model != null && Model.Count() != 0)
+@if (Model.CurrentPageData != null && Model.CurrentPageData.Count() != 0)
 {
 
-	<div class="result-count">Property Filter Count : <span>@Model.Count()</span></div>
+	<div class="result-count">Property page : <span id="page_current">@Model.CurrentPage</span></div>
+	<div class="result-count">Property Count : <span id="page_property_count">@Model.Count</span></div>
+	<div class="result-count">Property size : <span>@Model.PageSize</span></div>
+	<div class="result-count">Property total page : <span>@Model.TotalPages</span></div>
 	<div class="paginate">
-		<div class="pager">
+		@*<div class="pager">
 			<div class="firstPage pager-icon">&laquo;</div>
 			<div class="previousPage pager-icon">&lsaquo;</div>
 			<div class="pageNumbers custom-scrollbar"></div>
 			<div class="lastPage pager-icon">&raquo;</div>
 			<div class="nextPage pager-icon">&rsaquo;</div>
-		</div>
+		</div>*@
 		<div class="page-items">
-			@foreach (var item in Model)
+			@foreach (var item in Model.CurrentPageData)
 			{
 				@if (item.SpaceListing.ListingType != "RE-Professional")
 				{
@@ -513,7 +518,10 @@
 		<div class="pager">
 			<div class="firstPage pager-icon">&laquo;</div>
 			<div class="previousPage pager-icon">&lsaquo;</div>
-			<div class="pageNumbers custom-scrollbar"></div>
+			<div class="pageNumbers custom-scrollbar">
+				@*<a href="javascript:void(0);" data-page="1" class="active">1</a>
+				<a href="javascript:void(0);" data-page="2" class="">2</a>*@
+			</div>
 			<div class="nextPage pager-icon">&rsaquo;</div>
 			<div class="lastPage pager-icon">&raquo;</div>
 		</div>

@@ -10,7 +10,9 @@ namespace HiSpaceListingWeb.ViewModel
 	{
         public PropertyOperatorPeopleAndFilterMenuViewModel()
         {
-            List<PropertyDetailResponse> Listings = new List<PropertyDetailResponse>();
+            //List<PropertyDetailResponse> Listings = new List<PropertyDetailResponse>();
+            Listings = new PaginationModel<PropertyDetailResponse>();
+
             List<PropertyOperatorResponse> Operators = new List<PropertyOperatorResponse>();
             List<PropertyPeopleResponse> People = new List<PropertyPeopleResponse>();
             List<PropertyLocationSearchResponse>  PropertyLocationSearchList = new List<PropertyLocationSearchResponse>();
@@ -20,7 +22,8 @@ namespace HiSpaceListingWeb.ViewModel
             List<PeopleNameSearchResponse> PeopleNameSearchResponseList = new List<PeopleNameSearchResponse>();
         }
         //Property list
-        public List<PropertyDetailResponse> Listings { get; set; }
+        //public List<PropertyDetailResponse> Listings { get; set; }
+        public PaginationModel<PropertyDetailResponse> Listings { get; set; }
         //operator list
         public List<PropertyOperatorResponse> Operators { get; set; }
         //people list
