@@ -93,22 +93,22 @@ namespace HiSpaceListingWeb.Controllers
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-				//if (ViewBag.UserId > 0)
-				//{
-				//	int userId = ViewBag.UserId;
-				//	var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllPropertyListCommercialAndCoworkingWithFavorites + userId);
-				//	responseTask.Wait();
+				if (ViewBag.UserId > 0)
+				{
+					int userId = ViewBag.UserId;
+					var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllPropertyListCommercialAndCoworkingWithFavorites + userId + "/" + CurrentPage);
+					responseTask.Wait();
 
-				//	var result = responseTask.Result;
-				//	if (result.IsSuccessStatusCode)
-				//	{
-				//		var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-				//		readTask.Wait();
-				//		vModel = readTask.Result;
-				//	}
-				//}
-				//else
-				//{
+					var result = responseTask.Result;
+					if (result.IsSuccessStatusCode)
+					{
+						var readTask = result.Content.ReadAsAsync<PaginationModel<PropertyDetailResponse>>();
+						readTask.Wait();
+						pagedModel = readTask.Result;
+					}
+				}
+				else
+				{
 					var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllPropertyListCommercialAndCoworkingPaged + CurrentPage);
 					responseTask.Wait();
 					
@@ -119,10 +119,10 @@ namespace HiSpaceListingWeb.Controllers
 						readTask.Wait();
 					pagedModel = readTask.Result;
 					}
-				//}
-				
-				
 			}
+
+
+		}
 			//return Json(vModel);
 			return PartialView("_PropertyFilterListPartialView", pagedModel);
 		}
