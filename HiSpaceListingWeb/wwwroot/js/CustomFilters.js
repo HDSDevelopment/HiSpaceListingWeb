@@ -291,8 +291,14 @@ function propertySearchHistoryRemove(obj, id) {
 function propertyListByAll(CurrentPage) {
 	//var propertyModel = @Html.Raw(Json.Serialize(Model.Listings));
 	//console.log(propertyModel);
-
+	console.log(CurrentPage);
 	$("#filterPropertyResult").append("<div class='loader_new'></div>");
+	//scroll animation
+	$('html,body').animate({
+		scrollTop: $("#filterPropertyResult").offset().top - 100
+	},
+		'slow');
+
 	$.ajax({
 		type: "GET",
 		url: "/Filter/PropertyListByAll",
@@ -307,6 +313,16 @@ function propertyListByAll(CurrentPage) {
 			console.log($('#page_property_count').html());
 			createPaginationRows($('#page_property_count').html(), CurrentPage);
 			PaginationCall();
+			if (CurrentPage == 1) {
+				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
+			}
+			if (noOfButtons == CurrentPage) {
+				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
+			}
+			var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+			//console.log(btnParentLocation);
+			$("div.pageNumbers").scrollLeft(btnParentLocation-350);
+			//console.log($('.pageNumbers').width());
 			removeLoader();
 		},
 		error: function (response) {
@@ -320,12 +336,12 @@ function propertyListByAll(CurrentPage) {
 //pagination list function
 function createPaginationRows(count, CurrentPage) {
 	if (count > 5) {
-		var noOfButtons = count / 5;
+		 noOfButtons = count / 5;
 		//console.log(noOfButtons);
 		//console.log(typeof noOfButtons);
 		//console.log(Number.isInteger(noOfButtons));
 		if (!Number.isInteger(noOfButtons)) {
-			var noOfButtons = parseInt(noOfButtons + 1);
+			 noOfButtons = parseInt(noOfButtons + 1);
 		}
 		console.log(noOfButtons);
 		for (var i = 1; i <= noOfButtons; i++) {

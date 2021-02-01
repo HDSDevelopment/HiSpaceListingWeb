@@ -769,13 +769,13 @@ namespace HiSpaceListingWeb.Controllers
 					//Get Listings
 					if(ListShowType == 1)
 					{
-						//var responseTask = await client.GetAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavoritesByUserId + UserId);
-						//if (responseTask.IsSuccessStatusCode)
-						//{
-						//	var readTask = await responseTask.Content.ReadAsAsync<List<PropertyDetailResponse>>();
+						var responseTask = await client.GetAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavoritesByUserId + UserId);
+						if (responseTask.IsSuccessStatusCode)
+						{
+							var readTask = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyDetailResponse>>();
 
-						//	vModel.Listings = readTask;
-						//}
+							vModel.Listings = readTask;
+						}
 					}
 					//Get operator
 					else if (ListShowType == 2)
@@ -806,13 +806,13 @@ namespace HiSpaceListingWeb.Controllers
 					//Get Listings
 					if (ListShowType == 1)
 					{
-						//var responseTask = await client.GetAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavorites);
-						//if (responseTask.IsSuccessStatusCode)
-						//{
-						//	var readTask = await responseTask.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-
-						//	vModel.Listings = readTask;
-						//}
+						var responseTask = await client.GetAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavorites);
+						if (responseTask.IsSuccessStatusCode)
+						{
+							var readTask = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyDetailResponse>>();
+							vModel.Listings = readTask;
+							
+						}
 					}
 					//Get operator
 					else if (ListShowType == 2)

@@ -192,19 +192,28 @@
 </div>
 @if (Model.CurrentPageData != null && Model.CurrentPageData.Count() != 0)
 {
+	@if (Model.TotalPages > 1)
+	{
+		<div class="result-data">
+			<div class="result-count">Property page : <span id="page_current">@Model.CurrentPage</span> of <span>@Model.TotalPages</span></div>
+			<div class="result-count text-right">Total Property : <span id="page_property_count">@Model.Count</span></div>
+		</div>
+	}
+	else
+	{
+		<div class="result-data">
+			<div class="result-count">Latest Properties</div>
+		</div>
+	}
 
-	<div class="result-count">Property page : <span id="page_current">@Model.CurrentPage</span></div>
-	<div class="result-count">Property Count : <span id="page_property_count">@Model.Count</span></div>
-	<div class="result-count">Property size : <span>@Model.PageSize</span></div>
-	<div class="result-count">Property total page : <span>@Model.TotalPages</span></div>
 	<div class="paginate">
 		@*<div class="pager">
-			<div class="firstPage pager-icon">&laquo;</div>
-			<div class="previousPage pager-icon">&lsaquo;</div>
-			<div class="pageNumbers custom-scrollbar"></div>
-			<div class="lastPage pager-icon">&raquo;</div>
-			<div class="nextPage pager-icon">&rsaquo;</div>
-		</div>*@
+				<div class="firstPage pager-icon">&laquo;</div>
+				<div class="previousPage pager-icon">&lsaquo;</div>
+				<div class="pageNumbers custom-scrollbar"></div>
+				<div class="lastPage pager-icon">&raquo;</div>
+				<div class="nextPage pager-icon">&rsaquo;</div>
+			</div>*@
 		<div class="page-items">
 			@foreach (var item in Model.CurrentPageData)
 			{
@@ -515,16 +524,23 @@
 				}
 			}
 		</div>
-		<div class="pager">
-			<div class="firstPage pager-icon">&laquo;</div>
-			<div class="previousPage pager-icon">&lsaquo;</div>
-			<div class="pageNumbers custom-scrollbar">
-				@*<a href="javascript:void(0);" data-page="1" class="active">1</a>
-				<a href="javascript:void(0);" data-page="2" class="">2</a>*@
+
+		@if (Model.TotalPages > 1)
+		{
+			<div class="pager">
+				<div class="firstPage pager-icon" onclick="propertyListByAll(1);">&laquo;</div>
+				<div class="previousPage pager-icon" onclick="propertyListByAll(@Model.CurrentPage-1);">&lsaquo;</div>
+				<div class="pageNumbers custom-scrollbar">
+					@*<a href="javascript:void(0);" data-page="1" class="active">1</a>
+						<a href="javascript:void(0);" data-page="2" class="">2</a>*@
+				</div>
+				<div class="nextPage pager-icon" onclick="propertyListByAll(@Model.CurrentPage+1);">&rsaquo;</div>
+				<div class="lastPage pager-icon" onclick="propertyListByAll(@Model.TotalPages);">&raquo;</div>
 			</div>
-			<div class="nextPage pager-icon">&rsaquo;</div>
-			<div class="lastPage pager-icon">&raquo;</div>
-		</div>
+		}
+
+
+
 	</div>
 }
 else

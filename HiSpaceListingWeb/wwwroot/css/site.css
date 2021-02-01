@@ -4562,3 +4562,13 @@ input#sign-Phone[type=number] {
 	margin-bottom: 15px;
 	padding-left: 1px;
 }
+
+.result-data {
+	background: #007bff;
+	display: flex;
+	justify-content: space-between;
+}
+.opacity-pointer-none{
+	opacity: .5;
+	pointer-events: none;
+}
