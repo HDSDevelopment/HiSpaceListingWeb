@@ -527,20 +527,15 @@
 
 		@if (Model.TotalPages > 1)
 		{
-			<div class="pager">
-				<div class="firstPage pager-icon" onclick="propertyListByAll(1);">&laquo;</div>
-				<div class="previousPage pager-icon" onclick="propertyListByAll(@Model.CurrentPage-1);">&lsaquo;</div>
-				<div class="pageNumbers custom-scrollbar">
-					@*<a href="javascript:void(0);" data-page="1" class="active">1</a>
-						<a href="javascript:void(0);" data-page="2" class="">2</a>*@
-				</div>
-				<div class="nextPage pager-icon" onclick="propertyListByAll(@Model.CurrentPage+1);">&rsaquo;</div>
-				<div class="lastPage pager-icon" onclick="propertyListByAll(@Model.TotalPages);">&raquo;</div>
-			</div>
+	<div class="pager">
+		<div class="firstPage pager-icon">&laquo;</div>
+		<div class="previousPage pager-icon">&lsaquo;</div>
+		<div class="pageNumbers custom-scrollbar">			
+		</div>
+		<div class="nextPage pager-icon">&rsaquo;</div>
+		<div class="lastPage pager-icon">&raquo;</div>
+	</div>
 		}
-
-
-
 	</div>
 }
 else

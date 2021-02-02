@@ -169,7 +169,7 @@
 								@foreach (var item in Model.PropertyLocationSearchList)
 								{
 									@*<li><a href="@Url.Action( "PropertyListByLocation","Filter",new { Location = @item.locality})">@item.locality<span class="ml-auto">(@item.localityInUseCount)</span></a></li>*@
-									<li><a href="javascript:void(0);" onclick="propertyListByLocation('@item.locality');">@item.locality@*<span class="ml-auto">(@item.localityInUseCount)</span>*@</a></li>
+									<li><a href="javascript:void(0);" onclick="propertyListByLocation('@item.locality',1);">@item.locality@*<span class="ml-auto">(@item.localityInUseCount)</span>*@</a></li>
 
 								}
 								@*<li><a href="#">Commercial<span class="ml-auto">(50)</span></a></li>
@@ -193,7 +193,7 @@
 									}
 									else
 									{
-										<li><a href="javascript:void(0);" onclick="propertyListByType('@item.PropertyType');">@item.PropertyType@*<span class="ml-auto">(@item.PropertyTypeInUseCount)</span>*@</a></li>
+										<li><a href="javascript:void(0);" onclick="propertyListByType('@item.PropertyType', 1);">@item.PropertyType@*<span class="ml-auto">(@item.PropertyTypeInUseCount)</span>*@</a></li>
 									}
 								}
 							</ul>

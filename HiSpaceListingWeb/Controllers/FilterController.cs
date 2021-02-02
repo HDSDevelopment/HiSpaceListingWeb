@@ -126,49 +126,37 @@ namespace HiSpaceListingWeb.Controllers
 			//return Json(vModel);
 			return PartialView("_PropertyFilterListPartialView", pagedModel);
 		}
-		public ActionResult PropertyListByLocation(string Location)
+		public async Task<ActionResult> PropertyListByLocation(string Location, int CurrentPage)
 		{
 			SetSessionVariables();
 			List<PropertyDetailResponse> vModel = new List<PropertyDetailResponse>();
+			PaginationModel<PropertyDetailResponse> pagedModel = new PaginationModel<PropertyDetailResponse>();
 
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiFilterControllerName);
+				HttpResponseMessage responseMessage;
+
 				if (ViewBag.UserId > 0)
 				{
 					int userId = ViewBag.UserId;
-					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByLocationWithFavorites + "/" + userId + "/" + Location.ToString());
-					responseTask.Wait();
-
-					var result = responseTask.Result;
-					if (result.IsSuccessStatusCode)
-					{
-						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-						readTask.Wait();
-						vModel = readTask.Result;
-					}
+					responseMessage =  await client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByLocationWithFavorites + "/" + userId + "/" + Location.ToString() + "/" + CurrentPage);
+					
 				}
 				else
-				{
-					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByLocation + "/" + Location.ToString());
-					responseTask.Wait();
+					responseMessage = await client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByLocation + "/" + Location.ToString()+"/"+ CurrentPage);
 
-					var result = responseTask.Result;
-					if (result.IsSuccessStatusCode)
-					{
-						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-						readTask.Wait();
-						vModel = readTask.Result;
-					}
-				}
-				
+				if (responseMessage.IsSuccessStatusCode)
+					pagedModel = await responseMessage.Content.ReadAsAsync<PaginationModel<PropertyDetailResponse>>();
+
 			}
 			//return Json(vModel);
-			return PartialView("_PropertyFilterListPartialView", vModel);
+			return PartialView("_PropertyFilterListPartialView", pagedModel);
 		}
-		public ActionResult PropertyListByType(string Type)
+		public async Task<ActionResult> PropertyListByType(string ListingType, int CurrentPage)
 		{
 			SetSessionVariables();
+			PaginationModel<PropertyDetailResponse> pagedModel = new PaginationModel<PropertyDetailResponse>();
 			List<PropertyDetailResponse> vModel = new List<PropertyDetailResponse>();
 
 			using (var client = new HttpClient())
@@ -176,33 +164,32 @@ namespace HiSpaceListingWeb.Controllers
 				client.BaseAddress = new Uri(Common.Instance.ApiFilterControllerName);
 				if (ViewBag.UserId > 0) {
 					int userId = ViewBag.UserId;
-					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByTypeWithFavorites + "/" + userId + "/" + Type.ToString());
+					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByTypeWithFavorites + "/" + userId + "/" + ListingType.ToString() + "/" + CurrentPage);
 					responseTask.Wait();
 
 					var result = responseTask.Result;
 					if (result.IsSuccessStatusCode)
 					{
-						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-						readTask.Wait();
-						vModel = readTask.Result;
+						var readTask = await result.Content.ReadAsAsync<PaginationModel<PropertyDetailResponse>>();
+						pagedModel = readTask;
 					}
 				}
 				else
 				{
-					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByType + "/" + Type.ToString());
+					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetListingPropertyByType + "/" + ListingType.ToString() + "/" + CurrentPage);
 					responseTask.Wait();
 
 					var result = responseTask.Result;
 					if (result.IsSuccessStatusCode)
 					{
-						var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-						readTask.Wait();
-						vModel = readTask.Result;
+						var readTask = await result.Content.ReadAsAsync<PaginationModel<PropertyDetailResponse>>();
+
+						pagedModel = readTask;
 					}
 				}
 				
 			}
-			return PartialView("_PropertyFilterListPartialView", vModel);
+			return PartialView("_PropertyFilterListPartialView", pagedModel);
 		}
 		public ActionResult PropertyListByUser(string User)
 		{
