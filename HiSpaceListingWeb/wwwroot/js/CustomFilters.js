@@ -352,10 +352,13 @@ function createPaginationRows(count, CurrentPage, methodName) {
 				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(' + i + ');">' + i + '</a>');
 			}
 			else if (methodName == "propertyListByLocation") {
-				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(\''+methodLocation+' \',' + i +');">' + i + '</a>');
+				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(\'' + methodLocation + ' \',' + i + ');">' + i + '</a>');
 			}
 			else if (methodName == "propertyListByType") {
-				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(\'' + methodType+'\',' + i + ');">' + i + '</a>');
+				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(\'' + methodType + '\',' + i + ');">' + i + '</a>');
+			}
+			else if (methodName == "propertyListByUser") {
+				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(\'' + methodUser + '\',' + i + ');">' + i + '</a>');
 			}
 			
 		}
@@ -377,6 +380,12 @@ function createPaginationRows(count, CurrentPage, methodName) {
 			$('.previousPage').attr('onclick', methodName + '(\'' + methodType +'\',' + CurrentPage + '-1)');
 			$('.nextPage').attr('onclick', methodName + '(\'' + methodType +'\',' + CurrentPage + '+1)');
 			$('.lastPage').attr('onclick', methodName + '(\'' + methodType +'\',' + noOfButtons + ')');
+		}
+		else if (methodName == "propertyListByUser") {
+			$('.firstPage').attr('onclick', methodName + '(\'' + methodUser + '\',1)');
+			$('.previousPage').attr('onclick', methodName + '(\'' + methodUser + '\',' + CurrentPage + '-1)');
+			$('.nextPage').attr('onclick', methodName + '(\'' + methodUser + '\',' + CurrentPage + '+1)');
+			$('.lastPage').attr('onclick', methodName + '(\'' + methodUser + '\',' + noOfButtons + ')');
 		}
 		$('#custom_page_' + CurrentPage).addClass('active');
 	}
@@ -489,12 +498,14 @@ function propertyListByType(type, CurrentPage) {
 	
 }
 //Property User filter
-function propertyListByUser(user) {
+function propertyListByUser(user, CurrentPage) {
+	var methodName = "propertyListByUser";
+	methodUser = user;
 	$("#filterPropertyResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "GET",
 		url: "/Filter/PropertyListByUser",
-		data: { User: user },
+		data: { User: user, CurrentPage: CurrentPage },
 		dataType: "html",
 		success: function (response) {
 			//console.log(response);
@@ -502,7 +513,18 @@ function propertyListByUser(user) {
 			filterPropertyResult.html(response);
 			$("#propertySearchHistoryMove").empty();
 			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
+			createPaginationRows($('#page_property_count').html(), CurrentPage, methodName);
 			PaginationCall();
+			if (CurrentPage == 1) {
+				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
+			}
+			if (noOfButtons == CurrentPage) {
+				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
+			}
+			var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+			//console.log(btnParentLocation);
+			$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+			//console.log($('.pageNumbers').width());
 			removeLoader();
 		},
 		error: function (response) {
@@ -512,6 +534,7 @@ function propertyListByUser(user) {
 	});
 	
 }
+
 //Property List by its userid
 function propertyListByUserIdAndListingId(user, listingId) {
 	$("#detailPropertyResult").append("<div class='loader_new'></div>");
