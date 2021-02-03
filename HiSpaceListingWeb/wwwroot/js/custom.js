@@ -456,7 +456,7 @@ NOTE: This file contains all scripts for the actual Template.
             POTENZA.carousel();
         
         $('.carousel').carousel({
-            interval: 2000000
+            interval: 5000
         })
         
     });
