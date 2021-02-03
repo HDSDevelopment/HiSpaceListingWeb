@@ -2207,8 +2207,17 @@ button {
           animation: bounceInLeft 1s ease-in-out 100ms both; }
 
 .carousel .carousel-item.active .animated-06 {
-  -webkit-animation: bounceIn 1s ease-in 500ms both;
-          animation: bounceIn 1s ease-in 500ms both; }
+    -webkit-animation: bounceIn 1s ease-in 500ms both;
+    animation: bounceIn 1s ease-in 500ms both;
+}
+.carousel .carousel-item.active .animated-06-1ms {
+    -webkit-animation: bounceIn 1s ease-in 700ms both;
+    animation: bounceIn 1s ease-in 700ms both;
+}
+.carousel .carousel-item.active .animated-06-2ms {
+    -webkit-animation: bounceIn 1s ease-in 900ms both;
+    animation: bounceIn 1s ease-in 900ms both;
+}
 
 .carousel .carousel-item.active .animated-07 {
   -webkit-animation: fadeInDown 0.7s ease-in 300ms both;

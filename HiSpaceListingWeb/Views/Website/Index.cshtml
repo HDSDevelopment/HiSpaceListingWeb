@@ -82,9 +82,242 @@
 			</script>
 		}
 	}
-	<section class="position-relative">
-		<div class="banner bg-holder bg-overlay-gradient-02" style="background-image: url(images/slider/05.jpg);">
-			<div class="container">
+	@*<section class="position-relative">
+			<div class="banner bg-holder bg-overlay-gradient-02" style="background-image: url(images/slider/05.jpg);">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-sm-12 col-md-5 col-xl-5 order-2 order-md-1">
+							<div class="CTA-btn">
+								<div class="slide-type">
+									<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">
+										<div class="slide-type__image">
+											<span class="icon fab flaticon-apartment-1"></span>
+										</div>
+										<div class="slide-type_text texttype-1">
+											Find or List Your Space
+											<i class="fas fa-angle-double-right"></i>
+										</div>
+
+									</a>
+								</div>
+								<div class="slide-caption">
+									Find or List your commercial properties or co-working spaces
+								</div>
+							</div>
+							<div class="CTA-btn">
+								<div class="slide-type">
+									<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">
+										<div class="slide-type__image">
+											<span class="icon fab flaticon-building"></span>
+										</div>
+										<div class="slide-type_text texttype-2">
+											Find an Owner or Operator
+											<i class="fas fa-angle-double-right"></i>
+										</div>
+									</a>
+								</div>
+								<div class="slide-caption">
+									You own properties or co-working spaces? List yourself
+								</div>
+							</div>
+							<div class="CTA-btn">
+								<div class="slide-type">
+									<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">
+										<div class="slide-type__image">
+											<span class="icon fab flaticon-agent"></span>
+										</div>
+										<div class="slide-type_text texttype-3">
+											Find a Business Partner
+											<i class="fas fa-angle-double-right"></i>
+										</div>
+									</a>
+								</div>
+								<div class="slide-caption">
+									Find a business partner to collaborate in your project
+								</div>
+							</div>
+
+
+
+							</div>
+						<div class="col-sm-12 col-md-7 col-xl-7 order-1 order-md-2">
+							<h1 class="text-white mb-4 display-4 font-weight-bold slide-heading">Welcome to the Commercial Real Estate Community for the Next Generation Industry Evolution</h1>
+		<div class="slide-btn">
+				<div class="property-btn">
+					<a class="property-link btn btn-sec modal-link__signup" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-hands-helping"></i> Join Now</a>
+				</div>
+				<div class="property-btn">
+					<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-sign-in-alt"></i> Login</a>
+				</div>
+			</div>
+		</div>
+					</div>
+				</div>
+			</div>
+		</section>*@
+
+	<section class="clearfix">
+		<div id="slider" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators">
+				<li data-target="#slider" data-slide-to="0" class="active"></li>
+				<li data-target="#slider" data-slide-to="1"></li>
+			</ol>
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img class="img-fluid" src="~/images/slider/05.jpg" alt="">
+					<div class="slider-content">
+						<div class="container">
+							<div class="row align-items-center space-pt--50">
+								<div class="col-sm-12 col-md-5 col-xl-5 order-2 order-md-1">
+									<div class="CTA-btn animated-06">
+										<div class="slide-type">
+											<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">
+												<div class="slide-type__image">
+													<span class="icon fab flaticon-apartment-1"></span>
+												</div>
+												<div class="slide-type_text texttype-1">
+													Find or List Your Space
+													<i class="fas fa-angle-double-right"></i>
+												</div>
+
+											</a>
+										</div>
+										<div class="slide-caption">
+											Find or List your commercial properties or co-working spaces
+										</div>
+									</div>
+									<div class="CTA-btn animated-06-1ms">
+										<div class="slide-type">
+											<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">
+												<div class="slide-type__image">
+													<span class="icon fab flaticon-building"></span>
+												</div>
+												<div class="slide-type_text texttype-2">
+													Find an Owner or Operator
+													<i class="fas fa-angle-double-right"></i>
+												</div>
+											</a>
+										</div>
+										<div class="slide-caption">
+											You own properties or co-working spaces? List yourself
+										</div>
+									</div>
+									<div class="CTA-btn animated-06-2ms">
+										<div class="slide-type">
+											<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">
+												<div class="slide-type__image">
+													<span class="icon fab flaticon-agent"></span>
+												</div>
+												<div class="slide-type_text texttype-3">
+													Find a Business Partner
+													<i class="fas fa-angle-double-right"></i>
+												</div>
+											</a>
+										</div>
+										<div class="slide-caption">
+											Find a business partner to collaborate in your project
+										</div>
+									</div>
+
+
+
+								</div>
+								<div class="col-sm-12 col-md-7 col-xl-7 order-1 order-md-2">
+									<h1 class="text-white mb-4 display-4 font-weight-bold slide-heading animated-07">Welcome to the Commercial Real Estate Community for the Next Generation Industry Evolution</h1>
+									@*<div class="slide-btn">
+										<div class="property-btn animated-08">
+											<a class="property-link btn btn-sec modal-link__signup" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-hands-helping"></i> Join Now</a>
+										</div>
+										<div class="property-btn animated-08">
+											<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-sign-in-alt"></i> Login</a>
+										</div>
+									</div>*@
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-item slider-dark">
+					<img class="img-fluid" src="~/images/slider/04.jpg" alt="">
+					<div class="slider-content">
+						<div class="container">
+							<div class="row align-items-center space-pt--50">
+								<div class="col-sm-12 col-md-5 col-xl-5 order-2 order-md-1">
+									<div class="CTA-btn animated-06">
+										<div class="slide-type">
+											<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">
+												<div class="slide-type__image">
+													<span class="icon fab">
+														<i class="fas fa-hand-holding-usd"></i>
+													</span>
+													
+												</div>
+												<div class="slide-type_text texttype-1">
+													Investor
+													<i class="fas fa-angle-double-right"></i>
+												</div>
+
+											</a>
+										</div>
+										<div class="slide-caption">
+											Find the best investment in commercial properties
+										</div>
+									</div>
+									<div class="CTA-btn animated-06-1ms">
+										<div class="slide-type">
+											<a class="slide-type mb-0" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">
+												<div class="slide-type__image">
+													<span class="icon fab">
+														<i class="fas fa-chart-line"></i>
+													</span>
+												</div>
+												<div class="slide-type_text texttype-2">
+													Return Calculator
+													<i class="fas fa-angle-double-right"></i>
+												</div>
+											</a>
+										</div>
+										<div class="slide-caption">
+											Analysis your investment returns
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 col-md-7 col-xl-7 order-1 order-md-2">
+									<h1 class="mb-4 display-4 font-weight-bold slide-heading animated-07">Welcome to the Commercial Real Estate Investor Community</h1>
+									@*<div class="slide-btn">
+										<div class="property-btn animated-08">
+											<a class="property-link btn btn-sec modal-link__signup" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-hands-helping"></i> Join Now</a>
+										</div>
+										<div class="property-btn animated-08">
+											<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-sign-in-alt"></i> Login</a>
+										</div>
+									</div>*@
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="d-none d-md-block">
+				<a class="carousel-control-prev" href="#slider" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#slider" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	@*<section class="banner-bg-slider position-relative">
+			<div id="bg-slider">
+				<img src="~/images/slider/05.jpg" alt="">
+				<img src="~/images/slider/02.jpg" alt="">
+				<img src="~/images/slider/03.jpg" alt="">
+			</div>
+			<div class="banner-bg-slider-content">
 				<div class="row align-items-center">
 					<div class="col-sm-12 col-md-5 col-xl-5 order-2 order-md-1">
 						<div class="CTA-btn">
@@ -135,26 +368,25 @@
 							<div class="slide-caption">
 								Find a business partner to collaborate in your project
 							</div>
-						</div>	
-
-							
-
 						</div>
+
+
+
+					</div>
 					<div class="col-sm-12 col-md-7 col-xl-7 order-1 order-md-2">
 						<h1 class="text-white mb-4 display-4 font-weight-bold slide-heading">Welcome to the Commercial Real Estate Community for the Next Generation Industry Evolution</h1>
-						@*<div class="slide-btn">
-								<div class="property-btn">
-									<a class="property-link btn btn-sec modal-link__signup" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-hands-helping"></i> Join Now</a>
-								</div>
-								<div class="property-btn">
-									<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-sign-in-alt"></i> Login</a>
-								</div>
-							</div>*@
+						<div class="slide-btn">
+							<div class="property-btn">
+								<a class="property-link btn btn-sec modal-link__signup" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-hands-helping"></i> Join Now</a>
+							</div>
+							<div class="property-btn">
+								<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-sign-in-alt"></i> Login</a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>*@
 
 	<!--=================================
 	banner -->
@@ -251,8 +483,8 @@
 								We offer you the best real-estate professionals to get involved in your coworking spaces
 							</li>
 							@*<li>
-					Shell Space <span>(Fully Furnished, Semi Furnished..)</span>
-				</li>*@
+									Shell Space <span>(Fully Furnished, Semi Furnished..)</span>
+								</li>*@
 						</ul>
 					</div>
 					@if (ViewBag.UserId != null)
@@ -299,8 +531,8 @@
 								Do you want to get involved in projects with leading coworking operators ?
 							</li>
 							@*<li>
-					Realestate Professionals <span>(Property Developer, Co-working Architecture, Leasing, Interior Designer, Investor,..)</span>
-				</li>*@
+									Realestate Professionals <span>(Property Developer, Co-working Architecture, Leasing, Interior Designer, Investor,..)</span>
+								</li>*@
 						</ul>
 					</div>
 					@if (ViewBag.UserId != null)

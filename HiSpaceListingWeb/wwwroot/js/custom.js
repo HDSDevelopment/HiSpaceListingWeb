@@ -454,9 +454,10 @@ NOTE: This file contains all scripts for the actual Template.
             POTENZA.rangesliders(),
             POTENZA.streetviewtabs(),
             POTENZA.carousel();
-
+        
         $('.carousel').carousel({
-            interval: 2000
+            interval: 2000000
         })
+        
     });
 })(jQuery);

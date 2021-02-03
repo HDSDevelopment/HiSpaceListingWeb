@@ -140,25 +140,25 @@
 						</li>
 
 						@*<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				HiSpace List <i class="fas fa-chevron-down fa-xs"></i>
-			</a>
-			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">Property</a></li>
-				<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Operator</a></li>
-				<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">RE-Professionals</a></li>
-			</ul>
-		</li>*@
+								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									HiSpace List <i class="fas fa-chevron-down fa-xs"></i>
+								</a>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 1 })">Property</a></li>
+									<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 2 })">Operator</a></li>
+									<li><a class="dropdown-item" href="@Url.Action( "PropertyOperatorPeopleAndFilterMenu","Filter",new {ListShowType = 3 })">RE-Professionals</a></li>
+								</ul>
+							</li>*@
 						@*<li class="nav-item dropdown ">
-			<a class="nav-link" href="@Url.Action( "About","Website")">About</a>
-		</li>*@
+								<a class="nav-link" href="@Url.Action( "About","Website")">About</a>
+							</li>*@
 						<li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString()) == "CreateInvestor" ? "active" : "" )">
-	<a class="nav-link" href="@Url.Action( "CreateInvestor","Investor")" id="navbarDropdown">Investor</a>
-</li>
+							<a class="nav-link" href="@Url.Action( "CreateInvestor","Investor")" id="navbarDropdown">Investor</a>
+						</li>
 						<li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString()) == "Contact" ? "active" : "" )">
 							<a class="nav-link" href="@Url.Action( "Contact","Website")" id="navbarDropdown">Contact</a>
 						</li>
-						
+
 						@if (ViewBag.UserId != null && ViewBag.UserId == 0 && ViewBag.UserType == 0)
 						{
 							<li class="nav-item dropdown @((ViewContext.RouteData.Values["Controller"].ToString()) == "Admin" ? "active" : "" )">
@@ -201,8 +201,8 @@
 					</ul>
 				</div>
 				@*<div class="add-listing d-none d-sm-block">
-			<a class="btn btn-primary btn-md" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId})"> <i class="fa fa-plus-circle"></i>Add listing </a>
-		</div>*@
+						<a class="btn btn-primary btn-md" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId})"> <i class="fa fa-plus-circle"></i>Add listing </a>
+					</div>*@
 				@if (ViewBag.UserId != null && ViewBag.UserType == 2)
 				{
 					<div class="slide-btn align-self-center">
@@ -372,7 +372,7 @@
 	@*<script src="~/js/jarallax/jarallax-video.min.js"></script>*@
 	<script src="~/js/magnific-popup/jquery.magnific-popup.min.js"></script>
 	<script src="~/js/rater.js"></script>
-	
+
 	@*<script src="~/js/jquery.validate.min.js"></script>*@
 	<script>
 		if (/MSIE (\d+\.\d+);/.test(navigator.userAgent) || navigator.userAgent.indexOf("Trident/") > -1) {
