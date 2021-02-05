@@ -333,27 +333,25 @@ namespace HiSpaceListingWeb.Controllers
 			return PartialView("_OperatorFilterListPartialView", pagedModel);
 
 		}
-		public ActionResult OperatorListByUserId(string User)
+		public async Task<ActionResult> OperatorListByUserId(string User, int CurrentPage)
 		{
 			SetSessionVariables();
-			List<PropertyOperatorResponse> vModel = new List<PropertyOperatorResponse>();
+			PaginationModel<PropertyOperatorResponse> pagedModel = new PaginationModel<PropertyOperatorResponse>();
 
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiFilterControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiFilterGetOperatorByUserId + "/" + User.ToString());
-				responseTask.Wait();
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				HttpResponseMessage responseMessage;
+				responseMessage = await client.GetAsync(Common.Instance.ApiFilterGetOperatorByUserId + "/" + User.ToString() + "/" + CurrentPage);
+
+				if (responseMessage.IsSuccessStatusCode)
 				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyOperatorResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
+					pagedModel = await responseMessage.Content.ReadAsAsync<PaginationModel<PropertyOperatorResponse>>();
 				}
 
 			}
 			//return Json(vModel);
-			return PartialView("_OperatorFilterListPartialView", vModel);
+			return PartialView("_OperatorFilterListPartialView", pagedModel);
 		}
 		public ActionResult OperatorFilterCriteria(OperatorSearchCriteria operatorSearchCriteria)
 		{

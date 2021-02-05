@@ -363,6 +363,9 @@ function createPaginationRows(count, CurrentPage, methodName) {
 			else if (methodName == "operatorListByAll") {
 				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(' + i + ');">' + i + '</a>');
 			}
+			else if (methodName == "operatorListByUser") {
+				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(\'' + methodOperatorUser+'\',' + i + ');">' + i + '</a>');
+			}
 			
 		}
 		//first,next,previous,last button function
@@ -395,6 +398,12 @@ function createPaginationRows(count, CurrentPage, methodName) {
 			$('.previousPage').attr('onclick', methodName + '(' + CurrentPage + '-1)');
 			$('.nextPage').attr('onclick', methodName + '(' + CurrentPage + '+1)');
 			$('.lastPage').attr('onclick', methodName + '(' + noOfButtons + ')');
+		}
+		else if (methodName == "operatorListByUser") {
+			$('.firstPage').attr('onclick', methodName + '(\'' + methodOperatorUser +'\',1)');
+			$('.previousPage').attr('onclick', methodName + '(\'' + methodOperatorUser +'\',' + CurrentPage + '-1)');
+			$('.nextPage').attr('onclick', methodName + '(\'' + methodOperatorUser +'\',' + CurrentPage + '+1)');
+			$('.lastPage').attr('onclick', methodName + '(\'' + methodOperatorUser +'\',' + noOfButtons + ')');
 		}
 		$('#custom_page_' + CurrentPage).addClass('active');
 	}
@@ -629,12 +638,14 @@ function operatorListByAll(CurrentPage) {
 	
 }
 //Operator list by operator
-function operatorListByUser(user) {
+function operatorListByUser(user, CurrentPage) {
+	var methodName = "operatorListByUser";
+	methodOperatorUser = user;
 	$("#filterOperatorResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "GET",
 		url: "/Filter/OperatorListByUserId",
-		data: { User: user},
+		data: { User: user, CurrentPage: CurrentPage },
 		dataType: "html",
 		success: function (response) {
 			//console.log(response);
@@ -642,8 +653,19 @@ function operatorListByUser(user) {
 			filterOperatorResult.html(response);
 			$("#operatorSearchHistoryMove").empty();
 			$("#operatorSearchHistory").prependTo("#operatorSearchHistoryMove");
+			createPaginationRows($('#page_operator_count').html(), CurrentPage, methodName);
 			operatorFilterCount();
-			PaginationCall();
+			//PaginationCall();
+			if (CurrentPage == 1) {
+				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
+			}
+			if (noOfButtons == CurrentPage) {
+				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
+			}
+			var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+			//console.log(btnParentLocation);
+			$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+			//console.log($('.pageNumbers').width());
 			removeLoader();
 		},
 		error: function (response) {
