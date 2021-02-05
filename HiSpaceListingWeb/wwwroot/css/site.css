@@ -4633,3 +4633,11 @@ input#sign-Phone[type=number] {
 .slider-dark h1 {
 	color: #f1f1f1;
 }
+
+.space-pt--30{
+	padding-top: 30px;
+}
+#slider .slider-banner .slider-content {
+	bottom: 0;
+	top: unset;
+}

@@ -29,8 +29,14 @@ $('#Pr_Filter_For').on('change', function () {
 });
 
 //property filter form
-$('#property-form-submit').on('click', function (e) {
+function propertyFromSearchMethod(CurrentPage) {
+	var methodName = "propertyFromSearchMethod";
 	$("#filterPropertyResult").append("<div class='loader_new'></div>");
+	//scroll animation
+	$('html,body').animate({
+		scrollTop: $("#filterPropertyResult").offset().top - 100
+	},
+		'slow');
 	//$("#filterPropertyResult").append("<div class='loader_new-sub'></div>");
 	//console.log('property filter click');
 		var formData = new FormData();
@@ -119,6 +125,9 @@ $('#property-form-submit').on('click', function (e) {
 	var Pr_PriceMax = document.getElementsByName('PriceMax').value;
 	formData.append("PriceMax", Pr_PriceMax);
 
+	//Current page
+	formData.append("CurrentPage", CurrentPage);
+
 	for (var pair of formData.entries()) {
     console.log(pair[0]+ ' - ' +pair[1]); 
 	}
@@ -136,8 +145,22 @@ $('#property-form-submit').on('click', function (e) {
 			filterPropertyResult.html(response);
 			$("#propertySearchHistoryMove").empty();
 			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
-			operatorFilterCount();
-			PaginationCall();
+			//operatorFilterCount();
+			createPaginationRows($('#page_property_count').html(), CurrentPage, methodName);
+			//PaginationCall();
+			if (CurrentPage == 1) {
+				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
+			}
+			if (noOfButtons == CurrentPage) {
+				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
+			}
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+				//console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
+			
 			removeLoader();
 		},
 		error: function (response) {
@@ -145,10 +168,11 @@ $('#property-form-submit').on('click', function (e) {
 			alert("server not ready please try afterwards");
 		}
 	});
-});
+};
 
 //property history search
 function propertySearchFunction(obj) {
+	var methodName = "propertySearchFunction";
 	$("#filterPropertyResult").append("<div class='loader_new'></div>");
 	var activeRow = $(obj).closest('.sh-data');
 	console.log('property filter click');
@@ -320,10 +344,12 @@ function propertyListByAll(CurrentPage) {
 			if (noOfButtons == CurrentPage) {
 				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
 			}
-			var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
-			//console.log(btnParentLocation);
-			$("div.pageNumbers").scrollLeft(btnParentLocation-350);
-			//console.log($('.pageNumbers').width());
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+				//console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
 			removeLoader();
 		},
 		error: function (response) {
@@ -360,12 +386,16 @@ function createPaginationRows(count, CurrentPage, methodName) {
 			else if (methodName == "propertyListByUser") {
 				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(\'' + methodUser + '\',' + i + ');">' + i + '</a>');
 			}
+			else if (methodName == "propertyFromSearchMethod") {
+				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(' + i + ');">' + i + '</a>');
+			}
 			else if (methodName == "operatorListByAll") {
 				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(' + i + ');">' + i + '</a>');
 			}
 			else if (methodName == "operatorListByUser") {
 				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(\'' + methodOperatorUser+'\',' + i + ');">' + i + '</a>');
 			}
+			
 			
 		}
 		//first,next,previous,last button function
@@ -392,6 +422,12 @@ function createPaginationRows(count, CurrentPage, methodName) {
 			$('.previousPage').attr('onclick', methodName + '(\'' + methodUser + '\',' + CurrentPage + '-1)');
 			$('.nextPage').attr('onclick', methodName + '(\'' + methodUser + '\',' + CurrentPage + '+1)');
 			$('.lastPage').attr('onclick', methodName + '(\'' + methodUser + '\',' + noOfButtons + ')');
+		}
+		else if (methodName == "propertyFromSearchMethod") {
+			$('.firstPage').attr('onclick', methodName + '(1)');
+			$('.previousPage').attr('onclick', methodName + '(' + CurrentPage + '-1)');
+			$('.nextPage').attr('onclick', methodName + '(' + CurrentPage + '+1)');
+			$('.lastPage').attr('onclick', methodName + '(' + noOfButtons + ')');
 		}
 		else if (methodName == "operatorListByAll") {
 			$('.firstPage').attr('onclick', methodName + '(1)');
@@ -461,10 +497,12 @@ function propertyListByLocation(location, CurrentPage) {
 			if (noOfButtons == CurrentPage) {
 				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
 			}
-			var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
-			//console.log(btnParentLocation);
-			$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
-			//console.log($('.pageNumbers').width());
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+				//console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
 			removeLoader();
 		},
 		error: function (response) {
@@ -502,10 +540,12 @@ function propertyListByType(type, CurrentPage) {
 			if (noOfButtons == CurrentPage) {
 				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
 			}
-			var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
-			//console.log(btnParentLocation);
-			$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
-			//console.log($('.pageNumbers').width());
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+				//console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
 			removeLoader();
 		},
 		error: function (response) {
@@ -539,10 +579,12 @@ function propertyListByUser(user, CurrentPage) {
 			if (noOfButtons == CurrentPage) {
 				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
 			}
-			var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
-			//console.log(btnParentLocation);
-			$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
-			//console.log($('.pageNumbers').width());
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+				//console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
 			removeLoader();
 		},
 		error: function (response) {
@@ -624,10 +666,12 @@ function operatorListByAll(CurrentPage) {
 			if (noOfButtons == CurrentPage) {
 				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
 			}
-			var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
-			//console.log(btnParentLocation);
-			$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
-			//console.log($('.pageNumbers').width());
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+				//console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
 			removeLoader();
 		},
 		error: function (response) {
@@ -662,10 +706,12 @@ function operatorListByUser(user, CurrentPage) {
 			if (noOfButtons == CurrentPage) {
 				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
 			}
-			var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
-			//console.log(btnParentLocation);
-			$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
-			//console.log($('.pageNumbers').width());
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+				//console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
 			removeLoader();
 		},
 		error: function (response) {

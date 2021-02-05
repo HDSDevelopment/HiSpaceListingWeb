@@ -192,7 +192,7 @@
 </div>
 @if (Model.CurrentPageData != null && Model.CurrentPageData.Count() != 0)
 {
-	@if (Model.TotalPages > 1)
+	@if (Model.TotalPages > 0)
 	{
 		<div class="result-data">
 			<div class="result-count">Property page : <span id="page_current">@Model.CurrentPage</span> of <span>@Model.TotalPages</span></div>

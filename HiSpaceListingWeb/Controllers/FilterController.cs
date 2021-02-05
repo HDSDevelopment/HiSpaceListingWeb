@@ -185,10 +185,12 @@ namespace HiSpaceListingWeb.Controllers
 		{
 			SetSessionVariables();
 			List<PropertyDetailResponse> vModel = new List<PropertyDetailResponse>();
+			PaginationModel<PropertyDetailResponse> pagedModel = new PaginationModel<PropertyDetailResponse>();
 			using (var client = new HttpClient())
 			{
 				if (ViewBag.UserId > 0)
 				{
+					int userId = ViewBag.UserId;
 					List<PropertySearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<PropertySearchCriteria>>(HttpContext.Session, "propertySearchCriteriaList");
 
 					int id = 1;
@@ -224,35 +226,28 @@ namespace HiSpaceListingWeb.Controllers
 					pUserSearchCriteria.UserId = ViewBag.UserId;
 
 					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-					var responseTask = await client.PostAsJsonAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavoritesBySearch, pUserSearchCriteria);
-
-
+					var responseTask = await client.PostAsJsonAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavoritesBySearch + propertySearchCriteria.CurrentPage, pUserSearchCriteria);
 
 					if (responseTask.IsSuccessStatusCode)
 					{
-						var readTask = await responseTask.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-
-						vModel = readTask;
+						pagedModel = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyDetailResponse>>();
 					}
 
 				}
 				else
 				{
 					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-					var responseTask = await client.PostAsJsonAsync(Common.Instance.ApiListingGetPropertyListCommercialAndCoworking, propertySearchCriteria);
-
-
+					var responseTask = await client.PostAsJsonAsync(Common.Instance.ApiListingGetPropertyListCommercialAndCoworking
+						+ propertySearchCriteria.CurrentPage, propertySearchCriteria);
 
 					if (responseTask.IsSuccessStatusCode)
 					{
-						var readTask = await responseTask.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-
-						vModel = readTask;
+						pagedModel = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyDetailResponse>>();
 					}
 				}
 			}
 
-			return PartialView("_PropertyFilterListPartialView", vModel);
+			return PartialView("_PropertyFilterListPartialView", pagedModel);
 			//return Json(vModel);
 		}
 		public ActionResult PropertyFilterCriteriaHistory(PropertySearchCriteria propertySearchCriteria)
