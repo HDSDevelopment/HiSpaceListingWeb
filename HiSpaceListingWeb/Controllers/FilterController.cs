@@ -312,28 +312,25 @@ namespace HiSpaceListingWeb.Controllers
 				return NotFound();
 		}
 
-		public ActionResult OperatorListByAll()
+		public async Task<ActionResult> OperatorListByAll(int CurrentPage)
 		{
 			SetSessionVariables();
-			List<PropertyOperatorResponse> vModel = new List<PropertyOperatorResponse>();
+			PaginationModel<PropertyOperatorResponse> pagedModel = new PaginationModel<PropertyOperatorResponse>();
 
 			using (var client = new HttpClient())
 			{
 				
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllOperatorsList);
-				responseTask.Wait();
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				HttpResponseMessage responseMessage;
+				responseMessage = await client.GetAsync(Common.Instance.ApiLisitingGetAllOperatorsList + CurrentPage);
+				if (responseMessage.IsSuccessStatusCode)
 				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyOperatorResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
+					pagedModel = await responseMessage.Content.ReadAsAsync<PaginationModel<PropertyOperatorResponse>>();
 				}
 
 			}
 			//return Json(vModel);
-			return PartialView("_OperatorFilterListPartialView", vModel);
+			return PartialView("_OperatorFilterListPartialView", pagedModel);
 
 		}
 		public ActionResult OperatorListByUserId(string User)
@@ -690,7 +687,7 @@ namespace HiSpaceListingWeb.Controllers
 				}
 			}
 			vModel.Listings = new PaginationModel<PropertyDetailResponse>();
-			vModel.Operators = new List<PropertyOperatorResponse>();
+			vModel.Operators = new PaginationModel<PropertyOperatorResponse>();
 			vModel.People = new List<PropertyPeopleResponse>();
 			//property,operator,people list
 			using (var client = new HttpClient())
@@ -720,7 +717,7 @@ namespace HiSpaceListingWeb.Controllers
 						var responseTask = await client.GetAsync(Common.Instance.ApiGetLatestOperatorList);
 						if (responseTask.IsSuccessStatusCode)
 						{
-							var readTask = await responseTask.Content.ReadAsAsync<List<PropertyOperatorResponse>>();
+							var readTask = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyOperatorResponse>>();
 
 							vModel.Operators = readTask;
 						}
@@ -757,7 +754,7 @@ namespace HiSpaceListingWeb.Controllers
 						var responseTask = await client.GetAsync(Common.Instance.ApiGetLatestOperatorList);
 						if (responseTask.IsSuccessStatusCode)
 						{
-							var readTask = await responseTask.Content.ReadAsAsync<List<PropertyOperatorResponse>>();
+							var readTask = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyOperatorResponse>>();
 
 							vModel.Operators = readTask;
 						}

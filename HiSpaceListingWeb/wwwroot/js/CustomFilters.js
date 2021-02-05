@@ -313,7 +313,7 @@ function propertyListByAll(CurrentPage) {
 			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
 			//console.log($('#page_property_count').html());
 			createPaginationRows($('#page_property_count').html(), CurrentPage, methodName);
-			PaginationCall();
+			//PaginationCall();
 			if (CurrentPage == 1) {
 				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
 			}
@@ -360,6 +360,9 @@ function createPaginationRows(count, CurrentPage, methodName) {
 			else if (methodName == "propertyListByUser") {
 				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(\'' + methodUser + '\',' + i + ');">' + i + '</a>');
 			}
+			else if (methodName == "operatorListByAll") {
+				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(' + i + ');">' + i + '</a>');
+			}
 			
 		}
 		//first,next,previous,last button function
@@ -376,16 +379,22 @@ function createPaginationRows(count, CurrentPage, methodName) {
 			$('.lastPage').attr('onclick', methodName + '(\'' + methodLocation + ' \',' + noOfButtons + ')');
 		}
 		else if (methodName == "propertyListByType") {
-			$('.firstPage').attr('onclick', methodName + '(\'' + methodType +'\',1)');
-			$('.previousPage').attr('onclick', methodName + '(\'' + methodType +'\',' + CurrentPage + '-1)');
-			$('.nextPage').attr('onclick', methodName + '(\'' + methodType +'\',' + CurrentPage + '+1)');
-			$('.lastPage').attr('onclick', methodName + '(\'' + methodType +'\',' + noOfButtons + ')');
+			$('.firstPage').attr('onclick', methodName + '(\'' + methodType + '\',1)');
+			$('.previousPage').attr('onclick', methodName + '(\'' + methodType + '\',' + CurrentPage + '-1)');
+			$('.nextPage').attr('onclick', methodName + '(\'' + methodType + '\',' + CurrentPage + '+1)');
+			$('.lastPage').attr('onclick', methodName + '(\'' + methodType + '\',' + noOfButtons + ')');
 		}
 		else if (methodName == "propertyListByUser") {
 			$('.firstPage').attr('onclick', methodName + '(\'' + methodUser + '\',1)');
 			$('.previousPage').attr('onclick', methodName + '(\'' + methodUser + '\',' + CurrentPage + '-1)');
 			$('.nextPage').attr('onclick', methodName + '(\'' + methodUser + '\',' + CurrentPage + '+1)');
 			$('.lastPage').attr('onclick', methodName + '(\'' + methodUser + '\',' + noOfButtons + ')');
+		}
+		else if (methodName == "operatorListByAll") {
+			$('.firstPage').attr('onclick', methodName + '(1)');
+			$('.previousPage').attr('onclick', methodName + '(' + CurrentPage + '-1)');
+			$('.nextPage').attr('onclick', methodName + '(' + CurrentPage + '+1)');
+			$('.lastPage').attr('onclick', methodName + '(' + noOfButtons + ')');
 		}
 		$('#custom_page_' + CurrentPage).addClass('active');
 	}
@@ -404,7 +413,7 @@ function propertyListByUserId(user) {
 			detailPropertyResult.html('');
 			detailPropertyResult.html(response);
 			Peoplecarousel();
-			PaginationCall();
+			//PaginationCall();
 			removeLoader();
 		},
 		error: function (response) {
@@ -436,7 +445,7 @@ function propertyListByLocation(location, CurrentPage) {
 			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
 			//console.log($('#page_property_count').html());
 			createPaginationRows($('#page_property_count').html(), CurrentPage, methodName);
-			PaginationCall();
+			//PaginationCall();
 			if (CurrentPage == 1) {
 				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
 			}
@@ -477,7 +486,7 @@ function propertyListByType(type, CurrentPage) {
 			$("#propertySearchHistoryMove").empty();
 			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
 			createPaginationRows($('#page_property_count').html(), CurrentPage, methodName);
-			PaginationCall();
+			//PaginationCall();
 			if (CurrentPage == 1) {
 				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
 			}
@@ -514,7 +523,7 @@ function propertyListByUser(user, CurrentPage) {
 			$("#propertySearchHistoryMove").empty();
 			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
 			createPaginationRows($('#page_property_count').html(), CurrentPage, methodName);
-			PaginationCall();
+			//PaginationCall();
 			if (CurrentPage == 1) {
 				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
 			}
@@ -578,12 +587,18 @@ $(document).on('change', '#pr_Filter_ListingType', function (event) {
 
 var filterOperatorResult = $('#filterOperatorResult');
 //Operator list all
-function operatorListByAll() {
+function operatorListByAll(CurrentPage) {
+	var methodName = "operatorListByAll";
 	$("#filterOperatorResult").append("<div class='loader_new'></div>");
+	//scroll animation
+	$('html,body').animate({
+		scrollTop: $("#filterOperatorResult").offset().top - 100
+	},
+		'slow');
 	$.ajax({
 		type: "GET",
 		url: "/Filter/OperatorListByAll",
-		data: {},
+		data: { CurrentPage: CurrentPage },
 		dataType: "html",
 		success: function (response) {
 			//console.log(response);
@@ -591,8 +606,19 @@ function operatorListByAll() {
 			filterOperatorResult.html(response);
 			$("#operatorSearchHistoryMove").empty();
 			$("#operatorSearchHistory").prependTo("#operatorSearchHistoryMove");
+			createPaginationRows($('#page_operator_count').html(), CurrentPage, methodName);
 			operatorFilterCount();
-			PaginationCall();
+			//PaginationCall();
+			if (CurrentPage == 1) {
+				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
+			}
+			if (noOfButtons == CurrentPage) {
+				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
+			}
+			var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+			//console.log(btnParentLocation);
+			$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+			//console.log($('.pageNumbers').width());
 			removeLoader();
 		},
 		error: function (response) {

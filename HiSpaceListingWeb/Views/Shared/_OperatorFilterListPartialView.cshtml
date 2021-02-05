@@ -6,7 +6,8 @@
 @using HiSpaceListingWeb.Utilities;
 @using HiSpaceListingService.ViewModel;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@model IEnumerable<HiSpaceListingService.ViewModel.PropertyOperatorResponse>
+@*@model IEnumerable<HiSpaceListingService.ViewModel.PropertyOperatorResponse>*@
+@model HiSpaceListingService.ViewModel.PaginationModel<PropertyOperatorResponse>
 
 
 <div class="row">
@@ -26,7 +27,7 @@
 							<a class="ml-auto oper-history" data-toggle="collapse" href="#operatorCollapse" role="button" aria-expanded="true"><h6><i class="fas fa-clock"></i>Operator Search History</h6> <i class="fas fa-chevron-down"></i> </a>
 						</div>
 						<div id="operatorCollapse" class="collapse show">
-							@foreach (var list in operatorSearchCriteriaList) 
+							@foreach (var list in operatorSearchCriteriaList)
 							{
 
 								<div class="form-row sh-data">
@@ -68,10 +69,11 @@
 											<a class="property-search-submit" href="javascript:void(0)" onclick="operatorSearchFunction(this);">
 												<i class="fas fa-search-location btn-icon text-primary"></i>
 											</a>
-											@if (operatorSearchCriteriaList.Count() > 1 ) {
-											<a class="property-search-submit" href="javascript:void(0)" onclick="operatorSearchHistoryRemove(this, @list.Id);">
-												<i class="fas fa-trash-alt btn-icon text-danger"></i>
-											</a>
+											@if (operatorSearchCriteriaList.Count() > 1)
+											{
+												<a class="property-search-submit" href="javascript:void(0)" onclick="operatorSearchHistoryRemove(this, @list.Id);">
+													<i class="fas fa-trash-alt btn-icon text-danger"></i>
+												</a>
 											}
 										</div>
 										@*<button type="button" class="btn btn-primary btn-block property-search-submit" onclick="propertySearchFunction(this);"><i class="fas fa-search-location"></i>Search</button>*@
@@ -92,24 +94,37 @@
 
 
 
-@if (Model != null && Model.Count() != 0)
+@if (Model.CurrentPageData != null && Model.CurrentPageData.Count() != 0)
 {
+	@if (Model.TotalPages > 1)
+	{
+		<div class="result-data">
+			<div class="result-count">Operator page : <span id="page_current">@Model.CurrentPage</span> of <span>@Model.TotalPages</span></div>
+			<div class="result-count text-right">Total Operator : <span id="page_operator_count">@Model.Count</span></div>
+		</div>
+	}
+	else
+	{
+		<div class="result-data">
+			<div class="result-count">Latest Operator</div>
+		</div>
+	}
 
-	var i = 0;
-	<div class="result-count" id="opCount">Operator Filter Count : <span></span></div>
+	//var i = 0;
+	@*<div class="result-count" id="opCount">Operator Filter Count : <span></span></div>*@
 	<div class="paginate">
-		<div class="pager">
+		@*<div class="pager">
 			<div class="firstPage pager-icon">&laquo;</div>
 			<div class="previousPage pager-icon">&lsaquo;</div>
 			<div class="pageNumbers custom-scrollbar"></div>
 			<div class="lastPage pager-icon">&raquo;</div>
 			<div class="nextPage pager-icon">&rsaquo;</div>
-		</div>
+		</div>*@
 		<div class="page-items">
-			@foreach (var item in Model)
+			@foreach (var item in Model.CurrentPageData)
 			{
-				@if (item.TotalCommercial != 0 || item.TotalCoWorking != 0 || item.TotalREProfessional != 0)
-				{
+				@*@if (item.TotalCommercial != 0 || item.TotalCoWorking != 0 || item.TotalREProfessional != 0)
+				{*@
 					<div class="property-col-list operator-col-list">
 						<div class="row no-gutters">
 							<div class="col-lg-3 col-md-3 oper-image">
@@ -283,16 +298,17 @@
 
 						</div>
 					</div>
-					i++;
-					<p class="display-none operatorCount">@i</p>
-				}
+					@*i++;
+					<p class="display-none operatorCount">@i</p>*@
+					//}
 
 			}
 		</div>
 		<div class="pager">
 			<div class="firstPage pager-icon">&laquo;</div>
 			<div class="previousPage pager-icon">&lsaquo;</div>
-			<div class="pageNumbers custom-scrollbar"></div>
+			<div class="pageNumbers custom-scrollbar">
+			</div>
 			<div class="nextPage pager-icon">&rsaquo;</div>
 			<div class="lastPage pager-icon">&raquo;</div>
 		</div>
