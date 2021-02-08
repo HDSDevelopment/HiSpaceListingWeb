@@ -51,8 +51,11 @@ namespace HiSpaceListingWeb.Controllers
 		{
 			User session = null;
 			PropertySearchCriteria property = null;
+			//OperatorSearchCriteria operator = null;
 			HttpContext.Session.SetObjectAsJson("_user", session);
 			HttpContext.Session.SetObjectAsJson("propertySearchCriteriaList", property);
+			HttpContext.Session.SetObjectAsJson("operatorSearchCriteriaList", property);
+			HttpContext.Session.SetObjectAsJson("peopleSearchCriteriaList", property);
 			HttpContext.Session.SetString(Common.SessionUserEmail, "");
 			HttpContext.Session.SetInt32(Common.SessionUserType, -1);
 			HttpContext.Session.SetInt32(Common.SessionUserId, -1);

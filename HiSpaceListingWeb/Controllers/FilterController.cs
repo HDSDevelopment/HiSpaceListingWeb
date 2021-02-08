@@ -250,10 +250,12 @@ namespace HiSpaceListingWeb.Controllers
 			return PartialView("_PropertyFilterListPartialView", pagedModel);
 			//return Json(vModel);
 		}
-		public ActionResult PropertyFilterCriteriaHistory(PropertySearchCriteria propertySearchCriteria)
+		public async Task<ActionResult> PropertyFilterCriteriaHistory(PropertySearchCriteria propertySearchCriteria)
 		{
 			SetSessionVariables();
+			propertySearchCriteria.CurrentPage = 1;
 			List<PropertyDetailResponse> vModel = new List<PropertyDetailResponse>();
+			PaginationModel<PropertyDetailResponse> pagedModel = new PaginationModel<PropertyDetailResponse>();
 			List<PropertySearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<PropertySearchCriteria>>(HttpContext.Session, "propertySearchCriteriaList");
 
 			PropertyUserSearchCriteria pUserSearchCriteria = new PropertyUserSearchCriteria();
@@ -274,19 +276,15 @@ namespace HiSpaceListingWeb.Controllers
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavoritesBySearch, pUserSearchCriteria);
-				responseTask.Wait();
-
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				var responseTask = await client.PostAsJsonAsync(Common.Instance.ApiGetPropertiesCommercialAndCoworkingWithFavoritesBySearch + propertySearchCriteria.CurrentPage, pUserSearchCriteria);
+				if (responseTask.IsSuccessStatusCode)
 				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyDetailResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
+					pagedModel = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyDetailResponse>>();
 				}
+
 			}
 
-			return PartialView("_PropertyFilterListPartialView", vModel);
+			return PartialView("_PropertyFilterListPartialView", pagedModel);
 			//return Json(vModel);
 
 		}
@@ -348,10 +346,10 @@ namespace HiSpaceListingWeb.Controllers
 			//return Json(vModel);
 			return PartialView("_OperatorFilterListPartialView", pagedModel);
 		}
-		public ActionResult OperatorFilterCriteria(OperatorSearchCriteria operatorSearchCriteria)
+		public async Task<ActionResult> OperatorFilterCriteria(OperatorSearchCriteria operatorSearchCriteria)
 		{
 			SetSessionVariables();
-			List<PropertyOperatorResponse> vModel = new List<PropertyOperatorResponse>();
+			PaginationModel<PropertyOperatorResponse> pagedModel = new PaginationModel<PropertyOperatorResponse>();
 			if (ViewBag.UserId > 0)
 			{
 				List<OperatorSearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<OperatorSearchCriteria>>(HttpContext.Session, "operatorSearchCriteriaList");
@@ -375,42 +373,35 @@ namespace HiSpaceListingWeb.Controllers
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiLisitingGetOperatorList, operatorSearchCriteria);
-				responseTask.Wait();
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				var responseTask = await client.PostAsJsonAsync(Common.Instance.ApiLisitingGetOperatorList + operatorSearchCriteria.CurrentPage, operatorSearchCriteria);
+				if (responseTask.IsSuccessStatusCode)
 				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyOperatorResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
+					pagedModel = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyOperatorResponse>>();
 				}
 
 			}
 			//return Json(vModel);
-			return PartialView("_OperatorFilterListPartialView", vModel);
+			return PartialView("_OperatorFilterListPartialView", pagedModel);
 		}
-		public ActionResult OperatorFilterCriteriaHistory(OperatorSearchCriteria operatorSearchCriteria)
+		public async Task<ActionResult> OperatorFilterCriteriaHistory(OperatorSearchCriteria operatorSearchCriteria)
 		{
 			SetSessionVariables();
-			List<PropertyOperatorResponse> vModel = new List<PropertyOperatorResponse>();
+			operatorSearchCriteria.CurrentPage = 1;
+			PaginationModel<PropertyOperatorResponse> pagedModel = new PaginationModel<PropertyOperatorResponse>();
 			List<OperatorSearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<OperatorSearchCriteria>>(HttpContext.Session, "operatorSearchCriteriaList");
 
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiLisitingGetOperatorList, operatorSearchCriteria);
-				responseTask.Wait();
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				var responseTask = await client.PostAsJsonAsync(Common.Instance.ApiLisitingGetOperatorList + operatorSearchCriteria.CurrentPage, operatorSearchCriteria);
+				if (responseTask.IsSuccessStatusCode)
 				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyOperatorResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
+					pagedModel = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyOperatorResponse>>();
 				}
 
 			}
 			//return Json(vModel);
-			return PartialView("_OperatorFilterListPartialView", vModel);
+			return PartialView("_OperatorFilterListPartialView", pagedModel);
 		}
 		public ActionResult DeleteOperatorSearchCriteria(int id)
 		{

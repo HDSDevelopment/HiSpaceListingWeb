@@ -173,7 +173,13 @@ function propertyFromSearchMethod(CurrentPage) {
 //property history search
 function propertySearchFunction(obj) {
 	var methodName = "propertySearchFunction";
+	var CurrentPage = 1;
 	$("#filterPropertyResult").append("<div class='loader_new'></div>");
+	//scroll animation
+	$('html,body').animate({
+		scrollTop: $("#filterPropertyResult").offset().top - 100
+	},
+		'slow');
 	var activeRow = $(obj).closest('.sh-data');
 	console.log('property filter click');
 	var formData = new FormData();
@@ -278,8 +284,22 @@ function propertySearchFunction(obj) {
 			filterPropertyResult.html(response);
 			$("#propertySearchHistoryMove").empty();
 			$("#propertySearchHistory").prependTo("#propertySearchHistoryMove");
-			operatorFilterCount();
-			PaginationCall();
+			//operatorFilterCount();
+			createPaginationRows($('#page_property_count').html(), CurrentPage, methodName);
+			//PaginationCall();
+			if (CurrentPage == 1) {
+				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
+			}
+			if (noOfButtons == CurrentPage) {
+				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
+			}
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+				//console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
+
 			removeLoader();
 		},
 		error: function (response) {
@@ -386,15 +406,21 @@ function createPaginationRows(count, CurrentPage, methodName) {
 			else if (methodName == "propertyListByUser") {
 				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(\'' + methodUser + '\',' + i + ');">' + i + '</a>');
 			}
-			else if (methodName == "propertyFromSearchMethod") {
-				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(' + i + ');">' + i + '</a>');
+			else if ((methodName == "propertyFromSearchMethod") || (methodName == "propertySearchFunction")) {
+				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + "propertyFromSearchMethod" + '(' + i + ');">' + i + '</a>');
 			}
 			else if (methodName == "operatorListByAll") {
-				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(' + i + ');">' + i + '</a>');
+				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_operator_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(' + i + ');">' + i + '</a>');
 			}
 			else if (methodName == "operatorListByUser") {
-				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(\'' + methodOperatorUser+'\',' + i + ');">' + i + '</a>');
+				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_operator_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(\'' + methodOperatorUser+'\',' + i + ');">' + i + '</a>');
 			}
+			else if ((methodName == "operatorFromSearchMethod") || (methodName == "operatorSearchFunction")) {
+				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_operator_' + i + '" data-page="' + i + '" class="" onclick="' + "operatorFromSearchMethod" + '(' + i + ');">' + i + '</a>');
+			}
+			//else if (methodName == "operatorSearchFunction") {
+			//	$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_operator_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(' + i + ');">' + i + '</a>');
+			//}
 			
 			
 		}
@@ -423,11 +449,11 @@ function createPaginationRows(count, CurrentPage, methodName) {
 			$('.nextPage').attr('onclick', methodName + '(\'' + methodUser + '\',' + CurrentPage + '+1)');
 			$('.lastPage').attr('onclick', methodName + '(\'' + methodUser + '\',' + noOfButtons + ')');
 		}
-		else if (methodName == "propertyFromSearchMethod") {
-			$('.firstPage').attr('onclick', methodName + '(1)');
-			$('.previousPage').attr('onclick', methodName + '(' + CurrentPage + '-1)');
-			$('.nextPage').attr('onclick', methodName + '(' + CurrentPage + '+1)');
-			$('.lastPage').attr('onclick', methodName + '(' + noOfButtons + ')');
+		else if ((methodName == "propertyFromSearchMethod") || (methodName == "propertySearchFunction")) {
+			$('.firstPage').attr('onclick', "propertyFromSearchMethod" + '(1)');
+			$('.previousPage').attr('onclick', "propertyFromSearchMethod" + '(' + CurrentPage + '-1)');
+			$('.nextPage').attr('onclick', "propertyFromSearchMethod" + '(' + CurrentPage + '+1)');
+			$('.lastPage').attr('onclick', "propertyFromSearchMethod" + '(' + noOfButtons + ')');
 		}
 		else if (methodName == "operatorListByAll") {
 			$('.firstPage').attr('onclick', methodName + '(1)');
@@ -441,7 +467,25 @@ function createPaginationRows(count, CurrentPage, methodName) {
 			$('.nextPage').attr('onclick', methodName + '(\'' + methodOperatorUser +'\',' + CurrentPage + '+1)');
 			$('.lastPage').attr('onclick', methodName + '(\'' + methodOperatorUser +'\',' + noOfButtons + ')');
 		}
-		$('#custom_page_' + CurrentPage).addClass('active');
+		else if ((methodName == "operatorFromSearchMethod") || (methodName == "operatorSearchFunction")) {
+			$('.firstPage').attr('onclick', "operatorFromSearchMethod" + '(1)');
+			$('.previousPage').attr('onclick', "operatorFromSearchMethod" + '(' + CurrentPage + '-1)');
+			$('.nextPage').attr('onclick', "operatorFromSearchMethod" + '(' + CurrentPage + '+1)');
+			$('.lastPage').attr('onclick', "operatorFromSearchMethod" + '(' + noOfButtons + ')');
+		}
+		//else if (methodName == "operatorSearchFunction") {
+		//	$('.firstPage').attr('onclick', methodName + '(1)');
+		//	$('.previousPage').attr('onclick', methodName + '(' + CurrentPage + '-1)');
+		//	$('.nextPage').attr('onclick', methodName + '(' + CurrentPage + '+1)');
+		//	$('.lastPage').attr('onclick', methodName + '(' + noOfButtons + ')');
+		//}
+		//active the select page button
+		if ((methodName == "propertyListByAll") || (methodName == "propertyListByLocation") || (methodName == "propertyListByType") || (methodName == "propertyListByUser") || (methodName == "propertyFromSearchMethod") || (methodName == "propertySearchFunction")) {
+			$('#custom_page_' + CurrentPage).addClass('active');
+		} else if ((methodName == "operatorListByAll") || (methodName == "operatorListByUser") || (methodName == "operatorFromSearchMethod") || (methodName == "operatorSearchFunction")) {
+			$('#custom_page_operator_' + CurrentPage).addClass('active');
+		}
+		
 	}
 }
 
@@ -667,7 +711,7 @@ function operatorListByAll(CurrentPage) {
 				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
 			}
 			if (CurrentPage > 1) {
-				var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+				var btnParentLocation = parseInt($('#custom_page_operator_' + CurrentPage).position().left);
 				//console.log(btnParentLocation);
 				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
 				//console.log($('.pageNumbers').width());
@@ -685,6 +729,11 @@ function operatorListByAll(CurrentPage) {
 function operatorListByUser(user, CurrentPage) {
 	var methodName = "operatorListByUser";
 	methodOperatorUser = user;
+	//scroll animation
+	$('html,body').animate({
+		scrollTop: $("#filterOperatorResult").offset().top - 100
+	},
+		'slow');
 	$("#filterOperatorResult").append("<div class='loader_new'></div>");
 	$.ajax({
 		type: "GET",
@@ -707,7 +756,7 @@ function operatorListByUser(user, CurrentPage) {
 				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
 			}
 			if (CurrentPage > 1) {
-				var btnParentLocation = parseInt($('#custom_page_' + CurrentPage).position().left);
+				var btnParentLocation = parseInt($('#custom_page_operator_' + CurrentPage).position().left);
 				//console.log(btnParentLocation);
 				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
 				//console.log($('.pageNumbers').width());
@@ -751,8 +800,14 @@ $(document).on('change', '.OperatorLocation', function (event) {
 	});
 });
 //operator filter form
-$('#operator-form-submit').on('click', function (e) {
+function operatorFromSearchMethod(CurrentPage) {
+	var methodName = "operatorFromSearchMethod";
 	$("#filterOperatorResult").append("<div class='loader_new'></div>");
+	//scroll animation
+	$('html,body').animate({
+		scrollTop: $("#filterOperatorResult").offset().top - 100
+	},
+		'slow');
 		var formData = new FormData();
 	var OpCity = $('#Op_Filter_CityName').val();
 	if (OpCity != "All") {
@@ -765,6 +820,12 @@ $('#operator-form-submit').on('click', function (e) {
 		formData.append("OperatorName", OpOperator);
 	} else {
 		formData.append("OperatorName", "");
+	}
+	//Current page
+	formData.append("CurrentPage", CurrentPage);
+
+	for (var pair of formData.entries()) {
+		console.log(pair[0] + ' - ' + pair[1]);
 	}
 
 	$.ajax({
@@ -780,8 +841,21 @@ $('#operator-form-submit').on('click', function (e) {
 			filterOperatorResult.html(response);
 			$("#operatorSearchHistoryMove").empty();
 			$("#operatorSearchHistory").prependTo("#operatorSearchHistoryMove");
-			operatorFilterCount();
-			PaginationCall();
+			createPaginationRows($('#page_operator_count').html(), CurrentPage, methodName);
+			//PaginationCall();
+			if (CurrentPage == 1) {
+				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
+			}
+			if (noOfButtons == CurrentPage) {
+				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
+			}
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_operator_' + CurrentPage).position().left);
+				console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
+
 			removeLoader();
 		},
 		error: function (response) {
@@ -789,10 +863,17 @@ $('#operator-form-submit').on('click', function (e) {
 			alert("server not ready please try afterwards");
 		}
 	});
-});
+};
 //operator search history
 function operatorSearchFunction(obj) {
+	var methodName = "operatorSearchFunction";
+	var CurrentPage = 1;
 	$("#filterOperatorResult").append("<div class='loader_new'></div>");
+	//scroll animation
+	$('html,body').animate({
+		scrollTop: $("#filterOperatorResult").offset().top - 100
+	},
+		'slow');
 	var formData = new FormData();
 	var activeRow = $(obj).closest('.sh-data');
 
@@ -826,8 +907,21 @@ function operatorSearchFunction(obj) {
 			filterOperatorResult.html(response);
 			$("#operatorSearchHistoryMove").empty();
 			$("#operatorSearchHistory").prependTo("#operatorSearchHistoryMove");
-			operatorFilterCount();
-			PaginationCall();
+			createPaginationRows($('#page_operator_count').html(), CurrentPage, methodName);
+			//PaginationCall();
+			if (CurrentPage == 1) {
+				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
+			}
+			if (noOfButtons == CurrentPage) {
+				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
+			}
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_operator_' + CurrentPage).position().left);
+				console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
+
 			removeLoader();
 		},
 		error: function (response) {
