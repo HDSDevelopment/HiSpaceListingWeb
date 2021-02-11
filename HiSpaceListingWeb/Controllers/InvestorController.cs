@@ -31,6 +31,12 @@ namespace HiSpaceListingWeb.Controllers
 			return View();
 		}
 
+		public IActionResult InvestorReturns()
+		{
+			SetSessionVariables();
+			return View();
+		}
+
 		[HttpPost]
 		public async Task<ActionResult> Create(Investor model)
 		{

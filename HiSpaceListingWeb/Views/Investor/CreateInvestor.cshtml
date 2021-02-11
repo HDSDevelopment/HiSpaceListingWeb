@@ -47,12 +47,23 @@
 					<ol class="breadcrumb mb-0">
 						<li class="breadcrumb-item"><a href="@Url.Action("Index", "Website")"> <i class="fas fa-home"></i> </a></li>
 
-						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span> Investor </span></li>
+						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span> Investor Form </span></li>
 					</ol>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<section class="bg-texture-1">
+		<div class="container">
+			<div class="texture-head">
+				To estimate your investment returns, Provide your pieces of information
+			</div>
+			<div class="texture-btn">
+				<a class="nav-link btn btn-primary d-inline-block" href="@Url.Action( "InvestorReturns","Investor")">Investor Return Calculator</a>
+			</div>
+		</div>
+	</section>
 
 	<section class="pt-3">
 		<div class="property-btn investor-btn">
@@ -238,45 +249,45 @@
 									</div>
 									@*normal input*@
 									@*<div class="col-md-3 col-sm-6">
-					<div class="form-group">
-						@Html.EditorFor(m => m.MinRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
-						<label for="input" class="control-label">Investment Range (Min)*</label>
-						<i class="bar"></i>
-						<div class="error" id=""></div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6">
-					<div class="form-group">
-						@Html.EditorFor(m => m.MaxRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
-						<label for="input" class="control-label">Investment Range (Max)*</label>
-						<i class="bar"></i>
-						<div class="error" id=""></div>
-					</div>
-				</div>*@
+											<div class="form-group">
+												@Html.EditorFor(m => m.MinRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
+												<label for="input" class="control-label">Investment Range (Min)*</label>
+												<i class="bar"></i>
+												<div class="error" id=""></div>
+											</div>
+										</div>
+										<div class="col-md-3 col-sm-6">
+											<div class="form-group">
+												@Html.EditorFor(m => m.MaxRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
+												<label for="input" class="control-label">Investment Range (Max)*</label>
+												<i class="bar"></i>
+												<div class="error" id=""></div>
+											</div>
+										</div>*@
 
 									@*slider input*@
 									@*<div class="col-md-6 col-12 slider-labels__main">
-					<div class="row">
-						<span class="mb-3 price-lable">Amount Range</span>
-						<div class="col-sm-12">
-							<div id="slider-range__investor"></div>
-						</div>
-					</div>
-					<div class="row slider-labels">
-						<div class="col-6 caption">
-							<strong>Min:</strong> <span id="investor-value1"></span>
-						</div>
-						<div class="col-6 text-right caption">
-							<strong>Max:</strong> <span id="investor-value2"></span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-12">
-							@Html.HiddenFor(m => m.MinRange)
-							@Html.HiddenFor(m => m.MaxRange)
-						</div>
-					</div>
-				</div>*@
+											<div class="row">
+												<span class="mb-3 price-lable">Amount Range</span>
+												<div class="col-sm-12">
+													<div id="slider-range__investor"></div>
+												</div>
+											</div>
+											<div class="row slider-labels">
+												<div class="col-6 caption">
+													<strong>Min:</strong> <span id="investor-value1"></span>
+												</div>
+												<div class="col-6 text-right caption">
+													<strong>Max:</strong> <span id="investor-value2"></span>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12">
+													@Html.HiddenFor(m => m.MinRange)
+													@Html.HiddenFor(m => m.MaxRange)
+												</div>
+											</div>
+										</div>*@
 
 									@*drop down inputs*@
 									<div class="col-md-3 col-sm-6">
@@ -307,13 +318,13 @@
 										</div>
 									</div>
 									@*<div class="col-md-3 col-sm-6">
-					<div class="form-group">
-						@Html.EditorFor(m => m.MaxRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
-						<label for="input" class="control-label">Investment Range (Max)*</label>
-						<i class="bar"></i>
-						<div class="error" id=""></div>
-					</div>
-				</div>*@
+											<div class="form-group">
+												@Html.EditorFor(m => m.MaxRange, new { htmlAttributes = new { @class = "form-control", placeholder = "000", @type = "number" } })
+												<label for="input" class="control-label">Investment Range (Max)*</label>
+												<i class="bar"></i>
+												<div class="error" id=""></div>
+											</div>
+										</div>*@
 									<div class="col-md-3 col-sm-6">
 										<div class="row">
 											<div class="col-sm-4 pr-0">
@@ -388,31 +399,31 @@
 										<div class="error" id=""></div>
 									</div>
 									@*<div class="form-group col-md-3 col-sm-6">
-					<select class="form-control basic-select" id="Country" name="Country">
-						<option value="Country 1">Country 1</option>
-						<option value="Country 2">Country 2</option>
-					</select>
-					<label for="select" class="control-label">Country*</label><i class="bar"></i>
-					<div class="error" id=""></div>
-				</div>
+											<select class="form-control basic-select" id="Country" name="Country">
+												<option value="Country 1">Country 1</option>
+												<option value="Country 2">Country 2</option>
+											</select>
+											<label for="select" class="control-label">Country*</label><i class="bar"></i>
+											<div class="error" id=""></div>
+										</div>
 
-				<div class="form-group col-md-3 col-sm-6">
-					<select class="form-control basic-select" id="State" name="State">
-						<option value="State 1">State 1</option>
-						<option value="State 2">State 2</option>
-					</select>
-					<label for="select" class="control-label">State*</label><i class="bar"></i>
-					<div class="error" id=""></div>
-				</div>
+										<div class="form-group col-md-3 col-sm-6">
+											<select class="form-control basic-select" id="State" name="State">
+												<option value="State 1">State 1</option>
+												<option value="State 2">State 2</option>
+											</select>
+											<label for="select" class="control-label">State*</label><i class="bar"></i>
+											<div class="error" id=""></div>
+										</div>
 
-				<div class="form-group col-md-3 col-sm-6">
-					<select class="form-control basic-select" id="District" name="District">
-						<option value="District 1">District 1</option>
-						<option value="District 2">District 2</option>
-					</select>
-					<label for="select" class="control-label">District/City*</label><i class="bar"></i>
-					<div class="error" id=""></div>
-				</div>*@
+										<div class="form-group col-md-3 col-sm-6">
+											<select class="form-control basic-select" id="District" name="District">
+												<option value="District 1">District 1</option>
+												<option value="District 2">District 2</option>
+											</select>
+											<label for="select" class="control-label">District/City*</label><i class="bar"></i>
+											<div class="error" id=""></div>
+										</div>*@
 
 									<div class="form-group col-md-3 col-sm-6">
 										@Html.EditorFor(m => m.Neighborhood, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Nearest Area" } })
@@ -434,7 +445,7 @@
 									<div class="col-md-12 col-sm-12">
 										<div class="checkbox m-0">
 											<label>
-												<input type="checkbox" id="investor-terms"/>
+												<input type="checkbox" id="investor-terms" />
 												<i class="helper"></i>
 												<span class="ml-2">
 													I agree and provide consent to Hi Space team to contact me in the mobile number and/or email id provided in the form.*

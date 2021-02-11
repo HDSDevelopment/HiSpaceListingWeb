@@ -1,0 +1,535 @@
+﻿
+@model HiSpaceListingModels.Investor
+@{
+	ViewData["Title"] = "Investor Returns";
+	Layout = "~/Views/Shared/_WebLayout.cshtml";
+	@using Microsoft.AspNetCore.Http
+}
+
+<div class="investor-returns nav-padding">
+	<div class="bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<ol class="breadcrumb mb-0">
+						<li class="breadcrumb-item"><a href="@Url.Action("Index", "Website")"> <i class="fas fa-home"></i> </a></li>
+
+						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span> Investor Returns Calculator </span></li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<section class="bg-texture-1">
+		<div class="container">
+			<div class="texture-head">
+				To become an investor with the HiSpace partners, Provide your pieces of information
+			</div>
+			<div class="texture-btn">
+				<a class="nav-link btn btn-sec d-inline-block" href="@Url.Action( "CreateInvestor","Investor")">Investor Form</a>
+			</div>
+		</div>
+	</section>
+	<section class="mb-4">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="mt-3 mb-4">
+						<h2>Return Calculator</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row rtn-form">
+				<div class="col-sm-4 rtn-form__div">
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="rtn_investment">
+								Investment*
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+							</label>
+							<input type="number" class="form-control" id="rtn_investment" name="rtn_investment" placeholder="1000000">
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="rtn_noi">
+								Current NOI*
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+							</label>
+							<input type="number" class="form-control" id="rtn_noi" name="rtn_noi" placeholder="10000">
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-12">
+							<label for="rtn_cap">
+								Estimated CapEx or TI thru Hold*
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+							</label>
+							<input type="number" class="form-control" id="rtn_cap" name="rtn_cap" placeholder="10000">
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="rtn_inflation">
+								Inflation*
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+							</label>
+							<input type="number" class="form-control percent-float inpct" id="rtn_inflation" name="rtn_inflation" placeholder="0.00">
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="rtn_ltv">
+								Loan to Value(LTV)*
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+							</label>
+							<input type="number" class="form-control percent-float inpct" id="rtn_ltv" name="rtn_ltv" placeholder="0.00">
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-12">
+							<label for="rtn_intrest">
+								Interest Rate*
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+							</label>
+							<input type="number" class="form-control percent-float inpct" id="rtn_intrest" name="rtn_intrest" placeholder="0.00">
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="rtn_period">
+								Holding Period (Years)*
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+							</label>
+							<select class="form-control basic-select" id="rtn_period" name="rtn_period">
+								<option value="1">1 Year</option>
+								<option value="2">2 Years</option>
+								<option value="3">3 Years</option>
+								<option value="4">4 Years</option>
+								<option value="5">5 Years</option>
+							</select>
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="rtn_exitmethod">
+								Exit Method*
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+							</label>
+							<select class="form-control basic-select" id="rtn_exitmethod" name="rtn_exitmethod">
+								<option value="1">DCF</option>
+								<option value="2">Direct Cap</option>
+							</select>
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-12">
+							<label for="rtn_exitcap">
+								Exit Cap Rate*
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+							</label>
+							<input type="number" class="form-control percent-float inpct" id="rtn_exitcap" name="rtn_exitcap" placeholder="0.00">
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="rtn_discount">
+								Discount Rate*
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+							</label>
+							<input type="number" class="form-control percent-float inpct" id="rtn_discount" name="rtn_discount" placeholder="0.00">
+							<div class="error" id=""></div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="rtn_tax">
+								Tax Rate*
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+							</label>
+							<input type="number" class="form-control percent-float inpct" id="rtn_tax" name="rtn_tax" placeholder="0.00">
+							<div class="error" id=""></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 mt-3 text-center">
+							<button type="submit" class="btn btn-primary">Calculate</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-8">
+					<div class="mb-3">
+						<h4 class="text-center">Cash Flow</h4>
+					</div>
+					<div id="container" class="" style="height: 100%">
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+	</section>
+
+	<section class="mb-4">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="mb-3">
+						<h4>Cash Flow Table</h4>
+					</div>
+				</div>
+			</div>
+			<div class="">
+				<table class="table table-sm rtn-table">
+					<thead>
+						<tr>
+							<th scope="col">Cash Flow</th>
+							<th scope="col">Year 1</th>
+							<th scope="col">Year 2</th>
+							<th scope="col">Year 3</th>
+							<th scope="col">Year 4</th>
+							<th scope="col">Year 5</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">NOI</th>
+							<td>9500</td>
+							<td>10070</td>
+							<td>10674</td>
+							<td>11315</td>
+							<td>11994</td>
+						</tr>
+						<tr>
+							<th scope="row">Capital Expenses</th>
+							<td>-5000</td>
+							<td>-5000</td>
+							<td>-5000</td>
+							<td>-5000</td>
+							<td>-5000</td>
+						</tr>
+						<tr>
+							<th scope="row">Net Cash Flow</th>
+							<td>4500</td>
+							<td>5070</td>
+							<td>5674</td>
+							<td>11315</td>
+							<td>11994</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+
+	<section class="mb-4">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="mb-3">
+						<h4>Returns</h4>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="mb-3">
+						<h5 class="text-center text-pry">IRR</h5>
+					</div>
+					<div id="irr_chart" style="height: 300px"></div>
+				</div>
+				<div class="col-sm-3">
+					<div class="mb-3">
+						<h5 class="text-center text-info">Profit</h5>
+					</div>
+					<div id="profit_chart" style="height: 300px"></div>
+				</div>
+				<div class="col-sm-3">
+					<div class="mb-3">
+						<h5 class="text-center text-try">Multiple</h5>
+					</div>
+					<div id="multiple_chart" style="height: 300px"></div>
+				</div>
+				<div class="col-sm-3">
+					<div class="mb-3">
+						<h5 class="text-center text-sec">Peak Equity</h5>
+					</div>
+					<div id="peak_chart" style="height: 300px"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+@section Scripts {
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<script>
+	$('body').on('blur', '.percent-float', function () {
+		var percentValue = parseFloat($(this).val()).toFixed(2);
+		$(this).val(percentValue);
+	})
+
+	//chart flow
+	var dom = document.getElementById("container");
+	var myChart = echarts.init(dom);
+	var app = {};
+	var option;
+	option = {
+		//title: {
+		//	text: 'Cash Flow'
+		//},
+		renderer: 'svg',
+		tooltip: {
+			trigger: 'axis'
+		},
+		legend: {
+			data: ['NOI', 'Net Cash Flow']
+		},
+		grid: {
+			show: false,
+			left: "10%",
+			top: "5%",
+			width: "80%",
+			height: "80%",
+			containLabel: true
+		},
+		toolbox: {
+			feature: {
+				saveAsImage: {}
+			}
+		},
+		xAxis: {
+			type: 'category',
+			boundaryGap: false,
+			data: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+			name: "No of Years",
+			nameLocation: "middle",
+			nameTextStyle: {
+				fontWeight: "bold",
+				padding: [10, 0, 0, 0]
+			}
+		},
+		yAxis: [{
+			type: "value",
+			show: true,
+			name: "Amount",
+			nameLocation: "middle",
+			nameTextStyle: {
+				fontWeight: "bold",
+				align: "center",
+				padding: [4, 0, 0, 0]
+			},
+			boundaryGap: false,
+			axisLine: {
+				show: true
+			}
+		}],
+		series: [
+			{
+				name: 'NOI',
+				type: 'line',
+				data: [9500, 10070, 10674, 11315, 11994]
+			},
+			{
+				name: 'Net Cash Flow',
+				type: 'line',
+				data: [6500, 7070, 7674, 8315, 12713]
+			}
+		]
+	};
+	if (option && typeof option === 'object') {
+		myChart.setOption(option);
+	}
+
+	//IRR
+	var irr_dom = document.getElementById("irr_chart");
+	var irr_myChart = echarts.init(irr_dom);
+	var irr_app = {};
+	var irr_option;
+	irr_option = {
+		renderer: 'svg',
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {         
+				type: 'shadow'     
+			}
+		},
+		grid: {
+			containLabel: true,
+			left: "0",
+			top: "5%"
+		},
+		xAxis: [
+			{
+				type: 'category',
+				data: ['UnLevered', 'Levered', 'Post Tax'],
+				axisTick: {
+					alignWithLabel: true
+				}
+			}
+		],
+		yAxis: [
+			{
+				type: 'value',
+				axisLine: {
+					show: true
+				}
+			}
+		],
+		series: [
+			{
+				name: 'IRR',
+				type: 'bar',
+				barWidth: '40%',
+				data: [9.65, 16.18, 13.90]
+			}
+		],
+		color: '#ff9900'
+	};
+
+	if (irr_option && typeof irr_option === 'object') {
+		irr_myChart.setOption(irr_option);
+	}
+
+	//Profit
+	var profit_dom = document.getElementById("profit_chart");
+	var profit_myChart = echarts.init(profit_dom);
+	var profit_app = {};
+	var profit_option;
+	profit_option = {
+		renderer: 'svg',
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'shadow'
+			}
+		},
+		grid: {
+			containLabel: true,
+			left: "0",
+			top: "5%"
+		},
+		xAxis: [
+			{
+				type: 'category',
+				data: ['UnLevered', 'Levered', 'Post Tax'],
+				axisTick: {
+					alignWithLabel: true
+				}
+			}
+		],
+		yAxis: [
+			{
+				type: 'value',
+				axisLine: {
+					show: true
+				}
+			}
+		],
+		series: [
+			{
+				name: 'Profit',
+				type: 'bar',
+				barWidth: '40%',
+				data: [38412, 18724, 16085]
+			}
+		],
+		color: '#2196f3'
+	};
+
+	if (profit_option && typeof profit_option === 'object') {
+		profit_myChart.setOption(profit_option);
+	}
+
+	//Multiple
+	var multiple_dom = document.getElementById("multiple_chart");
+	var multiple_myChart = echarts.init(multiple_dom);
+	var multiple_app = {};
+	var multiple_option;
+	multiple_option = {
+		renderer: 'svg',
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'shadow'
+			}
+		},
+		grid: {
+			containLabel: true,
+			left: "0",
+			top: "5%"
+		},
+		xAxis: [
+			{
+				type: 'category',
+				data: ['UnLevered', 'Levered', 'Post Tax'],
+				axisTick: {
+					alignWithLabel: true
+				}
+			}
+		],
+		yAxis: [
+			{
+				type: 'value',
+				axisLine: {
+					show: true
+				}
+			}
+		],
+		series: [
+			{
+				name: 'Profit',
+				type: 'bar',
+				barWidth: '40%',
+				data: [1.31, 1.60, 1.51]
+			}
+		],
+		color: '#E91E63'
+	};
+
+	if (multiple_option && typeof multiple_option === 'object') {
+		multiple_myChart.setOption(multiple_option);
+	}
+
+	//Peak Equity
+	var peak_dom = document.getElementById("peak_chart");
+	var peak_myChart = echarts.init(peak_dom);
+	var peak_app = {};
+	var peak_option;
+	peak_option = {
+		renderer: 'svg',
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'shadow'
+			}
+		},
+		grid: {
+			containLabel: true,
+			left: "0",
+			top: "5%"
+		},
+		xAxis: [
+			{
+				type: 'category',
+				data: ['UnLevered', 'Levered', 'Post Tax'],
+				axisTick: {
+					alignWithLabel: true
+				}
+			}
+		],
+		yAxis: [
+			{
+				type: 'value',
+				axisLine: {
+					show: true
+				}
+			}
+		],
+		series: [
+			{
+				name: 'Profit',
+				type: 'bar',
+				barWidth: '40%',
+				data: [125000, 31250, 31250]
+			}
+		],
+		color: '#2ecc71'
+	};
+
+	if (peak_option && typeof peak_option === 'object') {
+		peak_myChart.setOption(peak_option);
+	}
+
+</script>
+}
