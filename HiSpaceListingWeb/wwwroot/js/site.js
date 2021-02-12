@@ -3305,3 +3305,186 @@ $(".favme").on('click touchstart', function () {
 $(".favme").on('animationend', function () {
 	$(this).toggleClass('is_animating');
 });
+
+
+
+
+
+
+//investor calculation
+function returnCalculation() {
+	var rtnHoldingPeriod = $('#rtn_period').val();
+	var rtnDiscount = $('#rtn_discount').val();
+	var rtnInflation = $('#rtn_inflation').val();
+	var rtnNOI = $('#rtn_noi').val();
+	var rtnEstimatedCap = $('#rtn_cap').val();
+	var discountFactor = [];
+	var inflationRate = [];
+	var NOI = [];
+	var capitalExpenses = [];
+	var netCashFlow = [];
+	var holdingPeriodYears = [];
+	//console.log(rtnHoldingPeriod);
+	//console.log(rtnDiscount);
+	//console.log(rtnInflation);
+	//console.log(rtnNOI);
+	//console.log(rtnEstimatedCap);
+	//discount factor
+	for (i = 1; i <= rtnHoldingPeriod; i++) {
+		discountFactor.push(parseFloat(Math.pow((1 + ((rtnDiscount) / 100)), -i).toFixed(2)));
+	}
+	//holding periods list array
+	for (i = 1; i <= rtnHoldingPeriod; i++) {
+		holdingPeriodYears.push("Year "+i);
+	}
+	console.log(holdingPeriodYears);
+	//inflation rate
+	for (i = 1; i <= rtnHoldingPeriod; i++) {
+		if (i == 1) {
+			var ir = 1;
+			inflationRate.push(ir);
+		} else {
+			var ir = parseFloat(((ir) * (1 + (rtnInflation) / 100)).toFixed(8));
+			//console.log(ir);
+			inflationRate.push(ir);
+		}		
+	}
+	//console.log(inflationRate);
+	//console.log(inflationRate.length);
+
+	//NOI calculation
+	for (i = 0; i < inflationRate.length; i++) {
+		//console.log(inflationRate[i]);
+		//NOI.push(parseFloat((inflationRate[i] * rtnNOI).toFixed(4)));
+		NOI.push(parseInt(inflationRate[i] * rtnNOI));
+	}
+	console.log(NOI);
+	//Capital Expenses
+	for (i = 1; i <= rtnHoldingPeriod; i++) {
+		//capitalExpenses.push(parseFloat(rtnEstimatedCap / rtnHoldingPeriod).toFixed(4));
+		capitalExpenses.push(parseInt(rtnEstimatedCap / rtnHoldingPeriod));
+	}
+	console.log(capitalExpenses);
+	//Net Cash Flow
+	for (i = 0; i < rtnHoldingPeriod; i++) {
+		//console.log('test');
+		//netCashFlow.push(parseFloat(NOI[i] - capitalExpenses[i]).toFixed(4));
+		netCashFlow.push(parseInt(NOI[i] - capitalExpenses[i]));
+	}
+	console.log(netCashFlow);
+	//chart cash flow
+	rtnCashFlow(NOI, capitalExpenses, netCashFlow, holdingPeriodYears);
+	//table append
+	rtnCashFlowTable(NOI, capitalExpenses, netCashFlow, holdingPeriodYears);
+};
+
+function rtnCashFlowTable(NOI, capitalExpenses, netCashFlow, holdingPeriodYears) {
+	console.log(holdingPeriodYears);
+	var cashTable = $("#rtn-cashflow-table");
+	//heading
+	cashTable.find('thead tr').empty();
+	cashTable.find('thead tr').append('<th scope="col">Cash Flow</th>');
+	$.each(holdingPeriodYears, function (i, element) {
+		//console.log(element);
+		//console.log(i);
+		cashTable.find('thead tr').append('<th scope="col">' +element+'</th>');
+	});
+
+	//NOI	
+	var cashNOI = $('#row-noi');
+	cashNOI.empty();
+	cashNOI.append('<th scope="col">NOI</th>');
+	$.each(NOI, function (i, element) {
+		cashNOI.append('<td>' + element + '</td>');
+	});
+
+	//Capital Expenses	
+	var cashCapital = $('#row-capital');
+	cashCapital.empty();
+	cashCapital.append('<th scope="col">Capital Expenses</th>');
+	$.each(capitalExpenses, function (i, element) {
+		cashCapital.append('<td>(-)' + element + '</td>');
+	});
+
+	//Net cash flow
+	var cashNetcash = $('#row-netCash');
+	cashNetcash.empty();
+	cashNetcash.append('<th scope="col">Net Cash Flow</th>');
+	$.each(netCashFlow, function (i, element) {
+		cashNetcash.append('<td>' + element + '</td>');
+	});
+};
+
+function rtnCashFlow(NOI, capitalExpenses, netCashFlow, holdingPeriodYears) {
+	//chart flow
+	var dom = document.getElementById("container");
+	var myChart = echarts.init(dom);
+	var app = {};
+	var option;
+	option = {
+		//title: {
+		//	text: 'Cash Flow'
+		//},
+		renderer: 'svg',
+		tooltip: {
+			trigger: 'axis'
+		},
+		legend: {
+			data: ['NOI', 'Net Cash Flow']
+		},
+		grid: {
+			show: false,
+			left: "10%",
+			top: "5%",
+			width: "80%",
+			height: "80%",
+			containLabel: true
+		},
+		toolbox: {
+			feature: {
+				saveAsImage: {}
+			}
+		},
+		xAxis: {
+			type: 'category',
+			boundaryGap: false,
+			data: holdingPeriodYears,
+			name: "No of Years",
+			nameLocation: "middle",
+			nameTextStyle: {
+				fontWeight: "bold",
+				padding: [10, 0, 0, 0]
+			}
+		},
+		yAxis: [{
+			type: "value",
+			show: true,
+			name: "Amount",
+			nameLocation: "middle",
+			nameTextStyle: {
+				fontWeight: "bold",
+				align: "center",
+				padding: [4, 0, 0, 0]
+			},
+			boundaryGap: false,
+			axisLine: {
+				show: true
+			}
+		}],
+		series: [
+			{
+				name: 'NOI',
+				type: 'line',
+				data: NOI
+			},
+			{
+				name: 'Net Cash Flow',
+				type: 'line',
+				data: netCashFlow
+			}
+		]
+	};
+	if (option && typeof option === 'object') {
+		myChart.setOption(option);
+	}
+};
