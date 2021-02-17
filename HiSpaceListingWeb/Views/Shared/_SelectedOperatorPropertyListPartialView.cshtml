@@ -10,13 +10,13 @@
 {
 	<div class="result-count">Property Filter Count : <span>@Model.PropertyDetail.Count()</span></div>
 	<div class="paginate">
-		<div class="pager">
+		@*<div class="pager">
 			<div class="firstPage pager-icon">&laquo;</div>
 			<div class="previousPage pager-icon">&lsaquo;</div>
 			<div class="pageNumbers custom-scrollbar"></div>
 			<div class="lastPage pager-icon">&raquo;</div>
 			<div class="nextPage pager-icon">&rsaquo;</div>
-		</div>
+		</div>*@
 		<div class="page-items">
 			@foreach (var item in Model.PropertyDetail)
 			{
@@ -271,13 +271,13 @@
 			</div>
 			}
 		</div>
-		<div class="pager">
+		@*<div class="pager">
 			<div class="firstPage pager-icon">&laquo;</div>
 			<div class="previousPage pager-icon">&lsaquo;</div>
 			<div class="pageNumbers custom-scrollbar"></div>
 			<div class="nextPage pager-icon">&rsaquo;</div>
 			<div class="lastPage pager-icon">&raquo;</div>
-		</div>
+		</div>*@
 	</div>
 
 @if (Model.LinkedREPRofessionals.Any())

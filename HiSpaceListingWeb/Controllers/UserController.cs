@@ -149,7 +149,7 @@ namespace HiSpaceListingWeb.Controllers
 					model.UserType = 2;
 					model.UserState = "Basic";
 				}
-				model.Status = true;
+				model.Status = false;
 				model.CreatedDateTime = DateTime.Now;
 				model.LoginCount = 0;
 				model.TermsAndConditions = true;
@@ -170,16 +170,16 @@ namespace HiSpaceListingWeb.Controllers
 						_user = rs.Result;
 					}
 
-					//email for signup success
-					var signupTask = client.GetAsync(Common.Instance.ApiSendSignupSuccess + _user.Email.ToString() + "/" + _user.CompanyName.ToString() + "/" + _user.Password.ToString());
-					signupTask.Wait();
+					////email for signup success
+					//var signupTask = client.GetAsync(Common.Instance.ApiSendSignupSuccess + _user.Email.ToString() + "/" + _user.CompanyName.ToString() + "/" + _user.Password.ToString());
+					//signupTask.Wait();
 
-					var Sresult = signupTask.Result;
-					if (Sresult.IsSuccessStatusCode)
-					{
-						//var rs = result.Content.ReadAsAsync<bool>().Result;
-						//var sr = rs;
-					}
+					//var Sresult = signupTask.Result;
+					//if (Sresult.IsSuccessStatusCode)
+					//{
+					//	//var rs = result.Content.ReadAsAsync<bool>().Result;
+					//	//var sr = rs;
+					//}
 
 					//SetSessionVariables();
 				}
@@ -219,6 +219,26 @@ namespace HiSpaceListingWeb.Controllers
 				}
 			}
 			return RedirectToAction("AdminLister", "Admin");
+		}
+
+		[HttpGet]
+		public ActionResult UserActivativation(int id, string check)
+		{
+			User _user = null;
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiUserControllerName);
+				//HTTP GET
+				var responseTask = client.GetAsync(Common.Instance.ApiUserActivate + id + "/" + check);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					_user = result.Content.ReadAsAsync<User>().Result;
+				}
+			}
+			return RedirectToAction("Index", "Website");
 		}
 
 		[HttpGet]

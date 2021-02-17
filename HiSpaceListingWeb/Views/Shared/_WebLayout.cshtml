@@ -206,6 +206,7 @@
 								<ul class="dropdown-menu">
 									<li><a class="dropdown-item" href="@Url.Action( "ListingTable","Listing",new { UserID = ViewBag.UserId, UserType = ViewBag.UserType})">Profile Setting</a></li>
 									<li><a class="dropdown-item" href="@Url.Action( "UserEnquiry","Listing",new { UserId = ViewBag.UserId, UserType = ViewBag.UserType, Type = "My"})">Made Enquiries</a></li>
+									<li><a class="dropdown-item" href="@Url.Action( "FillterFavorites","Filter",new { User = ViewBag.UserId})">Favorites</a></li>
 								</ul>
 							</li>
 						}

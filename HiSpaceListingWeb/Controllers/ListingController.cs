@@ -322,6 +322,29 @@ namespace HiSpaceListingWeb.Controllers
 			//return PartialView("_PropertyFilterListPartialView", vModel);
 		}
 
+		public ActionResult FavAddUserOperator(UserOperator userOperator)
+		{
+			SetSessionVariables();
+			UserOperator vModel = new UserOperator();
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiAddUserOperator, userOperator);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<UserOperator>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+			}
+			return Json(vModel);
+			//return PartialView("_PropertyFilterListPartialView", vModel);
+		}
+
 		public ActionResult FavDeleteUserListing(UserListing userListing)
 		{
 			SetSessionVariables();
@@ -337,6 +360,29 @@ namespace HiSpaceListingWeb.Controllers
 				if (result.IsSuccessStatusCode)
 				{
 					var readTask = result.Content.ReadAsAsync<UserListing>();
+					readTask.Wait();
+					vModel = readTask.Result;
+				}
+			}
+			return Json(vModel);
+			//return PartialView("_PropertyFilterListPartialView", vModel);
+		}
+
+		public ActionResult FavDeleteUserOperator(UserOperator userOperator)
+		{
+			SetSessionVariables();
+			UserOperator vModel = new UserOperator();
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiDeleteUserOperator, userOperator);
+				responseTask.Wait();
+
+				var result = responseTask.Result;
+				if (result.IsSuccessStatusCode)
+				{
+					var readTask = result.Content.ReadAsAsync<UserOperator>();
 					readTask.Wait();
 					vModel = readTask.Result;
 				}

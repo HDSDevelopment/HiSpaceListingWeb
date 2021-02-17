@@ -31,13 +31,13 @@
 					{
 						<div class="result-count">Property Filter Count : <span>@Model.Count()</span></div>
 						<div class="paginate">
-							<div class="pager">
+							@*<div class="pager">
 								<div class="firstPage pager-icon">&laquo;</div>
 								<div class="previousPage pager-icon">&lsaquo;</div>
 								<div class="pageNumbers custom-scrollbar"></div>
 								<div class="lastPage pager-icon">&raquo;</div>
 								<div class="nextPage pager-icon">&rsaquo;</div>
-							</div>
+							</div>*@
 							<div class="page-items">
 								@foreach (var item in Model)
 								{
@@ -96,7 +96,7 @@
 													<div class="fav-section">
 														<div class="flexbox tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Bookmark the favorite">
 															<div class="fav-btn @ViewBag.FavActive">
-																<span href="" class="favme dashicons dashicons-star-filled list-unfav @ViewBag.FavActive" v-userid="@ViewBag.UserId" v-listingid="@item.SpaceListing.ListingId" v-favid="@ViewBag.FavId"></span>
+																<span href="" class="favme favme-listing dashicons dashicons-star-filled list-unfav @ViewBag.FavActive" v-userid="@ViewBag.UserId" v-listingid="@item.SpaceListing.ListingId" v-favid="@ViewBag.FavId"></span>
 															</div>
 														</div>
 													</div>
@@ -310,13 +310,13 @@
 									</div>
 								}
 							</div>
-							<div class="pager">
+							@*<div class="pager">
 								<div class="firstPage pager-icon">&laquo;</div>
 								<div class="previousPage pager-icon">&lsaquo;</div>
 								<div class="pageNumbers custom-scrollbar"></div>
 								<div class="nextPage pager-icon">&rsaquo;</div>
 								<div class="lastPage pager-icon">&raquo;</div>
-							</div>
+							</div>*@
 						</div>
 					}
 					else

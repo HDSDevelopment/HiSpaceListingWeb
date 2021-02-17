@@ -6,7 +6,8 @@
 @using HiSpaceListingWeb.Utilities;
 @using HiSpaceListingService.ViewModel;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@model IEnumerable<HiSpaceListingService.ViewModel.PropertyPeopleResponse>
+@*@model IEnumerable<HiSpaceListingService.ViewModel.PropertyPeopleResponse>*@
+@model HiSpaceListingService.ViewModel.PaginationModel<PropertyPeopleResponse>
 
 <div class="row">
 
@@ -114,241 +115,258 @@
 	</div>
 </div>
 
-@if (Model != null && Model.Count() != 0)
+@if (Model.CurrentPageData != null && Model.CurrentPageData.Count() != 0)
 {
+	@if (Model.TotalPages > 0)
+	{
+		<div class="result-data">
+			<div class="result-count">People page : <span id="page_current">@Model.CurrentPage</span> of <span>@Model.TotalPages</span></div>
+			<div class="result-count text-right">Total People : <span id="page_people_count">@Model.Count</span></div>
+		</div>
+	}
+	else
+	{
+		<div class="result-data">
+			<div class="result-count">Latest People</div>
+		</div>
+	}
 	@*<div class="result-count" id="opCount">People Filter Count : <span>@Model.Count()</span></div>*@
-	<div class="paginate">
-		<div class="pager">
+<div class="paginate">
+	@*<div class="pager">
 			<div class="firstPage pager-icon">&laquo;</div>
 			<div class="previousPage pager-icon">&lsaquo;</div>
 			<div class="pageNumbers custom-scrollbar"></div>
 			<div class="lastPage pager-icon">&raquo;</div>
 			<div class="nextPage pager-icon">&rsaquo;</div>
-		</div>
-		<div class="page-items">
-			@foreach (var item in Model)
+		</div>*@
+	<div class="page-items">
+		@foreach (var item in Model.CurrentPageData)
+		{
+			if (item.Projects.Any())
 			{
-				if (item.Projects.Any())
-				{
-					<div class="property-item property-col-list mt-4">
-						<div class="row no-gutters">
-							<div class="col-lg-12 col-md-12 prop-details">
-								<div class="property-details">
-									<div class="row">
-										<div class="people-details__head col-sm-6">
-											<div class="people-details__head-logo text-uppercase">@item.Listing.RE_FirstName[0]<span></span>@item.Listing.RE_LastName[0]</div>
-											<div class="property-details__header text-capitalize">@item.Listing.RE_FirstName<span> - </span> @item.Listing.RE_LastName</div>
-											@if (ViewBag.UserId != null && ViewBag.UserId != -1)
-											{
-												ViewBag.DisabledPointer = "";
-											}
-											else
-											{
-												ViewBag.DisabledPointer = "disabled-pointer";
-											}
-											@if (item.Listing.IsFavorite)
-											{
-												ViewBag.FavActive = "active";
-												ViewBag.FavId = item.Listing.FavoriteId;
-											}
-											else
-											{
-												ViewBag.FavActive = "";
-												ViewBag.FavId = "";
-											}
-											<div class="fav-section fav-section_re @ViewBag.DisabledPointer">
-												<div class="flexbox tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Bookmark the favorite">
-													<div class="fav-btn @ViewBag.FavActive">
-														<span href="" class="favme dashicons dashicons-star-filled list-unfav @ViewBag.FavActive" v-userid="@ViewBag.UserId" v-listingid="@item.Listing.ListingId" v-favid="@ViewBag.FavId"></span>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="property-details__role col-sm-6 align-self-center">
-											<div class="mb-1">HiSpace-User Name: <span class="property-details__role-name">@item.Operator.CompanyName</span></div>
-											@if (item.Operator.Website != null)
-											{
-												<div>Website: <a href="@item.Operator.Website" target="_blank">@item.Operator.Website</a></div>
-											}
-											<div>
-												Role: <span class="property-details__role-type">
-													@{var role = "null";}
-													@foreach (var roles in item.Projects)
-													{
-														@if (!@role.Equals(roles.ProjectRole))
-														{
-															<span class="re-roles">@roles.ProjectRole</span>
-														}
-														role = @roles.ProjectRole;
-													}
-												</span>
-											</div>
-										</div>
-									</div>
-									@if (ViewBag.UserId != null && ViewBag.UserId != -1)
-									{
-										ViewBag.BlurClass = "";
-									}
-									else
-									{
-										ViewBag.BlurClass = "list-blur";
-									}
-									<div class="@ViewBag.BlurClass">
-										<div class="people-details__section">
-											<div class="people-projects mb-2">
-												<span class="property-span__head">Total Projects</span>
-												<span class="property-span__type badge-sec">@item.TotalProjects</span>
-											</div>
-											<div class="property-detail-img popup-gallery people-image__carousel">
-												<div class="owl-carousel owl-theme owl-loaded carousel-People">
-													<div class="owl-stage-outer">
-														<div class="owl-stage">
-															@foreach (var images in item.Projects)
-															{
-																<div class="owl-item">
-																	@if (images.ImageUrl != null)
-																	{
-																		<a class="portfolio-img" target="_blank" href="@images.ImageUrl">
-																			<img class="img-fluid" src="@images.ImageUrl" alt="">
-																		</a>
-																		<div class="people-image__type">@images.ProjectName</div>
-																	}
-																	else
-																	{
-																		<a class="portfolio-img" target="_blank" href="~/images/doc_placeholder.png">
-																			<img class="img-fluid" src="~/images/doc_placeholder.png" alt="">
-																		</a>
-																		<div class="people-image__type">@images.ProjectName</div>
-																	}
-
-																</div>
-															}
-														</div>
-													</div>
-												</div>
-												@if (item.LinkedOpr != null)
-												{
-													<div class="owl-carousel owl-theme owl-loaded carousel-People mt-3">
-														<div class="people-operator">
-															<div class="people-operator__head mt-1">Linked HiSpace-User with us</div>
-															<div class="owl-stage-outer">
-																<div class="owl-stage">
-
-																	@foreach (var oper in item.LinkedOpr)
-																	{
-																		<div class="owl-item">
-																			<div class="people-operator__list">
-																				@if (oper.Doc_CompanyLogo != null)
-																				{
-																					<img class="oper-img" src="@oper.Doc_CompanyLogo" data-holder-rendered="true">
-																				}
-																				else
-																				{
-																					<img class="oper-img" src="~/images/operatorPlaceholder.png" data-holder-rendered="true">
-
-																				}
-
-																				<div>@oper.CompanyName</div>
-																				<div class="opertor-details__list"><i class="fas fa-building"></i>@oper.PropertyName</div>
-																				<div class="opertor-details__list"><i class="fas fa-user-tie"></i>@oper.ProjectRole</div>
-																			</div>
-																		</div>
-																	}
-																</div>
-
-															</div>
-														</div>
-													</div>
-													@*<div class="people-operator">
-															<div class="people-operator__head">Linked Operators with us</div>
-															@foreach (var oper in item.LinkedOpr)
-															{
-																<div class="people-operator__list">
-																	@if (oper.Doc_CompanyLogo != null)
-																	{
-																		<img class="oper-img" src="@oper.Doc_CompanyLogo" data-holder-rendered="true">
-																	}
-																	else
-																	{
-																		<img class="oper-img" src="~/images/operatorPlaceholder.png" data-holder-rendered="true">
-
-																	}
-
-																	<div>@oper.CompanyName</div>
-																	<div class="opertor-details__list"><i class="fas fa-building"></i>@oper.PropertyName</div>
-																	<div class="opertor-details__list"><i class="fas fa-user-tie"></i>@oper.ProjectRole</div>
-																</div>
-															}
-														</div>*@
-												}
-
-											</div>
-
-											<div class="property-details__footer mt-1">
-												<div class="property-details__address">
-													<i class="fas fa-map-marker-alt fa-xs"></i>
-													@if (item.Listing.street_number != null)
-													{
-														@Html.Raw(@item.Listing.street_number + ",");
-													}
-													@if (item.Listing.route != null)
-													{
-														@Html.Raw(@item.Listing.route + ",");
-													}
-													<span class="property-span__head">@item.Listing.locality</span>, @item.Listing.administrative_area_level_1. <span class="property-span__head">@item.Listing.postal_code</span>
-												</div>
-												<div class="property-details__total">
-
-													<span class="property-span__tot">
-														<i class="fas fa-envelope fa-xs"></i>@item.Listing.Email
-													</span>
-													<span class="property-span__head"> | </span>
-													<span class="property-span__occ">
-														<i class="fas fa-mobile fa-xs"></i>@item.Listing.Phone
-													</span>
-												</div>
-											</div>
-
-										</div>
-										<div class="list-blur__background">
-											<div class="list-blur__btn">
-												<a class="property-link btn btn-outline-info modal-link__login obs-center" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/PeopleDetailListByListingId?ListingId="+@item.Listing.ListingId+""})" href="javascript:function() { return false; }">Join to view the detail</a>
-											</div>
-										</div>
-									</div>
-									<div class="">
+				<div class="property-item property-col-list mt-4">
+					<div class="row no-gutters">
+						<div class="col-lg-12 col-md-12 prop-details">
+							<div class="property-details">
+								<div class="row">
+									<div class="people-details__head col-sm-6">
+										<div class="people-details__head-logo text-uppercase">@item.Listing.RE_FirstName[0]<span></span>@item.Listing.RE_LastName[0]</div>
+										<div class="property-details__header text-capitalize">@item.Listing.RE_FirstName<span> - </span> @item.Listing.RE_LastName</div>
 										@if (ViewBag.UserId != null && ViewBag.UserId != -1)
 										{
-											<a class="property-link btn btn-primary btn-block" href="@Url.Action("PeopleDetailListByListingId", "Detail", new { ListingId = item.Listing.ListingId })">See Details</a>
+											ViewBag.DisabledPointer = "";
 										}
 										else
 										{
-											<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/PeopleDetailListByListingId?ListingId="+@item.Listing.ListingId+""})" href="javascript:function() { return false; }">See Details</a>
+											ViewBag.DisabledPointer = "disabled-pointer";
 										}
+										@if (item.Listing.IsFavorite)
+										{
+											ViewBag.FavActive = "active";
+											ViewBag.FavId = item.Listing.FavoriteId;
+										}
+										else
+										{
+											ViewBag.FavActive = "";
+											ViewBag.FavId = "";
+										}
+										<div class="fav-section fav-section_re @ViewBag.DisabledPointer">
+											<div class="flexbox tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Bookmark the favorite">
+												<div class="fav-btn @ViewBag.FavActive">
+													<span href="" class="favme favme-listing dashicons dashicons-star-filled list-unfav @ViewBag.FavActive" v-userid="@ViewBag.UserId" v-listingid="@item.Listing.ListingId" v-favid="@ViewBag.FavId"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="property-details__role col-sm-6 align-self-center">
+										<div class="mb-1">HiSpace-User Name: <span class="property-details__role-name">@item.Operator.CompanyName</span></div>
+										@if (item.Operator.Website != null)
+										{
+											<div>Website: <a href="@item.Operator.Website" target="_blank">@item.Operator.Website</a></div>
+										}
+										<div>
+											Role: <span class="property-details__role-type">
+												@{var role = "null";}
+												@foreach (var roles in item.Projects)
+												{
+													@if (!@role.Equals(roles.ProjectRole))
+													{
+														<span class="re-roles">@roles.ProjectRole</span>
+													}
+													role = @roles.ProjectRole;
+												}
+											</span>
+										</div>
+									</div>
+								</div>
+								@if (ViewBag.UserId != null && ViewBag.UserId != -1)
+								{
+									ViewBag.BlurClass = "";
+								}
+								else
+								{
+									ViewBag.BlurClass = "list-blur";
+								}
+								<div class="@ViewBag.BlurClass">
+									<div class="people-details__section">
+										<div class="people-projects mb-2">
+											<span class="property-span__head">Total Projects</span>
+											<span class="property-span__type badge-sec">@item.TotalProjects</span>
+										</div>
+										<div class="property-detail-img popup-gallery people-image__carousel">
+											<div class="owl-carousel owl-theme owl-loaded carousel-People">
+												<div class="owl-stage-outer">
+													<div class="owl-stage">
+														@foreach (var images in item.Projects)
+														{
+															<div class="owl-item">
+																@if (images.ImageUrl != null)
+																{
+																	<a class="portfolio-img" target="_blank" href="@images.ImageUrl">
+																		<img class="img-fluid" src="@images.ImageUrl" alt="">
+																	</a>
+																	<div class="people-image__type">@images.ProjectName</div>
+																}
+																else
+																{
+																	<a class="portfolio-img" target="_blank" href="~/images/doc_placeholder.png">
+																		<img class="img-fluid" src="~/images/doc_placeholder.png" alt="">
+																	</a>
+																	<div class="people-image__type">@images.ProjectName</div>
+																}
+
+															</div>
+														}
+													</div>
+												</div>
+											</div>
+											@if (item.LinkedOpr != null)
+											{
+												<div class="owl-carousel owl-theme owl-loaded carousel-People mt-3">
+													<div class="people-operator">
+														<div class="people-operator__head mt-1">Linked HiSpace-User with us</div>
+														<div class="owl-stage-outer">
+															<div class="owl-stage">
+
+																@foreach (var oper in item.LinkedOpr)
+																{
+																	<div class="owl-item">
+																		<div class="people-operator__list">
+																			@if (oper.Doc_CompanyLogo != null)
+																			{
+																				<img class="oper-img" src="@oper.Doc_CompanyLogo" data-holder-rendered="true">
+																			}
+																			else
+																			{
+																				<img class="oper-img" src="~/images/operatorPlaceholder.png" data-holder-rendered="true">
+
+																			}
+
+																			<div>@oper.CompanyName</div>
+																			<div class="opertor-details__list"><i class="fas fa-building"></i>@oper.PropertyName</div>
+																			<div class="opertor-details__list"><i class="fas fa-user-tie"></i>@oper.ProjectRole</div>
+																		</div>
+																	</div>
+																}
+															</div>
+
+														</div>
+													</div>
+												</div>
+												@*<div class="people-operator">
+														<div class="people-operator__head">Linked Operators with us</div>
+														@foreach (var oper in item.LinkedOpr)
+														{
+															<div class="people-operator__list">
+																@if (oper.Doc_CompanyLogo != null)
+																{
+																	<img class="oper-img" src="@oper.Doc_CompanyLogo" data-holder-rendered="true">
+																}
+																else
+																{
+																	<img class="oper-img" src="~/images/operatorPlaceholder.png" data-holder-rendered="true">
+
+																}
+
+																<div>@oper.CompanyName</div>
+																<div class="opertor-details__list"><i class="fas fa-building"></i>@oper.PropertyName</div>
+																<div class="opertor-details__list"><i class="fas fa-user-tie"></i>@oper.ProjectRole</div>
+															</div>
+														}
+													</div>*@
+											}
+
+										</div>
+
+										<div class="property-details__footer mt-1">
+											<div class="property-details__address">
+												<i class="fas fa-map-marker-alt fa-xs"></i>
+												@if (item.Listing.street_number != null)
+												{
+													@Html.Raw(@item.Listing.street_number + ",");
+												}
+												@if (item.Listing.route != null)
+												{
+													@Html.Raw(@item.Listing.route + ",");
+												}
+												<span class="property-span__head">@item.Listing.locality</span>, @item.Listing.administrative_area_level_1. <span class="property-span__head">@item.Listing.postal_code</span>
+											</div>
+											<div class="property-details__total">
+
+												<span class="property-span__tot">
+													<i class="fas fa-envelope fa-xs"></i>@item.Listing.Email
+												</span>
+												<span class="property-span__head"> | </span>
+												<span class="property-span__occ">
+													<i class="fas fa-mobile fa-xs"></i>@item.Listing.Phone
+												</span>
+											</div>
+										</div>
 
 									</div>
-									<div class="tooltip-wrapper list-data__check" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eco-Friendly Spaces click to see details"><i class="fas fa-check"></i></div>
+									<div class="list-blur__background">
+										<div class="list-blur__btn">
+											<a class="property-link btn btn-outline-info modal-link__login obs-center" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/PeopleDetailListByListingId?ListingId="+@item.Listing.ListingId+""})" href="javascript:function() { return false; }">Join to view the detail</a>
+										</div>
+									</div>
+								</div>
+								<div class="">
+									@if (ViewBag.UserId != null && ViewBag.UserId != -1)
+									{
+										<a class="property-link btn btn-primary btn-block" href="@Url.Action("PeopleDetailListByListingId", "Detail", new { ListingId = item.Listing.ListingId })">See Details</a>
+									}
+									else
+									{
+										<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/PeopleDetailListByListingId?ListingId="+@item.Listing.ListingId+""})" href="javascript:function() { return false; }">See Details</a>
+									}
 
 								</div>
+								<div class="tooltip-wrapper list-data__check" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eco-Friendly Spaces click to see details"><i class="fas fa-check"></i></div>
 
 							</div>
+
 						</div>
 					</div>
-				}
-				else
-				{
+				</div>
+														}
+														else
+														{
 
-				}
-			}
-		</div>
+														}
+													}
+	</div>
+	@if (Model.TotalPages > 1)
+	{
 		<div class="pager">
 			<div class="firstPage pager-icon">&laquo;</div>
 			<div class="previousPage pager-icon">&lsaquo;</div>
-			<div class="pageNumbers custom-scrollbar"></div>
+			<div class="pageNumbers custom-scrollbar">
+			</div>
 			<div class="nextPage pager-icon">&rsaquo;</div>
 			<div class="lastPage pager-icon">&raquo;</div>
 		</div>
-	</div>
+	}
+</div>
 
 }
 else

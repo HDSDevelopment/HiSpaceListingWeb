@@ -96,7 +96,7 @@
 
 @if (Model.CurrentPageData != null && Model.CurrentPageData.Count() != 0)
 {
-	@if (Model.TotalPages > 1)
+	@if (Model.TotalPages > 0)
 	{
 		<div class="result-data">
 			<div class="result-count">Operator page : <span id="page_current">@Model.CurrentPage</span> of <span>@Model.TotalPages</span></div>
@@ -139,6 +139,31 @@
 							<img class="oper-img oper-img_placeholder" src="~/images/sample_jpeg.jpg"
 								 data-holder-rendered="true">
 						}
+						@if (ViewBag.UserId != null && ViewBag.UserId != -1)
+						{
+							ViewBag.DisabledPointer = "";
+						}
+						else
+						{
+							ViewBag.DisabledPointer = "disabled-pointer";
+						}
+						@if (@item.Operator.IsFavorite)
+						{
+							ViewBag.FavActive = "active";
+							ViewBag.FavId = item.Operator.FavoriteId;
+						}
+						else
+						{
+							ViewBag.FavActive = "";
+							ViewBag.FavId = "";
+						}
+						<div class="fav-section @ViewBag.DisabledPointer">
+							<div class="flexbox tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Bookmark the favorite">
+								<div class="fav-btn @ViewBag.FavActive">
+									<span href="" class="favme favme-operator dashicons dashicons-star-filled list-unfav @ViewBag.FavActive" v-userid="@ViewBag.UserId" v-operatorid="@item.Operator.UserId" v-favid="@ViewBag.FavId"></span>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="col-lg-9 col-md-9 prop-details">
 						<div class="property-details">

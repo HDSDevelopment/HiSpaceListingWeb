@@ -122,6 +122,9 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiSendPasswordRecoveryEmail = "SendPasswordRecoveryEmail/";
 		//user type update
 		public string ApiUserTypeUpdate = "UserTypeUpdate/";
+		//user activation check
+		public string ApiUserActivate = "UserActivate/";
+
 
 
 		#endregion User Controller
@@ -160,12 +163,17 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiLisitingGetAllPropertyListCommercialAndCoworking = "GetAllPropertyListCommercialAndCoworking/";
 		public string ApiLisitingGetAllPropertyListCommercialAndCoworkingWithFavorites = "GetAllPropertyListCommercialAndCoworkingWithFavorites/";
 		public string ApiLisitingGetAllOperatorsList = "GetAllOperatorList/";
+		public string ApiLisitingGetAllOperatorListWithFavorites = "GetAllOperatorListWithFavorites/";
 		public string ApiLisitingGetOperatorList = "GetOperatorList/";
+		public string ApiLisitingGetOperatorListWithFavorites = "GetOperatorListWithFavorites/";
 
-		public string ApiLisitingGetAllPeopleList = "GetAllPeopleList/";
-		public string ApiLisitingGetAllPeopleListWithFavorites = "GetAllPeopleListWithFavorites/";
+		//public string ApiLisitingGetAllPeopleList = "GetAllPeopleList/";
+		public string ApiLisitingGetAllPeopleListPaged = "GetAllPeopleListPaged/";
+		//public string ApiLisitingGetAllPeopleListWithFavorites = "GetAllPeopleListWithFavorites/";
+		public string ApiLisitingGetAllPeopleListWithFavoritesPaged = "GetAllPeopleListWithFavoritesPaged/";
 
-		public string ApiLisitingGetPeopleList = "GetPeopleList/";
+		//public string ApiLisitingGetPeopleList = "GetPeopleList/";
+		public string ApiLisitingGetPeopleListPaged = "GetPeopleListPaged/";
 		//details
 		public string ApiLisitingGetPropertyAndLinkedReProfessionalListByUserID = "GetPropertyAndLinkedReProfessionalListByUserID/";
 		public string ApiLisitingGetPropertyListByUserIDAndListingID = "GetPropertyListByUserIDAndListingID/";
@@ -183,17 +191,26 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiGetLatestPeopleList = "GetLatestPeopleList/";
 		//get list percentage and complete percentage
 		public string ApiGetListingsWithCompletionPercentByUserId = "GetListingsWithCompletionPercentByUserId/";
-		//bookmarks
+		//bookmarks listing
 		public string ApiAddUserListing = "AddUserListing/";
 		public string ApiDeleteUserListing = "DeleteUserListing/";
+		//bookmarks listing
+		public string ApiAddUserOperator = "AddUserOperator/";
+		public string ApiDeleteUserOperator = "DeleteUserOperator/";
 		//with favourites
 		public string ApiGetPropertiesCommercialAndCoworkingWithFavorites = "GetPropertiesCommercialAndCoworkingWithFavorites/";
 		public string ApiGetPropertiesCommercialAndCoworkingWithFavoritesByUserId = "GetPropertiesCommercialAndCoworkingWithFavoritesByUserId/";
 		public string ApiGetPeopleWithFavoritesByUserId = "GetPeopleWithFavoritesByUserId/";
+		public string ApiGetPeopleWithFavorites = "GetPeopleWithFavorites/";
 		public string ApiGetPropertiesCommercialAndCoworkingWithFavoritesBySearch = "GetPropertiesCommercialAndCoworkingWithFavoritesBySearch/";
-		public string ApiGetPeopleWithFavoritesBySearch = "GetPeopleWithFavoritesBySearch/";
+		//public string ApiGetPeopleWithFavoritesBySearch = "GetPeopleWithFavoritesBySearch/";
+		public string ApiGetPeopleWithFavoritesBySearchPaged = "GetPeopleWithFavoritesBySearchPaged/";
 		//pagination
 		public string ApiLisitingGetAllPropertyListCommercialAndCoworkingPaged = "GetAllPropertyListCommercialAndCoworkingPaged/";
+		//operators
+		public string ApiLisitingGetLatestOperatorListWithFavorites = "GetLatestOperatorListWithFavorites/";
+		public string ApiLisitingGetLatestOperatorListWithFavoritesByUserId = "GetLatestOperatorListWithFavoritesByUserId/";
+
 
 
 
@@ -305,6 +322,7 @@ namespace HiSpaceListingWeb.Utilities
 		public string ApiFilterGetListingPropertyByAll = "GetListingPropertyByAll";
 		public string ApiFilterGetListingByTypeAndLocation = "GetListingByTypeAndLocation";
 		public string ApiFilterGetOperatorByUserId = "GetOperatorByUserId";
+		public string ApiFilterGetOperatorByUserIdWithFavorites = "GetOperatorByUserIdWithFavorites";
 
 		public string ApiFilterGetPeopleByListingId = "GetPeopleByListingId";
 		public string ApiFilterGetPeopleByListingIdWithFavorites = "GetPeopleByListingIdWithFavorites";

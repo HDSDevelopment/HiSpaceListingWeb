@@ -389,8 +389,11 @@ function createPaginationRows(count, CurrentPage, methodName) {
 		//console.log(typeof noOfButtons);
 		//console.log(Number.isInteger(noOfButtons));
 		if (!Number.isInteger(noOfButtons)) {
-			 noOfButtons = parseInt(noOfButtons + 1);
+			noOfButtons = parseInt(noOfButtons + 1);
 		}
+	} else {
+		noOfButtons = 0;
+	}
 		console.log(noOfButtons);
 		for (var i = 1; i <= noOfButtons; i++) {
 			//console.log('test' + i);
@@ -417,12 +420,16 @@ function createPaginationRows(count, CurrentPage, methodName) {
 			}
 			else if ((methodName == "operatorFromSearchMethod") || (methodName == "operatorSearchFunction")) {
 				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_operator_' + i + '" data-page="' + i + '" class="" onclick="' + "operatorFromSearchMethod" + '(' + i + ');">' + i + '</a>');
+			} 
+			else if (methodName == "peopleListByAll") {
+				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_people_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(' + i + ');">' + i + '</a>');
 			}
-			//else if (methodName == "operatorSearchFunction") {
-			//	$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_operator_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(' + i + ');">' + i + '</a>');
-			//}
-			
-			
+			else if (methodName == "peopleListByUser") {
+				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_people_' + i + '" data-page="' + i + '" class="" onclick="' + methodName + '(\'' + methodListingId + '\',' + i + ');">' + i + '</a>');
+			}
+			else if ((methodName == "peopleFromSearchMethod") || (methodName == "peopleSearchFunction")) {
+				$('.pageNumbers').append('<a href="javascript:void(0);" id="custom_page_people_' + i + '" data-page="' + i + '" class="" onclick="' + "peopleFromSearchMethod" + '(' + i + ');">' + i + '</a>');
+			} 
 		}
 		//first,next,previous,last button function
 		if (methodName == "propertyListByAll") {
@@ -473,6 +480,24 @@ function createPaginationRows(count, CurrentPage, methodName) {
 			$('.nextPage').attr('onclick', "operatorFromSearchMethod" + '(' + CurrentPage + '+1)');
 			$('.lastPage').attr('onclick', "operatorFromSearchMethod" + '(' + noOfButtons + ')');
 		}
+		else if (methodName == "peopleListByAll") {
+			$('.firstPage').attr('onclick', methodName + '(1)');
+			$('.previousPage').attr('onclick', methodName + '(' + CurrentPage + '-1)');
+			$('.nextPage').attr('onclick', methodName + '(' + CurrentPage + '+1)');
+			$('.lastPage').attr('onclick', methodName + '(' + noOfButtons + ')');
+	}
+		else if (methodName == "peopleListByUser") {
+			$('.firstPage').attr('onclick', methodName + '(\'' + methodListingId + '\',1)');
+			$('.previousPage').attr('onclick', methodName + '(\'' + methodListingId + '\',' + CurrentPage + '-1)');
+			$('.nextPage').attr('onclick', methodName + '(\'' + methodListingId + '\',' + CurrentPage + '+1)');
+			$('.lastPage').attr('onclick', methodName + '(\'' + methodListingId + '\',' + noOfButtons + ')');
+	}
+		else if ((methodName == "peopleFromSearchMethod") || (methodName == "peopleSearchFunction")) {
+			$('.firstPage').attr('onclick', "peopleFromSearchMethod" + '(1)');
+			$('.previousPage').attr('onclick', "peopleFromSearchMethod" + '(' + CurrentPage + '-1)');
+			$('.nextPage').attr('onclick', "peopleFromSearchMethod" + '(' + CurrentPage + '+1)');
+			$('.lastPage').attr('onclick', "peopleFromSearchMethod" + '(' + noOfButtons + ')');
+		}
 		//else if (methodName == "operatorSearchFunction") {
 		//	$('.firstPage').attr('onclick', methodName + '(1)');
 		//	$('.previousPage').attr('onclick', methodName + '(' + CurrentPage + '-1)');
@@ -484,10 +509,11 @@ function createPaginationRows(count, CurrentPage, methodName) {
 			$('#custom_page_' + CurrentPage).addClass('active');
 		} else if ((methodName == "operatorListByAll") || (methodName == "operatorListByUser") || (methodName == "operatorFromSearchMethod") || (methodName == "operatorSearchFunction")) {
 			$('#custom_page_operator_' + CurrentPage).addClass('active');
+		} else if ((methodName == "peopleListByAll") || (methodName == "peopleListByUser") || (methodName == "peopleFromSearchMethod")) {
+			$('#custom_page_people_' + CurrentPage).addClass('active');
 		}
 		
 	}
-}
 
 //Property details List by its userid
 function propertyListByUserId(user) {
@@ -986,8 +1012,14 @@ $(document).on('change', '.PeopleLocation', function (event) {
 });
 //people list
 //people filter form
-$('#people-form-submit').on('click', function (e) {
+function peopleFromSearchMethod(CurrentPage) {
+	var methodName = "peopleFromSearchMethod";
 	$("#filterProfessionalResult").append("<div class='loader_new'></div>");
+	//scroll animation
+	$('html,body').animate({
+		scrollTop: $("#filterProfessionalResult").offset().top - 100
+	},
+		'slow');
 		var formData = new FormData();
 	var Pe_Role = $('#Pe_Filter_Role').val();
 	if (Pe_Role != "All") {
@@ -1014,6 +1046,8 @@ $('#people-form-submit').on('click', function (e) {
 		formData.append("FirstName", "");
 		formData.append("LastName", "");
 	}
+	//Current page
+	formData.append("CurrentPage", CurrentPage);
 	for (var pair of formData.entries()) {
     console.log(pair[0]+ ' - ' +pair[1]); 
 	}
@@ -1031,7 +1065,20 @@ $('#people-form-submit').on('click', function (e) {
 			$("#peopleSearchHistoryMove").empty();
 			$("#peopleSearchHistory").prependTo("#peopleSearchHistoryMove");
 			Peoplecarousel();
-			PaginationCall();
+			createPaginationRows($('#page_people_count').html(), CurrentPage, methodName);
+			//PaginationCall();
+			if (CurrentPage == 1) {
+				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
+			}
+			if (noOfButtons == CurrentPage) {
+				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
+			}
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_people_' + CurrentPage).position().left);
+				//console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
 			removeLoader();
 		},
 		error: function (response) {
@@ -1039,16 +1086,22 @@ $('#people-form-submit').on('click', function (e) {
 			alert("server not ready please try afterwards");
 		}
 	});
-});
+};
 
 var filterProfessionalResult = $('#filterProfessionalResult');
 //People list all
-function peopleListByAll() {
+function peopleListByAll(CurrentPage) {
+	var methodName = "peopleListByAll";
 	$("#filterProfessionalResult").append("<div class='loader_new'></div>");
+	//scroll animation
+	$('html,body').animate({
+		scrollTop: $("#filterProfessionalResult").offset().top - 100
+	},
+		'slow');
 	$.ajax({
 		type: "GET",
 		url: "/Filter/PeopleListByAll",
-		data: {},
+		data: { CurrentPage: CurrentPage },
 		dataType: "html",
 		success: function (response) {
 			//console.log(response);
@@ -1057,7 +1110,20 @@ function peopleListByAll() {
 			$("#peopleSearchHistoryMove").empty();
 			$("#peopleSearchHistory").prependTo("#peopleSearchHistoryMove");
 			Peoplecarousel();
-			PaginationCall();
+			createPaginationRows($('#page_people_count').html(), CurrentPage, methodName);
+			//PaginationCall();
+			if (CurrentPage == 1) {
+				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
+			}
+			if (noOfButtons == CurrentPage) {
+				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
+			}
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_people_' + CurrentPage).position().left);
+				//console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
 			removeLoader();
 		},
 		error: function (response) {
@@ -1069,12 +1135,18 @@ function peopleListByAll() {
 } 
 
 //People list by ListingId
-function peopleListByUser(listingId) {
+function peopleListByUser(listingId, CurrentPage) {
+	var methodName = "peopleListByUser";
+	methodListingId = listingId;
 	$("#filterProfessionalResult").append("<div class='loader_new'></div>");
+	$('html,body').animate({
+		scrollTop: $("#filterProfessionalResult").offset().top - 100
+	},
+		'slow');
 	$.ajax({
 		type: "GET",
 		url: "/Filter/PeopleListByListingId",
-		data: { ListingId: listingId },
+		data: { ListingId: listingId, CurrentPage: CurrentPage },
 		dataType: "html",
 		success: function (response) {
 			//console.log(response);
@@ -1083,7 +1155,20 @@ function peopleListByUser(listingId) {
 			$("#peopleSearchHistoryMove").empty();
 			$("#peopleSearchHistory").prependTo("#peopleSearchHistoryMove");
 			Peoplecarousel();
-			PaginationCall();
+			createPaginationRows($('#page_people_count').html(), CurrentPage, methodName);
+			//PaginationCall();
+			if (CurrentPage == 1) {
+				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
+			}
+			if (noOfButtons == CurrentPage) {
+				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
+			}
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_people_' + CurrentPage).position().left);
+				//console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
 			removeLoader();
 		},
 		error: function (response) {
@@ -1094,6 +1179,13 @@ function peopleListByUser(listingId) {
 }
 //people search history
 function peopleSearchFunction(obj) {
+	var methodName = "peopleSearchFunction";
+	var CurrentPage = 1;
+	//scroll animation
+	$('html,body').animate({
+		scrollTop: $("#filterProfessionalResult").offset().top - 100
+	},
+		'slow');
 	$("#filterProfessionalResult").append("<div class='loader_new'></div>");
 	var formData = new FormData();
 	var activeRow = $(obj).closest('.sh-data');
@@ -1142,7 +1234,20 @@ function peopleSearchFunction(obj) {
 			$("#peopleSearchHistoryMove").empty();
 			$("#peopleSearchHistory").prependTo("#peopleSearchHistoryMove");
 			Peoplecarousel();
-			PaginationCall();
+			createPaginationRows($('#page_people_count').html(), CurrentPage, methodName);
+			//PaginationCall();
+			if (CurrentPage == 1) {
+				$('.firstPage, .previousPage').addClass('opacity-pointer-none');
+			}
+			if (noOfButtons == CurrentPage) {
+				$('.nextPage, .lastPage').addClass('opacity-pointer-none');
+			}
+			if (CurrentPage > 1) {
+				var btnParentLocation = parseInt($('#custom_page_people_' + CurrentPage).position().left);
+				//console.log(btnParentLocation);
+				$("div.pageNumbers").scrollLeft(btnParentLocation - 350);
+				//console.log($('.pageNumbers').width());
+			}
 			removeLoader();
 		},
 		error: function (response) {

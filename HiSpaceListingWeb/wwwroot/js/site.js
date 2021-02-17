@@ -3217,10 +3217,10 @@ $(document).ready(function () {
 
 
 //bookmark section
-// Favorite Button - Heart
-$('body').on('click', '.favme', function () {
+// Favorite Button - Listing
+$('body').on('click', '.favme-listing', function () {
 //$('.favme').click(function () {
-	console.log('test');
+	//console.log('test');
 	$(this).toggleClass('active');
 	$(this).closest('.fav-btn').toggleClass('active');
 	if ($(this).hasClass('active')) {
@@ -3279,6 +3279,85 @@ $('body').on('click', '.favme', function () {
 		$.ajax({
 			type: "POST",
 			url: "/Listing/FavDeleteUserListing",
+			data: formData,
+			context: this,
+			dataType: "html",
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				$(this).attr('v-favid', '');
+				//removeLoader();
+			},
+			error: function (response) {
+				//removeLoader();
+				alert("server not ready please try afterwards");
+			}
+		});
+	}
+});
+
+//bookmark section
+// Favorite Button - Operator
+$('body').on('click', '.favme-operator', function () {
+	console.log('test');
+	$(this).toggleClass('active');
+	$(this).closest('.fav-btn').toggleClass('active');
+	if ($(this).hasClass('active')) {
+		//$(this).closest('.row').append("<div class='loader_new-sub'></div>");
+		$(this).addClass('list-fav');
+		$(this).removeClass('list-unfav');
+
+		var formData = new FormData();
+		var fav_userid = $(this).attr('v-userid');
+		formData.append("UserId", fav_userid);
+		var fav_operatorid = $(this).attr('v-operatorid');
+		formData.append("OperatorId", fav_operatorid);
+
+		for (var pair of formData.entries()) {
+			console.log(pair[0] + ' - ' + pair[1]);
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "/Listing/FavAddUserOperator",
+			data: formData,
+			context: this,
+			dataType: "html",
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				var responseObj = jQuery.parseJSON(response);
+				console.log(response);
+				console.log(responseObj);
+				console.log(responseObj.id);
+				$(this).attr('v-favid', responseObj.id);
+				//removeLoader();
+			},
+			error: function (response) {
+				//removeLoader();
+				alert("server not ready please try afterwards");
+			}
+		});
+
+	} else {
+		$(this).addClass('list-unfav');
+		$(this).removeClass('list-fav');
+
+		var formData = new FormData();
+		var fav_userid = $(this).attr('v-userid');
+		formData.append("UserId", fav_userid);
+		var fav_operatorid = $(this).attr('v-operatorid');
+		formData.append("OperatorId", fav_operatorid);
+		var fav_id = $(this).attr('v-favid');
+		formData.append("Id", fav_id);
+
+		for (var pair of formData.entries()) {
+			console.log(pair[0] + ' - ' + pair[1]);
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "/Listing/FavDeleteUserOperator",
 			data: formData,
 			context: this,
 			dataType: "html",

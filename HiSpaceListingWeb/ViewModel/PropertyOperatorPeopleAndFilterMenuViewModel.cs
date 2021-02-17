@@ -15,7 +15,8 @@ namespace HiSpaceListingWeb.ViewModel
             //List<PropertyOperatorResponse> Operators = new List<PropertyOperatorResponse>();
             Operators = new PaginationModel<PropertyOperatorResponse>();
 
-            List<PropertyPeopleResponse> People = new List<PropertyPeopleResponse>();
+            //List<PropertyPeopleResponse> People = new List<PropertyPeopleResponse>();
+            People = new PaginationModel<PropertyPeopleResponse>();
             List<PropertyLocationSearchResponse>  PropertyLocationSearchList = new List<PropertyLocationSearchResponse>();
             List<PropertyTypeSearchResponse>  PropertyTypeSearchList = new List<PropertyTypeSearchResponse>();
             List<PropertyListerSearchResponse>  PropertyListerSearchList = new List<PropertyListerSearchResponse>();
@@ -28,7 +29,8 @@ namespace HiSpaceListingWeb.ViewModel
         //operator list
         public PaginationModel<PropertyOperatorResponse> Operators { get; set; }
         //people list
-        public List<PropertyPeopleResponse> People { get; set; }
+        //public List<PropertyPeopleResponse> People { get; set; }
+        public PaginationModel<PropertyPeopleResponse> People { get; set; }
         //Filter location list
         public List<PropertyLocationSearchResponse> PropertyLocationSearchList { set; get; }
         //Filter by type list

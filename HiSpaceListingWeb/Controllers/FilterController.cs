@@ -315,7 +315,15 @@ namespace HiSpaceListingWeb.Controllers
 				
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
 				HttpResponseMessage responseMessage;
-				responseMessage = await client.GetAsync(Common.Instance.ApiLisitingGetAllOperatorsList + CurrentPage);
+
+				if (ViewBag.UserId > 0)
+				{
+					int userId = ViewBag.UserId;
+					responseMessage = await client.GetAsync(Common.Instance.ApiLisitingGetAllOperatorListWithFavorites + userId + "/" + CurrentPage);
+				}
+				else
+					responseMessage = await client.GetAsync(Common.Instance.ApiLisitingGetAllOperatorsList + CurrentPage);
+
 				if (responseMessage.IsSuccessStatusCode)
 				{
 					pagedModel = await responseMessage.Content.ReadAsAsync<PaginationModel<PropertyOperatorResponse>>();
@@ -335,7 +343,13 @@ namespace HiSpaceListingWeb.Controllers
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiFilterControllerName);
 				HttpResponseMessage responseMessage;
-				responseMessage = await client.GetAsync(Common.Instance.ApiFilterGetOperatorByUserId + "/" + User.ToString() + "/" + CurrentPage);
+				if (ViewBag.UserId > 0)
+				{
+					int LoginUserId = ViewBag.UserId;
+					responseMessage = await client.GetAsync(Common.Instance.ApiFilterGetOperatorByUserIdWithFavorites + "/" + LoginUserId + "/" + User.ToString() + "/" + CurrentPage);
+				}
+				else
+					responseMessage = await client.GetAsync(Common.Instance.ApiFilterGetOperatorByUserId + "/" + User.ToString() + "/" + CurrentPage);
 
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -373,10 +387,17 @@ namespace HiSpaceListingWeb.Controllers
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-				var responseTask = await client.PostAsJsonAsync(Common.Instance.ApiLisitingGetOperatorList + operatorSearchCriteria.CurrentPage, operatorSearchCriteria);
-				if (responseTask.IsSuccessStatusCode)
+				HttpResponseMessage responseMessage;
+				if (ViewBag.UserId > 0)
 				{
-					pagedModel = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyOperatorResponse>>();
+					int LoginUserId = ViewBag.UserId;
+					responseMessage = await client.PostAsJsonAsync(Common.Instance.ApiLisitingGetOperatorListWithFavorites + LoginUserId + "/" + operatorSearchCriteria.CurrentPage, operatorSearchCriteria);
+				}
+				else
+					responseMessage = await client.PostAsJsonAsync(Common.Instance.ApiLisitingGetOperatorList + operatorSearchCriteria.CurrentPage, operatorSearchCriteria);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					pagedModel = await responseMessage.Content.ReadAsAsync<PaginationModel<PropertyOperatorResponse>>();
 				}
 
 			}
@@ -394,9 +415,17 @@ namespace HiSpaceListingWeb.Controllers
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
 				var responseTask = await client.PostAsJsonAsync(Common.Instance.ApiLisitingGetOperatorList + operatorSearchCriteria.CurrentPage, operatorSearchCriteria);
-				if (responseTask.IsSuccessStatusCode)
+				HttpResponseMessage responseMessage;
+				if (ViewBag.UserId > 0)
 				{
-					pagedModel = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyOperatorResponse>>();
+					int LoginUserId = ViewBag.UserId;
+					responseMessage = await client.PostAsJsonAsync(Common.Instance.ApiLisitingGetOperatorListWithFavorites + LoginUserId + "/" + operatorSearchCriteria.CurrentPage, operatorSearchCriteria);
+				}
+				else
+					responseMessage = await client.PostAsJsonAsync(Common.Instance.ApiLisitingGetOperatorList + operatorSearchCriteria.CurrentPage, operatorSearchCriteria);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					pagedModel = await responseMessage.Content.ReadAsAsync<PaginationModel<PropertyOperatorResponse>>();
 				}
 
 			}
@@ -420,49 +449,35 @@ namespace HiSpaceListingWeb.Controllers
 				return NotFound();
 		}
 
-		public ActionResult PeopleListByAll()
+		public async Task<ActionResult> PeopleListByAll(int CurrentPage)
 		{
 			SetSessionVariables();
-			List<PropertyPeopleResponse> vModel = new List<PropertyPeopleResponse>();
+			PaginationModel<PropertyPeopleResponse> pagedModel = new PaginationModel<PropertyPeopleResponse>();
 
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
+				HttpResponseMessage responseMessage;
 				if (ViewBag.UserId > 0)
 				{
 					int userId = ViewBag.UserId;
-					var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllPeopleListWithFavorites + userId);
-					responseTask.Wait();
-					var result = responseTask.Result;
-					if (result.IsSuccessStatusCode)
-					{
-						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
-						readTask.Wait();
-						vModel = readTask.Result;
-					}
+					responseMessage = await client.GetAsync(Common.Instance.ApiLisitingGetAllPeopleListWithFavoritesPaged + userId + "/" + CurrentPage);
 				}
 				else
 				{
-					var responseTask = client.GetAsync(Common.Instance.ApiLisitingGetAllPeopleList);
-					responseTask.Wait();
-					var result = responseTask.Result;
-					if (result.IsSuccessStatusCode)
-					{
-						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
-						readTask.Wait();
-						vModel = readTask.Result;
-					}
+					responseMessage = await client.GetAsync(Common.Instance.ApiLisitingGetAllPeopleListPaged + CurrentPage);
 				}
-				
-
+				if (responseMessage.IsSuccessStatusCode)
+					pagedModel = await responseMessage.Content.ReadAsAsync<PaginationModel<PropertyPeopleResponse>>();
 			}
 			//return Json(vModel);
-			return PartialView("_ProfessionalFilterListPartialView", vModel);
+			return PartialView("_ProfessionalFilterListPartialView", pagedModel);
 		}
-		public ActionResult PeopleFilterCriteria(PeopleSearchCriteria peopleSearchCriteria)
+		public async Task<ActionResult> PeopleFilterCriteria(PeopleSearchCriteria peopleSearchCriteria)
 		{
 			SetSessionVariables();
 			List<PropertyPeopleResponse> vModel = new List<PropertyPeopleResponse>();
+			PaginationModel<PropertyPeopleResponse> pagedModel = new PaginationModel<PropertyPeopleResponse>();
 
 			using (var client = new HttpClient())
 			{
@@ -489,61 +504,49 @@ namespace HiSpaceListingWeb.Controllers
 
 					int UserId = ViewBag.UserId;
 					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-					var responseTask = client.PostAsJsonAsync(Common.Instance.ApiGetPeopleWithFavoritesBySearch + UserId, peopleSearchCriteria);
-					responseTask.Wait();
+					var responseTask = await client.PostAsJsonAsync(Common.Instance.ApiGetPeopleWithFavoritesBySearchPaged + UserId + "/" + peopleSearchCriteria.CurrentPage, peopleSearchCriteria);
 
-					var result = responseTask.Result;
-					if (result.IsSuccessStatusCode)
+					if (responseTask.IsSuccessStatusCode)
 					{
-						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
-						readTask.Wait();
-						vModel = readTask.Result;
+						pagedModel = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyPeopleResponse>>();
 					}
 				}
 				else
 				{
 					client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-					var responseTask = client.PostAsJsonAsync(Common.Instance.ApiLisitingGetPeopleList, peopleSearchCriteria);
-					responseTask.Wait();
+					var responseTask = await client.PostAsJsonAsync(Common.Instance.ApiLisitingGetPeopleListPaged + peopleSearchCriteria.CurrentPage, peopleSearchCriteria);
 
-					var result = responseTask.Result;
-					if (result.IsSuccessStatusCode)
+					if (responseTask.IsSuccessStatusCode)
 					{
-						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
-						readTask.Wait();
-						vModel = readTask.Result;
+						pagedModel = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyPeopleResponse>>();
+
 					}
 				}
 				
 			}
 			//return Json(vModel);
-			return PartialView("_ProfessionalFilterListPartialView", vModel);
+			return PartialView("_ProfessionalFilterListPartialView", pagedModel);
 		}
-		public ActionResult PeopleFilterCriteriaHistory(PeopleSearchCriteria peopleSearchCriteria)
+		public async Task<ActionResult> PeopleFilterCriteriaHistory(PeopleSearchCriteria peopleSearchCriteria)
 		{
 			SetSessionVariables();
-			List<PropertyPeopleResponse> vModel = new List<PropertyPeopleResponse>();
+			peopleSearchCriteria.CurrentPage = 1;
+			//List<PropertyPeopleResponse> vModel = new List<PropertyPeopleResponse>();
+			PaginationModel<PropertyPeopleResponse> pagedModel = new PaginationModel<PropertyPeopleResponse>();
 			List<PeopleSearchCriteria> searchCriteriaList = SessionExtension.GetObjectFromJson<List<PeopleSearchCriteria>>(HttpContext.Session, "peopleSearchCriteriaList");
 			using (var client = new HttpClient())
 			{
-
 				int UserId = ViewBag.UserId;
 				client.BaseAddress = new Uri(Common.Instance.ApiListingControllerName);
-				var responseTask = client.PostAsJsonAsync(Common.Instance.ApiGetPeopleWithFavoritesBySearch + UserId, peopleSearchCriteria);
-				responseTask.Wait();
+				var responseTask = await client.PostAsJsonAsync(Common.Instance.ApiGetPeopleWithFavoritesBySearchPaged + UserId + "/" + peopleSearchCriteria.CurrentPage, peopleSearchCriteria);
 
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
+				if (responseTask.IsSuccessStatusCode)
 				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
+					pagedModel = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyPeopleResponse>>();
 				}
-
-
 			}
 			//return Json(vModel);
-			return PartialView("_ProfessionalFilterListPartialView", vModel);
+			return PartialView("_ProfessionalFilterListPartialView", pagedModel);
 		}
 		public ActionResult DeletePeopleSearchCriteria(int id)
 		{
@@ -561,44 +564,31 @@ namespace HiSpaceListingWeb.Controllers
 			else
 				return NotFound();
 		}
-		public ActionResult PeopleListByListingId(string ListingId)
+		public async Task<ActionResult> PeopleListByListingId(string ListingId, int CurrentPage)
 		{
 			SetSessionVariables();
-			List<PropertyPeopleResponse> vModel = new List<PropertyPeopleResponse>();
+			PaginationModel<PropertyPeopleResponse> pagedModel = new PaginationModel<PropertyPeopleResponse>();
 
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiFilterControllerName);
+				HttpResponseMessage responseMessage;
 				if (ViewBag.UserId > 0)
 				{
 					int userId = ViewBag.UserId;
-					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetPeopleByListingIdWithFavorites + "/" + userId + "/" + ListingId.ToString());
-					responseTask.Wait();
-					var result = responseTask.Result;
-					if (result.IsSuccessStatusCode)
-					{
-						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
-						readTask.Wait();
-						vModel = readTask.Result;
-					}
+					responseMessage = await client.GetAsync(Common.Instance.ApiFilterGetPeopleByListingIdWithFavorites + "/" + userId + "/" + ListingId.ToString() + "/" + CurrentPage);
+					
 				}
 				else
-				{
-					var responseTask = client.GetAsync(Common.Instance.ApiFilterGetPeopleByListingId + "/" + ListingId.ToString());
-					responseTask.Wait();
-					var result = responseTask.Result;
-					if (result.IsSuccessStatusCode)
-					{
-						var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
-						readTask.Wait();
-						vModel = readTask.Result;
-					}
-				}
-				
+					responseMessage = await client.GetAsync(Common.Instance.ApiFilterGetPeopleByListingId + "/" + ListingId.ToString() + "/" + CurrentPage);
+
+				if (responseMessage.IsSuccessStatusCode)
+					pagedModel = await responseMessage.Content.ReadAsAsync<PaginationModel<PropertyPeopleResponse>>();
+
 
 			}
 			//return Json(vModel);
-			return PartialView("_ProfessionalFilterListPartialView", vModel);
+			return PartialView("_ProfessionalFilterListPartialView", pagedModel);
 		}
 
 		public async Task<ActionResult> PropertyOperatorPeopleAndFilterMenu(int ListShowType)
@@ -672,7 +662,7 @@ namespace HiSpaceListingWeb.Controllers
 			}
 			vModel.Listings = new PaginationModel<PropertyDetailResponse>();
 			vModel.Operators = new PaginationModel<PropertyOperatorResponse>();
-			vModel.People = new List<PropertyPeopleResponse>();
+			vModel.People = new PaginationModel<PropertyPeopleResponse>();
 			//property,operator,people list
 			using (var client = new HttpClient())
 			{
@@ -698,7 +688,7 @@ namespace HiSpaceListingWeb.Controllers
 					//Get operator
 					else if (ListShowType == 2)
 					{
-						var responseTask = await client.GetAsync(Common.Instance.ApiGetLatestOperatorList);
+						var responseTask = await client.GetAsync(Common.Instance.ApiLisitingGetLatestOperatorListWithFavoritesByUserId + UserId);
 						if (responseTask.IsSuccessStatusCode)
 						{
 							var readTask = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyOperatorResponse>>();
@@ -712,7 +702,7 @@ namespace HiSpaceListingWeb.Controllers
 						var responseTask = await client.GetAsync(Common.Instance.ApiGetPeopleWithFavoritesByUserId + UserId);
 						if (responseTask.IsSuccessStatusCode)
 						{
-							var readTask = await responseTask.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
+							var readTask = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyPeopleResponse>>();
 
 							vModel.People = readTask;
 						}
@@ -735,7 +725,7 @@ namespace HiSpaceListingWeb.Controllers
 					//Get operator
 					else if (ListShowType == 2)
 					{
-						var responseTask = await client.GetAsync(Common.Instance.ApiGetLatestOperatorList);
+						var responseTask = await client.GetAsync(Common.Instance.ApiLisitingGetLatestOperatorListWithFavorites);
 						if (responseTask.IsSuccessStatusCode)
 						{
 							var readTask = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyOperatorResponse>>();
@@ -746,10 +736,10 @@ namespace HiSpaceListingWeb.Controllers
 					//Get people
 					else if (ListShowType == 3)
 					{
-						var responseTask = await client.GetAsync(Common.Instance.ApiGetLatestPeopleList);
+						var responseTask = await client.GetAsync(Common.Instance.ApiGetPeopleWithFavorites);
 						if (responseTask.IsSuccessStatusCode)
 						{
-							var readTask = await responseTask.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
+							var readTask = await responseTask.Content.ReadAsAsync<PaginationModel<PropertyPeopleResponse>>();
 
 							vModel.People = readTask;
 						}
