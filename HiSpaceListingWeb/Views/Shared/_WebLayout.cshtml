@@ -102,7 +102,7 @@
 												@ViewBag.UserCompanyName <i class="fa fa-user pl-2"></i>
 											</a>
 											<ul class="dropdown-menu">
-												<li><a class="dropdown-item" href="@Url.Action( "Logout","User")">Sign out</a></li>
+												<li><a class="dropdown-item" href="@Url.Action( "Logout","User")">Sign Out</a></li>
 											</ul>
 										</li>
 									</ul>
@@ -110,7 +110,7 @@
 								else
 								{
 									<div class="user-alert bg-pry"></div>
-									<a class="modal-link__login d-inline" data-targeturl="@Url.Action("LoginPartialView","User", new { returnUrl = Context.Request.Path})" href="javascript:function() { return false; }"> sign in<i class="fa fa-user pl-2 d-inline"></i></a>
+									<a class="modal-link__login d-inline" data-targeturl="@Url.Action("LoginPartialView","User", new { returnUrl = Context.Request.Path})" href="javascript:function() { return false; }"> Signin<i class="fa fa-user pl-2 d-inline"></i></a>
 								}
 							</div>
 						</div>
