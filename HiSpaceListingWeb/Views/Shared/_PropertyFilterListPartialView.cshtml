@@ -228,12 +228,12 @@
 									{
 										@foreach (var image in item.ListingImagesList.Take(1))
 										{
-											<img class="img-fluid image-list" src="@image.ImageUrl" alt="">
+											<img class="img-fluid image-list" src="@image.ImageUrl" alt="hispace property">
 										}
 									}
 									else
 									{
-										<img class="img-fluid image-list" src="~/images/property/no-image.png" alt="">
+										<img class="img-fluid image-list" src="~/images/property/no-image.png" alt="hispace property">
 									}
 									<div class="property-lable">
 										@if (item.SpaceListing.ListingType == "Commercial")
@@ -253,7 +253,7 @@
 									</div>
 									<div class="property-agent">
 										<div class="property-agent-image">
-											<img class="img-fluid" src="~/images/avatar/placeholder.png" alt="">
+											<img class="img-fluid" src="~/images/avatar/placeholder.png" alt="hispace property">
 										</div>
 										<div class="property-agent-info">
 											<a class="property-agent-name" href="#">@item.SpaceUser.CompanyName</a>

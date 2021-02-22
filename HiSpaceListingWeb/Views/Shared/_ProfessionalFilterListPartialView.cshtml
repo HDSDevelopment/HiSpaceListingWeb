@@ -182,7 +182,7 @@
 										<div class="mb-1">HiSpace-User Name: <span class="property-details__role-name">@item.Operator.CompanyName</span></div>
 										@if (item.Operator.Website != null)
 										{
-											<div>Website: <a href="@item.Operator.Website" target="_blank">@item.Operator.Website</a></div>
+											<div>Website: <a href="https://@item.Operator.Website.ToString()" target="_blank">@item.Operator.Website</a></div>
 										}
 										<div>
 											Role: <span class="property-details__role-type">
@@ -223,14 +223,14 @@
 																@if (images.ImageUrl != null)
 																{
 																	<a class="portfolio-img" target="_blank" href="@images.ImageUrl">
-																		<img class="img-fluid" src="@images.ImageUrl" alt="">
+																		<img class="img-fluid" src="@images.ImageUrl" alt="hispace reprofessional">
 																	</a>
 																	<div class="people-image__type">@images.ProjectName</div>
 																}
 																else
 																{
 																	<a class="portfolio-img" target="_blank" href="~/images/doc_placeholder.png">
-																		<img class="img-fluid" src="~/images/doc_placeholder.png" alt="">
+																		<img class="img-fluid" src="~/images/doc_placeholder.png" alt="hispace reprofessional">
 																	</a>
 																	<div class="people-image__type">@images.ProjectName</div>
 																}
@@ -254,11 +254,11 @@
 																		<div class="people-operator__list">
 																			@if (oper.Doc_CompanyLogo != null)
 																			{
-																				<img class="oper-img" src="@oper.Doc_CompanyLogo" data-holder-rendered="true">
+																				<img class="oper-img" src="@oper.Doc_CompanyLogo" data-holder-rendered="true" alt="hispace reprofessional">
 																			}
 																			else
 																			{
-																				<img class="oper-img" src="~/images/operatorPlaceholder.png" data-holder-rendered="true">
+																				<img class="oper-img" src="~/images/operatorPlaceholder.png" data-holder-rendered="true" alt="hispace reprofessional">
 
 																			}
 

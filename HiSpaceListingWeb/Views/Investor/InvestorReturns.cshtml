@@ -1,12 +1,15 @@
 ﻿
 @model HiSpaceListingModels.Investor
 @{
-	ViewData["Title"] = "Investor Returns";
+	ViewData["Title"] = "Investor return calculation page for Property, Operator, ReProfessionals";
+	ViewData["keywords"] = "Home For Property, Operator, ReProfessionals";
+	ViewData["description"] = "Can Search all properties with commercial and coworking, search all operator and builders, search all real estate professionals for your project. More with the hispace investor";
 	Layout = "~/Views/Shared/_WebLayout.cshtml";
 	@using Microsoft.AspNetCore.Http
 }
 
 <div class="investor-returns nav-padding">
+	<h1 class="display-none">The Search Result</h1>
 	<div class="bg-light">
 		<div class="container">
 			<div class="row">
@@ -153,11 +156,11 @@
 					</div>
 					<div id="container" class="" style="height: 100%">
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
-		
+
 	</section>
 
 	<section class="mb-4">

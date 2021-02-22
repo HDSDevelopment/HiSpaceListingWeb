@@ -1971,7 +1971,7 @@ form.md-form .checkbox.checbox-switch-small {
 	height: 100vh;
 }
 
-#slider h1 {
+#slider h1, #slider h2{
 	font-size: 55px;
 	line-height: 70px;
 	font-weight: 600;

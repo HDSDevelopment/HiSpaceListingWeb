@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using AspNetCore.SEOHelper;
 using HiSpaceListingWeb.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -108,7 +109,7 @@ namespace HiSpaceListingWeb
 				app.UseHsts();
 			}
 			app.UseStaticFiles();
-
+			//app.UseXMLSitemap(env.ContentRootPath);
 			app.UseRouting();
 
 			app.UseAuthorization();

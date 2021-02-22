@@ -1,10 +1,13 @@
-﻿using HiSpaceListingModels;
+﻿using AspNetCore.SEOHelper.Sitemap;
+using HiSpaceListingModels;
 using HiSpaceListingService.ViewModel;
 using HiSpaceListingWeb.Utilities;
 using HiSpaceListingWeb.ViewModel;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +17,64 @@ namespace HiSpaceListingWeb.Controllers
 {
 	public class WebsiteController : Controller
 	{
-		private object html;
+
+		//private readonly ILogger<WebsiteController> _logger;
+		//private readonly IWebHostEnvironment _env;
+		//public WebsiteController(ILogger<WebsiteController> logger, IWebHostEnvironment env)
+		//{
+		//	_logger = logger;
+		//	_env = env;
+		//}
+
+		////not returning any view  
+		//public string CreateSitemapInRootDirectory()
+		//{
+		//	var list = new List<SitemapNode>();
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/serilog-mongodb-in-asp-net-core", Frequency = SitemapFrequency.Daily });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/logging-in-asp-net-core", Frequency = SitemapFrequency.Yearly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.7, Url = "https://www.thehispace.com/robots-txt-in-asp-net-core", Frequency = SitemapFrequency.Monthly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.5, Url = "https://www.thehispace.com/versioning-asp.net-core-apiIs-with-swagger", Frequency = SitemapFrequency.Weekly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.4, Url = "https://www.thehispace.com/configuring-swagger-asp-net-core-web-api", Frequency = SitemapFrequency.Never });
+
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=1/serilog-mongodb-in-asp-net-core", Frequency = SitemapFrequency.Daily });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=1/logging-in-asp-net-core", Frequency = SitemapFrequency.Yearly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.7, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=1/robots-txt-in-asp-net-core", Frequency = SitemapFrequency.Monthly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.5, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=1/versioning-asp.net-core-apiIs-with-swagger", Frequency = SitemapFrequency.Weekly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.4, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=1/configuring-swagger-asp-net-core-web-api", Frequency = SitemapFrequency.Never });
+
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=2/serilog-mongodb-in-asp-net-core", Frequency = SitemapFrequency.Daily });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=2/logging-in-asp-net-core", Frequency = SitemapFrequency.Yearly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.7, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=2/robots-txt-in-asp-net-core", Frequency = SitemapFrequency.Monthly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.5, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=2/versioning-asp.net-core-apiIs-with-swagger", Frequency = SitemapFrequency.Weekly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.4, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=2/configuring-swagger-asp-net-core-web-api", Frequency = SitemapFrequency.Never });
+
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=3/serilog-mongodb-in-asp-net-core", Frequency = SitemapFrequency.Daily });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=3/logging-in-asp-net-core", Frequency = SitemapFrequency.Yearly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.7, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=3/robots-txt-in-asp-net-core", Frequency = SitemapFrequency.Monthly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.5, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=3/versioning-asp.net-core-apiIs-with-swagger", Frequency = SitemapFrequency.Weekly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.4, Url = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=3/configuring-swagger-asp-net-core-web-api", Frequency = SitemapFrequency.Never });
+
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/Investor/CreateInvestor/serilog-mongodb-in-asp-net-core", Frequency = SitemapFrequency.Daily });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/Investor/CreateInvestor/logging-in-asp-net-core", Frequency = SitemapFrequency.Yearly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.7, Url = "https://www.thehispace.com/Investor/CreateInvestor/robots-txt-in-asp-net-core", Frequency = SitemapFrequency.Monthly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.5, Url = "https://www.thehispace.com/Investor/CreateInvestor/versioning-asp.net-core-apiIs-with-swagger", Frequency = SitemapFrequency.Weekly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.4, Url = "https://www.thehispace.com/Investor/CreateInvestor/configuring-swagger-asp-net-core-web-api", Frequency = SitemapFrequency.Never });
+
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/Investor/InvestorReturns/serilog-mongodb-in-asp-net-core", Frequency = SitemapFrequency.Daily });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/Investor/InvestorReturns/logging-in-asp-net-core", Frequency = SitemapFrequency.Yearly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.7, Url = "https://www.thehispace.com/Investor/InvestorReturns/robots-txt-in-asp-net-core", Frequency = SitemapFrequency.Monthly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.5, Url = "https://www.thehispace.com/Investor/InvestorReturns/versioning-asp.net-core-apiIs-with-swagger", Frequency = SitemapFrequency.Weekly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.4, Url = "https://www.thehispace.com/Investor/InvestorReturns/configuring-swagger-asp-net-core-web-api", Frequency = SitemapFrequency.Never });
+
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/Website/Contact/serilog-mongodb-in-asp-net-core", Frequency = SitemapFrequency.Daily });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://www.thehispace.com/Website/Contact/logging-in-asp-net-core", Frequency = SitemapFrequency.Yearly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.7, Url = "https://www.thehispace.com/Website/Contact/robots-txt-in-asp-net-core", Frequency = SitemapFrequency.Monthly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.5, Url = "https://www.thehispace.com/Website/Contact/versioning-asp.net-core-apiIs-with-swagger", Frequency = SitemapFrequency.Weekly });
+		//	list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.4, Url = "https://www.thehispace.com/Website/Contact/configuring-swagger-asp-net-core-web-api", Frequency = SitemapFrequency.Never });
+
+		//	new SitemapDocument().CreateSitemapXML(list, _env.ContentRootPath);
+		//	return "sitemap.xml file should be create in root directory";
+		//}
 
 		public ActionResult Index()
 		{
@@ -174,5 +234,6 @@ namespace HiSpaceListingWeb.Controllers
 		{
 			return HttpContext.Session.GetObjectFromJson<User>("_user");
 		}
+
 	}
 }
