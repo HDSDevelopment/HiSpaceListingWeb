@@ -4717,3 +4717,15 @@ input#sign-Phone[type=number],
 	background: #dddddd;
 	padding-top: 10px;
 }
+
+button.modal-link__login {
+	padding: 0;
+	color: #fff;
+	background: transparent;
+	border: none;
+}
+button.btn-primary {
+	background-color: var(--pry-color);
+	color: #fff;
+	border-color: var(--pry-color);
+}

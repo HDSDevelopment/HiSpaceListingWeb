@@ -116,27 +116,22 @@ namespace HiSpaceListingWeb.Controllers
 			return PartialView("_SelectedOperatorPropertyListPartialView", vModel);
 		}
 
-		public ActionResult PeopleDetailListByListingId(string ListingId)
+		public async Task<ActionResult> PeopleDetailListByListingId(string ListingId, int CurrentPage)
 		{
 			SetSessionVariables();
-			List<PropertyPeopleResponse> vModel = new List<PropertyPeopleResponse>();
+			PaginationModel<PropertyPeopleResponse> pagedModel = new PaginationModel<PropertyPeopleResponse>();
 
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri(Common.Instance.ApiFilterControllerName);
-				var responseTask = client.GetAsync(Common.Instance.ApiFilterGetPeopleByListingId + "/" + ListingId.ToString());
-				responseTask.Wait();
-				var result = responseTask.Result;
-				if (result.IsSuccessStatusCode)
-				{
-					var readTask = result.Content.ReadAsAsync<List<PropertyPeopleResponse>>();
-					readTask.Wait();
-					vModel = readTask.Result;
-				}
+				HttpResponseMessage responseMessage = await client.GetAsync(Common.Instance.ApiFilterGetPeopleByListingId + "/" + ListingId.ToString() + "/" + CurrentPage);
+
+				if (responseMessage.IsSuccessStatusCode)
+					pagedModel = await responseMessage.Content.ReadAsAsync<PaginationModel<PropertyPeopleResponse>>();
 
 			}
 			//return Json(vModel);
-			return View("ProfessionalDetail", vModel);
+			return View("ProfessionalDetail", pagedModel);
 		}
 		public void SetSessionVariables()
 		{

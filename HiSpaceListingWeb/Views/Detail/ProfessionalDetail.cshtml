@@ -1,10 +1,13 @@
-﻿@{
+﻿
+@using HiSpaceListingService.ViewModel;
+@{
 	ViewData["Title"] = "Professional Detail";
 	Layout = "~/Views/Shared/_WebLayout.cshtml";
 	@using Microsoft.AspNetCore.Http
 	@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 }
-@model IEnumerable<HiSpaceListingService.ViewModel.PropertyPeopleResponse>
+@*@model IEnumerable<HiSpaceListingService.ViewModel.PropertyPeopleResponse>*@
+@model HiSpaceListingService.ViewModel.PaginationModel<PropertyPeopleResponse>
 
 <div class="property-list nav-padding container">
 	<div class="bg-light">
@@ -22,7 +25,7 @@
 		</div>
 	</div>
 	<div class="result-count mt-3" id="opCount">People / Real Estate Professional Details</div>
-	@foreach (var item in Model)
+	@foreach (var item in Model.CurrentPageData)
 	{
 		<div class=" property-col-list mt-4 mb-4">
 			<div class="row no-gutters">
@@ -98,7 +101,7 @@
 																			<img class="img-fluid" alt="name" src="@Url.Content(pro.ImageUrl)" />
 																		</a>
 																	</div>
-																	
+
 																</div>
 																<div class="col-sm-9">
 																	<div class="re-project__desc">
@@ -119,7 +122,7 @@
 									</div>
 								</div>
 
-								
+
 
 							</div>
 
@@ -131,7 +134,7 @@
 			</div>
 		</div>
 
-		
+
 
 		<div class="mb-4">
 			<div class="result-count mb-2 mt-2" id="opCount">Linked operators with us</div>
@@ -144,26 +147,26 @@
 
 								@foreach (var oper in item.LinkedOpr)
 								{
-								<div class="owl-item">
-									<div class="people-operator__list operator__listImage">
-										@if (oper.Doc_CompanyLogo != null)
-										{
-											<img class="oper-img" src="@oper.Doc_CompanyLogo" data-holder-rendered="true">
-										}
-										else
-										{
-											<img class="oper-img" src="~/images/operatorPlaceholder.png" data-holder-rendered="true">
+									<div class="owl-item">
+										<div class="people-operator__list operator__listImage">
+											@if (oper.Doc_CompanyLogo != null)
+											{
+												<img class="oper-img" src="@oper.Doc_CompanyLogo" data-holder-rendered="true">
+											}
+											else
+											{
+												<img class="oper-img" src="~/images/operatorPlaceholder.png" data-holder-rendered="true">
 
-										}
+											}
 
-										<div>@oper.CompanyName</div>
-										<div class="opertor-details__list"><i class="fas fa-building"></i>@oper.PropertyName</div>
-										<div class="opertor-details__list"><i class="fas fa-user-tie"></i>@oper.ProjectRole</div>
-									<div class="property-btn property-btn__small">
-										<a class="property-link btn btn-sec btn-block" href="@Url.Action("SelectOperatorPropertyList", "Detail", new { User = oper.UserId })">Know More</a>
+											<div>@oper.CompanyName</div>
+											<div class="opertor-details__list"><i class="fas fa-building"></i>@oper.PropertyName</div>
+											<div class="opertor-details__list"><i class="fas fa-user-tie"></i>@oper.ProjectRole</div>
+											<div class="property-btn property-btn__small">
+												<a class="property-link btn btn-sec btn-block" href="@Url.Action("SelectOperatorPropertyList", "Detail", new { User = oper.UserId })">Know More</a>
+											</div>
+										</div>
 									</div>
-									</div>
-								</div>
 								}
 							</div>
 
@@ -174,73 +177,73 @@
 		</div>
 
 		<div class="enquiry-form d-block">
-								<div class="">
-									<h3 class="text-center">Enquiry</h3>
-								</div>
-								@using (Html.BeginForm("UserEnquiry", "Website", FormMethod.Post, new { @class = "form-row p-3 md-form", enctype = "multipart/form-data", onSubmit = "enquiryFormValidate(event)", id = "enquiryForm" }))
-								{
-									<div class="display-none">
-										<div class="form-group">
-											<input type="text" id="ListingId" name="ListingId" value="@item.Listing.ListingId">
-											<label for="input" class="control-label">Listing id</label><i class="bar"></i>
+			<div class="">
+				<h3 class="text-center">Enquiry</h3>
+			</div>
+			@using (Html.BeginForm("UserEnquiry", "Website", FormMethod.Post, new { @class = "form-row p-3 md-form", enctype = "multipart/form-data", onSubmit = "enquiryFormValidate(event)", id = "enquiryForm" }))
+			{
+				<div class="display-none">
+					<div class="form-group">
+						<input type="text" id="ListingId" name="ListingId" value="@item.Listing.ListingId">
+						<label for="input" class="control-label">Listing id</label><i class="bar"></i>
 
-										</div>
-									</div>
-									<div class="display-none">
-										<div class="form-group">
-											<input type="text" id="Listing_UserId" name="Listing_UserId" value="@item.Listing.UserId">
-											<label for="input" class="control-label">Listing UserId</label><i class="bar"></i>
-										</div>
-									</div>
-									<div class="display-none">
-										<div class="form-group">
-											<input type="text" id="Sender_UserId" name="Sender_UserId" value="@ViewBag.UserId">
-											<label for="input" class="control-label">Sender UserId</label><i class="bar"></i>
-										</div>
-									</div>
-									<div class="display-none">
-										<div class="form-group">
-											<input type="text" id="To_Email" name="To_Email" value="@item.Operator.Email">
-											<label for="input" class="control-label">To Email</label><i class="bar"></i>
-										</div>
-									</div>
+					</div>
+				</div>
+				<div class="display-none">
+					<div class="form-group">
+						<input type="text" id="Listing_UserId" name="Listing_UserId" value="@item.Listing.UserId">
+						<label for="input" class="control-label">Listing UserId</label><i class="bar"></i>
+					</div>
+				</div>
+				<div class="display-none">
+					<div class="form-group">
+						<input type="text" id="Sender_UserId" name="Sender_UserId" value="@ViewBag.UserId">
+						<label for="input" class="control-label">Sender UserId</label><i class="bar"></i>
+					</div>
+				</div>
+				<div class="display-none">
+					<div class="form-group">
+						<input type="text" id="To_Email" name="To_Email" value="@item.Operator.Email">
+						<label for="input" class="control-label">To Email</label><i class="bar"></i>
+					</div>
+				</div>
 
-									<div class="col-md-4">
-										<div class="form-group">
-											<input type="text" id="Sender_Name" name="Sender_Name" placeholder="Name" />
-											<label for="input" class="control-label">Name*</label><i class="bar"></i>
-											<div class="error" id=""></div>
-										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="form-group">
-											<input type="text" id="Sender_Phone" name="Sender_Phone" placeholder="9999999999" />
-											<label for="input" class="control-label">Phone*</label><i class="bar"></i>
-											<div class="error" id=""></div>
-										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="form-group">
-											<input type="email" id="Sender_Email" name="Sender_Email" placeholder="abc@gmail.com" />
-											<label for="input" class="control-label">Email*</label><i class="bar"></i>
-											<div class="error" id=""></div>
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-group">
-											<textarea type="text" id="Sender_Message" name="Sender_Message" rows="2" placeholder="Enter your message here..."></textarea>
-											<label for="input" class="control-label">Message*</label><i class="bar"></i>
-											<div class="error" id=""></div>
-										</div>
-									</div>
-									<div class="col-md-12 d-flex justify-content-center mb-3">
-										@*<a class="btn btn-primary btn-sm">Enquiry Now</a>*@
-										<button type="submit" class="btn btn-primary">Enquiry Now</button>
-									</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<input type="text" id="Sender_Name" name="Sender_Name" placeholder="Name" />
+						<label for="input" class="control-label">Name*</label><i class="bar"></i>
+						<div class="error" id=""></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<input type="text" id="Sender_Phone" name="Sender_Phone" placeholder="9999999999" />
+						<label for="input" class="control-label">Phone*</label><i class="bar"></i>
+						<div class="error" id=""></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<input type="email" id="Sender_Email" name="Sender_Email" placeholder="abc@gmail.com" />
+						<label for="input" class="control-label">Email*</label><i class="bar"></i>
+						<div class="error" id=""></div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<textarea type="text" id="Sender_Message" name="Sender_Message" rows="2" placeholder="Enter your message here..."></textarea>
+						<label for="input" class="control-label">Message*</label><i class="bar"></i>
+						<div class="error" id=""></div>
+					</div>
+				</div>
+				<div class="col-md-12 d-flex justify-content-center mb-3">
+					@*<a class="btn btn-primary btn-sm">Enquiry Now</a>*@
+					<button type="submit" class="btn btn-primary">Enquiry Now</button>
+				</div>
 
-									@*</form>*@
-								}
-							</div>
+				@*</form>*@
+			}
+		</div>
 
 	}
 </div>

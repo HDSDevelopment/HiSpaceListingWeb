@@ -5,16 +5,19 @@
 	if(ListShowType == "1")
 	{
 		ViewData["Title"] = "Search Result for HiSpace Property";
+		ViewData["canonical"] = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=1";
 		ViewData["description"] = "Can search all properties with commercial and coworking. With all amenities, facilities best in market";
 	}
 	else if (ListShowType == "2")
 	{
 		ViewData["Title"] = "Search Result for HiSpace Operator";
+		ViewData["canonical"] = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=2";
 		ViewData["description"] = "Can search all operator and builders for your projects. List your own properties or co-working spaces";
 	}
 	else if(ListShowType == "3")
 	{
 		ViewData["Title"] = "Search Result for HiSpace REProfessionals";
+		ViewData["canonical"] = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=3";
 		ViewData["description"] = "Can search all real estate professionals for your project. Also Find a business partner to collaborate in your project";
 	}
 	else
@@ -32,7 +35,6 @@
 @model HiSpaceListingWeb.ViewModel.PropertyOperatorPeopleAndFilterMenuViewModel
 
 <div class="property-list nav-padding container">
-	<h1 class="display-none">The Search Result</h1>
 	<div class="bg-light">
 		<div class="container">
 			<div class="row">

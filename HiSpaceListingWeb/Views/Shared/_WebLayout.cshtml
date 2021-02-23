@@ -22,6 +22,7 @@
 	<meta name="keywords" content="@ViewData["keywords"]" />
 	<meta name="description" content="@ViewData["description"]" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="canonical" href="@ViewData["canonical"]"/>
 	<title>Hispace - @ViewData["Title"]</title>
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="~/images/favicon.ico" />
@@ -110,7 +111,7 @@
 								else
 								{
 									<div class="user-alert bg-pry"></div>
-									<a class="modal-link__login d-inline" data-targeturl="@Url.Action("LoginPartialView","User", new { returnUrl = Context.Request.Path})" href="javascript:function() { return false; }"> Signin<i class="fa fa-user pl-2 d-inline"></i></a>
+									<button class="modal-link__login d-inline" data-targeturl="@Url.Action("LoginPartialView","User", new { returnUrl = Context.Request.Path})"> Signin<i class="fa fa-user pl-2 d-inline"></i></button>
 								}
 							</div>
 						</div>
@@ -239,10 +240,10 @@
 				{
 					<div class="slide-btn align-self-center">
 						<div class="property-btn">
-							<a class="property-link btn btn-sec modal-link__signup" data-targeturl="@Url.Action("SignupPartialView","User")" href="javascript:function() { return false; }"><i class="fas fa-hands-helping"></i> Join Now</a>
+							<button class="property-link btn btn-sec modal-link__signup" data-targeturl="@Url.Action("SignupPartialView","User")"><i class="fas fa-hands-helping"></i> Join Now</button>
 						</div>
 						<div class="property-btn">
-							<a class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User", new { returnUrl = Context.Request.Path})" href="javascript:function() { return false; }"><i class="fas fa-sign-in-alt"></i> Login</a>
+							<button class="property-link btn btn-primary modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User", new { returnUrl = Context.Request.Path})" ><i class="fas fa-sign-in-alt"></i> Login</button>
 						</div>
 					</div>
 				}

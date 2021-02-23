@@ -9,6 +9,7 @@
 @*@model IEnumerable<HiSpaceListingService.ViewModel.PropertyPeopleResponse>*@
 @model HiSpaceListingService.ViewModel.PaginationModel<PropertyPeopleResponse>
 
+	<h1 class="display-none">The Search Result for reprofessionals</h1>
 <div class="row">
 
 	<div class="col-12 search-history" id="peopleSearchHistory">
@@ -222,16 +223,16 @@
 															<div class="owl-item">
 																@if (images.ImageUrl != null)
 																{
-																	<a class="portfolio-img" target="_blank" href="@images.ImageUrl">
+																	@*<a class="portfolio-img" target="_blank" href="@images.ImageUrl">*@
 																		<img class="img-fluid" src="@images.ImageUrl" alt="hispace reprofessional">
-																	</a>
+																	@*</a>*@
 																	<div class="people-image__type">@images.ProjectName</div>
 																}
 																else
 																{
-																	<a class="portfolio-img" target="_blank" href="~/images/doc_placeholder.png">
+																	@*<a class="portfolio-img" target="_blank" href="~/images/doc_placeholder.png">*@
 																		<img class="img-fluid" src="~/images/doc_placeholder.png" alt="hispace reprofessional">
-																	</a>
+																	@*</a>*@
 																	<div class="people-image__type">@images.ProjectName</div>
 																}
 
