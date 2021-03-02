@@ -2,8 +2,9 @@
 @{
 	ViewData["Title"] = "Investor page for Property, Operator, ReProfessionals";
 	ViewData["canonical"] = "https://www.thehispace.com/Investor/CreateInvestor";
+	ViewData["robots"] = "index, follow, noarchive";
 	ViewData["keywords"] = "Home For Property, Operator, ReProfessionals";
-	ViewData["description"] = "Can Search all properties with commercial and coworking, search all operator and builders, search all real estate professionals for your project. More with the hispace investor";
+	ViewData["description"] = "To find the investment in the coworking, property, real estate, builders, land investment and more";
 	Layout = "~/Views/Shared/_WebLayout.cshtml";
 	@using Microsoft.AspNetCore.Http
 }
@@ -61,7 +62,7 @@
 	<section class="bg-texture-1">
 		<div class="container">
 			<div class="texture-head">
-				To estimate your investment returns, Provide your pieces of information
+				Do you have any real estate investment idea? Check your approximate investment returns here with Hi Space returns calculator
 			</div>
 			<div class="texture-btn">
 				<a class="nav-link btn btn-primary d-inline-block" href="@Url.Action( "InvestorReturns","Investor")">Investor Return Calculator</a>

@@ -131,7 +131,8 @@ var regx = {
 	"postRegx": { "rule": /^[1-9][0-9]{5}$/, "error": "Invalid Postal No." },
 	//"postRegx": { "rule": /^\d{6}$/, "error": "Invalid Postal No." },
 	"numberRegx": { "rule": /^[+-]?\d+(\.\d+)?$/, "error": "Invalid No." },
-	"googleCapcha": { "rule": /([^\s])/, "error": "You can't leave Captcha Code empty" }
+	"googleCapcha": { "rule": /([^\s])/, "error": "You can't leave Captcha Code empty" },
+	"percentageRegx": { "rule": /^100$|^\d{0,2}(\.\d{1,2})? *%?$/, "error": "Enter range between 0 to 100" }
 }
 function validate(formData, rules) {
 	console.log(formData);
@@ -517,7 +518,94 @@ $(document).on("change", "select", function (e) {
 	input.siblings(".error").html(``);
 })
 
+//return calculation validation
+function rtnCalcualtionValidate(e) {
+	console.log(e);
+	let formData = { "id": "rtn-form__div" };
+	$(`#${formData.id} .error`).html(``);
+	let rules;
 
+	rules = [
+		{ "id": "rtn_investment", "validation": ["emptyRegx"] },
+		{ "id": "rtn_noi", "validation": ["emptyRegx"] },
+		{ "id": "rtn_cap", "validation": ["emptyRegx"] },
+		{
+			"id": "rtn_inflation", "validation": ["emptyRegx", "percentageRegx"] },
+		//{ "id": "rtn_ltv", "validation": ["emptyRegx"] },
+		//{ "id": "rtn_intrest", "validation": ["emptyRegx"] },
+		//{ "id": "rtn_period", "validation": ["emptyRegx"] },
+		//{ "id": "rtn_exitmethod", "validation": ["emptyRegx"] },
+		{
+			"id": "rtn_exitcap", "validation": ["emptyRegx", "percentageRegx"] },
+		{
+			"id": "rtn_discount", "validation": ["emptyRegx", "percentageRegx"] },
+		//{ "id": "rtn_tax", "validation": ["emptyRegx"] },
+	];
+
+	//if (($('#rtn_investment').val()) < ($('#rtn_noi').val())) {
+	//	$('#rtn_noi').next('.error').html("Expected NOI must be less than the Investment amount!");
+	//}
+
+	if ($('#rtn_tax').val() != '' && $('#rtn_tax').val() != 0 && $('#rtn_tax').val() != 0.00) {
+		//$('#rtn_tax').next().addClass('error');
+		rules.push({ "id": "rtn_tax", "validation": ["percentageRegx"] });
+	}
+	if ($('#rtn_ltv').val() != '') {
+
+		rules.push({ "id": "rtn_ltv", "validation": ["percentageRegx"] });
+		rules.push({ "id": "rtn_intrest", "validation": ["emptyRegx","percentageRegx"] });
+	}
+	//if ($('#rtn_exitmethod').val() != 'DCF') {
+	//	rules.push({ "id": "rtn_exitcap", "validation": ["emptyRegx", "percentageRegx"] });
+	//}
+
+	//if ($('#sign-Address').is(':visible')) {
+	//	rules = [
+	//		{ "id": "sign-CompanyName", "validation": ["emptyRegx"] },
+	//		{ "id": "sign-Phone", "validation": ["emptyRegx", "phoneRegx"] },
+	//		{ "id": "sign-Email", "validation": ["emptyRegx"] },
+	//		{ "id": "sign-Password", "validation": ["emptyRegx", "passwordRegx"] },
+	//		{ "id": "sign-Address", "validation": ["emptyRegx"] },
+	//		{ "id": "sign-Postalcode", "validation": ["emptyRegx", "postRegx"] },
+	//		{ "id": "TermsAndConditions", "validation": ["checkboxRegx"] },
+	//	];
+	//} else {
+		
+	//}
+
+
+	//console.log(rules)
+	//var User_Website = "sign-Website";
+	//if ($(`#${User_Website}`).val() && $(`#${User_Website}`).val() != "") {
+	//	rules.push({ "id": "sign-Website", "validation": ["websiteRegx"] });
+	//}
+	validate(formData, rules);
+	var validateCount = 0;
+	var rtnResult;
+	var validationRtnResult = $(`#${formData.id} .error`).each(function (i) {
+		if ($(this).is(':empty')) {
+			//console.log('test');
+			validateCount++;
+			rtnResult = 1;
+		}
+		else {
+			rtnResult = 0;
+			return false;
+		}
+	})
+	console.log(rtnResult);
+	if (rtnResult == 1) {
+		returnCalculation();
+	}
+	//console.log(validateCount);
+	//console.log(validationRtnResult);
+
+	//if (validateCount == 8) {
+	//	$("body").append("<div class='loader_new'></div>");
+	//}
+
+
+}
 
 
 

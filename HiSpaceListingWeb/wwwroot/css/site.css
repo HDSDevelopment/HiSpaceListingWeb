@@ -4701,9 +4701,9 @@ input#sign-Phone[type=number],
 	padding: 5px 10px;
 }
 .rtn-table.table thead th, .rtn-table.table th {
-	border-bottom-color: var(--sec-color);
-	background: var(--sec-color);
-	color: #fff;
+	border-bottom-color: #565656;
+	background: #d2d2d2;
+	color: #565656;
 }
 .rtn-table.table td {
 	text-align: right;
@@ -4728,4 +4728,58 @@ button.btn-primary {
 	background-color: var(--pry-color);
 	color: #fff;
 	border-color: var(--pry-color);
+}
+
+button.modal-link__login.a-to-btninfo {
+	padding: 12px 30px;
+	color: var(--info-color);
+	background: #ffffff;
+	box-shadow: 2px 3px 20px -7px #000;
+	border: 1px solid var(--info-color);
+	transition: all .5s;
+}
+button.modal-link__login.a-to-btnpry {
+	padding: 12px 30px;
+	background: var(--pry-color);
+	color: #ffffff;
+	border: 1px solid var(--pry-color);
+	transition: all .5s;
+}
+button.modal-link__login.a-to-btninfo:hover {
+	background: var(--info-color);
+	color: #ffffff;
+	transition: all .5s;
+}
+button.modal-link__login.a-to-btnpry:hover {
+	background: #EF6C00;
+	border-color: #EF6C00;
+	transition: all .5s;
+}
+
+
+.rtn-slider .container{
+	background: #f3f3f3;
+	padding: 20px;
+}
+
+/*#container > div{
+	background: #f00;
+}*/
+
+.div-blur{
+	filter: blur(2px);
+}
+.cashflow-table{
+	position: relative;
+}
+.chart-sample {
+	position: absolute;
+	top: 40%;
+	padding: 5px 10px;
+	color: #fff;
+	background: #6c757d;
+	font-weight: 600;
+	left: 45%;
+	border-radius: 3px;
+	box-shadow: 4px 4px 25px -3px #6f6f6f;
 }

@@ -21,8 +21,19 @@
 	<meta charset="utf-8">
 	<meta name="keywords" content="@ViewData["keywords"]" />
 	<meta name="description" content="@ViewData["description"]" />
+	<meta name="robots" content="@ViewData["robots"]" />
+
+	<meta property="og:title" content="For Property, Operator, ReProfessionals and Investor" />
+	<meta property="og:description" content="Can Search all properties with commercial and coworking, search all operator and builders, search all real estate professionals for your project. More with the hispace investor" />
+	<meta property="og:image" content="https://www.thehispace.com/images/slider/07.jpg" />
+	<meta property="og:url" content="https://www.thehispace.com/" />
+	<meta property="og:site_name" content="www.thehispace.com" />
+	<meta property="og:type" content="website" />
+	<meta property="og:locale" content="en_US" />
+
+
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="canonical" href="@ViewData["canonical"]"/>
+	<link rel="canonical" href="@ViewData["canonical"]" />
 	<title>Hispace - @ViewData["Title"]</title>
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="~/images/favicon.ico" />
@@ -61,8 +72,17 @@
 	<link rel="stylesheet" href="~/css/custom.css" />
 	<link rel="stylesheet" href="~/css/site.css" />
 	<link rel="stylesheet" href="~/css/summernote.css">
+	<link rel="stylesheet" href="~/css/jslider/jslider.css">
 	<link rel="stylesheet" href="~/css/customResponsive.css">
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-CHT27M7F40"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
 
+		gtag('config', 'G-CHT27M7F40');
+	</script>
 </head>
 <body>
 	<div class="loader_new"></div>

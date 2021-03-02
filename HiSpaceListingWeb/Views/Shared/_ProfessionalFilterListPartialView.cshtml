@@ -9,7 +9,7 @@
 @*@model IEnumerable<HiSpaceListingService.ViewModel.PropertyPeopleResponse>*@
 @model HiSpaceListingService.ViewModel.PaginationModel<PropertyPeopleResponse>
 
-	<h1 class="display-none">The Search Result for reprofessionals</h1>
+	
 <div class="row">
 
 	<div class="col-12 search-history" id="peopleSearchHistory">
@@ -327,7 +327,7 @@
 									</div>
 									<div class="list-blur__background">
 										<div class="list-blur__btn">
-											<a class="property-link btn btn-outline-info modal-link__login obs-center" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/PeopleDetailListByListingId?ListingId="+@item.Listing.ListingId+""})" href="javascript:function() { return false; }">Join to view the detail</a>
+											<a class="property-link btn btn-outline-info modal-link__login obs-center a-to-btninfo" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/PeopleDetailListByListingId?ListingId="+@item.Listing.ListingId+""})">Join to view the detail</a>
 										</div>
 									</div>
 								</div>
@@ -338,7 +338,7 @@
 									}
 									else
 									{
-										<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/PeopleDetailListByListingId?ListingId="+@item.Listing.ListingId+""})" href="javascript:function() { return false; }">See Details</a>
+										<a class="property-link btn btn-primary btn-block modal-link__login a-to-btnpry" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/PeopleDetailListByListingId?ListingId="+@item.Listing.ListingId+""})">See Details</a>
 									}
 
 								</div>

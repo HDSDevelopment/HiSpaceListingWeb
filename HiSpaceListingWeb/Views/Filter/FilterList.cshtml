@@ -1,23 +1,23 @@
 ﻿@{
 	ViewData["keywords"] = "Home For Property, Operator, ReProfessionals";
 	string ListShowType = Context.Request.Query["ListShowType"];
-
-	if(ListShowType == "1")
+	ViewData["robots"] = "index, nofollow, noarchive";
+	if (ListShowType == "1")
 	{
 		ViewData["Title"] = "Search Result for HiSpace Property";
-		ViewData["canonical"] = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=1";
+		//ViewData["canonical"] = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=1";
 		ViewData["description"] = "Can search all properties with commercial and coworking. With all amenities, facilities best in market";
 	}
 	else if (ListShowType == "2")
 	{
 		ViewData["Title"] = "Search Result for HiSpace Operator";
-		ViewData["canonical"] = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=2";
+		//ViewData["canonical"] = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=2";
 		ViewData["description"] = "Can search all operator and builders for your projects. List your own properties or co-working spaces";
 	}
-	else if(ListShowType == "3")
+	else if (ListShowType == "3")
 	{
 		ViewData["Title"] = "Search Result for HiSpace REProfessionals";
-		ViewData["canonical"] = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=3";
+		//ViewData["canonical"] = "https://www.thehispace.com/Filter/PropertyOperatorPeopleAndFilterMenu?ListShowType=3";
 		ViewData["description"] = "Can search all real estate professionals for your project. Also Find a business partner to collaborate in your project";
 	}
 	else
@@ -27,13 +27,12 @@
 	}
 
 
-
 	Layout = "~/Views/Shared/_WebLayout.cshtml";
 	@using Microsoft.AspNetCore.Http
 	@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 }
 @model HiSpaceListingWeb.ViewModel.PropertyOperatorPeopleAndFilterMenuViewModel
-
+<h1 class="display-none">@ViewData["Title"]</h1>
 <div class="property-list nav-padding container">
 	<div class="bg-light">
 		<div class="container">
@@ -41,8 +40,8 @@
 				<div class="col-12">
 					<!--<ol class="breadcrumb mb-0">
 						<li class="breadcrumb-item"><a href="@Url.Action("Index", "Website")"> <i class="fas fa-home"></i> </a></li>-->
-						@*<li class="breadcrumb-item"><i class="fas fa-chevron-right"></i><a href="@Url.Action( "PropertyList","Website")"> All Property List </a></li>*@
-						<!--<li class="breadcrumb-item"> <i class="fas fa-chevron-right"></i> <span> HiSpace List </span></li>
+					@*<li class="breadcrumb-item"><i class="fas fa-chevron-right"></i><a href="@Url.Action( "PropertyList","Website")"> All Property List </a></li>*@
+					<!--<li class="breadcrumb-item"> <i class="fas fa-chevron-right"></i> <span> HiSpace List </span></li>
 						<li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span> Properties/Operator/Owner/Professional </span></li>
 					</ol>-->
 				</div>
@@ -61,7 +60,7 @@
 			<a class="nav-link page-nav" id="tab-03-tab" data-toggle="tab" href="#tab-03" role="tab" aria-controls="tab-03" aria-selected="false"><span class="icon fab flaticon-agent"></span> RE Professionals/People</a>
 		</li>
 	</ul>
-	
+
 	<div class="tab-content" id="myTabContent">
 		@*property list*@
 		<div class="tab-pane fade show active" id="tab-01" role="tabpanel" aria-labelledby="tab-01-tab">
@@ -83,7 +82,7 @@
 	<script src="~/js/customSlider.js"></script>
 	<script src="~/js/CustomFilters.js"></script>
 	<script>
-		$(document).on('change', '.dd-filter:visible', function () {    
+		$(document).on('change', '.dd-filter:visible', function () {
 			$(".filter-main__type:visible").append("<div class='loader_new-sub'></div>");
 			var value_selected = $(".dd-filter:visible option:selected").val();
 			//console.log(value_selected)
@@ -117,8 +116,8 @@
 			removeLoader();
 		})
 
-		//property pagination
-		
+			//property pagination
+
 	</script>
 }
 

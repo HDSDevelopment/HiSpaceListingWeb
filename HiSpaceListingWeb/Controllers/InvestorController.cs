@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using HiSpaceListingModels;
+using HiSpaceListingService.DTO;
 using HiSpaceListingService.ViewModel;
 using HiSpaceListingWeb.Utilities;
 using HiSpaceListingWeb.ViewModel;
@@ -36,6 +37,25 @@ namespace HiSpaceListingWeb.Controllers
 			SetSessionVariables();
 			return View();
 		}
+
+		[HttpPost]
+		public async Task<ActionResult> GetReturnCalculation(BasicReturnCalculatorDTO model)
+		{
+			SetSessionVariables();
+			BasicReturnCalculatorResponse vModel = new BasicReturnCalculatorResponse();
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(Common.Instance.ApiBasicReturnCalculatorControllerName);
+				HttpResponseMessage responseMessage = await client.PostAsJsonAsync(Common.Instance.ApiBasicReturnCalculatorPost, model);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					vModel = await responseMessage.Content.ReadAsAsync<BasicReturnCalculatorResponse>();
+				}
+			}
+			return Json(vModel);
+			//return PartialView("_OperatorFilterListPartialView", pagedModel);
+		}
+
 
 		[HttpPost]
 		public async Task<ActionResult> Create(Investor model)

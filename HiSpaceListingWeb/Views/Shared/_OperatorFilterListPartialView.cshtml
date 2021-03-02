@@ -10,7 +10,7 @@
 @model HiSpaceListingService.ViewModel.PaginationModel<PropertyOperatorResponse>
 
 
-<h1 class="display-none">The Search Result for operator</h1>
+
 <div class="row">
 
 	<div class="col-12 search-history" id="operatorSearchHistory">
@@ -303,7 +303,7 @@
 								</div>
 								<div class="list-blur__background">
 									<div class="list-blur__btn">
-										<a class="property-link btn btn-outline-info modal-link__login obs-center" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/SelectOperatorPropertyList?User="+@item.Operator.UserId+""})" href="javascript:function() { return false; }">Join to view the detail</a>
+										<button class="property-link btn btn-outline-info modal-link__login obs-center a-to-btninfo" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/SelectOperatorPropertyList?User="+@item.Operator.UserId+""})">Join to view the detail</button>
 									</div>
 								</div>
 							</div>
@@ -315,7 +315,7 @@
 							}
 							else
 							{
-								<a class="property-link btn btn-primary btn-block modal-link__login" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/SelectOperatorPropertyList?User="+@item.Operator.UserId+""})" href="javascript:function() { return false; }">See Details</a>
+								<button class="property-link btn btn-primary btn-block modal-link__login a-to-btnpry" data-targeturl="@Url.Action("LoginPartialView","User",new { returnUrl = "/Detail/SelectOperatorPropertyList?User="+@item.Operator.UserId+""})">See Details</button>
 							}
 						</div>
 						<div class="tooltip-wrapper list-data__check" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eco-Friendly Spaces click to see details"><i class="fas fa-check"></i></div>

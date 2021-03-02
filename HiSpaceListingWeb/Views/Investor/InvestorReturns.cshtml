@@ -3,8 +3,9 @@
 @{
 	ViewData["Title"] = "Investor return calculation page for Property, Operator, ReProfessionals";
 	ViewData["canonical"] = "https://www.thehispace.com/Investor/InvestorReturns";
+	ViewData["robots"] = "index, follow, noarchive";
 	ViewData["keywords"] = "Home For Property, Operator, ReProfessionals";
-	ViewData["description"] = "Can Search all properties with commercial and coworking, search all operator and builders, search all real estate professionals for your project. More with the hispace investor";
+	ViewData["description"] = "To find the investment returns calculation on your valuable assert. It will show the returns calculation based on out formula and future estimations";
 	Layout = "~/Views/Shared/_WebLayout.cshtml";
 	@using Microsoft.AspNetCore.Http
 }
@@ -28,7 +29,7 @@
 	<section class="bg-texture-1">
 		<div class="container">
 			<div class="texture-head">
-				To become an investor with the HiSpace partners, Provide your pieces of information
+				Looking for real estate investment avenues? Provide us your contact information and very few details here. Hi Space team will reach out to you
 			</div>
 			<div class="texture-btn">
 				<a class="nav-link btn btn-sec d-inline-block" href="@Url.Action( "CreateInvestor","Investor")">Investor Form</a>
@@ -45,20 +46,20 @@
 				</div>
 			</div>
 			<div class="row rtn-form">
-				<div class="col-sm-4 rtn-form__div">
+				<div class="col-sm-4 rtn-form__div" id="rtn-form__div">
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="rtn_investment">
 								Investment*
-								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Maximum amount you are willing to invest">?</span>
 							</label>
 							<input type="number" class="form-control" id="rtn_investment" name="rtn_investment" placeholder="1000000">
 							<div class="error" id=""></div>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="rtn_noi">
-								Current NOI*
-								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+								Expected NOI*
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Expected annual Profit (Revenues minus Expenses) amount">?</span>
 							</label>
 							<input type="number" class="form-control" id="rtn_noi" name="rtn_noi" placeholder="10000">
 							<div class="error" id=""></div>
@@ -66,7 +67,7 @@
 						<div class="form-group col-md-12">
 							<label for="rtn_cap">
 								Estimated CapEx or TI thru Hold*
-								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Expected Capital Expenditure like huge building repairs etc.">?</span>
 							</label>
 							<input type="number" class="form-control" id="rtn_cap" name="rtn_cap" placeholder="10000">
 							<div class="error" id=""></div>
@@ -74,23 +75,23 @@
 						<div class="form-group col-md-6">
 							<label for="rtn_inflation">
 								Inflation*
-								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Yearly inflation % (eg. 7%)">?</span>
 							</label>
 							<input type="number" class="form-control percent-float inpct" id="rtn_inflation" name="rtn_inflation" placeholder="0.00">
 							<div class="error" id=""></div>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="rtn_ltv">
-								Loan to Value(LTV)*
-								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+								Loan to Value(LTV)
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Percentage of property value that can be availed as Loan amount (eg. 70%)">?</span>
 							</label>
 							<input type="number" class="form-control percent-float inpct" id="rtn_ltv" name="rtn_ltv" placeholder="0.00">
 							<div class="error" id=""></div>
 						</div>
-						<div class="form-group col-md-12">
+						<div class="form-group col-md-12 intrest-rate d-none">
 							<label for="rtn_intrest">
 								Interest Rate*
-								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Interest rate that the banks charge for the loan (eg. 9.5%)">?</span>
 							</label>
 							<input type="number" class="form-control percent-float inpct" id="rtn_intrest" name="rtn_intrest" placeholder="0.00">
 							<div class="error" id=""></div>
@@ -98,7 +99,7 @@
 						<div class="form-group col-md-6">
 							<label for="rtn_period">
 								Holding Period (Years)*
-								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Number of years you want to hold the property (eg. 5 years)">?</span>
 							</label>
 							<select class="form-control basic-select" id="rtn_period" name="rtn_period">
 								<option value="1">1 Year</option>
@@ -112,34 +113,34 @@
 						<div class="form-group col-md-6">
 							<label for="rtn_exitmethod">
 								Exit Method*
-								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="How to calculate the Resale Value, by using (a) DCF (Discounted Cash Flow) or (b) Direct Capitalisation a) Discounted Cash Flow calculates Resale assuming next 10 years from Exit year b) Direct Capitalisation calculates Resale using Exit + 1 year NOI">?</span>
 							</label>
 							<select class="form-control basic-select" id="rtn_exitmethod" name="rtn_exitmethod">
-								<option value="1">DCF</option>
-								<option value="2">Direct Cap</option>
+								<option value="DCF">DCF</option>
+								<option value="Direct Cap">Direct Cap</option>
 							</select>
 							<div class="error" id=""></div>
 						</div>
 						<div class="form-group col-md-12">
 							<label for="rtn_exitcap">
 								Exit Cap Rate*
-								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Expected rate of return (Capitalisation Rate) to use during Exit; Higher the cap%, lower the value. (eg. 6%)">?</span>
 							</label>
-							<input type="number" class="form-control percent-float inpct" id="rtn_exitcap" name="rtn_exitcap" placeholder="0.00">
+							<input type="number" class="form-control percent-float inpct" id="rtn_exitcap" name="rtn_exitcap" placeholder="1.00">
 							<div class="error" id=""></div>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="rtn_discount">
 								Discount Rate*
-								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Rate of Risk (eg. 10%)">?</span>
 							</label>
 							<input type="number" class="form-control percent-float inpct" id="rtn_discount" name="rtn_discount" placeholder="0.00">
 							<div class="error" id=""></div>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="rtn_tax">
-								Tax Rate*
-								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy">?</span>
+								Tax Rate
+								<span class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="" data-original-title="Government Tax Rate (eg. 18%)">?</span>
 							</label>
 							<input type="number" class="form-control percent-float inpct" id="rtn_tax" name="rtn_tax" placeholder="0.00">
 							<div class="error" id=""></div>
@@ -147,7 +148,7 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12 mt-3 text-center">
-							<button type="button" id="rtn-calculate-btn" class="btn btn-primary" onclick="returnCalculation();">Calculate</button>
+							<button type="button" id="rtn-calculate-btn" class="btn btn-primary" onclick="rtnCalcualtionValidate(this);">Calculate</button>
 						</div>
 					</div>
 				</div>
@@ -155,9 +156,12 @@
 					<div class="mb-3">
 						<h4 class="text-center">Cash Flow</h4>
 					</div>
-					<div id="container" class="" style="height: 100%">
-					</div>
+					<div id="container" class="div-blur" style="height: 100%">
+						@*<div class="chart-blur">
 
+			</div>*@
+					</div>
+					<div class="chart-sample">Sample</div>
 				</div>
 			</div>
 		</div>
@@ -173,8 +177,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="">
-				<table id="rtn-cashflow-table" class="table table-sm rtn-table">
+			<div class="cashflow-table">
+				<table id="rtn-cashflow-table" class="table table-sm rtn-table div-blur">
 					<thead>
 						<tr>
 							<th scope="col">Cash Flow</th>
@@ -210,11 +214,70 @@
 							<td>11315</td>
 							<td>11994</td>
 						</tr>
+						<tr id="row-levered">
+						</tr>
+						<tr id="row-unLevered">
+						</tr>
+						<tr id="row-postTax">
+						</tr>
 					</tbody>
 				</table>
+				<div class="chart-sample">Sample</div>
 			</div>
 		</div>
 	</section>
+
+
+	@*<section class="rtn-slider mb-4">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="mb-3">
+						<h4>Sensitivity Slider</h4>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="mb-3">
+						<h6 class="text-center text-pry">LTV</h6>
+					</div>
+					<div class="layout-slider">
+						<input id="SliderLTV" type="slider" name="price" value="20" />
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="mb-3">
+						<h6 class="text-center text-pry">Discount Rate</h6>
+					</div>
+					<div class="layout-slider">
+						<input id="SliderDiscount" type="slider" name="price" value="20" />
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="mb-3">
+						<h6 class="text-center text-pry">Cap Rate</h6>
+					</div>
+					<div class="layout-slider">
+						<input id="SliderCap" type="slider" name="price" value="20" />
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="mb-3">
+						<h6 class="text-center text-pry">Tax Rate</h6>
+					</div>
+					<div class="layout-slider">
+						<input id="SliderTax" type="slider" name="price" value="20" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 mt-3 text-center">
+					<button type="button" id="rtn-apply-btn" class="btn btn-primary btn-sm" onclick="returnCalculation();">Apply</button>
+				</div>
+			</div>
+		</div>
+	</section>*@
 
 	<section class="mb-4">
 		<div class="container">
@@ -230,25 +293,29 @@
 					<div class="mb-3">
 						<h5 class="text-center text-pry">IRR</h5>
 					</div>
-					<div id="irr_chart" style="height: 300px"></div>
+					<div id="irr_chart" class="div-blur" style="height: 300px"></div>
+					<div class="chart-sample">Sample</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="mb-3">
 						<h5 class="text-center text-info">Profit</h5>
 					</div>
-					<div id="profit_chart" style="height: 300px"></div>
+					<div id="profit_chart" class="div-blur" style="height: 300px"></div>
+					<div class="chart-sample">Sample</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="mb-3">
 						<h5 class="text-center text-try">Multiple</h5>
 					</div>
-					<div id="multiple_chart" style="height: 300px"></div>
+					<div id="multiple_chart" class="div-blur" style="height: 300px"></div>
+					<div class="chart-sample">Sample</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="mb-3">
 						<h5 class="text-center text-sec">Peak Equity</h5>
 					</div>
-					<div id="peak_chart" style="height: 300px"></div>
+					<div id="peak_chart" class="div-blur" style="height: 300px"></div>
+					<div class="chart-sample">Sample</div>
 				</div>
 			</div>
 		</div>
@@ -256,304 +323,325 @@
 </div>
 
 @section Scripts {
+
+	<script type="text/javascript" src="~/js/jslider/jshashtable-2.1_src.js"></script>
+	<script type="text/javascript" src="~/js/jslider/jquery.numberformatter-1.2.3.js"></script>
+	<script type="text/javascript" src="~/js/jslider/tmpl.js"></script>
+	<script type="text/javascript" src="~/js/jslider/jquery.dependClass-0.1.js"></script>
+	<script type="text/javascript" src="~/js/jslider/draggable-0.1.js"></script>
+	<script type="text/javascript" src="~/js/jslider/jquery.slider.js"></script>
+
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-<script>
-	$('body').on('blur', '.percent-float', function () {
-		var percentValue = parseFloat($(this).val()).toFixed(2);
-		$(this).val(percentValue);
-	})
+	<script src="~/js/InvestorReturns.js"></script>
+	<script>
+		jQuery("#SliderLTV").slider({ from: 1, to: 100, step: .5, round: 1, format: { format: '##.0', locale: 'de' }, dimension: '&nbsp; %', skin: "plastic" });
+		jQuery("#SliderDiscount").slider({ from: 1, to: 100, step: .5, round: 1, format: { format: '##.0', locale: 'de' }, dimension: '&nbsp; %', skin: "plastic" });
+		jQuery("#SliderCap").slider({ from: 1, to: 100, step: .5, round: 1, format: { format: '##.0', locale: 'de' }, dimension: '&nbsp; %', skin: "plastic" });
+		jQuery("#SliderTax").slider({ from: 1, to: 100, step: .5, round: 1, format: { format: '##.0', locale: 'de' }, dimension: '&nbsp; %', skin: "plastic" });
 
-	//chart flow
-	var dom = document.getElementById("container");
-	var myChart = echarts.init(dom);
-	var app = {};
-	var option;
-	option = {
-		//title: {
-		//	text: 'Cash Flow'
-		//},
-		renderer: 'svg',
-		tooltip: {
-			trigger: 'axis'
-		},
-		legend: {
-			data: ['NOI', 'Net Cash Flow']
-		},
-		grid: {
-			show: false,
-			left: "10%",
-			top: "5%",
-			width: "80%",
-			height: "80%",
-			containLabel: true
-		},
-		toolbox: {
-			feature: {
-				saveAsImage: {}
+
+		//percentage float
+		$('body').on('blur', '.percent-float', function () {
+			if ($(this).val() < 100) {
+				var percentValue = parseFloat($(this).val()).toFixed(2);
+				$(this).val(percentValue);
 			}
-		},
-		xAxis: {
-			type: 'category',
-			boundaryGap: false,
-			data: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
-			name: "No of Years",
-			nameLocation: "middle",
-			nameTextStyle: {
-				fontWeight: "bold",
-				padding: [10, 0, 0, 0]
-			}
-		},
-		yAxis: [{
-			type: "value",
-			show: true,
-			name: "Amount",
-			nameLocation: "middle",
-			nameTextStyle: {
-				fontWeight: "bold",
-				align: "center",
-				padding: [4, 0, 0, 0]
+		})
+		////comma separator
+		//$('body').on('blur', '.number-comma', function () {
+		//	;
+		//	//if ($(this).val() < 100) {
+		//	//	var percentValue = parseFloat($(this).val()).toFixed(2);
+		//	$(this).val(numberWithCommas($(this).val()));
+		//	//}
+		//})
+
+		//chart flow
+		var dom = document.getElementById("container");
+		var myChart = echarts.init(dom);
+		var app = {};
+		var option;
+		option = {
+			//title: {
+			//	text: 'Cash Flow'
+			//},
+			renderer: 'svg',
+			tooltip: {
+				trigger: 'axis'
 			},
-			boundaryGap: false,
-			axisLine: {
-				show: true
-			}
-		}],
-		series: [
-			{
-				name: 'NOI',
-				type: 'line',
-				data: [9500, 10070, 10674, 11315, 11994]
+			legend: {
+				data: ['NOI', 'Net Cash Flow']
 			},
-			{
-				name: 'Net Cash Flow',
-				type: 'line',
-				data: [6500, 7070, 7674, 8315, 12713]
-			}
-		]
-	};
-	if (option && typeof option === 'object') {
-		myChart.setOption(option);
-	}
-
-	//IRR
-	var irr_dom = document.getElementById("irr_chart");
-	var irr_myChart = echarts.init(irr_dom);
-	var irr_app = {};
-	var irr_option;
-	irr_option = {
-		renderer: 'svg',
-		tooltip: {
-			trigger: 'axis',
-			axisPointer: {         
-				type: 'shadow'     
-			}
-		},
-		grid: {
-			containLabel: true,
-			left: "0",
-			top: "5%"
-		},
-		xAxis: [
-			{
+			grid: {
+				show: false,
+				left: "10%",
+				top: "5%",
+				width: "80%",
+				height: "80%",
+				containLabel: true
+			},
+			xAxis: {
 				type: 'category',
-				data: ['UnLevered', 'Levered', 'Post Tax'],
-				axisTick: {
-					alignWithLabel: true
-				},
-				axisLabel: {
-					show: true,
-					rotate: -30,
-					margin: 10
+				boundaryGap: false,
+				data: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+				name: "No of Years",
+				nameLocation: "middle",
+				nameTextStyle: {
+					fontWeight: "bold",
+					padding: [10, 0, 0, 0]
 				}
-			}
-		],
-		yAxis: [
-			{
-				type: 'value',
+			},
+			yAxis: [{
+				type: "value",
+				show: true,
+				name: "Amount",
+				nameLocation: "middle",
+				nameTextStyle: {
+					fontWeight: "bold",
+					align: "center",
+					padding: [4, 0, 0, 0]
+				},
+				boundaryGap: false,
 				axisLine: {
 					show: true
 				}
-			}
-		],
-		series: [
-			{
-				name: 'IRR',
-				type: 'bar',
-				barWidth: '40%',
-				data: [9.65, 16.18, 13.90]
-			}
-		],
-		color: '#ff9900'
-	};
-
-	if (irr_option && typeof irr_option === 'object') {
-		irr_myChart.setOption(irr_option);
-	}
-
-	//Profit
-	var profit_dom = document.getElementById("profit_chart");
-	var profit_myChart = echarts.init(profit_dom);
-	var profit_app = {};
-	var profit_option;
-	profit_option = {
-		renderer: 'svg',
-		tooltip: {
-			trigger: 'axis',
-			axisPointer: {
-				type: 'shadow'
-			}
-		},
-		grid: {
-			containLabel: true,
-			left: "0",
-			top: "5%"
-		},
-		xAxis: [
-			{
-				type: 'category',
-				data: ['UnLevered', 'Levered', 'Post Tax'],
-				axisTick: {
-					alignWithLabel: true
+			}],
+			series: [
+				{
+					name: 'NOI',
+					type: 'line',
+					data: [9500, 10070, 10674, 11315, 11994]
 				},
-				axisLabel: {
-					show: true,
-					rotate: -30,
-					margin: 10
+				{
+					name: 'Net Cash Flow',
+					type: 'line',
+					data: [6500, 7070, 7674, 8315, 12713]
 				}
-			}
-		],
-		yAxis: [
-			{
-				type: 'value',
-				axisLine: {
-					show: true
+			]
+		};
+		if (option && typeof option === 'object') {
+			myChart.setOption(option);
+		}
+
+		//IRR
+		var irr_dom = document.getElementById("irr_chart");
+		var irr_myChart = echarts.init(irr_dom);
+		var irr_app = {};
+		var irr_option;
+		irr_option = {
+			renderer: 'svg',
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					type: 'shadow'
 				}
-			}
-		],
-		series: [
-			{
-				name: 'Profit',
-				type: 'bar',
-				barWidth: '40%',
-				data: [38412, 18724, 16085]
-			}
-		],
-		color: '#2196f3'
-	};
-
-	if (profit_option && typeof profit_option === 'object') {
-		profit_myChart.setOption(profit_option);
-	}
-
-	//Multiple
-	var multiple_dom = document.getElementById("multiple_chart");
-	var multiple_myChart = echarts.init(multiple_dom);
-	var multiple_app = {};
-	var multiple_option;
-	multiple_option = {
-		renderer: 'svg',
-		tooltip: {
-			trigger: 'axis',
-			axisPointer: {
-				type: 'shadow'
-			}
-		},
-		grid: {
-			containLabel: true,
-			left: "0",
-			top: "5%"
-		},
-		xAxis: [
-			{
-				type: 'category',
-				data: ['UnLevered', 'Levered', 'Post Tax'],
-				axisTick: {
-					alignWithLabel: true
-				},
-				axisLabel: {
-					show: true,
-					rotate: -30,
-					margin: 10
+			},
+			grid: {
+				containLabel: true,
+				left: "0",
+				top: "5%"
+			},
+			xAxis: [
+				{
+					type: 'category',
+					data: ['UnLevered', 'Levered', 'Post Tax'],
+					axisTick: {
+						alignWithLabel: true
+					},
+					axisLabel: {
+						show: true,
+						rotate: -30,
+						margin: 10
+					}
 				}
-			}
-		],
-		yAxis: [
-			{
-				type: 'value',
-				axisLine: {
-					show: true
+			],
+			yAxis: [
+				{
+					type: 'value',
+					axisLine: {
+						show: true
+					}
 				}
-			}
-		],
-		series: [
-			{
-				name: 'Profit',
-				type: 'bar',
-				barWidth: '40%',
-				data: [1.31, 1.60, 1.51]
-			}
-		],
-		color: '#E91E63'
-	};
-
-	if (multiple_option && typeof multiple_option === 'object') {
-		multiple_myChart.setOption(multiple_option);
-	}
-
-	//Peak Equity
-	var peak_dom = document.getElementById("peak_chart");
-	var peak_myChart = echarts.init(peak_dom);
-	var peak_app = {};
-	var peak_option;
-	peak_option = {
-		renderer: 'svg',
-		tooltip: {
-			trigger: 'axis',
-			axisPointer: {
-				type: 'shadow'
-			}
-		},
-		grid: {
-			containLabel: true,
-			left: "0",
-			top: "5%"
-		},
-		xAxis: [
-			{
-				type: 'category',
-				data: ['UnLevered', 'Levered', 'Post Tax'],
-				axisTick: {
-					alignWithLabel: true
-				},
-				axisLabel: {
-					show: true,
-					rotate: -30,
-					margin: 10
+			],
+			series: [
+				{
+					name: 'IRR',
+					type: 'bar',
+					barWidth: '40%',
+					data: [9.65, 16.18, 13.90]
 				}
-			}
-		],
-		yAxis: [
-			{
-				type: 'value',
-				axisLine: {
-					show: true
+			],
+			color: '#ff9900'
+		};
+
+		if (irr_option && typeof irr_option === 'object') {
+			irr_myChart.setOption(irr_option);
+		}
+
+		//Profit
+		var profit_dom = document.getElementById("profit_chart");
+		var profit_myChart = echarts.init(profit_dom);
+		var profit_app = {};
+		var profit_option;
+		profit_option = {
+			renderer: 'svg',
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					type: 'shadow'
 				}
-			}
-		],
-		series: [
-			{
-				name: 'Profit',
-				type: 'bar',
-				barWidth: '40%',
-				data: [125000, 31250, 31250]
-			}
-		],
-		color: '#2ecc71'
-	};
+			},
+			grid: {
+				containLabel: true,
+				left: "0",
+				top: "5%"
+			},
+			xAxis: [
+				{
+					type: 'category',
+					data: ['UnLevered', 'Levered', 'Post Tax'],
+					axisTick: {
+						alignWithLabel: true
+					},
+					axisLabel: {
+						show: true,
+						rotate: -30,
+						margin: 10
+					}
+				}
+			],
+			yAxis: [
+				{
+					type: 'value',
+					axisLine: {
+						show: true
+					}
+				}
+			],
+			series: [
+				{
+					name: 'Profit',
+					type: 'bar',
+					barWidth: '40%',
+					data: [38412, 18724, 16085]
+				}
+			],
+			color: '#2196f3'
+		};
 
-	if (peak_option && typeof peak_option === 'object') {
-		peak_myChart.setOption(peak_option);
-	}
+		if (profit_option && typeof profit_option === 'object') {
+			profit_myChart.setOption(profit_option);
+		}
 
-</script>
+		//Multiple
+		var multiple_dom = document.getElementById("multiple_chart");
+		var multiple_myChart = echarts.init(multiple_dom);
+		var multiple_app = {};
+		var multiple_option;
+		multiple_option = {
+			renderer: 'svg',
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					type: 'shadow'
+				}
+			},
+			grid: {
+				containLabel: true,
+				left: "0",
+				top: "5%"
+			},
+			xAxis: [
+				{
+					type: 'category',
+					data: ['UnLevered', 'Levered', 'Post Tax'],
+					axisTick: {
+						alignWithLabel: true
+					},
+					axisLabel: {
+						show: true,
+						rotate: -30,
+						margin: 10
+					}
+				}
+			],
+			yAxis: [
+				{
+					type: 'value',
+					axisLine: {
+						show: true
+					}
+				}
+			],
+			series: [
+				{
+					name: 'Profit',
+					type: 'bar',
+					barWidth: '40%',
+					data: [1.31, 1.60, 1.51]
+				}
+			],
+			color: '#E91E63'
+		};
+
+		if (multiple_option && typeof multiple_option === 'object') {
+			multiple_myChart.setOption(multiple_option);
+		}
+
+		//Peak Equity
+		var peak_dom = document.getElementById("peak_chart");
+		var peak_myChart = echarts.init(peak_dom);
+		var peak_app = {};
+		var peak_option;
+		peak_option = {
+			renderer: 'svg',
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					type: 'shadow'
+				}
+			},
+			grid: {
+				containLabel: true,
+				left: "0",
+				top: "5%"
+			},
+			xAxis: [
+				{
+					type: 'category',
+					data: ['UnLevered', 'Levered', 'Post Tax'],
+					axisTick: {
+						alignWithLabel: true
+					},
+					axisLabel: {
+						show: true,
+						rotate: -30,
+						margin: 10
+					}
+				}
+			],
+			yAxis: [
+				{
+					type: 'value',
+					axisLine: {
+						show: true
+					}
+				}
+			],
+			series: [
+				{
+					name: 'Profit',
+					type: 'bar',
+					barWidth: '40%',
+					data: [125000, 31250, 31250]
+				}
+			],
+			color: '#2ecc71'
+		};
+
+		if (peak_option && typeof peak_option === 'object') {
+			peak_myChart.setOption(peak_option);
+		}
+
+	</script>
 }

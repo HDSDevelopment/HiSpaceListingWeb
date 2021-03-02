@@ -91,6 +91,19 @@ namespace HiSpaceListingWeb.Utilities
 
 		#endregion Investor Controller
 
+
+		#region BasicReturnCalculator Controller
+		public string ApiBasicReturnCalculatorControllerName
+		{
+			get
+			{
+				return ApiAddress + "BasicReturnCalculator/";
+			}
+		}
+		public string ApiBasicReturnCalculatorPost = "Post/";
+
+		#endregion BasicReturnCalculator Controller
+
 		#region User Controller
 
 		public string ApiUserControllerName
