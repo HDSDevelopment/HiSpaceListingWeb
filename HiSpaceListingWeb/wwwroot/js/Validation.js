@@ -528,7 +528,7 @@ function rtnCalcualtionValidate(e) {
 	rules = [
 		{ "id": "rtn_investment", "validation": ["emptyRegx"] },
 		{ "id": "rtn_noi", "validation": ["emptyRegx"] },
-		{ "id": "rtn_cap", "validation": ["emptyRegx"] },
+		//{ "id": "rtn_cap", "validation": ["emptyRegx"] },
 		{
 			"id": "rtn_inflation", "validation": ["emptyRegx", "percentageRegx"] },
 		//{ "id": "rtn_ltv", "validation": ["emptyRegx"] },

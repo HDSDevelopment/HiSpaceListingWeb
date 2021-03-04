@@ -95,6 +95,9 @@ function returnCalculation() {
 	var rtnInvestment = $('#rtn_investment').val();
 	var rtnNOI = $('#rtn_noi').val();
 	var rtnCap = $('#rtn_cap').val();
+	if (rtnCap == "") {
+		rtnCap = 0;
+	}
 	var rtnInflation = $('#rtn_inflation').val();
 	var rtnLTV = $('#rtn_ltv').val();
 	if (rtnLTV == "") {
