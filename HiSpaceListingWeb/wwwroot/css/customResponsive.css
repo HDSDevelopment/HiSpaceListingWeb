@@ -154,6 +154,11 @@
 	.modal-content .image-upload__row > div:last-child {
 		margin-bottom: 10px;
 	}
+
+
+	#container{
+		height: 450px !important;
+	}
 }
 /*-------------------------------------------------*/
 @media (max-width: 575px) {
@@ -307,6 +312,9 @@
 	.slide-btn {
 		margin-right: 25px;
 	}
+	#container {
+		height: 350px !important;
+	}
 }
 /*-------------------------------------------------*/
 @media(max-width: 479px) {
@@ -335,6 +343,9 @@
 		display: unset;
 		font-size: 12px;
 		line-height: 22px;
+	}
+	#container {
+		height: 300px !important;
 	}
 }
 /*-------------------------------------------------*/

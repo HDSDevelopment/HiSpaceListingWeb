@@ -64,7 +64,11 @@
 //	//table append
 //	rtnCashFlowTable(NOI, capitalExpenses, netCashFlow, holdingPeriodYears);
 //};
+//$.cookie("visits", 10);
+//console.log($.cookie("visits"));
+//$.removeCookie("visits");
 
+//console.log($.cookie("visits"));
 
 //interest rate show
 var rtnLtvInput = $('#rtn_ltv');
@@ -88,22 +92,32 @@ $(rtnExitMethod).change(function () {
 });
 
 
+function returnCalculation(process) {
 
+	if (process == 1) {
+		//$('#SliderLTV').next().find('.jslider-value span').html(rtnLTV);
+		//$('#SliderLTV').siblings('.current-value__slider').html('Current LTV "' + rtnLTV + '"');
 
-function returnCalculation() {
+		////console.log($('#SliderLTV').siblings('.current-value__slider').html());
+		//$('#SliderDiscount').next().find('.jslider-value span').html(rtnDiscount);
+		//$('#SliderDiscount').siblings('.current-value__slider').html('Current Discunt "' + rtnDiscount + '"');
+
+		//$('#SliderCap').next().find('.jslider-value span').html(rtnExitcap);
+		//$('#SliderCap').siblings('.current-value__slider').html('Current Exit Cap "' + rtnExitcap + '"');
+
+		//$('#SliderTax').next().find('.jslider-value span').html(rtnTax);
+		//$('#SliderTax').siblings('.current-value__slider').html('Current Tax "' + rtnTax + '"');
+		console.log($('#SliderLTV').next().find('.jslider-value span').html().replace(/,/g, '.'));
+		console.log($('#SliderDiscount').next().find('.jslider-value span').html().replace(/,/g, '.'));
+		console.log($('#SliderCap').next().find('.jslider-value span').html().replace(/,/g, '.'));
+		console.log($('#SliderTax').next().find('.jslider-value span').html().replace(/,/g, '.'));
+	}
 	var formData = new FormData();
 	var rtnInvestment = $('#rtn_investment').val();
 	var rtnNOI = $('#rtn_noi').val();
-	var rtnCap = $('#rtn_cap').val();
-	if (rtnCap == "") {
-		rtnCap = 0;
-	}
+	
 	var rtnInflation = $('#rtn_inflation').val();
-	var rtnLTV = $('#rtn_ltv').val();
-	if (rtnLTV == "") {
-		rtnLTV = 0.00;
-	}
-	console.log(rtnLTV);
+	
 	var rtnIntrest = $('#rtn_intrest').val();
 	if (rtnIntrest == "") {
 		rtnIntrest = 0.00;
@@ -114,25 +128,42 @@ function returnCalculation() {
 	if (rtnExitcap == "" || rtnExitcap == "0.00") {
 		rtnExitcap = 1.00;
 	}
-	var rtnDiscount = $('#rtn_discount').val();
-	var rtnTax = $('#rtn_tax').val();
-	if (rtnTax == "") {
-		rtnTax = 0.00;
+	
+	
+	if (process == 1) {
+		var rtnLTV = $('#SliderLTV').next().find('.jslider-value span').html().replace(/,/g, '.');
+		var rtnDiscount = $('#SliderDiscount').next().find('.jslider-value span').html().replace(/,/g, '.');
+		var rtnCap = $('#SliderCap').next().find('.jslider-value span').html().replace(/,/g, '.');
+		var rtnTax = $('#SliderTax').next().find('.jslider-value span').html().replace(/,/g, '.');
+	} else {
+		var rtnLTV = $('#rtn_ltv').val();
+		if (rtnLTV == "") {
+			rtnLTV = 0.00;
+		}
+		var rtnCap = $('#rtn_cap').val();
+		if (rtnCap == "") {
+			rtnCap = 0.00;
+		}
+		var rtnDiscount = $('#rtn_discount').val();
+		var rtnTax = $('#rtn_tax').val();
+		if (rtnTax == "") {
+			rtnTax = 0.00;
+		}
 	}
-	//console.log(rtnTax);
+	
 
 
 	//var rtnInvestment = 125000;
 	//var rtnNOI = 9500;
 	//var rtnCap = 15000;
 	//var rtnInflation = 6.00;
-	//var rtnLTV = 0.00;
+	//var rtnLTV = 20.00;
 	//var rtnIntrest = 0.00;
 	//var rtnPeriod = 3;
 	//var rtnExitmethod = "Direct cap";
 	//var rtnExitcap = 1;
 	//var rtnDiscount = 12.00;
-	//var rtnTax = 25.00;
+	//var rtnTax = 25.35;
 	var rtnAdditionalYears = 11;
 	formData.append("Investment", rtnInvestment);
 	formData.append("CurrentNOI", rtnNOI);
@@ -177,7 +208,7 @@ function returnCalculation() {
 			var peakEquity = [];
 			var operatingCashFlow = obj['operatingCashFlow'];
 			if (operatingCashFlow == null || operatingCashFlow == "") {
-				alert('Try some other values');
+				alert('Please enter the valid inputs...!');
 				removeBodyLoader();
 			}
 			var responseNOI = obj['operatingCashFlow']['netOperatingIncomeList'];
@@ -191,6 +222,7 @@ function returnCalculation() {
 			var responseProfit = obj['profit'];
 			var responseMultiple = obj['multiple'];
 			var responsePeakEquity = obj['peakEquity'];
+
 			//console.log(responseNOI);
 			//console.log(rtnPeriod);
 			//holding periods list array
@@ -233,13 +265,90 @@ function returnCalculation() {
 				peakEquity.push(element.toFixed(2));
 			});
 
+			//var responseCurrentValues = [];
+			//responseCurrentValues.push(
+			//	{ 'NOI': NOI },
+			//	{ 'netCashFlow': netCashFlow },
+			//	{ 'capitalExpenses': capitalExpenses },
+			//	{ 'holdingPeriodYears': holdingPeriodYears},
+			//	{ 'leveredCash': leveredCash},
+			//	{ 'unleveredCash': unleveredCash},
+			//	{ 'postTaxCash': postTaxCash},
+			//	{ 'irr': irr},
+			//	{ 'profit': profit},
+			//	{ 'multiple': multiple},
+			//	{ 'peakEquity': peakEquity}
+			//);
+			var cookievalue;
+			var responseCurrentValues = {
+				'currentNOI': NOI,
+				'currentnetCashFlow': netCashFlow,
+				'currentcapitalExpenses': capitalExpenses,
+				'currentholdingPeriodYears': holdingPeriodYears,
+				'currentleveredCash': leveredCash,
+				'currentunleveredCash': unleveredCash,
+				'currentpostTaxCash': postTaxCash,
+				'currentirr': irr,
+				'currentprofit': profit,
+				'currentmultiple': multiple,
+				'currentpeakEquity': peakEquity
+			};
+
 			//chart cash flow
 			rtnCashFlow(NOI, capitalExpenses, netCashFlow, holdingPeriodYears, leveredCash, unleveredCash, postTaxCash, rtnLTV, rtnTax);
 			//table append
 			rtnCashFlowTable(NOI, capitalExpenses, netCashFlow, holdingPeriodYears, leveredCash, unleveredCash, postTaxCash, rtnLTV, rtnTax);
 			//all returns
-			overAllReturns(irr, profit, multiple, peakEquity);
+			if (process == 0) {
+				$.cookie("responseCurrentValues", JSON.stringify(responseCurrentValues));
+				console.log(JSON.parse($.cookie("responseCurrentValues")));
+				cookievalue = JSON.parse($.cookie("responseCurrentValues"));
+				//console.log(cookievalue);
+				//console.log(cookievalue['currentirr']);
 
+				overAllReturns(cookievalue['currentirr'], cookievalue['currentprofit'], cookievalue['currentmultiple'], cookievalue['currentpeakEquity'], irr, profit, multiple, peakEquity, 0);
+			} else {
+				cookievalue = JSON.parse($.cookie("responseCurrentValues"));
+				console.log(cookievalue);
+				overAllReturns(cookievalue['currentirr'], cookievalue['currentprofit'], cookievalue['currentmultiple'], cookievalue['currentpeakEquity'], irr, profit, multiple, peakEquity, 1);
+			}
+
+			//slider section
+			setTimeout(function () {
+			$('.rtn-slider').removeClass('d-none');
+			//console.log($('#SliderLTV').val());
+			//$('#SliderLTV').val(rtnLTV);
+			//console.log($('#SliderLTV').val());
+			//$('#SliderDiscount').val(rtnDiscount);
+			//$('#SliderCap').val(rtnExitcap);
+			//$('#SliderTax').val(rtnTax);
+
+			$('#SliderLTV').val(rtnLTV);
+			console.log($('#SliderLTV').val());
+			$('#SliderLTV').next().find('.jslider-value span').html(rtnLTV);
+			$('#SliderLTV').siblings('.current-value__slider').html('Current LTV "' + rtnLTV + '"');
+
+			//console.log($('#SliderLTV').siblings('.current-value__slider').html());
+			$('#SliderDiscount').val(rtnDiscount);
+			$('#SliderDiscount').next().find('.jslider-value span').html(rtnDiscount);
+			$('#SliderDiscount').siblings('.current-value__slider').html('Current Discunt "' + rtnDiscount + '"');
+
+			$('#SliderCap').val(rtnExitcap);
+			$('#SliderCap').next().find('.jslider-value span').html(rtnExitcap);
+			$('#SliderCap').siblings('.current-value__slider').html('Current Exit Cap "' + rtnExitcap + '"');
+
+			$('#SliderTax').val(rtnTax);
+			$('#SliderTax').next().find('.jslider-value span').html(rtnTax);
+			$('#SliderTax').siblings('.current-value__slider').html('Current Tax "' + rtnTax + '"');
+
+			
+				jQuery("#SliderLTV").slider({from: 1,to: 100,step: .1,round: 1,format: {format: '##.0',locale: 'de'},dimension: ' %',skin: "round"});
+				jQuery("#SliderDiscount").slider({ from: 1, to: 100, step: .1, round: 1, format: { format: '##.0', locale: 'de' }, dimension: ' %', skin: "round" });
+				jQuery("#SliderCap").slider({ from: 1, to: 100, step: .1, round: 1, format: { format: '##.0', locale: 'de' }, dimension: ' %', skin: "round" });
+				jQuery("#SliderTax").slider({ from: 1, to: 100, step: .1, round: 1, format: { format: '##.0', locale: 'de' }, dimension: ' %', skin: "round" });
+			}, 1000);
+
+			//console.log();
 			removeBodyLoader();
 			removeBlur();
 		},
@@ -324,15 +433,21 @@ function rtnCashFlow(NOI, capitalExpenses, netCashFlow, holdingPeriodYears, leve
 		//},
 		renderer: 'svg',
 		tooltip: {
-			trigger: 'axis'
+			trigger: 'axis',
+			axisPointer: {
+				type: 'cross'
+			},
+			backgroundColor: 'rgba(255, 255, 255, 0.8)'
 		},
 		legend: {
-			data: ['NOI', 'Net Cash Flow', 'Levered Cash Flow', 'Unlevered Cash Flow', 'Post Tax Cash Flow']
+			data: ['NOI', 'Net Cash Flow', 'Levered Cash Flow', 'Unlevered Cash Flow', 'Post Tax Cash Flow'],
+			type: 'scroll',
+			orient: 'horizontal'
 		},
 		grid: {
 			show: false,
 			left: "10%",
-			top: "5%",
+			top: "10%",
 			width: "80%",
 			height: "80%",
 			containLabel: true
@@ -446,12 +561,37 @@ function rtnCashFlowTable(NOI, capitalExpenses, netCashFlow, holdingPeriodYears,
 	}
 };
 
-function overAllReturns(irr, profit, multiple, peakEquity) {
+function overAllReturns(cirr, cprofit, cmultiple, cpeakEquity, irr, profit, multiple, peakEquity, process) {
+	if (process == 1) {
+		barWidth = '30%'
+	} else {
+		barWidth = '40%'
+	}
 	//IRR
 	var irr_dom = document.getElementById("irr_chart");
 	var irr_myChart = echarts.init(irr_dom);
 	var irr_app = {};
 	var irr_option;
+	var irr_dataseries = [];
+	
+	irr_dataseries = [
+		{
+			name: 'Current IRR',
+			type: 'bar',
+			barWidth: barWidth,
+			data: cirr,
+			color: '#ff9900'
+		}
+	];
+	if(process == 1) {
+		irr_dataseries.push({
+			name: 'Updated IRR',
+			type: 'bar',
+			barWidth: barWidth,
+			data: irr,
+			color: "#d2d2d2"
+		});
+	};
 	irr_option = {
 		renderer: 'svg',
 		tooltip: {
@@ -487,26 +627,12 @@ function overAllReturns(irr, profit, multiple, peakEquity) {
 				}
 			}
 		],
-		series: [
-			{
-				name: 'Current IRR',
-				type: 'bar',
-				barWidth: '40%',
-				data: irr,
-				color: '#ff9900'
-			},
-			//{
-			//	name: 'Updated IRR',
-			//	type: 'bar',
-			//	barWidth: '40%',
-			//	data: irr,
-			//	color: "#d2d2d2"
-			//}
-		],
+		series: irr_dataseries
 		
 	};
 
 	if (irr_option && typeof irr_option === 'object') {
+		irr_myChart.clear();
 		irr_myChart.setOption(irr_option);
 	}
 
@@ -515,6 +641,25 @@ function overAllReturns(irr, profit, multiple, peakEquity) {
 	var profit_myChart = echarts.init(profit_dom);
 	var profit_app = {};
 	var profit_option;
+	var profit_dataseries = [];
+	profit_dataseries = [
+		{
+			name: 'Current Profit',
+			type: 'bar',
+			barWidth: barWidth,
+			data: cprofit,
+			color: '#2196f3'
+		}
+	];
+	if (process == 1) {
+		profit_dataseries.push({
+			name: 'Updated Profit',
+			type: 'bar',
+			barWidth: barWidth,
+			data: profit,
+			color: "#d2d2d2"
+		});
+	};
 	profit_option = {
 		renderer: 'svg',
 		tooltip: {
@@ -550,26 +695,11 @@ function overAllReturns(irr, profit, multiple, peakEquity) {
 				}
 			}
 		],
-		series: [
-			{
-				name: 'Current Profit',
-				type: 'bar',
-				barWidth: '40%',
-				data: profit,
-				color: '#2196f3'
-			},
-			//{
-			//	name: 'Updated Profit',
-			//	type: 'bar',
-			//	barWidth: '40%',
-			//	data: profit,
-			//	color: "#d2d2d2"
-			//}
-		],
-		
+		series: profit_dataseries 	
 	};
 
 	if (profit_option && typeof profit_option === 'object') {
+		profit_myChart.clear();
 		profit_myChart.setOption(profit_option);
 	}
 
@@ -578,6 +708,25 @@ function overAllReturns(irr, profit, multiple, peakEquity) {
 	var multiple_myChart = echarts.init(multiple_dom);
 	var multiple_app = {};
 	var multiple_option;
+	var multiple_dataseries = [];
+	multiple_dataseries = [
+		{
+			name: 'Current Multiple',
+			type: 'bar',
+			barWidth: barWidth,
+			data: cmultiple,
+			color: '#E91E63'
+		}
+	];
+	if (process == 1) {
+		multiple_dataseries.push({
+			name: 'Updated Multiple',
+			type: 'bar',
+			barWidth: barWidth,
+			data: multiple,
+			color: "#d2d2d2"
+		});
+	};
 	multiple_option = {
 		renderer: 'svg',
 		tooltip: {
@@ -613,26 +762,12 @@ function overAllReturns(irr, profit, multiple, peakEquity) {
 				}
 			}
 		],
-		series: [
-			{
-				name: 'Current Multiple',
-				type: 'bar',
-				barWidth: '40%',
-				data: multiple,
-				color: '#E91E63'
-			},
-			//{
-			//	name: 'Updated Multiple',
-			//	type: 'bar',
-			//	barWidth: '40%',
-			//	data: multiple,
-			//	color: "#d2d2d2"
-			//}
-		],
+		series: multiple_dataseries
 		
 	};
 
 	if (multiple_option && typeof multiple_option === 'object') {
+		multiple_myChart.clear();
 		multiple_myChart.setOption(multiple_option);
 	}
 
@@ -641,6 +776,25 @@ function overAllReturns(irr, profit, multiple, peakEquity) {
 	var peak_myChart = echarts.init(peak_dom);
 	var peak_app = {};
 	var peak_option;
+	var peak_dataseries = [];
+	peak_dataseries = [
+		{
+			name: 'Current Peak Equity',
+			type: 'bar',
+			barWidth: barWidth,
+			data: cpeakEquity,
+			color: '#2ecc71'
+		}
+	];
+	if (process == 1) {
+		peak_dataseries.push({
+			name: 'Updated Peak Equity',
+			type: 'bar',
+			barWidth: barWidth,
+			data: peakEquity,
+			color: "#d2d2d2"
+		});
+	};
 	peak_option = {
 		renderer: 'svg',
 		tooltip: {
@@ -676,26 +830,12 @@ function overAllReturns(irr, profit, multiple, peakEquity) {
 				}
 			}
 		],
-		series: [
-			{
-				name: 'Current Peak Equity',
-				type: 'bar',
-				barWidth: '40%',
-				data: peakEquity,
-				color: '#2ecc71'
-			},
-			//{
-			//	name: 'Updated Peak Equity',
-			//	type: 'bar',
-			//	barWidth: '40%',
-			//	data: peakEquity,
-			//	color: "#d2d2d2"
-			//}
-		],
+		series: peak_dataseries
 		
 	};
 
 	if (peak_option && typeof peak_option === 'object') {
+		peak_myChart.clear();
 		peak_myChart.setOption(peak_option);
 	}
 };

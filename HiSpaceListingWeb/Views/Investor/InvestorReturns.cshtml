@@ -148,7 +148,10 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12 mt-3 text-center">
-							<button type="button" id="rtn-calculate-btn" class="btn btn-primary" onclick="rtnCalcualtionValidate(this);">Calculate</button>
+							<button type="button" id="rtn-calculate-btn" class="btn btn-primary" onclick="rtnCalcualtionValidate(this,0);">Calculate</button>
+						</div>
+						<div class="col-sm-12 mt-3 text-center">
+							<button type="button" id="rtn-calculate-btn" class="btn btn-primary" onclick="rtnCalcualtionValidate(this,1);">Calculate</button>
 						</div>
 					</div>
 				</div>
@@ -159,7 +162,7 @@
 					<div id="container" class="div-blur" style="height: 100%">
 						@*<div class="chart-blur">
 
-			</div>*@
+							</div>*@
 					</div>
 					<div class="chart-sample">Enter values and hit calculate button</div>
 				</div>
@@ -177,7 +180,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="cashflow-table">
+			<div class="cashflow-table table-responsive">
 				<table id="rtn-cashflow-table" class="table table-sm rtn-table div-blur">
 					<thead>
 						<tr>
@@ -228,56 +231,60 @@
 	</section>
 
 
-	@*<section class="rtn-slider mb-4">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="mb-3">
-						<h4>Sensitivity Slider</h4>
+	<section class="rtn-slider mb-4 d-none">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="mb-3">
+							<h4>Sensitivity Slider<span class="tooltip-wrapper tool-fix" data-toggle="tooltip" data-placement="top" title="" data-original-title="Adjust the below range slider (LTV, Discount, Cap rate, Tax rate) to check the instant return values">?</span></h4>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="mb-4">
+							<h6 class="text-center text-pry">LTV</h6>
+						</div>
+						<div class="layout-slider">
+							<input id="SliderLTV" type="slider" name="price" value="0" />
+							<span class="current-value__slider">Current LTV</span>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="mb-4">
+							<h6 class="text-center text-pry">Cap Rate</h6>
+						</div>
+						<div class="layout-slider">
+							<input id="SliderCap" type="slider" name="price" value="0" />
+							<span class="current-value__slider"></span>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="mb-4">
+							<h6 class="text-center text-pry">Discount Rate</h6>
+						</div>
+						<div class="layout-slider">
+							<input id="SliderDiscount" type="slider" name="price" value="0" />
+							<span class="current-value__slider"></span>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="mb-4">
+							<h6 class="text-center text-pry">Tax Rate</h6>
+						</div>
+						<div class="layout-slider">
+							<input id="SliderTax" type="slider" name="price" value="0" />
+							<span class="current-value__slider"></span>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 mt-4 text-center">
+						<button type="button" id="rtn-apply-btn" class="btn btn-primary btn-sm" onclick="returnCalculation(1);">Apply</button>
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-3">
-					<div class="mb-3">
-						<h6 class="text-center text-pry">LTV</h6>
-					</div>
-					<div class="layout-slider">
-						<input id="SliderLTV" type="slider" name="price" value="20" />
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="mb-3">
-						<h6 class="text-center text-pry">Discount Rate</h6>
-					</div>
-					<div class="layout-slider">
-						<input id="SliderDiscount" type="slider" name="price" value="20" />
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="mb-3">
-						<h6 class="text-center text-pry">Cap Rate</h6>
-					</div>
-					<div class="layout-slider">
-						<input id="SliderCap" type="slider" name="price" value="20" />
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="mb-3">
-						<h6 class="text-center text-pry">Tax Rate</h6>
-					</div>
-					<div class="layout-slider">
-						<input id="SliderTax" type="slider" name="price" value="20" />
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12 mt-3 text-center">
-					<button type="button" id="rtn-apply-btn" class="btn btn-primary btn-sm" onclick="returnCalculation();">Apply</button>
-				</div>
-			</div>
-		</div>
-	</section>*@
+		</section>
 
 	<section class="mb-4">
 		<div class="container">
@@ -323,7 +330,7 @@
 </div>
 
 @section Scripts {
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="~/js/jslider/jshashtable-2.1_src.js"></script>
 	<script type="text/javascript" src="~/js/jslider/jquery.numberformatter-1.2.3.js"></script>
 	<script type="text/javascript" src="~/js/jslider/tmpl.js"></script>
@@ -334,11 +341,7 @@
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 	<script src="~/js/InvestorReturns.js"></script>
 	<script>
-		jQuery("#SliderLTV").slider({ from: 1, to: 100, step: .5, round: 1, format: { format: '##.0', locale: 'de' }, dimension: '&nbsp; %', skin: "plastic" });
-		jQuery("#SliderDiscount").slider({ from: 1, to: 100, step: .5, round: 1, format: { format: '##.0', locale: 'de' }, dimension: '&nbsp; %', skin: "plastic" });
-		jQuery("#SliderCap").slider({ from: 1, to: 100, step: .5, round: 1, format: { format: '##.0', locale: 'de' }, dimension: '&nbsp; %', skin: "plastic" });
-		jQuery("#SliderTax").slider({ from: 1, to: 100, step: .5, round: 1, format: { format: '##.0', locale: 'de' }, dimension: '&nbsp; %', skin: "plastic" });
-
+		
 
 		//percentage float
 		$('body').on('blur', '.percent-float', function () {

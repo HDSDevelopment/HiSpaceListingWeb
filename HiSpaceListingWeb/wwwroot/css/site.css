@@ -4662,7 +4662,7 @@ input#sign-Phone[type=number],
 	font-weight: 500;
 	margin-bottom: 3px;
 }
-	.rtn-form label span {
+	.rtn-form label span, .tooltip-wrapper {
 		padding: 2px 5px;
 		color: #fff;
 		background: #d60;
@@ -4670,6 +4670,11 @@ input#sign-Phone[type=number],
 		cursor: pointer;
 		font-size: 10px;
 	}
+		.tooltip-wrapper.tool-fix {
+			margin-left: 3px;
+			position: relative;
+			bottom: 8px;
+		}
 .rtn-form .form-control {
 	height: 35px;
 	padding: 5px 10px;
@@ -4779,7 +4784,33 @@ button.modal-link__login.a-to-btnpry:hover {
 	color: #fff;
 	background: #6c757d;
 	font-weight: 600;
-	left: 45%;
+	left: 50%;
+	transform: translate(-50%, 0);
 	border-radius: 3px;
 	box-shadow: 4px 4px 25px -3px #6f6f6f;
+}
+
+
+/*Range slider*/
+.jslider .jslider-value {
+	font-size: 12px !important;
+	padding: 2px 5px 0 !important;
+	background: var(--sec-color) !important;
+	color: #fff;
+	font-weight: 600;
+	top: -25px !important;
+}
+.jslider .jslider-label {
+	font-size: 10px !important;
+	opacity: 0.8 !important;
+	font-weight: 600 !important;
+}
+
+.current-value__slider {
+	display: block;
+	padding-top: 5px;
+	padding-left: 5px;
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--pry-color);
 }

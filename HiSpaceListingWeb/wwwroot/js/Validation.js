@@ -519,7 +519,7 @@ $(document).on("change", "select", function (e) {
 })
 
 //return calculation validation
-function rtnCalcualtionValidate(e) {
+function rtnCalcualtionValidate(e, process) {
 	console.log(e);
 	let formData = { "id": "rtn-form__div" };
 	$(`#${formData.id} .error`).html(``);
@@ -595,7 +595,7 @@ function rtnCalcualtionValidate(e) {
 	})
 	console.log(rtnResult);
 	if (rtnResult == 1) {
-		returnCalculation();
+		returnCalculation(process);
 	}
 	//console.log(validateCount);
 	//console.log(validationRtnResult);
