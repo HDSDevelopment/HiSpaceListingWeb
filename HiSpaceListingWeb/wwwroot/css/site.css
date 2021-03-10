@@ -4665,11 +4665,12 @@ input#sign-Phone[type=number],
 	.rtn-form label span, .tooltip-wrapper {
 		padding: 2px 5px;
 		color: #fff;
-		background: #d60;
 		border-radius: 30px;
+		background: #d60;
 		cursor: pointer;
 		font-size: 10px;
 	}
+
 		.tooltip-wrapper.tool-fix {
 			margin-left: 3px;
 			position: relative;
@@ -4818,4 +4819,25 @@ button.modal-link__login.a-to-btnpry:hover {
 }
 .updated-value__slider {
 	color: var(--info-color);
+}
+
+.list-data__check {
+	position: absolute;
+	right: -10px;
+	top: -20px;
+	padding: 8px !important;
+	background: #d3f4e1 !important;
+	border-radius: 30px !important;
+	font-size: 18px !important;
+	line-height: 18px;
+	width: 34px;
+	color: #2ecc71 !important;
+	box-shadow: 3px 3px 10px -3px #000000;
+}
+.fav-section .tooltip-wrapper {
+	background: none;
+}
+
+.fav-section_re {
+	width: 45px;
 }
