@@ -4806,11 +4806,16 @@ button.modal-link__login.a-to-btnpry:hover {
 	font-weight: 600 !important;
 }
 
-.current-value__slider {
+.current-value__slider, .updated-value__slider {
 	display: block;
 	padding-top: 5px;
 	padding-left: 5px;
 	font-size: 12px;
-	font-weight: 500;
+	font-weight: 800;
+}
+.current-value__slider {
 	color: var(--pry-color);
+}
+.updated-value__slider {
+	color: var(--info-color);
 }

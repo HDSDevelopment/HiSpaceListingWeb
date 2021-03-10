@@ -159,6 +159,17 @@
 	#container{
 		height: 450px !important;
 	}
+
+	#slider h1, #slider h2 {
+		font-size: 30px;
+		line-height: 45px;
+		letter-spacing: 3px;
+		position: relative;
+		padding-top: 10px;
+	}
+	.CTA-btn {
+		margin-bottom: 0px;
+	}
 }
 /*-------------------------------------------------*/
 @media (max-width: 575px) {
@@ -325,6 +336,21 @@
 	.owl-carousel .owl-item .people-operator__listImage img {
 		height: auto;
 	}
+	#slider h2 {
+		font-size: 28px;
+		line-height: 38px;
+		letter-spacing: 2px;
+		position: relative;
+		padding-top: 0;
+	}
+	#slider .carousel-item .slider-content span {
+		font-size: 30px;
+		line-height: 40px;
+		letter-spacing: 3px;
+		font-weight: 300;
+		padding: 10px;
+		width: 60px;
+	}
 }
 /*-------------------------------------------------*/
 @media(max-width: 400px) {
@@ -358,7 +384,46 @@
     padding: 10px 20px;
 }
 	.slide-type__image{
-    height: 80px;
+    height: 60px;
+	}
+	#slider h2 {
+		font-size: 25px;
+		line-height: 35px;
+		letter-spacing: 2px;
+		position: relative;
+		padding-top: 30px;
+	}
+
+	#slider .carousel-item .slider-content span {
+		font-size: 25px;
+		line-height: 38px;
+		letter-spacing: 3px;
+		font-weight: 300;
+		padding: 10px;
+		width: 60px;
+	}
+}
+/*-------------------------------------------------*/
+
+@media(max-width: 350px) {
+
+	.slide-caption {
+		top: 3px;
+	}
+
+	#slider h2 {
+		padding-top: 70px;
+	}
+
+	.slide-type_text {
+		font-size: 14px;
+	}
+	#slider h2 {
+		font-size: 22px;
+		line-height: 30px;
+		letter-spacing: 2px;
+		position: relative;
+		padding-top: 100px;
 	}
 }
 /*-------------------------------------------------*/
@@ -382,13 +447,6 @@
 
 	.navbar-toggler {
 		height: 50px;
-	}
-}
-/*-------------------------------------------------*/
-@media(max-width: 350px) {
-
-	.slide-caption {
-		top: 3px;
 	}
 }
 /*-------------------------------------------------*/

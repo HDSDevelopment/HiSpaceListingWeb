@@ -1,75 +1,4 @@
-﻿////investor calculation
-//function returnCalculation() {
-//	var rtnHoldingPeriod = $('#rtn_period').val();
-//	var rtnDiscount = $('#rtn_discount').val();
-//	var rtnInflation = $('#rtn_inflation').val();
-//	var rtnNOI = $('#rtn_noi').val();
-//	var rtnEstimatedCap = $('#rtn_cap').val();
-//	var discountFactor = [];
-//	var inflationRate = [];
-//	var NOI = [];
-//	var capitalExpenses = [];
-//	var netCashFlow = [];
-//	var holdingPeriodYears = [];
-//	//console.log(rtnHoldingPeriod);
-//	//console.log(rtnDiscount);
-//	//console.log(rtnInflation);
-//	//console.log(rtnNOI);
-//	//console.log(rtnEstimatedCap);
-//	//discount factor
-//	for (i = 1; i <= rtnHoldingPeriod; i++) {
-//		discountFactor.push(parseFloat(Math.pow((1 + ((rtnDiscount) / 100)), -i).toFixed(2)));
-//	}
-//	//holding periods list array
-//	for (i = 1; i <= rtnHoldingPeriod; i++) {
-//		holdingPeriodYears.push("Year " + i);
-//	}
-//	console.log(holdingPeriodYears);
-//	//inflation rate
-//	for (i = 1; i <= rtnHoldingPeriod; i++) {
-//		if (i == 1) {
-//			var ir = 1;
-//			inflationRate.push(ir);
-//		} else {
-//			var ir = parseFloat(((ir) * (1 + (rtnInflation) / 100)).toFixed(8));
-//			//console.log(ir);
-//			inflationRate.push(ir);
-//		}
-//	}
-//	//console.log(inflationRate);
-//	//console.log(inflationRate.length);
-
-//	//NOI calculation
-//	for (i = 0; i < inflationRate.length; i++) {
-//		//console.log(inflationRate[i]);
-//		//NOI.push(parseFloat((inflationRate[i] * rtnNOI).toFixed(4)));
-//		NOI.push(parseInt(inflationRate[i] * rtnNOI));
-//	}
-//	console.log(NOI);
-//	//Capital Expenses
-//	for (i = 1; i <= rtnHoldingPeriod; i++) {
-//		//capitalExpenses.push(parseFloat(rtnEstimatedCap / rtnHoldingPeriod).toFixed(4));
-//		capitalExpenses.push(parseInt(rtnEstimatedCap / rtnHoldingPeriod));
-//	}
-//	console.log(capitalExpenses);
-//	//Net Cash Flow
-//	for (i = 0; i < rtnHoldingPeriod; i++) {
-//		//console.log('test');
-//		//netCashFlow.push(parseFloat(NOI[i] - capitalExpenses[i]).toFixed(4));
-//		netCashFlow.push(parseInt(NOI[i] - capitalExpenses[i]));
-//	}
-//	console.log(netCashFlow);
-//	//chart cash flow
-//	rtnCashFlow(NOI, capitalExpenses, netCashFlow, holdingPeriodYears);
-//	//table append
-//	rtnCashFlowTable(NOI, capitalExpenses, netCashFlow, holdingPeriodYears);
-//};
-//$.cookie("visits", 10);
-//console.log($.cookie("visits"));
-//$.removeCookie("visits");
-
-//console.log($.cookie("visits"));
-
+﻿//investor calculation
 //interest rate show
 var rtnLtvInput = $('#rtn_ltv');
 $(rtnLtvInput).keyup(function () {
@@ -94,27 +23,16 @@ $(rtnExitMethod).change(function () {
 
 function returnCalculation(process) {
 
-	if (process == 1) {
-		//$('#SliderLTV').next().find('.jslider-value span').html(rtnLTV);
-		//$('#SliderLTV').siblings('.current-value__slider').html('Current LTV "' + rtnLTV + '"');
-
-		////console.log($('#SliderLTV').siblings('.current-value__slider').html());
-		//$('#SliderDiscount').next().find('.jslider-value span').html(rtnDiscount);
-		//$('#SliderDiscount').siblings('.current-value__slider').html('Current Discunt "' + rtnDiscount + '"');
-
-		//$('#SliderCap').next().find('.jslider-value span').html(rtnExitcap);
-		//$('#SliderCap').siblings('.current-value__slider').html('Current Exit Cap "' + rtnExitcap + '"');
-
-		//$('#SliderTax').next().find('.jslider-value span').html(rtnTax);
-		//$('#SliderTax').siblings('.current-value__slider').html('Current Tax "' + rtnTax + '"');
-		console.log($('#SliderLTV').next().find('.jslider-value span').html().replace(/,/g, '.'));
-		console.log($('#SliderDiscount').next().find('.jslider-value span').html().replace(/,/g, '.'));
-		console.log($('#SliderCap').next().find('.jslider-value span').html().replace(/,/g, '.'));
-		console.log($('#SliderTax').next().find('.jslider-value span').html().replace(/,/g, '.'));
-	}
+	//if (process == 1) {
+	//	console.log($('#SliderLTV').next().find('.jslider-value span').html().replace(/,/g, '.'));
+	//	console.log($('#SliderDiscount').next().find('.jslider-value span').html().replace(/,/g, '.'));
+	//	console.log($('#SliderCap').next().find('.jslider-value span').html().replace(/,/g, '.'));
+	//	console.log($('#SliderTax').next().find('.jslider-value span').html().replace(/,/g, '.'));
+	//}
 	var formData = new FormData();
 	var rtnInvestment = $('#rtn_investment').val();
 	var rtnNOI = $('#rtn_noi').val();
+	var rtnCap = $('#rtn_cap').val();
 	
 	var rtnInflation = $('#rtn_inflation').val();
 	
@@ -133,22 +51,55 @@ function returnCalculation(process) {
 	if (process == 1) {
 		var rtnLTV = $('#SliderLTV').next().find('.jslider-value span').html().replace(/,/g, '.');
 		var rtnDiscount = $('#SliderDiscount').next().find('.jslider-value span').html().replace(/,/g, '.');
-		var rtnCap = $('#SliderCap').next().find('.jslider-value span').html().replace(/,/g, '.');
+		var rtnExitcap = $('#SliderCap').next().find('.jslider-value span').html().replace(/,/g, '.');
 		var rtnTax = $('#SliderTax').next().find('.jslider-value span').html().replace(/,/g, '.');
 	} else {
 		var rtnLTV = $('#rtn_ltv').val();
+		$('#SliderLTV').val(rtnLTV);
 		if (rtnLTV == "") {
 			rtnLTV = 0.00;
 		}
-		var rtnCap = $('#rtn_cap').val();
-		if (rtnCap == "") {
-			rtnCap = 0.00;
+		var rtnExitcap = $('#rtn_exitcap').val();
+		$('#SliderTax').val(rtnTax);
+		if (rtnExitcap == "") {
+			rtnExitcap = 0.00;
 		}
 		var rtnDiscount = $('#rtn_discount').val();
+		$('#SliderCap').val(rtnExitcap);
 		var rtnTax = $('#rtn_tax').val();
 		if (rtnTax == "") {
 			rtnTax = 0.00;
 		}
+		$('#SliderDiscount').val(rtnDiscount);
+
+
+		jQuery("#SliderLTV").slider({ from: 1, to: 100, step: .1, round: 1, format: { format: '##.0', locale: 'de' }, dimension: ' %', skin: "round" });
+		jQuery("#SliderDiscount").slider({ from: 1, to: 100, step: .1, round: 1, format: { format: '##.0', locale: 'de' }, dimension: ' %', skin: "round" });
+		jQuery("#SliderCap").slider({ from: 1, to: 100, step: .1, round: 1, format: { format: '##.0', locale: 'de' }, dimension: ' %', skin: "round" });
+		jQuery("#SliderTax").slider({ from: 1, to: 100, step: .1, round: 1, format: { format: '##.0', locale: 'de' }, dimension: ' %', skin: "round" });
+
+		//$('#SliderLTV').val(rtnLTV);
+		$('#SliderLTV').next().find('.jslider-value span').html(rtnLTV);
+		$('#SliderLTV').next().find('.jslider-bg').next().css('left', rtnLTV + '%');
+		$('#SliderLTV').next().find('.jslider-bg').siblings('.jslider-value').css({ 'left': rtnLTV + '%', 'right': 'unset' });
+		$('#SliderLTV').siblings('.current-value__slider').html('Current LTV "' + rtnLTV + ' %"');
+
+		//console.log($('#SliderLTV').siblings('.current-value__slider').html());
+		//$('#SliderDiscount').val(rtnDiscount);
+		$('#SliderDiscount').next().find('.jslider-value span').html(rtnDiscount);
+		$('#SliderDiscount').next().find('.jslider-bg').next().css('left', rtnDiscount + '%');
+		$('#SliderDiscount').next().find('.jslider-bg').siblings('.jslider-value').eq(0).css({ 'left': rtnDiscount + '%', 'right': 'unset'});
+		$('#SliderDiscount').siblings('.current-value__slider').html('Current Discunt "' + rtnDiscount + ' %"');
+
+		$('#SliderCap').next().find('.jslider-value span').html(rtnExitcap);
+		$('#SliderCap').next().find('.jslider-bg').next().css('left', rtnExitcap + '%');
+		$('#SliderCap').next().find('.jslider-bg').siblings('.jslider-value').eq(0).css({ 'left': rtnExitcap + '%', 'right': 'unset' });
+		$('#SliderCap').siblings('.current-value__slider').html('Current Exit Cap "' + rtnExitcap + ' %"');
+
+		$('#SliderTax').next().find('.jslider-value span').html(rtnTax);
+		$('#SliderTax').next().find('.jslider-bg').next().css('left', rtnTax + '%');
+		$('#SliderTax').next().find('.jslider-bg').siblings('.jslider-value').eq(0).css({ 'left': rtnTax + '%', 'right': 'unset' });
+		$('#SliderTax').siblings('.current-value__slider').html('Current Tax "' + rtnTax + ' %"');
 	}
 	
 
@@ -208,16 +159,16 @@ function returnCalculation(process) {
 			var peakEquity = [];
 			var operatingCashFlow = obj['operatingCashFlow'];
 			if (operatingCashFlow == null || operatingCashFlow == "") {
-				alert('Please enter the valid inputs...!');
+				alert('Please enter valid inputs...!');
 				removeBodyLoader();
 			}
 			var responseNOI = obj['operatingCashFlow']['netOperatingIncomeList'];
 			
 			var responseNetCashFlow = obj['operatingCashFlow']['netCashFlowList'];
 			var responseCapitalExpenses = obj['operatingCashFlow']['capitalExpenseList'];
-			var responseLeveredCash = obj['financingCashFlow']['leveredCashFlow'];
-			var responseUnleveredCash = obj['investmentCashFlow']['unleveredCashFlowValue'];
-			var responsePostTaxCash = obj['taxCashFlow']['postTaxCashFlow'];
+			var responseLeveredCash = obj['financingCashFlow']['leveredCashFlow2'];
+			var responseUnleveredCash = obj['investmentCashFlow']['unleveredCashFlowValue2'];
+			var responsePostTaxCash = obj['taxCashFlow']['postTaxCashFlow2'];
 			var responseIrr = obj['irr'];
 			var responseProfit = obj['profit'];
 			var responseMultiple = obj['multiple'];
@@ -226,29 +177,29 @@ function returnCalculation(process) {
 			//console.log(responseNOI);
 			//console.log(rtnPeriod);
 			//holding periods list array
-			for (i = 0; i <= rtnPeriod; i++) {
+			for (i = 1; i <= rtnPeriod; i++) {
 				holdingPeriodYears.push("Year " + i);
 			}
-			$.each(responseNOI.slice(0, parseInt(rtnPeriod) + 1), function (i, element) {
+			$.each(responseNOI.slice(1, parseInt(rtnPeriod) + 1), function (i, element) {
 				//console.log(element);
 				//console.log(element['itemValue']);
 				//console.log(element['forYear']);
 				NOI.push(element['itemValue'].toFixed());
 				console.log(NOI);
 			}); 
-			$.each(responseNetCashFlow.slice(0, parseInt(rtnPeriod) + 1), function (i, element) {
+			$.each(responseNetCashFlow.slice(1, parseInt(rtnPeriod) + 1), function (i, element) {
 				netCashFlow.push(element['itemValue'].toFixed());
 			}); 
-			$.each(responseCapitalExpenses.slice(0, parseInt(rtnPeriod) + 1), function (i, element) {
+			$.each(responseCapitalExpenses.slice(1, parseInt(rtnPeriod) + 1), function (i, element) {
 				capitalExpenses.push(element['itemValue'].toFixed());
 			});
-			$.each(responseLeveredCash.slice(0, parseInt(rtnPeriod) + 1), function (i, element) {
+			$.each(responseLeveredCash.slice(1, parseInt(rtnPeriod) + 1), function (i, element) {
 				leveredCash.push(element['itemValue'].toFixed());
 			});
-			$.each(responseUnleveredCash.slice(0, parseInt(rtnPeriod) + 1), function (i, element) {
+			$.each(responseUnleveredCash.slice(1, parseInt(rtnPeriod) + 1), function (i, element) {
 				unleveredCash.push(element['itemValue'].toFixed());
 			});
-			$.each(responsePostTaxCash.slice(0, parseInt(rtnPeriod) + 1), function (i, element) {
+			$.each(responsePostTaxCash.slice(1, parseInt(rtnPeriod) + 1), function (i, element) {
 				postTaxCash.push(element['itemValue'].toFixed());
 			});
 			$.each(responseIrr, function (i, element) {
@@ -300,53 +251,47 @@ function returnCalculation(process) {
 			rtnCashFlowTable(NOI, capitalExpenses, netCashFlow, holdingPeriodYears, leveredCash, unleveredCash, postTaxCash, rtnLTV, rtnTax);
 			//all returns
 			if (process == 0) {
+				//passing array
 				$.cookie("responseCurrentValues", JSON.stringify(responseCurrentValues));
+				//passing current values
+				$.cookie("responseCurrentLTV", rtnLTV);
+				$.cookie("responseCurrentCap", rtnExitcap);
+				$.cookie("responseCurrentDiscount", rtnDiscount);
+				$.cookie("responseCurrentTax", rtnTax);
+
 				console.log(JSON.parse($.cookie("responseCurrentValues")));
 				cookievalue = JSON.parse($.cookie("responseCurrentValues"));
 				//console.log(cookievalue);
 				//console.log(cookievalue['currentirr']);
 
 				overAllReturns(cookievalue['currentirr'], cookievalue['currentprofit'], cookievalue['currentmultiple'], cookievalue['currentpeakEquity'], irr, profit, multiple, peakEquity, 0);
+
+				//slider section
+				setTimeout(function () {
+					$('.rtn-slider').removeClass('d-none');
+					console.log('slider view');
+					//console.log($('#SliderLTV').val());
+					//$('#SliderLTV').val(rtnLTV);
+					//console.log($('#SliderLTV').val());
+					//$('#SliderDiscount').val(rtnDiscount);
+					//$('#SliderCap').val(rtnExitcap);
+					//$('#SliderTax').val(rtnTax);
+
+					
+				}, 1000);
+
 			} else {
 				cookievalue = JSON.parse($.cookie("responseCurrentValues"));
 				console.log(cookievalue);
 				overAllReturns(cookievalue['currentirr'], cookievalue['currentprofit'], cookievalue['currentmultiple'], cookievalue['currentpeakEquity'], irr, profit, multiple, peakEquity, 1);
+
+
+				//updated value
+				$('#SliderLTV').siblings('.updated-value__slider').html('Updated LTV "' + rtnLTV + ' %"');
+				$('#SliderDiscount').siblings('.updated-value__slider').html('Updated Discunt "' + rtnDiscount + ' %"');
+				$('#SliderCap').siblings('.updated-value__slider').html('Updated Exit Cap "' + rtnExitcap + ' %"');
+				$('#SliderTax').siblings('.updated-value__slider').html('Updated Tax "' + rtnTax + ' %"');
 			}
-
-			//slider section
-			setTimeout(function () {
-			$('.rtn-slider').removeClass('d-none');
-			//console.log($('#SliderLTV').val());
-			//$('#SliderLTV').val(rtnLTV);
-			//console.log($('#SliderLTV').val());
-			//$('#SliderDiscount').val(rtnDiscount);
-			//$('#SliderCap').val(rtnExitcap);
-			//$('#SliderTax').val(rtnTax);
-
-			$('#SliderLTV').val(rtnLTV);
-			console.log($('#SliderLTV').val());
-			$('#SliderLTV').next().find('.jslider-value span').html(rtnLTV);
-			$('#SliderLTV').siblings('.current-value__slider').html('Current LTV "' + rtnLTV + '"');
-
-			//console.log($('#SliderLTV').siblings('.current-value__slider').html());
-			$('#SliderDiscount').val(rtnDiscount);
-			$('#SliderDiscount').next().find('.jslider-value span').html(rtnDiscount);
-			$('#SliderDiscount').siblings('.current-value__slider').html('Current Discunt "' + rtnDiscount + '"');
-
-			$('#SliderCap').val(rtnExitcap);
-			$('#SliderCap').next().find('.jslider-value span').html(rtnExitcap);
-			$('#SliderCap').siblings('.current-value__slider').html('Current Exit Cap "' + rtnExitcap + '"');
-
-			$('#SliderTax').val(rtnTax);
-			$('#SliderTax').next().find('.jslider-value span').html(rtnTax);
-			$('#SliderTax').siblings('.current-value__slider').html('Current Tax "' + rtnTax + '"');
-
-			
-				jQuery("#SliderLTV").slider({from: 1,to: 100,step: .1,round: 1,format: {format: '##.0',locale: 'de'},dimension: ' %',skin: "round"});
-				jQuery("#SliderDiscount").slider({ from: 1, to: 100, step: .1, round: 1, format: { format: '##.0', locale: 'de' }, dimension: ' %', skin: "round" });
-				jQuery("#SliderCap").slider({ from: 1, to: 100, step: .1, round: 1, format: { format: '##.0', locale: 'de' }, dimension: ' %', skin: "round" });
-				jQuery("#SliderTax").slider({ from: 1, to: 100, step: .1, round: 1, format: { format: '##.0', locale: 'de' }, dimension: ' %', skin: "round" });
-			}, 1000);
 
 			//console.log();
 			removeBodyLoader();
@@ -593,7 +538,7 @@ function overAllReturns(cirr, cprofit, cmultiple, cpeakEquity, irr, profit, mult
 		});
 	};
 	irr_option = {
-		renderer: 'svg',
+		//renderer: 'svg',
 		tooltip: {
 			trigger: 'axis',
 			axisPointer: {

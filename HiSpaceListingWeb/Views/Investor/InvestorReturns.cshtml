@@ -150,9 +150,6 @@
 						<div class="col-sm-12 mt-3 text-center">
 							<button type="button" id="rtn-calculate-btn" class="btn btn-primary" onclick="rtnCalcualtionValidate(this,0);">Calculate</button>
 						</div>
-						<div class="col-sm-12 mt-3 text-center">
-							<button type="button" id="rtn-calculate-btn" class="btn btn-primary" onclick="rtnCalcualtionValidate(this,1);">Calculate</button>
-						</div>
 					</div>
 				</div>
 				<div class="col-sm-8">
@@ -247,16 +244,18 @@
 						</div>
 						<div class="layout-slider">
 							<input id="SliderLTV" type="slider" name="price" value="0" />
-							<span class="current-value__slider">Current LTV</span>
+							<span class="current-value__slider"></span>
+							<span class="updated-value__slider"></span>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="mb-4">
-							<h6 class="text-center text-pry">Cap Rate</h6>
+							<h6 class="text-center text-pry">Exit Cap Rate</h6>
 						</div>
 						<div class="layout-slider">
 							<input id="SliderCap" type="slider" name="price" value="0" />
 							<span class="current-value__slider"></span>
+							<span class="updated-value__slider"></span>
 						</div>
 					</div>
 					<div class="col-sm-3">
@@ -266,6 +265,7 @@
 						<div class="layout-slider">
 							<input id="SliderDiscount" type="slider" name="price" value="0" />
 							<span class="current-value__slider"></span>
+							<span class="updated-value__slider"></span>
 						</div>
 					</div>
 					<div class="col-sm-3">
@@ -275,6 +275,7 @@
 						<div class="layout-slider">
 							<input id="SliderTax" type="slider" name="price" value="0" />
 							<span class="current-value__slider"></span>
+							<span class="updated-value__slider"></span>
 						</div>
 					</div>
 				</div>
@@ -338,7 +339,8 @@
 	<script type="text/javascript" src="~/js/jslider/draggable-0.1.js"></script>
 	<script type="text/javascript" src="~/js/jslider/jquery.slider.js"></script>
 
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+	@*<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>*@
+	<script src="~/js/echarts.min.js"></script>
 	<script src="~/js/InvestorReturns.js"></script>
 	<script>
 		
